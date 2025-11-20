@@ -376,6 +376,89 @@ class LatinMorphology:
             forms["perf_pass_2pl"] = ppp.replace("um", "a") + " estis"
             forms["perf_pass_3pl"] = ppp.replace("um", "a") + " sunt"
         
+        # ===== SUBJUNCTIVE MOOD =====
+        
+        # Present Subjunctive Active
+        # Rule: Use opposite vowel (1st conj uses 'e', others use 'ā')
+        if conjugation == "1":
+            forms["pres_subj_1sg"] = pres_stem + "em"
+            forms["pres_subj_2sg"] = pres_stem + "ēs"
+            forms["pres_subj_3sg"] = pres_stem + "et"
+            forms["pres_subj_1pl"] = pres_stem + "ēmus"
+            forms["pres_subj_2pl"] = pres_stem + "ētis"
+            forms["pres_subj_3pl"] = pres_stem + "ent"
+        elif conjugation == "2":
+            forms["pres_subj_1sg"] = pres_stem + "eam"
+            forms["pres_subj_2sg"] = pres_stem + "eās"
+            forms["pres_subj_3sg"] = pres_stem + "eat"
+            forms["pres_subj_1pl"] = pres_stem + "eāmus"
+            forms["pres_subj_2pl"] = pres_stem + "eātis"
+            forms["pres_subj_3pl"] = pres_stem + "eant"
+        elif conjugation == "3":
+            forms["pres_subj_1sg"] = pres_stem + "am"
+            forms["pres_subj_2sg"] = pres_stem + "ās"
+            forms["pres_subj_3sg"] = pres_stem + "at"
+            forms["pres_subj_1pl"] = pres_stem + "āmus"
+            forms["pres_subj_2pl"] = pres_stem + "ātis"
+            forms["pres_subj_3pl"] = pres_stem + "ant"
+        elif conjugation == "4":
+            forms["pres_subj_1sg"] = pres_stem + "am"
+            forms["pres_subj_2sg"] = pres_stem + "ās"
+            forms["pres_subj_3sg"] = pres_stem + "at"
+            forms["pres_subj_1pl"] = pres_stem + "āmus"
+            forms["pres_subj_2pl"] = pres_stem + "ātis"
+            forms["pres_subj_3pl"] = pres_stem + "ant"
+        
+        # Imperfect Subjunctive Active
+        # Rule: present infinitive + personal endings (m, s, t, mus, tis, nt)
+        inf_stem = parts[1]  # Full infinitive (amare, monere, regere, audire)
+        forms["imp_subj_1sg"] = inf_stem + "m"
+        forms["imp_subj_2sg"] = inf_stem + "s"
+        forms["imp_subj_3sg"] = inf_stem + "t"
+        forms["imp_subj_1pl"] = inf_stem + "mus"
+        forms["imp_subj_2pl"] = inf_stem + "tis"
+        forms["imp_subj_3pl"] = inf_stem + "nt"
+        
+        # Present Subjunctive Passive
+        if conjugation == "1":
+            forms["pres_subj_pass_1sg"] = pres_stem + "er"
+            forms["pres_subj_pass_2sg"] = pres_stem + "ēris"
+            forms["pres_subj_pass_3sg"] = pres_stem + "ētur"
+            forms["pres_subj_pass_1pl"] = pres_stem + "ēmur"
+            forms["pres_subj_pass_2pl"] = pres_stem + "ēminī"
+            forms["pres_subj_pass_3pl"] = pres_stem + "entur"
+        elif conjugation == "2":
+            forms["pres_subj_pass_1sg"] = pres_stem + "ear"
+            forms["pres_subj_pass_2sg"] = pres_stem + "eāris"
+            forms["pres_subj_pass_3sg"] = pres_stem + "eātur"
+            forms["pres_subj_pass_1pl"] = pres_stem + "eāmur"
+            forms["pres_subj_pass_2pl"] = pres_stem + "eāminī"
+            forms["pres_subj_pass_3pl"] = pres_stem + "eantur"
+        elif conjugation == "3":
+            forms["pres_subj_pass_1sg"] = pres_stem + "ar"
+            forms["pres_subj_pass_2sg"] = pres_stem + "āris"
+            forms["pres_subj_pass_3sg"] = pres_stem + "ātur"
+            forms["pres_subj_pass_1pl"] = pres_stem + "āmur"
+            forms["pres_subj_pass_2pl"] = pres_stem + "āminī"
+            forms["pres_subj_pass_3pl"] = pres_stem + "antur"
+        elif conjugation == "4":
+            forms["pres_subj_pass_1sg"] = pres_stem + "ar"
+            forms["pres_subj_pass_2sg"] = pres_stem + "āris"
+            forms["pres_subj_pass_3sg"] = pres_stem + "ātur"
+            forms["pres_subj_pass_1pl"] = pres_stem + "āmur"
+            forms["pres_subj_pass_2pl"] = pres_stem + "āminī"
+            forms["pres_subj_pass_3pl"] = pres_stem + "antur"
+        
+        # Imperfect Subjunctive Passive
+        # Rule: present infinitive + passive endings (r, ris, tur, mur, mini, ntur)
+        forms["imp_subj_pass_1sg"] = inf_stem + "r"
+        forms["imp_subj_pass_2sg"] = inf_stem + "ris"
+        forms["imp_subj_pass_3sg"] = inf_stem + "tur"
+        forms["imp_subj_pass_1pl"] = inf_stem + "mur"
+        forms["imp_subj_pass_2pl"] = inf_stem + "minī"
+        forms["imp_subj_pass_3pl"] = inf_stem + "ntur"
+
+        
         # Apply irregular forms overrides if present
         if irregular_forms:
             try:

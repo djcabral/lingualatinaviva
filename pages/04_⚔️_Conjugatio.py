@@ -85,9 +85,15 @@ with col2:
     )
 
 with col3:
-    # Future: Add mode selector for advanced levels
-    if user_level >= 7:
-        st.info("🔜 Subjuntivo")
+    # Mode selector for advanced levels
+    if user_level >= 4:
+        mode_selection = st.selectbox(
+            "📖 Modo",
+            ["Indicativo", "Subjuntivo"],
+            key="mode_select"
+        )
+    else:
+        mode_selection = "Indicativo"  # Default for lower levels
 
 # Get verbs
 with get_session() as session:
@@ -120,9 +126,10 @@ with get_session() as session:
         st.error("No se pudo generar la conjugación para este verbo.")
         st.stop()
     
-    # Map tense and voice to form keys
+    # Map tense, voice, and mood to form keys
     tense_lower = tense_selection.lower()
     voice_es = voice_selection  # "Activa" or "Pasiva"
+    mode_es = mode_selection  # "Indicativo" or "Subjuntivo"
     
     if tense_lower == "praesens":
         prefix = "pres"
@@ -137,11 +144,18 @@ with get_session() as session:
         prefix = "pres"
         tense_es = "Presente"
     
+    # Add "_subj" suffix for subjunctive mood (not available for perfect)
+    if mode_es == "Subjuntivo":
+        if prefix == "perf":
+            st.warning("⚠️ El perfecto de subjuntivo no está disponible aún. Usa Presente o Imperfecto.")
+            st.stop()
+        prefix = prefix + "_subj"
+    
     # Add "_pass" suffix for passive voice
     if voice_es == "Pasiva":
         prefix = prefix + "_pass"
     
-    tense_display = f"{tense_es} de Indicativo ({voice_es})"
+    tense_display = f"{tense_es} de {mode_es} ({voice_es})"
     st.markdown(f"**{tense_display}**")
     
     # Initialize show_answers state
