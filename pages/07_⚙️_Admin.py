@@ -64,11 +64,24 @@ with tabs[0]:
             declension = st.selectbox("Declinación (sustantivos)", ["", "1", "2", "3", "4", "5"])
             principal_parts = st.text_input("Partes principales (verbos)")
             conjugation = st.selectbox("Conjugación (verbos)", ["", "1", "2", "3", "4"])
+            irregular_forms = st.text_area("Formas Irregulares (JSON)", help='Ejemplo: {"dat_pl": "filiābus"}')
         
         submitted = st.form_submit_button("✅ Añadir Palabra")
         
         if submitted:
             if latin and translation and pos:
+                import json
+                
+                # Validate JSON if provided
+                irregular_json = None
+                if irregular_forms:
+                    try:
+                        json.loads(irregular_forms)
+                        irregular_json = irregular_forms
+                    except json.JSONDecodeError:
+                        st.error("❌ El campo 'Formas Irregulares' debe ser un JSON válido.")
+                        st.stop()
+
                 with get_session() as session:
                     new_word = Word(
                         latin=latin,
@@ -79,7 +92,8 @@ with tabs[0]:
                         gender=gender if gender else None,
                         declension=declension if declension else None,
                         principal_parts=principal_parts if principal_parts else None,
-                        conjugation=conjugation if conjugation else None
+                        conjugation=conjugation if conjugation else None,
+                        irregular_forms=irregular_json
                     )
                     session.add(new_word)
                     session.commit()

@@ -107,7 +107,7 @@ with get_session() as session:
         st.error("Este verbo no tiene información completa para conjugarse.")
         st.stop()
     
-    forms = morphology.conjugate_verb(verb.latin, verb.conjugation, verb.principal_parts)
+    forms = morphology.conjugate_verb(verb.latin, verb.conjugation, verb.principal_parts, verb.irregular_forms)
     
     if not forms:
         st.error("No se pudo generar la conjugación para este verbo.")

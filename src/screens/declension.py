@@ -46,7 +46,7 @@ class DeclensionScreen(Screen):
             self.query_one("#decl-word").update(f"{word.latin} ({word.genitive}, {word.gender})")
             
             # Generate forms
-            forms = LatinMorphology.decline_noun(word.latin, word.declension, word.gender, word.genitive)
+            forms = LatinMorphology.decline_noun(word.latin, word.declension, word.gender, word.genitive, word.irregular_forms)
             
             table = self.query_one(DataTable)
             table.clear()

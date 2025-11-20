@@ -1,4 +1,5 @@
 from typing import List, Dict, Optional
+import json
 
 class LatinMorphology:
     @staticmethod
@@ -16,7 +17,7 @@ class LatinMorphology:
         return normalized
 
     @staticmethod
-    def decline_noun(word: str, declension: str, gender: str, genitive: str) -> Dict[str, str]:
+    def decline_noun(word: str, declension: str, gender: str, genitive: str, irregular_forms: Optional[str] = None) -> Dict[str, str]:
         """
         Generates full declension table for a noun.
         Returns a dict with keys like 'nom_sg', 'gen_pl', etc.
@@ -100,10 +101,20 @@ class LatinMorphology:
             else:
                 forms[case] = stem + ending
                 
+        # Apply irregular forms overrides if present
+        if irregular_forms:
+            try:
+                overrides = json.loads(irregular_forms)
+                for key, value in overrides.items():
+                    if key in forms:
+                        forms[key] = value
+            except json.JSONDecodeError:
+                pass # Ignore invalid JSON
+
         return forms
 
     @staticmethod
-    def conjugate_verb(word: str, conjugation: str, principal_parts: str) -> Dict[str, str]:
+    def conjugate_verb(word: str, conjugation: str, principal_parts: str, irregular_forms: Optional[str] = None) -> Dict[str, str]:
         """
         Generates basic conjugation table (Present, Imperfect, Perfect - Active Indicative).
         """
@@ -188,4 +199,13 @@ class LatinMorphology:
         forms["perf_2pl"] = perf_stem + "istis"
         forms["perf_3pl"] = perf_stem + "ērunt"
         
+        # Apply irregular forms overrides if present
+        if irregular_forms:
+            try:
+                overrides = json.loads(irregular_forms)
+                for key, value in overrides.items():
+                    forms[key] = value
+            except json.JSONDecodeError:
+                pass # Ignore invalid JSON
+
         return forms

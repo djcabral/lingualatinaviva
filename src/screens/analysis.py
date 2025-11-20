@@ -47,7 +47,7 @@ class AnalysisScreen(Screen):
             
             # Generate a random form to analyze
             if word.part_of_speech == "noun":
-                forms = LatinMorphology.decline_noun(word.latin, word.declension, word.gender, word.genitive)
+                forms = LatinMorphology.decline_noun(word.latin, word.declension, word.gender, word.genitive, word.irregular_forms)
                 if forms:
                     case = random.choice(list(forms.keys()))
                     form = forms[case]

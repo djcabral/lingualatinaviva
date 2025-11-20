@@ -91,7 +91,7 @@ with get_session() as session:
         st.stop()
     
     genitive = noun.genitive if noun.genitive else noun.latin
-    forms = morphology.decline_noun(noun.latin, noun.declension, noun.gender, genitive)
+    forms = morphology.decline_noun(noun.latin, noun.declension, noun.gender, genitive, noun.irregular_forms)
     
     if not forms:
         st.warning("No se pudo generar la declinación para este sustantivo.")

@@ -43,6 +43,7 @@ class Word(SQLModel, table=True):
     is_invariable: bool = Field(default=False)  # Preposiciones, adverbios, conjunciones
     is_fundamental: bool = Field(default=False)  # Top 100 + invariables importantes
     category: Optional[str] = None  # "preposition", "adverb", "conjunction", etc.
+    irregular_forms: Optional[str] = None  # JSON string overriding specific forms e.g. {"dat_pl": "filiābus"}
     
     # Relaciones
     reviews: List["ReviewLog"] = Relationship(back_populates="word")

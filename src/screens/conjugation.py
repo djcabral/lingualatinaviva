@@ -46,7 +46,7 @@ class ConjugationScreen(Screen):
             self.query_one("#conj-word").update(f"{word.latin} ({word.principal_parts})")
             
             # Generate forms
-            forms = LatinMorphology.conjugate_verb(word.latin, word.conjugation, word.principal_parts)
+            forms = LatinMorphology.conjugate_verb(word.latin, word.conjugation, word.principal_parts, word.irregular_forms)
             
             table = self.query_one(DataTable)
             table.clear()

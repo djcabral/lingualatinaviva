@@ -1,6 +1,6 @@
 from sqlmodel import create_engine, SQLModel, Session, select
 from contextlib import contextmanager
-from .models import (
+from database.models import (
     Word, ReviewLog, UserProfile, Text, TextWordLink,
     Author, WordFrequency, SyntaxPattern  # Nuevos modelos Fase 1
 )
