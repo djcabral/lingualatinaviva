@@ -214,7 +214,7 @@ elif section == "Textos":
         if st.button("💾 Guardar Texto", use_container_width=True):
             if title and content:
                 with get_session() as session:
-                    new_text = Text(title=title, author=author, content=content, level=level)
+                    new_text = Text(title=title, author=author, content=content, difficulty=level)
                     session.add(new_text)
                     session.commit()
                     session.refresh(new_text)
@@ -246,7 +246,7 @@ elif section == "Textos":
         with get_session() as session:
             texts = session.exec(select(Text)).all()
             for t in texts:
-                with st.expander(f"{t.title} (Nivel {t.level})"):
+                with st.expander(f"{t.title} (Nivel {t.difficulty})"):
                     st.write(t.content[:200] + "...")
                     st.caption(f"Autor: {t.author or 'Desconocido'}")
 
