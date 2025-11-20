@@ -114,6 +114,72 @@ class LatinMorphology:
         return forms
 
     @staticmethod
+    def decline_pronoun(pronoun: str) -> Dict[str, str]:
+        """
+        Generates declension for personal pronouns (ego, tū, nōs, vōs).
+        These have completely irregular paradigms.
+        """
+        forms = {}
+        
+        pronoun_lower = pronoun.lower()
+        
+        if pronoun_lower == "ego":
+            forms = {
+                "nom_sg": "ego",
+                "gen_sg": "meī",
+                "dat_sg": "mihi",
+                "acc_sg": "mē",
+                "abl_sg": "mē",
+                "nom_pl": "nōs",
+                "gen_pl": "nostrum/nostrī",
+                "dat_pl": "nōbīs",
+                "acc_pl": "nōs",
+                "abl_pl": "nōbīs"
+            }
+        elif pronoun_lower == "tū":
+            forms = {
+                "nom_sg": "tū",
+                "gen_sg": "tuī",
+                "dat_sg": "tibi",
+                "acc_sg": "tē",
+                "abl_sg": "tē",
+                "nom_pl": "vōs",
+                "gen_pl": "vestrum/vestrī",
+                "dat_pl": "vōbīs",
+                "acc_pl": "vōs",
+                "abl_pl": "vōbīs"
+            }
+        elif pronoun_lower in ["nōs", "nos"]:
+            forms = {
+                "nom_sg": "—",
+                "gen_sg": "—",
+                "dat_sg": "—",
+                "acc_sg": "—",
+                "abl_sg": "—",
+                "nom_pl": "nōs",
+                "gen_pl": "nostrum/nostrī",
+                "dat_pl": "nōbīs",
+                "acc_pl": "nōs",
+                "abl_pl": "nōbīs"
+            }
+        elif pronoun_lower in ["vōs", "vos"]:
+            forms = {
+                "nom_sg": "—",
+                "gen_sg": "—",
+                "dat_sg": "—",
+                "acc_sg": "—",
+                "abl_sg": "—",
+                "nom_pl": "vōs",
+                "gen_pl": "vestrum/vestrī",
+                "dat_pl": "vōbīs",
+                "acc_pl": "vōs",
+                "abl_pl": "vōbīs"
+            }
+        
+        return forms
+
+
+    @staticmethod
     def conjugate_verb(word: str, conjugation: str, principal_parts: str, irregular_forms: Optional[str] = None) -> Dict[str, str]:
         """
         Generates basic conjugation table (Present, Imperfect, Perfect - Active Indicative).

@@ -85,17 +85,26 @@ with get_session() as session:
     cases = ["nominativus", "vocativus", "accusativus", "genitivus", "dativus", "ablativus"]
     case_labels = ["Nominativus", "Vocativus", "Accusativus", "Genitivus", "Dativus", "Ablativus"]
     
-    # Get full declension table
-    if not noun.declension or not noun.gender:
-        st.warning("Este sustantivo no tiene declinación o género definido.")
-        st.stop()
-    
-    genitive = noun.genitive if noun.genitive else noun.latin
-    forms = morphology.decline_noun(noun.latin, noun.declension, noun.gender, genitive, noun.irregular_forms)
-    
-    if not forms:
-        st.warning("No se pudo generar la declinación para este sustantivo.")
-        st.stop()
+    # Check if it's a pronoun
+    if noun.part_of_speech == "pronoun":
+        forms = morphology.decline_pronoun(noun.latin)
+        if not forms:
+            st.warning("Pronombre no reconocido.")
+            st.stop()
+        st.info(f"📋 Pronombre personal")
+    else:
+        # Regular noun declension
+        if not noun.declension or not noun.gender:
+            st.warning("Este sustantivo no tiene declinación o género definido.")
+            st.stop()
+        
+        genitive = noun.genitive if noun.genitive else noun.latin
+        forms = morphology.decline_noun(noun.latin, noun.declension, noun.gender, genitive, noun.irregular_forms)
+        
+        if not forms:
+            st.warning("No se pudo generar la declinación para este sustantivo.")
+            st.stop()
+
     
     
     # Initialize show_answers state
