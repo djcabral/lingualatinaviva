@@ -169,6 +169,9 @@ class LatinMorphology:
             imp_stem = pres_stem + "ēba" # reg-eba
         elif conjugation == "4":
             imp_stem = pres_stem + "iēba" # audi-eba
+        else:
+            # Fallback for unexpected conjugation values
+            imp_stem = pres_stem + "ba"
             
         forms["imp_1sg"] = imp_stem + "m"
         forms["imp_2sg"] = imp_stem + "s"
