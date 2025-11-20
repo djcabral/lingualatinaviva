@@ -458,7 +458,38 @@ class LatinMorphology:
         forms["imp_subj_pass_2pl"] = inf_stem + "minī"
         forms["imp_subj_pass_3pl"] = inf_stem + "ntur"
 
+        # ===== IMPERATIVE MOOD =====
         
+        # Present Imperative Active (only 2nd person)
+        # Singular: stem (no ending), Plural: add -te
+        if conjugation == "1":
+            forms["imv_2sg"] = pres_stem + "ā"  # amā
+            forms["imv_2pl"] = pres_stem + "āte"  # amāte
+        elif conjugation == "2":
+            forms["imv_2sg"] = pres_stem + "ē"  # monē
+            forms["imv_2pl"] = pres_stem + "ēte"  # monēte
+        elif conjugation == "3":
+            forms["imv_2sg"] = pres_stem + "e"  # rege
+            forms["imv_2pl"] = pres_stem + "ite"  # regite
+        elif conjugation == "4":
+            forms["imv_2sg"] = pres_stem + "ī"  # audī
+            forms["imv_2pl"] = pres_stem + "īte"  # audīte
+        
+        # Present Imperative Passive (only 2nd person)
+        # Singular: add -re, Plural: add -minī
+        if conjugation == "1":
+            forms["imv_pass_2sg"] = pres_stem + "āre"  # amāre
+            forms["imv_pass_2pl"] = pres_stem + "āminī"  # amāminī
+        elif conjugation == "2":
+            forms["imv_pass_2sg"] = pres_stem + "ēre"  # monēre
+            forms["imv_pass_2pl"] = pres_stem + "ēminī"  # monēminī
+        elif conjugation == "3":
+            forms["imv_pass_2sg"] = pres_stem + "ere"  # regere
+            forms["imv_pass_2pl"] = pres_stem + "iminī"  # regiminī
+        elif conjugation == "4":
+            forms["imv_pass_2sg"] = pres_stem + "īre"  # audīre
+            forms["imv_pass_2pl"] = pres_stem + "īminī"  # audīminī
+
         # Apply irregular forms overrides if present
         if irregular_forms:
             try:

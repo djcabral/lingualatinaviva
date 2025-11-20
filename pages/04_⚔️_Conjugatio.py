@@ -89,7 +89,7 @@ with col3:
     if user_level >= 4:
         mode_selection = st.selectbox(
             "📖 Modo",
-            ["Indicativo", "Subjuntivo"],
+            ["Indicativo", "Subjuntivo", "Imperativo"],
             key="mode_select"
         )
     else:
@@ -129,33 +129,44 @@ with get_session() as session:
     # Map tense, voice, and mood to form keys
     tense_lower = tense_selection.lower()
     voice_es = voice_selection  # "Activa" or "Pasiva"
-    mode_es = mode_selection  # "Indicativo" or "Subjuntivo"
+    mode_es = mode_selection  # "Indicativo", "Subjuntivo", or "Imperativo"
     
-    if tense_lower == "praesens":
-        prefix = "pres"
-        tense_es = "Presente"
-    elif tense_lower == "imperfectum":
-        prefix = "imp"
-        tense_es = "Imperfecto"
-    elif tense_lower == "perfectum":
-        prefix = "perf"
-        tense_es = "Perfecto"
+    # Imperative has special handling (only 2nd person, no tense selection)
+    if mode_es == "Imperativo":
+        prefix = "imv"
+        if voice_es == "Pasiva":
+            prefix = "imv_pass"
+        tense_display = f"Imperativo ({voice_es})"
+        # Imperative only has 2nd person singular and plural
+        persons = ["2ª persona"]
     else:
-        prefix = "pres"
-        tense_es = "Presente"
+        if tense_lower == "praesens":
+            prefix = "pres"
+            tense_es = "Presente"
+        elif tense_lower == "imperfectum":
+            prefix = "imp"
+            tense_es = "Imperfecto"
+        elif tense_lower == "perfectum":
+            prefix = "perf"
+            tense_es = "Perfecto"
+        else:
+            prefix = "pres"
+            tense_es = "Presente"
+        
+        # Add "_subj" suffix for subjunctive mood (not available for perfect)
+        if mode_es == "Subjuntivo":
+            if prefix == "perf":
+                st.warning("⚠️ El perfecto de subjuntivo no está disponible aún. Usa Presente o Imperfecto.")
+                st.stop()
+            prefix = prefix + "_subj"
+        
+        # Add "_pass" suffix for passive voice
+        if voice_es == "Pasiva":
+            prefix = prefix + "_pass"
+        
+        tense_display = f"{tense_es} de {mode_es} ({voice_es})"
+        persons = ["1ª persona", "2ª persona", "3ª persona"]
     
-    # Add "_subj" suffix for subjunctive mood (not available for perfect)
-    if mode_es == "Subjuntivo":
-        if prefix == "perf":
-            st.warning("⚠️ El perfecto de subjuntivo no está disponible aún. Usa Presente o Imperfecto.")
-            st.stop()
-        prefix = prefix + "_subj"
-    
-    # Add "_pass" suffix for passive voice
-    if voice_es == "Pasiva":
-        prefix = prefix + "_pass"
-    
-    tense_display = f"{tense_es} de {mode_es} ({voice_es})"
     st.markdown(f"**{tense_display}**")
     
     # Initialize show_answers state
@@ -165,47 +176,80 @@ with get_session() as session:
         st.session_state.user_conjugation_answers = {}
     
     # Create conjugation table
-    persons = ["1ª persona", "2ª persona", "3ª persona"]
-    
     col1, col2 = st.columns(2)
     
-    with col1:
-        st.markdown("#### Singularis")
-        for i, person in enumerate(persons, 1):
-            key = f"{prefix}_{i}sg"
+    if mode_es == "Imperativo":
+        # Imperative only has 2nd person
+        with col1:
+            st.markdown("#### Singularis")
+            key = f"{prefix}_2sg"
             correct_form = forms.get(key, "—")
             
             if st.session_state.show_conjugation_answers:
-                # Show user's answer and correct answer
-                user_answer = st.session_state.user_conjugation_answers.get(f"input_sg_{i}", "")
+                user_answer = st.session_state.user_conjugation_answers.get(f"input_sg_2", "")
                 is_correct = normalize_latin(user_answer.strip()).lower() == normalize_latin(correct_form).lower()
                 
                 if is_correct:
-                    st.success(f"✅ {person}: **{correct_form}**")
+                    st.success(f"✅ 2ª persona: **{correct_form}**")
                 else:
-                    st.error(f"❌ {person}: '{user_answer}' → **{correct_form}**")
+                    st.error(f"❌ 2ª persona: '{user_answer}' → **{correct_form}**")
             else:
-                # Empty input for practice
-                st.text_input(person, value="", key=f"input_sg_{i}", placeholder="Escribe la forma...")
-    
-    with col2:
-        st.markdown("#### Pluralis")
-        for i, person in enumerate(persons, 1):
-            key = f"{prefix}_{i}pl"
+                st.text_input("2ª persona", value="", key=f"input_sg_2", placeholder="Escribe la forma...")
+        
+        with col2:
+            st.markdown("#### Pluralis")
+            key = f"{prefix}_2pl"
             correct_form = forms.get(key, "—")
             
             if st.session_state.show_conjugation_answers:
-                # Show user's answer and correct answer
-                user_answer = st.session_state.user_conjugation_answers.get(f"input_pl_{i}", "")
+                user_answer = st.session_state.user_conjugation_answers.get(f"input_pl_2", "")
                 is_correct = normalize_latin(user_answer.strip()).lower() == normalize_latin(correct_form).lower()
                 
                 if is_correct:
-                    st.success(f"✅ {person}: **{correct_form}**")
+                    st.success(f"✅ 2ª persona: **{correct_form}**")
                 else:
-                    st.error(f"❌ {person}: '{user_answer}' → **{correct_form}**")
+                    st.error(f"❌ 2ª persona: '{user_answer}' → **{correct_form}**")
             else:
-                # Empty input for practice
-                st.text_input(person, value="", key=f"input_pl_{i}", placeholder="Escribe la forma...")
+                st.text_input("2ª persona", value="", key=f"input_pl_2", placeholder="Escribe la forma...")
+    else:
+        # Regular conjugation (all 3 persons)
+        with col1:
+            st.markdown("#### Singularis")
+            for i, person in enumerate(persons, 1):
+                key = f"{prefix}_{i}sg"
+                correct_form = forms.get(key, "—")
+                
+                if st.session_state.show_conjugation_answers:
+                    # Show user's answer and correct answer
+                    user_answer = st.session_state.user_conjugation_answers.get(f"input_sg_{i}", "")
+                    is_correct = normalize_latin(user_answer.strip()).lower() == normalize_latin(correct_form).lower()
+                    
+                    if is_correct:
+                        st.success(f"✅ {person}: **{correct_form}**")
+                    else:
+                        st.error(f"❌ {person}: '{user_answer}' → **{correct_form}**")
+                else:
+                    # Empty input for practice
+                    st.text_input(person, value="", key=f"input_sg_{i}", placeholder="Escribe la forma...")
+        
+        with col2:
+            st.markdown("#### Pluralis")
+            for i, person in enumerate(persons, 1):
+                key = f"{prefix}_{i}pl"
+                correct_form = forms.get(key, "—")
+                
+                if st.session_state.show_conjugation_answers:
+                    # Show user's answer and correct answer
+                    user_answer = st.session_state.user_conjugation_answers.get(f"input_pl_{i}", "")
+                    is_correct = normalize_latin(user_answer.strip()).lower() == normalize_latin(correct_form).lower()
+                    
+                    if is_correct:
+                        st.success(f"✅ {person}: **{correct_form}**")
+                    else:
+                        st.error(f"❌ {person}: '{user_answer}' → **{correct_form}**")
+                else:
+                    # Empty input for practice
+                    st.text_input(person, value="", key=f"input_pl_{i}", placeholder="Escribe la forma...")
     
     # Show XP feedback if available
     if 'xp_feedback_conjugation' in st.session_state and st.session_state.show_conjugation_answers:
