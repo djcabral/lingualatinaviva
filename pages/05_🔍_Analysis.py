@@ -87,6 +87,24 @@ with get_session() as session:
     
     
     
+    # Check if word is invariable
+    if word.is_invariable:
+        st.markdown("### 📋 Palabra Invariable")
+        st.info(
+            f"**Tipo:** {translate_pos(word.part_of_speech)}  \n"
+            f"**Significado:** {word.translation}  \n"
+            f"**Categoría:** {word.category if word.category else 'N/A'}  \n\n"
+            f"Esta palabra es **invariable**, es decir, no se declina ni se conjuga. Siempre se usa en la misma forma: **{word.latin}**"
+        )
+        
+        st.markdown("---")
+        if st.button("🎲 Nueva Palabra", use_container_width=True):
+            st.session_state.current_word_analysis = random.choice(all_words)
+            st.session_state.current_form_analysis = None
+            st.session_state.show_analysis_result = False
+            st.rerun()
+        st.stop()
+    
     # Generate all forms for the word
     forms = {}
     if word.part_of_speech == "noun":
