@@ -176,6 +176,64 @@ class LatinMorphology:
                 "abl_pl": "vōbīs"
             }
         
+        # Demonstrative Pronouns (3 genders)
+        elif pronoun_lower == "is":
+            # is, ea, id - "that, he, she, it"
+            forms = {
+                "nom_sg_m": "is", "nom_sg_f": "ea", "nom_sg_n": "id",
+                "gen_sg_m": "eius", "gen_sg_f": "eius", "gen_sg_n": "eius",
+                "dat_sg_m": "eī", "dat_sg_f": "eī", "dat_sg_n": "eī",
+                "acc_sg_m": "eum", "acc_sg_f": "eam", "acc_sg_n": "id",
+                "abl_sg_m": "eō", "abl_sg_f": "eā", "abl_sg_n": "eō",
+                "nom_pl_m": "eī/iī", "nom_pl_f": "eae", "nom_pl_n": "ea",
+                "gen_pl_m": "eōrum", "gen_pl_f": "eārum", "gen_pl_n": "eōrum",
+                "dat_pl_m": "eīs/iīs", "dat_pl_f": "eīs/iīs", "dat_pl_n": "eīs/iīs",
+                "acc_pl_m": "eōs", "acc_pl_f": "eās", "acc_pl_n": "ea",
+                "abl_pl_m": "eīs/iīs", "abl_pl_f": "eīs/iīs", "abl_pl_n": "eīs/iīs"
+            }
+        elif pronoun_lower == "hic":
+            # hic, haec, hoc - "this"
+            forms = {
+                "nom_sg_m": "hic", "nom_sg_f": "haec", "nom_sg_n": "hoc",
+                "gen_sg_m": "huius", "gen_sg_f": "huius", "gen_sg_n": "huius",
+                "dat_sg_m": "huic", "dat_sg_f": "huic", "dat_sg_n": "huic",
+                "acc_sg_m": "hunc", "acc_sg_f": "hanc", "acc_sg_n": "hoc",
+                "abl_sg_m": "hōc", "abl_sg_f": "hāc", "abl_sg_n": "hōc",
+                "nom_pl_m": "hī", "nom_pl_f": "hae", "nom_pl_n": "haec",
+                "gen_pl_m": "hōrum", "gen_pl_f": "hārum", "gen_pl_n": "hōrum",
+                "dat_pl_m": "hīs", "dat_pl_f": "hīs", "dat_pl_n": "hīs",
+                "acc_pl_m": "hōs", "acc_pl_f": "hās", "acc_pl_n": "haec",
+                "abl_pl_m": "hīs", "abl_pl_f": "hīs", "abl_pl_n": "hīs"
+            }
+        elif pronoun_lower == "ille":
+            # ille, illa, illud - "that, that (over there)"
+            forms = {
+                "nom_sg_m": "ille", "nom_sg_f": "illa", "nom_sg_n": "illud",
+                "gen_sg_m": "illīus", "gen_sg_f": "illīus", "gen_sg_n": "illīus",
+                "dat_sg_m": "illī", "dat_sg_f": "illī", "dat_sg_n": "illī",
+                "acc_sg_m": "illum", "acc_sg_f": "illam", "acc_sg_n": "illud",
+                "abl_sg_m": "illō", "abl_sg_f": "illā", "abl_sg_n": "illō",
+                "nom_pl_m": "illī", "nom_pl_f": "illae", "nom_pl_n": "illa",
+                "gen_pl_m": "illōrum", "gen_pl_f": "illārum", "gen_pl_n": "illōrum",
+                "dat_pl_m": "illīs", "dat_pl_f": "illīs", "dat_pl_n": "illīs",
+                "acc_pl_m": "illōs", "acc_pl_f": "illās", "acc_pl_n": "illa",
+                "abl_pl_m": "illīs", "abl_pl_f": "illīs", "abl_pl_n": "illīs"
+            }
+        elif pronoun_lower == "iste":
+            # iste, ista, istud - "that (of yours)"
+            forms = {
+                "nom_sg_m": "iste", "nom_sg_f": "ista", "nom_sg_n": "istud",
+                "gen_sg_m": "istīus", "gen_sg_f": "istīus", "gen_sg_n": "istīus",
+                "dat_sg_m": "istī", "dat_sg_f": "istī", "dat_sg_n": "istī",
+                "acc_sg_m": "istum", "acc_sg_f": "istam", "acc_sg_n": "istud",
+                "abl_sg_m": "istō", "abl_sg_f": "istā", "abl_sg_n": "istō",
+                "nom_pl_m": "istī", "nom_pl_f": "istae", "nom_pl_n": "ista",
+                "gen_pl_m": "istōrum", "gen_pl_f": "istārum", "gen_pl_n": "istōrum",
+                "dat_pl_m": "istīs", "dat_pl_f": "istīs", "dat_pl_n": "istīs",
+                "acc_pl_m": "istōs", "acc_pl_f": "istās", "acc_pl_n": "ista",
+                "abl_pl_m": "istīs", "abl_pl_f": "istīs", "abl_pl_n": "istīs"
+            }
+        
         return forms
 
 

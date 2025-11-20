@@ -107,37 +107,71 @@ with get_session() as session:
 
     
     
+    # Check if this is a demonstrative pronoun (has gender forms)
+    is_demonstrative = any(key.endswith('_m') or key.endswith('_f') or key.endswith('_n') for key in forms.keys())
+    
     # Initialize show_answers state
     if 'show_declension_answers' not in st.session_state:
         st.session_state.show_declension_answers = False
     if 'user_declension_answers' not in st.session_state:
         st.session_state.user_declension_answers = {}
     
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.markdown("#### Singularis")
+    if is_demonstrative:
+        # Display with 3 genders
+        st.markdown("### Paradigma Completo (m / f / n)")
+        
         for case, label in zip(cases, case_labels):
-            key = f"{case[:3]}_sg"
-            correct_form = forms.get(key, "—")
+            st.markdown(f"**{label}**")
+            col_sg, col_pl = st.columns(2)
             
-            if st.session_state.show_declension_answers:
-                # Show user's answer and correct answer
-                user_answer = st.session_state.user_declension_answers.get(f"input_sg_{case}", "")
-                # Normalize both for comparison (remove macrons)
-                is_correct = normalize_latin(user_answer.strip()).lower() == normalize_latin(correct_form).lower()
+            with col_sg:
+                st.markdown("*Singularis*")
+                key_m = f"{case[:3]}_sg_m"
+                key_f = f"{case[:3]}_sg_f"
+                key_n = f"{case[:3]}_sg_n"
+                form_m = forms.get(key_m, "—")
+                form_f = forms.get(key_f, "—")
+                form_n = forms.get(key_n, "—")
+                st.info(f"{form_m} / {form_f} / {form_n}")
+            
+            with col_pl:
+                st.markdown("*Pluralis*")
+                key_m = f"{case[:3]}_pl_m"
+                key_f = f"{case[:3]}_pl_f"
+                key_n = f"{case[:3]}_pl_n"
+                form_m = forms.get(key_m, "—")
+                form_f = forms.get(key_f, "—")
+                form_n = forms.get(key_n, "—")
+                st.info(f"{form_m} / {form_f} / {form_n}")
+            
+            st.markdown("---")
+    else:
+        # Regular display (nouns and personal pronouns)
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.markdown("#### Singularis")
+            for case, label in zip(cases, case_labels):
+                key = f"{case[:3]}_sg"
+                correct_form = forms.get(key, "—")
                 
-                # Display with color coding
-                if is_correct:
-                    st.success(f"✅ {label}: **{correct_form}**")
+                if st.session_state.show_declension_answers:
+                    # Show user's answer and correct answer
+                    user_answer = st.session_state.user_declension_answers.get(f"input_sg_{case}", "")
+                    # Normalize both for comparison (remove macrons)
+                    is_correct = normalize_latin(user_answer.strip()).lower() == normalize_latin(correct_form).lower()
+                    
+                    # Display with color coding
+                    if is_correct:
+                        st.success(f"✅ {label}: **{correct_form}**")
+                    else:
+                        st.error(f"❌ {label}: Tu respuesta: '{user_answer}' → Correcto: **{correct_form}**")
                 else:
-                    st.error(f"❌ {label}: Tu respuesta: '{user_answer}' → Correcto: **{correct_form}**")
-            else:
-                # Empty input for practice
-                st.text_input(label, value="", key=f"input_sg_{case}", placeholder="Escribe la forma...")
-    
-    with col2:
-        st.markdown("#### Pluralis")
+                    # Empty input for practice
+                    st.text_input(label, value="", key=f"input_sg_{case}", placeholder="Escribe la forma...")
+        
+        with col2:
+            st.markdown("#### Pluralis")
         for case, label in zip(cases, case_labels):
             key = f"{case[:3]}_pl"
             correct_form = forms.get(key, "—")
