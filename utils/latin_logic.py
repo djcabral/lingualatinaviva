@@ -199,6 +199,59 @@ class LatinMorphology:
         forms["perf_2pl"] = perf_stem + "istis"
         forms["perf_3pl"] = perf_stem + "ērunt"
         
+        # ===== PASSIVE VOICE =====
+        
+        # Present Indicative Passive
+        if conjugation == "1":
+            forms["pres_pass_1sg"] = pres_stem + "or"
+            forms["pres_pass_2sg"] = pres_stem + "āris"
+            forms["pres_pass_3sg"] = pres_stem + "ātur"
+            forms["pres_pass_1pl"] = pres_stem + "āmur"
+            forms["pres_pass_2pl"] = pres_stem + "āminī"
+            forms["pres_pass_3pl"] = pres_stem + "antur"
+        elif conjugation == "2":
+            forms["pres_pass_1sg"] = pres_stem + "or"
+            forms["pres_pass_2sg"] = pres_stem + "ēris"
+            forms["pres_pass_3sg"] = pres_stem + "ētur"
+            forms["pres_pass_1pl"] = pres_stem + "ēmur"
+            forms["pres_pass_2pl"] = pres_stem + "ēminī"
+            forms["pres_pass_3pl"] = pres_stem + "entur"
+        elif conjugation == "3":
+            forms["pres_pass_1sg"] = pres_stem + "or"
+            forms["pres_pass_2sg"] = pres_stem + "eris"
+            forms["pres_pass_3sg"] = pres_stem + "itur"
+            forms["pres_pass_1pl"] = pres_stem + "imur"
+            forms["pres_pass_2pl"] = pres_stem + "iminī"
+            forms["pres_pass_3pl"] = pres_stem + "untur"
+        elif conjugation == "4":
+            forms["pres_pass_1sg"] = pres_stem + "or"
+            forms["pres_pass_2sg"] = pres_stem + "īris"
+            forms["pres_pass_3sg"] = pres_stem + "ītur"
+            forms["pres_pass_1pl"] = pres_stem + "īmur"
+            forms["pres_pass_2pl"] = pres_stem + "īminī"
+            forms["pres_pass_3pl"] = pres_stem + "iuntur"
+        
+        # Imperfect Indicative Passive
+        # Use same stem as active imperfect
+        forms["imp_pass_1sg"] = imp_stem + "r"
+        forms["imp_pass_2sg"] = imp_stem + "ris"
+        forms["imp_pass_3sg"] = imp_stem + "tur"
+        forms["imp_pass_1pl"] = imp_stem + "mur"
+        forms["imp_pass_2pl"] = imp_stem + "minī"
+        forms["imp_pass_3pl"] = imp_stem + "ntur"
+        
+        # Perfect Indicative Passive (Periphrastic: PPP + sum)
+        # Extract perfect passive participle from 4th principal part
+        if len(parts) >= 4 and parts[3]:
+            ppp = parts[3]  # e.g., "amatum", "monitum", "rectum"
+            # PPP agrees with subject, using neuter singular for base form
+            forms["perf_pass_1sg"] = ppp + " sum"
+            forms["perf_pass_2sg"] = ppp + " es"
+            forms["perf_pass_3sg"] = ppp + " est"
+            forms["perf_pass_1pl"] = ppp.replace("um", "a") + " sumus"  # amata sumus (neuter plural)
+            forms["perf_pass_2pl"] = ppp.replace("um", "a") + " estis"
+            forms["perf_pass_3pl"] = ppp.replace("um", "a") + " sunt"
+        
         # Apply irregular forms overrides if present
         if irregular_forms:
             try:
@@ -209,3 +262,4 @@ class LatinMorphology:
                 pass # Ignore invalid JSON
 
         return forms
+

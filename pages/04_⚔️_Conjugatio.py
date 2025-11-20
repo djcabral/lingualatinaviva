@@ -66,8 +66,8 @@ else:
     available_tenses = ["Praesens", "Imperfectum", "Perfectum"]
     st.info("🎯 Nivel avanzado: Todos los tiempos del indicativo activo")
 
-# Select tense
-col1, col2 = st.columns([2, 1])
+# Select tense and voice
+col1, col2, col3 = st.columns([2, 1, 1])
 with col1:
     # Use format_func to display Spanish names
     tense_selection = st.selectbox(
@@ -78,9 +78,16 @@ with col1:
     )
 
 with col2:
-    # Future: Add mode and voice selectors for advanced levels
+    voice_selection = st.selectbox(
+        "🎭 Voz",
+        ["Activa", "Pasiva"],
+        key="voice_select"
+    )
+
+with col3:
+    # Future: Add mode selector for advanced levels
     if user_level >= 7:
-        st.info("🔜 Próximamente: Subjuntivo e imperativo")
+        st.info("🔜 Subjuntivo")
 
 # Get verbs
 with get_session() as session:
@@ -113,21 +120,28 @@ with get_session() as session:
         st.error("No se pudo generar la conjugación para este verbo.")
         st.stop()
     
-    # Map tense to form keys
+    # Map tense and voice to form keys
     tense_lower = tense_selection.lower()
+    voice_es = voice_selection  # "Activa" or "Pasiva"
+    
     if tense_lower == "praesens":
         prefix = "pres"
-        tense_display = "Presente de Indicativo (Activo)"
+        tense_es = "Presente"
     elif tense_lower == "imperfectum":
         prefix = "imp"
-        tense_display = "Imperfecto de Indicativo (Activo)"
+        tense_es = "Imperfecto"
     elif tense_lower == "perfectum":
         prefix = "perf"
-        tense_display = "Perfecto de Indicativo (Activo)"
+        tense_es = "Perfecto"
     else:
         prefix = "pres"
-        tense_display = "Presente de Indicativo (Activo)"
+        tense_es = "Presente"
     
+    # Add "_pass" suffix for passive voice
+    if voice_es == "Pasiva":
+        prefix = prefix + "_pass"
+    
+    tense_display = f"{tense_es} de Indicativo ({voice_es})"
     st.markdown(f"**{tense_display}**")
     
     # Initialize show_answers state
