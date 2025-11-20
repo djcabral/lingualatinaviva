@@ -5,7 +5,6 @@ from datetime import datetime
 
 class Author(SQLModel, table=True):
     """Autor clásico latino"""
-    __table_args__ = {'extend_existing': True}
     
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str = Field(index=True)  # "Caesar", "Cicero", etc.
@@ -21,7 +20,6 @@ class Author(SQLModel, table=True):
 
 
 class Word(SQLModel, table=True):
-    __table_args__ = {'extend_existing': True}
     
     id: Optional[int] = Field(default=None, primary_key=True)
     latin: str = Field(index=True)
@@ -52,7 +50,6 @@ class Word(SQLModel, table=True):
     frequencies: List["WordFrequency"] = Relationship(back_populates="word")
 
 class ReviewLog(SQLModel, table=True):
-    __table_args__ = {'extend_existing': True}
     
     id: Optional[int] = Field(default=None, primary_key=True)
     word_id: int = Field(foreign_key="word.id")
@@ -65,7 +62,6 @@ class ReviewLog(SQLModel, table=True):
     word: Optional["Word"] = Relationship(back_populates="reviews")
 
 class UserProfile(SQLModel, table=True):
-    __table_args__ = {'extend_existing': True}
     
     id: Optional[int] = Field(default=None, primary_key=True)
     username: str
@@ -76,7 +72,6 @@ class UserProfile(SQLModel, table=True):
 
 class Text(SQLModel, table=True):
     """Texto latino para lectura progresiva"""
-    __table_args__ = {'extend_existing': True}
     
     id: Optional[int] = Field(default=None, primary_key=True)
     author_id: Optional[int] = Field(default=None, foreign_key="author.id")
@@ -97,7 +92,6 @@ class Text(SQLModel, table=True):
 
 class TextWordLink(SQLModel, table=True):
     """Vincula palabras con textos (con anotaciones morfológicas y sintácticas)"""
-    __table_args__ = {'extend_existing': True}
     
     id: Optional[int] = Field(default=None, primary_key=True)
     text_id: int = Field(foreign_key="text.id")
@@ -115,7 +109,6 @@ class TextWordLink(SQLModel, table=True):
 
 class WordFrequency(SQLModel, table=True):
     """Frecuencia de palabras en el corpus"""
-    __table_args__ = {'extend_existing': True}
     
     id: Optional[int] = Field(default=None, primary_key=True)
     word_id: int = Field(foreign_key="word.id", index=True)
@@ -132,7 +125,6 @@ class WordFrequency(SQLModel, table=True):
 
 class SyntaxPattern(SQLModel, table=True):
     """Patrones sintácticos especiales del latín"""
-    __table_args__ = {'extend_existing': True}
     
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str = Field(index=True)  # "Ablativo absoluto", "Acusativo + infinitivo"
