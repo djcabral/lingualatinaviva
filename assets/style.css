@@ -1,0 +1,341 @@
+/* Import Google Fonts - Classical typography */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cardo:ital,wght@0,400;0,700;1,400&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
+/* Root variables for theming */
+:root {
+    --parchment-bg: #f4e8d0;
+    --parchment-dark: #e0d4bc;
+    --text-primary: #3f2a1d;
+    --text-secondary: #654321;
+    --accent-red: #8b0000;
+    --accent-gold: #b8860b;
+    --accent-bronze: #cd7f32;
+    --border-classic: #8b7355;
+}
+
+/* Dark mode (Scriptorium) variables */
+[data-theme="dark"] {
+    --parchment-bg: #1a1410;
+    --parchment-dark: #2d2520;
+    --text-primary: #e0c097;
+    --text-secondary: #c9a876;
+    --accent-red: #a52a2a;
+}
+
+/* Global Styles */
+* {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body {
+    font-family: 'Cardo', 'Crimson Text', Georgia, serif !important;
+    background-color: var(--parchment-bg);
+    background-image:
+        linear-gradient(90deg, rgba(139, 115, 85, 0.02) 1px, transparent 1px),
+        linear-gradient(rgba(139, 115, 85, 0.02) 1px, transparent 1px);
+    background-size: 20px 20px;
+    color: var(--text-primary);
+}
+
+/* Headers - Elegant classical style */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Cinzel', serif !important;
+    color: var(--text-secondary) !important;
+    letter-spacing: 0.5px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Streamlit App Background */
+.stApp {
+    background-color: var(--parchment-bg);
+    background-image:
+        radial-gradient(circle at 20% 50%, rgba(139, 115, 85, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(139, 115, 85, 0.03) 0%, transparent 50%);
+    color: var(--text-primary) !important;
+}
+
+/* Global text color fix */
+p,
+span,
+div,
+label {
+    color: var(--text-primary) !important;
+}
+
+/* Sidebar styling */
+section[data-testid="stSidebar"] {
+    background-color: var(--parchment-dark) !important;
+    border-right: 3px solid var(--border-classic);
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+section[data-testid="stSidebar"] * {
+    color: var(--text-primary) !important;
+}
+
+section[data-testid="stSidebar"] .stMarkdown {
+    color: var(--text-primary) !important;
+}
+
+section[data-testid="stSidebar"] .stMarkdown p {
+    color: var(--text-primary) !important;
+}
+
+/* Buttons - Classical manuscript style */
+.stButton>button {
+    background: linear-gradient(135deg, #8b0000, #a52a2a) !important;
+    color: #ffffff !important;
+    border: 2px solid var(--accent-gold) !important;
+    border-radius: 8px !important;
+    padding: 0.6rem 1.2rem !important;
+    font-family: 'Cinzel', serif !important;
+    font-weight: 700 !important;
+    transition: all 0.3s ease !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8) !important;
+}
+
+.stButton>button:hover {
+    background: linear-gradient(135deg, #a52a2a, #b22222) !important;
+    border-color: var(--accent-bronze) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(139, 0, 0, 0.4);
+    color: #ffffff !important;
+}
+
+.stButton>button:active {
+    transform: translateY(0);
+}
+
+.stButton>button p {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    margin: 0 !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Custom Stat Boxes - Glassmorphism */
+.stat-box {
+    background: linear-gradient(135deg, rgba(184, 134, 11, 0.1), rgba(139, 0, 0, 0.05));
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(139, 115, 85, 0.3);
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    margin: 10px 0;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+}
+
+.stat-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.stat-value {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: var(--accent-red);
+    font-family: 'Cinzel', serif;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.stat-label {
+    font-size: 1em;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 8px;
+    font-family: 'Cinzel', serif;
+}
+
+/* Vocabulary Card - Parchment style */
+.vocab-card {
+    background: linear-gradient(135deg, #fff8f0, #fef5e7);
+    border: 3px solid var(--border-classic);
+    padding: 50px;
+    border-radius: 15px;
+    text-align: center;
+    margin: 30px auto;
+    max-width: 600px;
+    box-shadow: 0 10px 30px rgba(63, 42, 29, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    position: relative;
+}
+
+.vocab-card::before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 1px solid rgba(139, 115, 85, 0.2);
+    border-radius: 10px;
+    pointer-events: none;
+}
+
+.vocab-latin {
+    font-size: 3.5em;
+    color: var(--accent-red);
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    letter-spacing: 2px;
+}
+
+.vocab-translation {
+    font-size: 1.8em;
+    color: var(--text-primary);
+    margin-top: 20px;
+    font-family: 'Cardo', serif;
+}
+
+.vocab-pos {
+    font-style: italic;
+    color: var(--text-secondary);
+    font-size: 1.1em;
+    margin-top: 10px;
+}
+
+/* Text Input Fields */
+.stTextInput>div>div>input {
+    background-color: rgba(255, 248, 240, 0.8) !important;
+    border: 2px solid var(--border-classic) !important;
+    border-radius: 8px !important;
+    color: var(--text-primary) !important;
+    font-family: 'Cardo', serif !important;
+    padding: 10px !important;
+}
+
+/* Disabled text inputs - keep text readable */
+.stTextInput>div>div>input:disabled {
+    background-color: rgba(230, 230, 230, 0.5) !important;
+    color: var(--text-primary) !important;
+    opacity: 1 !important;
+    cursor: not-allowed !important;
+}
+
+/* Placeholder text - darker for better visibility */
+.stTextInput>div>div>input::placeholder {
+    color: #654321 !important;
+    opacity: 0.8 !important;
+    font-style: italic;
+}
+
+.stTextInput>div>div>input::-webkit-input-placeholder {
+    color: #654321 !important;
+    opacity: 0.8 !important;
+    font-style: italic;
+}
+
+.stTextInput>div>div>input::-moz-placeholder {
+    color: #654321 !important;
+    opacity: 0.8 !important;
+    font-style: italic;
+}
+
+/* Text Area */
+.stTextArea>div>div>textarea {
+    background-color: rgba(255, 248, 240, 0.8) !important;
+    border: 2px solid var(--border-classic) !important;
+    border-radius: 8px !important;
+    color: var(--text-primary) !important;
+    font-family: 'Cardo', serif !important;
+}
+
+/* Select boxes - Force maximum contrast */
+.stSelectbox>div>div>select,
+.stSelectbox select,
+[data-baseweb="select"] select,
+select {
+    background-color: #ffffff !important;
+    border: 3px solid var(--border-classic) !important;
+    color: #000000 !important;
+    font-family: 'Cardo', serif !important;
+    font-weight: 700 !important;
+    font-size: 1.1em !important;
+    padding: 10px !important;
+}
+
+.stSelectbox>div>div>select option,
+.stSelectbox select option,
+select option {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    font-weight: 700 !important;
+    padding: 8px !important;
+}
+
+/* Streamlit's custom select styling override */
+[data-baseweb="select"]>div {
+    background-color: #ffffff !important;
+}
+
+[data-baseweb="select"] span {
+    color: #000000 !important;
+    font-weight: 700 !important;
+}
+
+/* Dropdown menu when selectbox is opened */
+[data-baseweb="popover"] {
+    background-color: #ffffff !important;
+}
+
+[data-baseweb="menu"] {
+    background-color: #ffffff !important;
+}
+
+[role="option"],
+[data-baseweb="menu"] li,
+ul[role="listbox"] li {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    font-weight: 700 !important;
+    font-size: 1.1em !important;
+    padding: 12px !important;
+}
+
+[role="option"]:hover,
+[data-baseweb="menu"] li:hover,
+ul[role="listbox"] li:hover {
+    background-color: #f0f0f0 !important;
+    color: #000000 !important;
+}
+
+/* Selected option in dropdown */
+[aria-selected="true"] {
+    background-color: #e8e8e8 !important;
+    color: #000000 !important;
+    font-weight: 700 !important;
+}
+
+/* Number Input */
+.stNumberInput>div>div>input {
+    background-color: rgba(255, 248, 240, 0.8) !important;
+    border: 2px solid var(--border-classic) !important;
+    color: var(--text-primary) !important;
+    font-family: 'Cardo', serif !important;
+}
+
+/* Info/Warning/Success boxes */
+.stAlert {
+    border-radius: 10px !important;
+    border-left: 5px solid var(--accent-gold) !important;
+}
+
+.stAlert p,
+.stAlert div {
+    color: var(--text-primary) !important;
+}
+
+/* Progress bar */
+.stProgress>div>div {
+    background-color: var(--accent-gold);
+}

@@ -1,0 +1,213 @@
+import streamlit as st
+import sys
+import os
+import random
+import unicodedata
+
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+
+from database.connection import get_session
+from database.models import Word, UserProfile
+from sqlmodel import select
+from utils.latin_logic import LatinMorphology
+
+def normalize_latin(text):
+    """Remove macrons and diacritics from Latin text for comparison"""
+    normalized = unicodedata.normalize('NFD', text)
+    return ''.join(char for char in normalized if unicodedata.category(char) != 'Mn')
+
+st.set_page_config(page_title="Conjugatio", page_icon="⚔️", layout="wide")
+
+# Load CSS
+def load_css():
+    css_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "assets", "style.css")
+    if os.path.exists(css_path):
+        with open(css_path) as f:
+            st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+load_css()
+
+st.markdown(
+    """
+    <h1 style='text-align: center; font-family: "Cinzel", serif; color: #8b4513;'>
+        ⚔️ Conjugatio - Conjugaciones
+    </h1>
+    """,
+    unsafe_allow_html=True
+)
+
+morphology = LatinMorphology()
+
+# Get user level for progressive learning
+with get_session() as session:
+    user = session.exec(select(UserProfile)).first()
+    user_level = user.level if user else 1
+
+st.markdown(f"### 📚 Nivel {user_level} - Verbos")
+
+# Tense translation map
+TENSE_MAP = {
+    "Praesens": "Presente",
+    "Imperfectum": "Imperfecto",
+    "Perfectum": "Perfecto"
+}
+
+# Progressive tense introduction based on level
+if user_level <= 2:
+    available_tenses = ["Praesens"]
+    st.info("🎯 Nivel básico: Solo presente de indicativo (activo)")
+elif user_level <= 4:
+    available_tenses = ["Praesens", "Imperfectum"]
+    st.info("🎯 Nivel intermedio: Presente e imperfecto de indicativo (activo)")
+elif user_level <= 6:
+    available_tenses = ["Praesens", "Imperfectum", "Perfectum"]
+    st.info("🎯 Nivel intermedio-avanzado: Presente, imperfecto y perfecto de indicativo (activo)")
+else:
+    available_tenses = ["Praesens", "Imperfectum", "Perfectum"]
+    st.info("🎯 Nivel avanzado: Todos los tiempos del indicativo activo")
+
+# Select tense
+col1, col2 = st.columns([2, 1])
+with col1:
+    # Use format_func to display Spanish names
+    tense_selection = st.selectbox(
+        "⏱️ Tiempo verbal", 
+        available_tenses, 
+        format_func=lambda x: TENSE_MAP.get(x, x),
+        key="tense_select"
+    )
+
+with col2:
+    # Future: Add mode and voice selectors for advanced levels
+    if user_level >= 7:
+        st.info("🔜 Próximamente: Subjuntivo e imperativo")
+
+# Get verbs
+with get_session() as session:
+    verbs = session.exec(select(Word).where(Word.part_of_speech == "verb")).all()
+    
+    if not verbs:
+        st.warning("No hay verbos en la base de datos. Usa el panel de Admin para añadirlos.")
+        st.stop()
+    
+    if 'current_verb' not in st.session_state:
+        st.session_state.current_verb = random.choice(verbs)
+    
+    verb = st.session_state.current_verb
+    
+    st.markdown(f"### Conjuga: **{verb.latin}** ({verb.translation})")
+    
+    if verb.principal_parts:
+        st.info(f"📋 Partes principales: **{verb.principal_parts}** • Conjugación: {verb.conjugation}ª")
+    else:
+        st.warning("Este verbo no tiene partes principales definidas.")
+    
+    # Get full conjugation table
+    if not verb.principal_parts or not verb.conjugation:
+        st.error("Este verbo no tiene información completa para conjugarse.")
+        st.stop()
+    
+    forms = morphology.conjugate_verb(verb.latin, verb.conjugation, verb.principal_parts)
+    
+    if not forms:
+        st.error("No se pudo generar la conjugación para este verbo.")
+        st.stop()
+    
+    # Map tense to form keys
+    tense_lower = tense_selection.lower()
+    if tense_lower == "praesens":
+        prefix = "pres"
+        tense_display = "Presente de Indicativo (Activo)"
+    elif tense_lower == "imperfectum":
+        prefix = "imp"
+        tense_display = "Imperfecto de Indicativo (Activo)"
+    elif tense_lower == "perfectum":
+        prefix = "perf"
+        tense_display = "Perfecto de Indicativo (Activo)"
+    else:
+        prefix = "pres"
+        tense_display = "Presente de Indicativo (Activo)"
+    
+    st.markdown(f"**{tense_display}**")
+    
+    # Initialize show_answers state
+    if 'show_conjugation_answers' not in st.session_state:
+        st.session_state.show_conjugation_answers = False
+    if 'user_conjugation_answers' not in st.session_state:
+        st.session_state.user_conjugation_answers = {}
+    
+    # Create conjugation table
+    persons = ["1ª persona", "2ª persona", "3ª persona"]
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("#### Singularis")
+        for i, person in enumerate(persons, 1):
+            key = f"{prefix}_{i}sg"
+            correct_form = forms.get(key, "—")
+            
+            if st.session_state.show_conjugation_answers:
+                # Show user's answer and correct answer
+                user_answer = st.session_state.user_conjugation_answers.get(f"input_sg_{i}", "")
+                is_correct = normalize_latin(user_answer.strip()).lower() == normalize_latin(correct_form).lower()
+                
+                if is_correct:
+                    st.success(f"✅ {person}: **{correct_form}**")
+                else:
+                    st.error(f"❌ {person}: '{user_answer}' → **{correct_form}**")
+            else:
+                # Empty input for practice
+                st.text_input(person, value="", key=f"input_sg_{i}", placeholder="Escribe la forma...")
+    
+    with col2:
+        st.markdown("#### Pluralis")
+        for i, person in enumerate(persons, 1):
+            key = f"{prefix}_{i}pl"
+            correct_form = forms.get(key, "—")
+            
+            if st.session_state.show_conjugation_answers:
+                # Show user's answer and correct answer
+                user_answer = st.session_state.user_conjugation_answers.get(f"input_pl_{i}", "")
+                is_correct = normalize_latin(user_answer.strip()).lower() == normalize_latin(correct_form).lower()
+                
+                if is_correct:
+                    st.success(f"✅ {person}: **{correct_form}**")
+                else:
+                    st.error(f"❌ {person}: '{user_answer}' → **{correct_form}**")
+            else:
+                # Empty input for practice
+                st.text_input(person, value="", key=f"input_pl_{i}", placeholder="Escribe la forma...")
+    
+    st.markdown("---")
+    
+    col1, col2, col3 = st.columns([1, 1, 1])
+    
+    with col1:
+        if st.button("✅ Verificar", use_container_width=True):
+            # Save user answers
+            st.session_state.user_conjugation_answers = {}
+            for i in range(1, 4):
+                sg_key = f"input_sg_{i}"
+                pl_key = f"input_pl_{i}"
+                if sg_key in st.session_state:
+                    st.session_state.user_conjugation_answers[sg_key] = st.session_state[sg_key]
+                if pl_key in st.session_state:
+                    st.session_state.user_conjugation_answers[pl_key] = st.session_state[pl_key]
+            
+            st.session_state.show_conjugation_answers = True
+            st.rerun()
+    
+    with col2:
+        if st.button("🔄 Limpiar", use_container_width=True):
+            st.session_state.show_conjugation_answers = False
+            st.session_state.user_conjugation_answers = {}
+            st.rerun()
+    
+    with col3:
+        if st.button("🎲 Nuevo Verbo", use_container_width=True):
+            st.session_state.current_verb = random.choice(verbs)
+            st.session_state.show_conjugation_answers = False
+            st.session_state.user_conjugation_answers = {}
+            st.rerun()
+
