@@ -148,6 +148,10 @@ with get_session() as session:
                 # Empty input for practice
                 st.text_input(label, value="", key=f"input_pl_{case}", placeholder="Escribe la forma...")
     
+    # Show XP feedback if available
+    if 'xp_feedback' in st.session_state and st.session_state.show_declension_answers:
+        st.success(st.session_state.xp_feedback)
+    
     st.markdown("---")
     
     col1, col2, col3 = st.columns([1, 1, 1])
@@ -163,6 +167,41 @@ with get_session() as session:
                     st.session_state.user_declension_answers[sg_key] = st.session_state[sg_key]
                 if pl_key in st.session_state:
                     st.session_state.user_declension_answers[pl_key] = st.session_state[pl_key]
+            
+            # Calculate score and award XP
+            correct_count = 0
+            total_count = 0
+            
+            for case in cases:
+                # Singular
+                sg_key = f"input_sg_{case}"
+                user_answer_sg = st.session_state.user_declension_answers.get(sg_key, "")
+                correct_form_sg = forms.get(f"{case[:3]}_sg", "")
+                if user_answer_sg.strip():  # Solo contar si el usuario respondió
+                    total_count += 1
+                    if normalize_latin(user_answer_sg.strip()).lower() == normalize_latin(correct_form_sg).lower():
+                        correct_count += 1
+                
+                # Plural
+                pl_key = f"input_pl_{case}"
+                user_answer_pl = st.session_state.user_declension_answers.get(pl_key, "")
+                correct_form_pl = forms.get(f"{case[:3]}_pl", "")
+                if user_answer_pl.strip():  # Solo contar si el usuario respondió
+                    total_count += 1
+                    if normalize_latin(user_answer_pl.strip()).lower() == normalize_latin(correct_form_pl).lower():
+                        correct_count += 1
+            
+            # Award XP: 5 points per correct answer
+            xp_gained = correct_count * 5
+            
+            if xp_gained > 0:
+                with get_session() as session:
+                    user = session.exec(select(UserProfile)).first()
+                    if user:
+                        user.xp += xp_gained
+                        session.add(user)
+                        session.commit()
+                        st.session_state.xp_feedback = f"🎉 +{xp_gained} XP ({correct_count}/{total_count} correctas)"
             
             st.session_state.show_declension_answers = True
             st.rerun()

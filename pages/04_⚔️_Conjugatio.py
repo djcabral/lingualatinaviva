@@ -179,6 +179,10 @@ with get_session() as session:
                 # Empty input for practice
                 st.text_input(person, value="", key=f"input_pl_{i}", placeholder="Escribe la forma...")
     
+    # Show XP feedback if available
+    if 'xp_feedback_conjugation' in st.session_state and st.session_state.show_conjugation_answers:
+        st.success(st.session_state.xp_feedback_conjugation)
+    
     st.markdown("---")
     
     col1, col2, col3 = st.columns([1, 1, 1])
@@ -194,6 +198,41 @@ with get_session() as session:
                     st.session_state.user_conjugation_answers[sg_key] = st.session_state[sg_key]
                 if pl_key in st.session_state:
                     st.session_state.user_conjugation_answers[pl_key] = st.session_state[pl_key]
+            
+            # Calculate score and award XP
+            correct_count = 0
+            total_count = 0
+            
+            for i in range(1, 4):
+                # Singular
+                sg_key = f"input_sg_{i}"
+                user_answer_sg = st.session_state.user_conjugation_answers.get(sg_key, "")
+                correct_form_sg = forms.get(f"{prefix}_{i}sg", "")
+                if user_answer_sg.strip():
+                    total_count += 1
+                    if normalize_latin(user_answer_sg.strip()).lower() == normalize_latin(correct_form_sg).lower():
+                        correct_count += 1
+                
+                # Plural
+                pl_key = f"input_pl_{i}"
+                user_answer_pl = st.session_state.user_conjugation_answers.get(pl_key, "")
+                correct_form_pl = forms.get(f"{prefix}_{i}pl", "")
+                if user_answer_pl.strip():
+                    total_count += 1
+                    if normalize_latin(user_answer_pl.strip()).lower() == normalize_latin(correct_form_pl).lower():
+                        correct_count += 1
+            
+            # Award XP: 5 points per correct answer
+            xp_gained = correct_count * 5
+            
+            if xp_gained > 0:
+                with get_session() as session:
+                    user = session.exec(select(UserProfile)).first()
+                    if user:
+                        user.xp += xp_gained
+                        session.add(user)
+                        session.commit()
+                        st.session_state.xp_feedback_conjugation = f"🎉 +{xp_gained} XP ({correct_count}/{total_count} correctas)"
             
             st.session_state.show_conjugation_answers = True
             st.rerun()
