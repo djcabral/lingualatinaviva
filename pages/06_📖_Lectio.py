@@ -51,7 +51,7 @@ def calculate_mastery(session, text_id):
 
 # Load texts from database
 with get_session() as session:
-    texts = session.exec(select(Text).order_by(Text.level)).all()
+    texts = session.exec(select(Text).order_by(Text.difficulty)).all()
     
     if not texts:
         st.info("No hay textos disponibles. Usa el panel de Admin para añadir textos clásicos.")
@@ -95,10 +95,10 @@ Estne Gallia in Eurōpā? Gallia in Eurōpā est. Estne Rōma in Galliā? Rōma 
             with col1:
                 st.markdown(f"**{text.title}**")
                 if text.author:
-                    st.caption(f"por {text.author}")
+                    st.caption(f"por {text.author.name}")
             
             with col2:
-                st.metric("Nivel", text.level)
+                st.metric("Nivel", text.difficulty)
             
             with col3:
                 color = "green" if mastery >= 70 else "orange" if mastery >= 40 else "red"
