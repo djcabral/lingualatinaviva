@@ -61,7 +61,7 @@ class ReviewLog(SQLModel, table=True):
     interval: int = Field(default=0) # Days until next review
     repetitions: int = Field(default=0)
     
-    word: Word = Relationship(back_populates="reviews")
+    word: Optional["Word"] = Relationship(back_populates="reviews")
 
 class UserProfile(SQLModel, table=True):
     __table_args__ = {'extend_existing': True}
