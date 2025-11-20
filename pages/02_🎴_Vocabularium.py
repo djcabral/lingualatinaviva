@@ -74,7 +74,45 @@ with get_session() as session:
                 st.warning("No hay textos disponibles. Añade textos en el panel de Admin.")
                 st.stop()
 
+
 st.markdown("---")
+
+# Define handle_review BEFORE using it
+def handle_review(session, word, quality):
+    """Handle SRS review logic"""
+    # Get previous review for this word
+    previous_review = session.exec(
+        select(ReviewLog).where(ReviewLog.word_id == word.id).order_by(ReviewLog.review_date.desc())
+    ).first()
+    
+    # Calculate next review
+    result = calculate_next_review(quality, previous_review)
+    
+    # Create new review log
+    new_review = ReviewLog(
+        word_id=word.id,
+        review_date=datetime.now(),
+        quality=quality,
+        ease_factor=result['ease_factor'],
+        interval=result['interval'],
+        repetitions=result['repetitions']
+    )
+    session.add(new_review)
+    
+    # Update user XP
+    user = session.exec(select(UserProfile)).first()
+    if user:
+        xp_gain = {0: 1, 2: 3, 4: 5, 5: 10}.get(quality, 5)
+        user.xp += xp_gain
+        session.add(user)
+    
+    session.commit()
+    
+    # Reset state for next word
+    st.session_state.show_answer = False
+    st.session_state.current_word_id = None
+    st.success(f"¡Bien! +{xp_gain} XP")
+    st.rerun()
 
 with get_session() as session:
     # Get words based on study mode
@@ -149,7 +187,6 @@ with get_session() as session:
         
         with col1:
             if st.button("❌ " + get_text('again', st.session_state.language), use_container_width=True):
-                # Record review with quality 0
                 handle_review(session, word, 0)
         
         with col2:
@@ -163,39 +200,3 @@ with get_session() as session:
         with col4:
             if st.button("⭐ " + get_text('easy', st.session_state.language), use_container_width=True):
                 handle_review(session, word, 5)
-
-def handle_review(session, word, quality):
-    """Handle SRS review logic"""
-    # Get previous review for this word
-    previous_review = session.exec(
-        select(ReviewLog).where(ReviewLog.word_id == word.id).order_by(ReviewLog.review_date.desc())
-    ).first()
-    
-    # Calculate next review
-    result = calculate_next_review(quality, previous_review)
-    
-    # Create new review log
-    new_review = ReviewLog(
-        word_id=word.id,
-        review_date=datetime.now(),
-        quality=quality,
-        ease_factor=result['ease_factor'],
-        interval=result['interval'],
-        repetitions=result['repetitions']
-    )
-    session.add(new_review)
-    
-    # Update user XP
-    user = session.exec(select(UserProfile)).first()
-    if user:
-        xp_gain = {0: 1, 2: 3, 4: 5, 5: 10}.get(quality, 5)
-        user.xp += xp_gain
-        session.add(user)
-    
-    session.commit()
-    
-    # Reset state for next word
-    st.session_state.show_answer = False
-    st.session_state.current_word_id = None
-    st.success(f"¡Bien! +{xp_gain} PE")
-    st.rerun()
