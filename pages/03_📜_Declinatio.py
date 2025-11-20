@@ -172,24 +172,24 @@ with get_session() as session:
         
         with col2:
             st.markdown("#### Pluralis")
-        for case, label in zip(cases, case_labels):
-            key = f"{case[:3]}_pl"
-            correct_form = forms.get(key, "—")
-            
-            if st.session_state.show_declension_answers:
-                # Show user's answer and correct answer
-                user_answer = st.session_state.user_declension_answers.get(f"input_pl_{case}", "")
-                # Normalize both for comparison (remove macrons)
-                is_correct = normalize_latin(user_answer.strip()).lower() == normalize_latin(correct_form).lower()
+            for case, label in zip(cases, case_labels):
+                key = f"{case[:3]}_pl"
+                correct_form = forms.get(key, "—")
                 
-                # Display with color coding
-                if is_correct:
-                    st.success(f"✅ {label}: **{correct_form}**")
+                if st.session_state.show_declension_answers:
+                    # Show user's answer and correct answer
+                    user_answer = st.session_state.user_declension_answers.get(f"input_pl_{case}", "")
+                    # Normalize both for comparison (remove macrons)
+                    is_correct = normalize_latin(user_answer.strip()).lower() == normalize_latin(correct_form).lower()
+                    
+                    # Display with color coding
+                    if is_correct:
+                        st.success(f"✅ {label}: **{correct_form}**")
+                    else:
+                        st.error(f"❌ {label}: Tu respuesta: '{user_answer}' → Correcto: **{correct_form}**")
                 else:
-                    st.error(f"❌ {label}: Tu respuesta: '{user_answer}' → Correcto: **{correct_form}**")
-            else:
-                # Empty input for practice
-                st.text_input(label, value="", key=f"input_pl_{case}", placeholder="Escribe la forma...")
+                    # Empty input for practice
+                    st.text_input(label, value="", key=f"input_pl_{case}", placeholder="Escribe la forma...")
     
     # Show XP feedback if available
     if 'xp_feedback' in st.session_state and st.session_state.show_declension_answers:
