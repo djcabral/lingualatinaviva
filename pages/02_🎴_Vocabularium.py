@@ -4,13 +4,16 @@ import os
 import random
 from datetime import datetime, timedelta
 
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+root_path = os.path.dirname(os.path.dirname(__file__))
+if root_path not in sys.path:
+    sys.path.append(root_path)
 
 from database.connection import get_session
 from database.models import Word, ReviewLog, UserProfile, Text, TextWordLink
 from sqlmodel import select
 from utils.i18n import get_text
 from utils.srs import calculate_next_review
+from utils.gamification import process_xp_gain
 
 st.set_page_config(page_title="Vocabularium", page_icon="🎴", layout="wide")
 
@@ -37,7 +40,7 @@ if 'selected_text_id' not in st.session_state:
 
 st.markdown(
     """
-    <h1 style='text-align: center; font-family: "Cinzel", serif; color: #8b4513;'>
+    <h1 style='text-align: center; font-family: "Cinzel", serif;'>
         🎴 Vocabularium - Flashcards SRS
     </h1>
     """,
@@ -103,10 +106,11 @@ def handle_review(session, word, quality):
     user = session.exec(select(UserProfile)).first()
     if user:
         xp_gain = {0: 1, 2: 3, 4: 5, 5: 10}.get(quality, 5)
-        user.xp += xp_gain
-        session.add(user)
-    
-    session.commit()
+        new_level, leveled_up = process_xp_gain(session, user, xp_gain)
+        
+        if leveled_up:
+            st.balloons()
+            st.success(f"🎉 ¡FELICIDADES! Has alcanzado el Nivel {new_level}!")
     
     # Reset state for next word
     st.session_state.show_answer = False

@@ -36,8 +36,8 @@ def init_db():
 
 def import_seed_data(session: Session):
     # This assumes running from project root
-    # Check for Spanish vocabulary first
-    csv_path = os.path.join("data", "words.csv")
+    # Check for seed_data.csv first (cleaned data)
+    csv_path = os.path.join("data", "seed_data.csv")
     if not os.path.exists(csv_path):
         csv_path = os.path.join("data", "vocabulary.csv")
     

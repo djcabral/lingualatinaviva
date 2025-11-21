@@ -2,7 +2,9 @@ import streamlit as st
 import sys
 import os
 
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+root_path = os.path.dirname(os.path.dirname(__file__))
+if root_path not in sys.path:
+    sys.path.append(root_path)
 
 from database.connection import get_session
 from database.models import Text, TextWordLink, Word, ReviewLog
@@ -21,7 +23,7 @@ load_css()
 
 st.markdown(
     """
-    <h1 style='text-align: center; font-family: "Cinzel", serif; color: #8b4513;'>
+    <h1 style='text-align: center; font-family: "Cinzel", serif;'>
         📖 Lectio - Lectura Progresiva
     </h1>
     """,

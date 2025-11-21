@@ -76,7 +76,20 @@ class AnalysisScreen(Screen):
                 self.target_analysis = f"{word.latin} - {pos_display}: {word.translation} (Invariable)"
                 self.query_one("#target-form").update(word.latin)
             else:
-                self.load_new_form()  # Skip other non-inflected words
+                # Fallback for other words
+                pos_translations = {
+                    "adverb": "Adverbio",
+                    "preposition": "Preposición",
+                    "conjunction": "Conjunción",
+                    "interjection": "Interjección",
+                    "noun": "Sustantivo",
+                    "verb": "Verbo",
+                    "adjective": "Adjetivo",
+                    "pronoun": "Pronombre"
+                }
+                pos_display = pos_translations.get(word.part_of_speech, word.part_of_speech)
+                self.target_analysis = f"{word.latin} - {pos_display}: {word.translation}"
+                self.query_one("#target-form").update(f"{word.latin} ({pos_display})")
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         if event.button.id == "btn-back":

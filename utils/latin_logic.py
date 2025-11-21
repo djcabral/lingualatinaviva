@@ -17,7 +17,7 @@ class LatinMorphology:
         return normalized
 
     @staticmethod
-    def decline_noun(word: str, declension: str, gender: str, genitive: str, irregular_forms: Optional[str] = None) -> Dict[str, str]:
+    def decline_noun(word: str, declension: str, gender: str, genitive: str, irregular_forms: Optional[str] = None, parisyllabic: Optional[bool] = None) -> Dict[str, str]:
         """
         Generates full declension table for a noun.
         Returns a dict with keys like 'nom_sg', 'gen_pl', etc.
@@ -59,17 +59,30 @@ class LatinMorphology:
         elif declension == "3":
             stem = genitive[:-2] # rex, regis -> reg
             is_neuter = gender == 'n'
+            is_parisyllabic = parisyllabic if parisyllabic is not None else False
             
             if is_neuter:
-                endings = {
-                    "nom_sg": "", "voc_sg": "", "gen_sg": "is", "dat_sg": "ī", "acc_sg": "", "abl_sg": "e",
-                    "nom_pl": "a", "voc_pl": "a", "gen_pl": "um", "dat_pl": "ibus", "acc_pl": "a", "abl_pl": "ibus"
-                }
-            else:
-                endings = {
-                    "nom_sg": "", "voc_sg": "", "gen_sg": "is", "dat_sg": "ī", "acc_sg": "em", "abl_sg": "e",
-                    "nom_pl": "ēs", "voc_pl": "ēs", "gen_pl": "um", "dat_pl": "ibus", "acc_pl": "ēs", "abl_pl": "ibus"
-                }
+                if is_parisyllabic:  # e.g., mare, maris
+                    endings = {
+                        "nom_sg": "", "voc_sg": "", "gen_sg": "is", "dat_sg": "ī", "acc_sg": "", "abl_sg": "ī",
+                        "nom_pl": "ia", "voc_pl": "ia", "gen_pl": "ium", "dat_pl": "ibus", "acc_pl": "ia", "abl_pl": "ibus"
+                    }
+                else:  # e.g., corpus, corporis (imparisyllabic)
+                    endings = {
+                        "nom_sg": "", "voc_sg": "", "gen_sg": "is", "dat_sg": "ī", "acc_sg": "", "abl_sg": "e",
+                        "nom_pl": "a", "voc_pl": "a", "gen_pl": "um", "dat_pl": "ibus", "acc_pl": "a", "abl_pl": "ibus"
+                    }
+            else:  # Masculine/Feminine
+                if is_parisyllabic:  # e.g., civis, civis
+                    endings = {
+                        "nom_sg": "", "voc_sg": "", "gen_sg": "is", "dat_sg": "ī", "acc_sg": "em", "abl_sg": "ī",
+                        "nom_pl": "ēs", "voc_pl": "ēs", "gen_pl": "ium", "dat_pl": "ibus", "acc_pl": "ēs", "abl_pl": "ibus"
+                    }
+                else:  # e.g., rex, regis (imparisyllabic)
+                    endings = {
+                        "nom_sg": "", "voc_sg": "", "gen_sg": "is", "dat_sg": "ī", "acc_sg": "em", "abl_sg": "e",
+                        "nom_pl": "ēs", "voc_pl": "ēs", "gen_pl": "um", "dat_pl": "ibus", "acc_pl": "ēs", "abl_pl": "ibus"
+                    }
                 
         elif declension == "4":
             stem = word[:-2]
@@ -234,6 +247,21 @@ class LatinMorphology:
                 "abl_pl_m": "istīs", "abl_pl_f": "istīs", "abl_pl_n": "istīs"
             }
         
+        elif pronoun_lower == "qui":
+            # qui, quae, quod - "who, which"
+            forms = {
+                "nom_sg_m": "quī", "nom_sg_f": "quae", "nom_sg_n": "quod",
+                "gen_sg_m": "cuius", "gen_sg_f": "cuius", "gen_sg_n": "cuius",
+                "dat_sg_m": "cui", "dat_sg_f": "cui", "dat_sg_n": "cui",
+                "acc_sg_m": "quem", "acc_sg_f": "quam", "acc_sg_n": "quod",
+                "abl_sg_m": "quō", "abl_sg_f": "quā", "abl_sg_n": "quō",
+                "nom_pl_m": "quī", "nom_pl_f": "quae", "nom_pl_n": "quae",
+                "gen_pl_m": "quōrum", "gen_pl_f": "quārum", "gen_pl_n": "quōrum",
+                "dat_pl_m": "quibus", "dat_pl_f": "quibus", "dat_pl_n": "quibus",
+                "acc_pl_m": "quōs", "acc_pl_f": "quās", "acc_pl_n": "quae",
+                "abl_pl_m": "quibus", "abl_pl_f": "quibus", "abl_pl_n": "quibus"
+            }
+        
         return forms
 
 
@@ -322,6 +350,60 @@ class LatinMorphology:
         forms["perf_1pl"] = perf_stem + "imus"
         forms["perf_2pl"] = perf_stem + "istis"
         forms["perf_3pl"] = perf_stem + "ērunt"
+
+        # Future Indicative Active
+        if conjugation == "1":
+            # 1st: -ābō, -ābis, -ābit...
+            forms["fut_1sg"] = pres_stem + "ābō"
+            forms["fut_2sg"] = pres_stem + "ābis"
+            forms["fut_3sg"] = pres_stem + "ābit"
+            forms["fut_1pl"] = pres_stem + "ābimus"
+            forms["fut_2pl"] = pres_stem + "ābitis"
+            forms["fut_3pl"] = pres_stem + "ābunt"
+        elif conjugation == "2":
+            # 2nd: -ēbō, -ēbis, -ēbit...
+            forms["fut_1sg"] = pres_stem + "ēbō"
+            forms["fut_2sg"] = pres_stem + "ēbis"
+            forms["fut_3sg"] = pres_stem + "ēbit"
+            forms["fut_1pl"] = pres_stem + "ēbimus"
+            forms["fut_2pl"] = pres_stem + "ēbitis"
+            forms["fut_3pl"] = pres_stem + "ēbunt"
+        elif conjugation == "3":
+            # 3rd: -am, -ēs, -et...
+            # pres_stem: reg
+            forms["fut_1sg"] = pres_stem + "am"
+            forms["fut_2sg"] = pres_stem + "ēs"
+            forms["fut_3sg"] = pres_stem + "et"
+            forms["fut_1pl"] = pres_stem + "ēmus"
+            forms["fut_2pl"] = pres_stem + "ētis"
+            forms["fut_3pl"] = pres_stem + "ent"
+        elif conjugation == "4":
+            # 4th: -iam, -iēs, -iet...
+            # pres_stem: audi (actually aud)
+            forms["fut_1sg"] = pres_stem + "iam"
+            forms["fut_2sg"] = pres_stem + "iēs"
+            forms["fut_3sg"] = pres_stem + "iet"
+            forms["fut_1pl"] = pres_stem + "iēmus"
+            forms["fut_2pl"] = pres_stem + "iētis"
+            forms["fut_3pl"] = pres_stem + "ient"
+
+        # Pluperfect Indicative Active
+        # perf_stem + eram
+        forms["plup_1sg"] = perf_stem + "eram"
+        forms["plup_2sg"] = perf_stem + "erās"
+        forms["plup_3sg"] = perf_stem + "erat"
+        forms["plup_1pl"] = perf_stem + "erāmus"
+        forms["plup_2pl"] = perf_stem + "erātis"
+        forms["plup_3pl"] = perf_stem + "erant"
+
+        # Future Perfect Indicative Active
+        # perf_stem + ero
+        forms["futperf_1sg"] = perf_stem + "erō"
+        forms["futperf_2sg"] = perf_stem + "eris"
+        forms["futperf_3sg"] = perf_stem + "erit"
+        forms["futperf_1pl"] = perf_stem + "erimus"
+        forms["futperf_2pl"] = perf_stem + "eritis"
+        forms["futperf_3pl"] = perf_stem + "erint"
         
         # ===== PASSIVE VOICE =====
         
@@ -341,7 +423,7 @@ class LatinMorphology:
             forms["pres_pass_2pl"] = pres_stem + "ēminī"
             forms["pres_pass_3pl"] = pres_stem + "entur"
         elif conjugation == "3":
-            forms["pres_pass_1sg"] = pres_stem + "or"
+            forms["pres_pass_1sg"] = parts[0][:-1] + "or" # regor
             forms["pres_pass_2sg"] = pres_stem + "eris"
             forms["pres_pass_3sg"] = pres_stem + "itur"
             forms["pres_pass_1pl"] = pres_stem + "imur"
@@ -364,6 +446,42 @@ class LatinMorphology:
         forms["imp_pass_2pl"] = imp_stem + "minī"
         forms["imp_pass_3pl"] = imp_stem + "ntur"
         
+        # Future Indicative Passive
+        if conjugation == "1":
+            # 1st: -ābor, -āberis, -ābitur...
+            forms["fut_pass_1sg"] = pres_stem + "ābor"
+            forms["fut_pass_2sg"] = pres_stem + "āberis"
+            forms["fut_pass_3sg"] = pres_stem + "ābitur"
+            forms["fut_pass_1pl"] = pres_stem + "ābimur"
+            forms["fut_pass_2pl"] = pres_stem + "ābiminī"
+            forms["fut_pass_3pl"] = pres_stem + "ābuntur"
+        elif conjugation == "2":
+            # 2nd: -ēbor, -ēberis, -ēbitur...
+            forms["fut_pass_1sg"] = pres_stem + "ēbor"
+            forms["fut_pass_2sg"] = pres_stem + "ēberis"
+            forms["fut_pass_3sg"] = pres_stem + "ēbitur"
+            forms["fut_pass_1pl"] = pres_stem + "ēbimur"
+            forms["fut_pass_2pl"] = pres_stem + "ēbiminī"
+            forms["fut_pass_3pl"] = pres_stem + "ēbuntur"
+        elif conjugation == "3":
+            # 3rd: -ar, -ēris, -ētur...
+            # pres_stem: reg
+            forms["fut_pass_1sg"] = pres_stem + "ar"
+            forms["fut_pass_2sg"] = pres_stem + "ēris"
+            forms["fut_pass_3sg"] = pres_stem + "ētur"
+            forms["fut_pass_1pl"] = pres_stem + "ēmur"
+            forms["fut_pass_2pl"] = pres_stem + "ēminī"
+            forms["fut_pass_3pl"] = pres_stem + "entur"
+        elif conjugation == "4":
+            # 4th: -iar, -iēris, -iētur...
+            # pres_stem: audi
+            forms["fut_pass_1sg"] = pres_stem + "iar"
+            forms["fut_pass_2sg"] = pres_stem + "iēris"
+            forms["fut_pass_3sg"] = pres_stem + "iētur"
+            forms["fut_pass_1pl"] = pres_stem + "iēmur"
+            forms["fut_pass_2pl"] = pres_stem + "iēminī"
+            forms["fut_pass_3pl"] = pres_stem + "ientur"
+
         # Perfect Indicative Passive (Periphrastic: PPP + sum)
         # Extract perfect passive participle from 4th principal part
         if len(parts) >= 4 and parts[3]:
@@ -375,6 +493,38 @@ class LatinMorphology:
             forms["perf_pass_1pl"] = ppp.replace("um", "a") + " sumus"  # amata sumus (neuter plural)
             forms["perf_pass_2pl"] = ppp.replace("um", "a") + " estis"
             forms["perf_pass_3pl"] = ppp.replace("um", "a") + " sunt"
+            
+            # Pluperfect Indicative Passive (PPP + eram)
+            forms["plup_pass_1sg"] = ppp + " eram"
+            forms["plup_pass_2sg"] = ppp + " erās"
+            forms["plup_pass_3sg"] = ppp + " erat"
+            forms["plup_pass_1pl"] = ppp.replace("um", "a") + " erāmus"
+            forms["plup_pass_2pl"] = ppp.replace("um", "a") + " erātis"
+            forms["plup_pass_3pl"] = ppp.replace("um", "a") + " erant"
+            
+            # Future Perfect Indicative Passive (PPP + ero)
+            forms["futperf_pass_1sg"] = ppp + " erō"
+            forms["futperf_pass_2sg"] = ppp + " eris"
+            forms["futperf_pass_3sg"] = ppp + " erit"
+            forms["futperf_pass_1pl"] = ppp.replace("um", "a") + " erimus"
+            forms["futperf_pass_2pl"] = ppp.replace("um", "a") + " eritis"
+            forms["futperf_pass_3pl"] = ppp.replace("um", "a") + " erunt"
+            
+            # Perfect Subjunctive Passive (PPP + sim)
+            forms["perf_subj_pass_1sg"] = ppp + " sim"
+            forms["perf_subj_pass_2sg"] = ppp + " sīs"
+            forms["perf_subj_pass_3sg"] = ppp + " sit"
+            forms["perf_subj_pass_1pl"] = ppp.replace("um", "a") + " sīmus"
+            forms["perf_subj_pass_2pl"] = ppp.replace("um", "a") + " sītis"
+            forms["perf_subj_pass_3pl"] = ppp.replace("um", "a") + " sint"
+            
+            # Pluperfect Subjunctive Passive (PPP + essem)
+            forms["plup_subj_pass_1sg"] = ppp + " essem"
+            forms["plup_subj_pass_2sg"] = ppp + " essēs"
+            forms["plup_subj_pass_3sg"] = ppp + " esset"
+            forms["plup_subj_pass_1pl"] = ppp.replace("um", "a") + " essēmus"
+            forms["plup_subj_pass_2pl"] = ppp.replace("um", "a") + " essētis"
+            forms["plup_subj_pass_3pl"] = ppp.replace("um", "a") + " essent"
         
         # ===== SUBJUNCTIVE MOOD =====
         
@@ -418,6 +568,24 @@ class LatinMorphology:
         forms["imp_subj_1pl"] = inf_stem + "mus"
         forms["imp_subj_2pl"] = inf_stem + "tis"
         forms["imp_subj_3pl"] = inf_stem + "nt"
+        
+        # Perfect Subjunctive Active
+        # perf_stem + erim
+        forms["perf_subj_1sg"] = perf_stem + "erim"
+        forms["perf_subj_2sg"] = perf_stem + "eris"
+        forms["perf_subj_3sg"] = perf_stem + "erit"
+        forms["perf_subj_1pl"] = perf_stem + "erimus"
+        forms["perf_subj_2pl"] = perf_stem + "eritis"
+        forms["perf_subj_3pl"] = perf_stem + "erint"
+        
+        # Pluperfect Subjunctive Active
+        # perf_stem + issem
+        forms["plup_subj_1sg"] = perf_stem + "issem"
+        forms["plup_subj_2sg"] = perf_stem + "issēs"
+        forms["plup_subj_3sg"] = perf_stem + "isset"
+        forms["plup_subj_1pl"] = perf_stem + "issēmus"
+        forms["plup_subj_2pl"] = perf_stem + "issētis"
+        forms["plup_subj_3pl"] = perf_stem + "issent"
         
         # Present Subjunctive Passive
         if conjugation == "1":

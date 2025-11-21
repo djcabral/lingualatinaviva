@@ -3,7 +3,10 @@ import sys
 import os
 
 # Add paths for imports
-sys.path.append(os.path.dirname(__file__))
+# Add paths for imports
+current_dir = os.path.dirname(__file__)
+if current_dir not in sys.path:
+    sys.path.append(current_dir)
 
 from database.connection import init_db
 from utils.i18n import get_text
@@ -48,21 +51,17 @@ if st.session_state.first_visit:
                         max-width: 700px;">
                 <h1 style="font-family: 'Cinzel', serif; 
                            font-size: 3.5em; 
-                           color: #8b4513;
-                           margin-bottom: 30px;
-                           text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">
+                           margin-bottom: 30px;">
                     📜 Lingua Latina Viva 📜
                 </h1>
                 <p style="font-family: 'Cardo', serif; 
                           font-size: 2em; 
-                          color: #654321;
                           font-style: italic;
                           margin-bottom: 40px;
                           line-height: 1.6;">
                     "Ave, discipule.<br>Incipiamus iter per linguam aeternam."
                 </p>
-                <p style="font-family: 'Lato', sans-serif; 
-                          color: #777;
+                <p style="font-family: 'Lato', sans-serif;
                           font-size: 1.1em;">
                     Bienvenido/a • Welcome • Willkommen
                 </p>
@@ -81,7 +80,7 @@ else:
     # Main navigation
     st.sidebar.markdown(
         """
-        <h1 style='text-align: center; font-family: "Cinzel", serif; color: #8b4513;'>
+        <h1 style='text-align: center; font-family: "Cinzel", serif;'>
             📜 Lingua Latina Viva
         </h1>
         """,
@@ -109,16 +108,59 @@ else:
     st.markdown(
         """
         <div style='text-align: center; padding: 50px 0;'>
-            <h1 style='font-family: "Cinzel", serif; font-size: 3em; color: #8b4513;'>
+            <h1 style='font-family: "Cinzel", serif; font-size: 3em;'>
                 Ave, Discipule!
             </h1>
-            <p style='font-family: "Cardo", serif; font-size: 1.5em; color: #654321; font-style: italic;'>
+            <p style='font-family: "Cardo", serif; font-size: 1.5em; font-style: italic;'>
                 Elige un módulo del menú lateral para comenzar tu práctica diaria.
             </p>
         </div>
         """,
         unsafe_allow_html=True
     )
+    
+    # Introduction section
+    st.markdown("---")
+    
+    col1, col2 = st.columns([2, 1])
+    
+    with col1:
+        st.markdown("### 🎯 ¿Qué es Lingua Latina Viva?")
+        st.markdown("""
+        **Lingua Latina Viva** es una plataforma interactiva de aprendizaje de latín clásico diseñada 
+        para desarrollar fluidez real mediante práctica intensiva y progresiva.
+        
+        **Características principales:**
+        - 📚 **Vocabulario SRS**: Sistema de repetición espaciada para memorización eficiente
+        - 📜 **Declinaciones**: Práctica intensiva de sustantivos, adjetivos y pronombres
+        - ⚔️ **Conjugaciones**: Dominio completo de las formas verbales latinas
+        - 🔍 **Análisis Morfológico**: Identifica y analiza formas gramaticales
+        - 📖 **Gramática Rápida**: Referencia completa de paradigmas y reglas
+        - 📖 **Lectio**: Lectura progresiva de textos clásicos auténticos
+        
+        **Basado en metodología europea tradicional** con enfoque en:
+        - Progresión estricta por niveles (1-10)
+        - Paradigmas completos desde el principio
+        - Vocabulario de textos clásicos auténticos
+        """)
+    
+    with col2:
+        st.markdown("### 🎓 Objetivo")
+        st.info("""
+        **Meta:** Alcanzar fluidez de lectura en latín clásico a través de:
+        
+        1. Memorización de vocabulario esencial
+        2. Automatización de declinaciones y conjugaciones
+        3. Reconocimiento rápido de formas
+        4. Lectura progresiva de autores clásicos
+        
+        Inspirado en el método Ørberg y la tradición pedagógica europea.
+        """)
+        
+        st.markdown("### 🚀 Comienza Ahora")
+        st.success("👈 Selecciona un módulo del menú lateral para comenzar tu práctica diaria.")
+    
+    st.markdown("---")
     
     # Quick stats overview
     from database.connection import get_session

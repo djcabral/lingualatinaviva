@@ -50,7 +50,7 @@ class VocabularyScreen(Screen):
             # Simple logic: pick a word that needs review or a new word
             # In a real app, this would be a complex query based on next_review_date
             # For now, random selection for demo
-            words = session.exec(select(Word)).all()
+            words = session.exec(select(Word).where(Word.status == 'active')).all()
             if words:
                 self.current_word = random.choice(words)
                 self.query_one("#card-front").update(self.current_word.latin)

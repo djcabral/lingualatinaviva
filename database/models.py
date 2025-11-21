@@ -37,6 +37,9 @@ class Word(SQLModel, table=True):
     principal_parts: Optional[str] = None # For verbs: amo, amare, amavi, amatum
     conjugation: Optional[str] = None # 1, 2, 3, 4, mixed
     
+    # For 3rd declension nouns: True = parisyllabic (gen_pl -ium), False = imparisyllabic (gen_pl -um)
+    parisyllabic: Optional[bool] = None
+    
     # NUEVOS CAMPOS - Fase 1
     author_id: Optional[int] = Field(default=None, foreign_key="author.id")
     frequency_rank_global: Optional[int] = None  # Rango de frecuencia general (1 = más frecuente)
@@ -44,6 +47,14 @@ class Word(SQLModel, table=True):
     is_fundamental: bool = Field(default=False)  # Top 100 + invariables importantes
     category: Optional[str] = None  # "preposition", "adverb", "conjunction", etc.
     irregular_forms: Optional[str] = None  # JSON string overriding specific forms e.g. {"dat_pl": "filiābus"}
+    
+    # Collatinus dictionary integration
+    definition_es: Optional[str] = None  # Full Spanish definition from Collatinus
+    collatinus_lemma: Optional[str] = None  # Original lemma form from Collatinus
+    collatinus_model: Optional[str] = None  # Flexion model (e.g., amo, lupus, rex)
+    
+    # Reservoir System
+    status: str = Field(default="active")     # 'active', 'reservoir', 'hidden'
     
     # Relaciones
     reviews: List["ReviewLog"] = Relationship(back_populates="word")

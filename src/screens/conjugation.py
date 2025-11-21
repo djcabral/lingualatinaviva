@@ -35,7 +35,7 @@ class ConjugationScreen(Screen):
     def load_new_word(self):
         with get_session() as session:
             # Fetch verbs only
-            statement = select(Word).where(Word.part_of_speech == "verb")
+            statement = select(Word).where(Word.part_of_speech == "verb", Word.status == "active")
             words = session.exec(statement).all()
             
             if not words:

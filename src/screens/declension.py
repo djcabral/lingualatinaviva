@@ -35,7 +35,7 @@ class DeclensionScreen(Screen):
     def load_new_word(self):
         with get_session() as session:
             # Fetch nouns only
-            statement = select(Word).where(Word.part_of_speech == "noun")
+            statement = select(Word).where(Word.part_of_speech == "noun", Word.status == "active")
             words = session.exec(statement).all()
             
             if not words:

@@ -3,7 +3,9 @@ import sys
 import os
 import random
 
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+root_path = os.path.dirname(os.path.dirname(__file__))
+if root_path not in sys.path:
+    sys.path.append(root_path)
 
 from database.connection import get_session
 from database.models import Word
@@ -48,7 +50,7 @@ load_css()
 
 st.markdown(
     """
-    <h1 style='text-align: center; font-family: "Cinzel", serif; color: #8b4513;'>
+    <h1 style='text-align: center; font-family: "Cinzel", serif;'>
         🔍 Analysis - Análisis Morfológico
     </h1>
     """,
@@ -110,16 +112,26 @@ with get_session() as session:
     if word.part_of_speech == "noun":
         if word.declension and word.gender:
             genitive = word.genitive if word.genitive else word.latin
-            forms = morphology.decline_noun(word.latin, word.declension, word.gender, genitive)
+            forms = morphology.decline_noun(word.latin, word.declension, word.gender, genitive, None, word.parisyllabic)
     elif word.part_of_speech == "verb":
         if word.conjugation and word.principal_parts:
             forms = morphology.conjugate_verb(word.latin, word.conjugation, word.principal_parts)
             
     if not forms:
-        st.warning("No se pudieron generar formas para esta palabra. Intenta con otra.")
-        if st.button("🎲 Nueva Palabra"):
+        # Fallback for invariable words or words without forms generated
+        st.markdown("### 📋 Información de la Palabra")
+        st.info(
+            f"**Tipo:** {translate_pos(word.part_of_speech)}  \n"
+            f"**Significado:** {word.translation}  \n"
+            f"**Nota:** No se pudieron generar formas declinadas/conjugadas para esta palabra. "
+            f"Es probable que sea una palabra invariable (como un adverbio o preposición) o que sus formas aún no estén en la base de datos."
+        )
+        
+        st.markdown("---")
+        if st.button("🎲 Nueva Palabra", use_container_width=True):
             st.session_state.current_word_analysis = random.choice(all_words)
             st.session_state.current_form_analysis = None
+            st.session_state.show_analysis_result = False
             st.rerun()
         st.stop()
 
@@ -166,15 +178,54 @@ with get_session() as session:
             user_tag = f"{case_map[case]}_{number_map[number]}"
             
         elif word.part_of_speech == "verb":
-            tense = st.selectbox("Tiempo", ["Presente", "Imperfecto", "Perfecto"])
-            person = st.selectbox("Persona", ["1ª", "2ª", "3ª"])
+            # Mood
+            mood = st.selectbox("Modo", ["Indicativo", "Subjuntivo", "Imperativo"])
+            
+            # Voice
+            voice = st.selectbox("Voz", ["Activa", "Pasiva"])
+            
+            # Tense (depends on mood)
+            if mood == "Imperativo":
+                tense = "Presente" # Imperative only has present in this app for now
+                st.info("Tiempo: Presente (Implícito)")
+            elif mood == "Subjuntivo":
+                tense = st.selectbox("Tiempo", ["Presente", "Imperfecto", "Perfecto", "Pluscuamperfecto"])
+            else: # Indicativo
+                tense = st.selectbox("Tiempo", ["Presente", "Imperfecto", "Futuro", "Perfecto", "Pluscuamperfecto", "Futuro Perfecto"])
+            
+            # Person & Number
+            if mood == "Imperativo":
+                person = "2ª"
+                st.info("Persona: 2ª (Implícito)")
+            else:
+                person = st.selectbox("Persona", ["1ª", "2ª", "3ª"])
+            
             number = st.selectbox("Número", ["Singular", "Plural"])
             
-            tense_map = {"Presente": "pres", "Imperfecto": "imp", "Perfecto": "perf"}
+            # Construct tag
+            tense_map = {
+                "Presente": "pres", 
+                "Imperfecto": "imp", 
+                "Futuro": "fut",
+                "Perfecto": "perf",
+                "Pluscuamperfecto": "plup",
+                "Futuro Perfecto": "futperf"
+            }
             number_map = {"Singular": "sg", "Plural": "pl"}
             person_map = {"1ª": "1", "2ª": "2", "3ª": "3"}
             
-            user_tag = f"{tense_map[tense]}_{person_map[person]}{number_map[number]}"
+            if mood == "Imperativo":
+                prefix = "imv"
+                if voice == "Pasiva":
+                    prefix += "_pass"
+                user_tag = f"{prefix}_{person_map[person]}{number_map[number]}"
+            else:
+                prefix = tense_map[tense]
+                if mood == "Subjuntivo":
+                    prefix += "_subj"
+                if voice == "Pasiva":
+                    prefix += "_pass"
+                user_tag = f"{prefix}_{person_map[person]}{number_map[number]}"
     
     with col2:
         st.markdown("#### Posibles análisis:")
@@ -198,14 +249,52 @@ with get_session() as session:
                     num_rev = {"sg": "Singular", "pl": "Plural"}
                     st.info(f"• {case_rev[parts[0]]} {num_rev[parts[1]]}")
                 elif word.part_of_speech == "verb":
-                    # pres_1sg -> Presente 1ª Singular
-                    tense_rev = {"pres": "Presente", "imp": "Imperfecto", "perf": "Perfecto"}
-                    num_rev = {"sg": "Singular", "pl": "Plural"}
-                    # parts: [tense, person+number] e.g. ['pres', '1sg']
-                    p_n = parts[1]
+                    # Parse tag: prefix_personNumber (e.g. pres_subj_pass_1sg)
+                    parts = tag.split('_')
+                    
+                    # Extract person/number from the last part
+                    p_n = parts[-1]
                     person = p_n[0]
                     number = p_n[1:]
-                    st.info(f"• {tense_rev[parts[0]]} {person}ª Persona {num_rev[number]}")
+                    
+                    # Analyze prefix for Tense, Mood, Voice
+                    prefix_parts = parts[:-1]
+                    prefix_str = "_".join(prefix_parts)
+                    
+                    tense_rev = {
+                        "pres": "Presente", 
+                        "imp": "Imperfecto", 
+                        "fut": "Futuro",
+                        "perf": "Perfecto", 
+                        "plup": "Pluscuamperfecto",
+                        "futperf": "Futuro Perfecto",
+                        "imv": "Imperativo"
+                    }
+                    num_rev = {"sg": "Singular", "pl": "Plural"}
+                    
+                    desc = []
+                    
+                    # Tense
+                    base_tense = prefix_parts[0]
+                    desc.append(tense_rev.get(base_tense, base_tense))
+                    
+                    # Mood
+                    if "subj" in prefix_parts:
+                        desc.append("de Subjuntivo")
+                    elif "imv" in prefix_parts:
+                        # Imperative is already the base tense name in our map, but let's be explicit
+                        pass 
+                    else:
+                        desc.append("de Indicativo")
+                        
+                    # Voice
+                    if "pass" in prefix_parts:
+                        desc.append("Pasivo")
+                    else:
+                        desc.append("Activo")
+                        
+                    full_desc = " ".join(desc)
+                    st.info(f"• {full_desc} - {person}ª Persona {num_rev.get(number, number)}")
 
     st.markdown("---")
     if st.button("🎲 Nueva Palabra / Forma", use_container_width=True):
