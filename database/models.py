@@ -152,3 +152,22 @@ class SyntaxPattern(SQLModel, table=True):
     example_latin: Optional[str] = None
     example_translation: Optional[str] = None
     difficulty: int = Field(default=1)  # 1-10
+
+
+class InflectedForm(SQLModel, table=True):
+    """Formas inflectadas generadas automáticamente para análisis reverso (forma → lema)"""
+    __table_args__ = {'extend_existing': True}
+    
+    id: Optional[int] = Field(default=None, primary_key=True)
+    form: str = Field(index=True)  # La forma inflectada con macrones, ej: "puellae"
+    normalized_form: str = Field(index=True)  # Sin macrones para búsqueda: "puellae"
+    
+    word_id: int = Field(foreign_key="word.id")
+    
+    # Análisis morfológico en JSON
+    # Para sustantivos: {"case": "gen", "number": "sg"}
+    # Para verbos: {"tense": "pres", "person": "1", "number": "sg", "mood": "ind", "voice": "act"}
+    morphology: str
+    
+    # Relación
+    word: Optional["Word"] = Relationship()
