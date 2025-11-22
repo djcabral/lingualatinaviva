@@ -20,57 +20,112 @@ def load_css():
         with open(css_path) as f:
             st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
-# Add custom CSS for interactive text
+# Add custom CSS for interactive text with hover tooltips
 def add_interactive_text_css():
     st.markdown("""
     <style>
+    .latin-text-container {
+        position: relative;
+        font-family: 'Cardo', serif;
+        font-size: 1.3em;
+        line-height: 2.2;
+        text-align: justify;
+    }
     .interactive-word {
-        cursor: pointer;
+        position: relative;
+        cursor: help;
         padding: 2px 4px;
         border-radius: 3px;
         transition: all 0.2s;
-        display: inline-block;
-        margin: 0 1px;
+        display: inline;
+        border-bottom: 2px dotted currentColor;
     }
     .interactive-word:hover {
-        background-color: rgba(255, 255, 255, 0.2);
-        transform: translateY(-1px);
+        background-color: rgba(255, 255, 255, 0.15);
     }
+    
+    /* Tooltip que aparece al hacer hover */
+    .interactive-word .tooltip {
+        visibility: hidden;
+        opacity: 0;
+        position: absolute;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
+        width: 280px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 12px 15px;
+        border-radius: 8px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        transition: opacity 0.3s, visibility 0.3s;
+        pointer-events: none;
+    }
+    
+    .interactive-word .tooltip::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: #764ba2 transparent transparent transparent;
+    }
+    
+    .interactive-word:hover .tooltip {
+        visibility: visible;
+        opacity: 1;
+    }
+    
+    .tooltip-lemma {
+        font-size: 1.2em;
+        font-weight: bold;
+        display: block;
+        margin-bottom: 4px;
+        font-family: 'Cinzel', serif;
+    }
+    
+    .tooltip-translation {
+        font-size: 1em;
+        display: block;
+        margin-bottom: 6px;
+    }
+    
+    .tooltip-morphology {
+        font-size: 0.85em;
+        font-style: italic;
+        display: block;
+        margin-bottom: 4px;
+        opacity: 0.9;
+    }
+    
+    .tooltip-pos {
+        background: rgba(255,255,255,0.25);
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.75em;
+        display: inline-block;
+        margin-top: 4px;
+    }
+    
+    /* Colores según maestría */
     .word-known {
         color: #10b981;
-        font-weight: 500;
+        border-bottom-color: #10b981;
     }
     .word-learning {
         color: #f59e0b;
-        font-weight: 500;
+        border-bottom-color: #f59e0b;
     }
     .word-unknown {
-        color: #ef4444;
-        font-weight: 500;
+        color: #8b5cf6;
+        border-bottom-color: #8b5cf6;
     }
-    .word-invariable {
-        color: #94a3b8;
-    }
-    .analysis-popup {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        padding: 15px;
-        border-radius: 10px;
-        color: white;
-        margin: 10px 0;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-    .analysis-popup strong {
-        font-size: 1.2em;
-        display: block;
-        margin-bottom: 5px;
-    }
-    .morphology-tag {
-        background: rgba(255,255,255,0.2);
-        padding: 3px 8px;
-        border-radius: 5px;
-        font-size: 0.9em;
-        display: inline-block;
-        margin: 2px;
+    .word-no-review {
+        color: #64748b;
+        border-bottom-color: #64748b;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -130,162 +185,254 @@ def get_word_mastery(session, word_id):
         return 20
 
 def render_interactive_text(text_content: str, session):
-    """Renderiza texto latino con análisis interactivo palabra por palabra"""
+    """Renderiza texto latino con tooltips hover para análisis morfológico"""
     
     # Analizar el texto
     analyzed_text = LatinTextAnalyzer.analyze_text(text_content, session)
     
-    # Dividir en oraciones para mejor formato
-    sentences = []
-    current_sentence = []
+    # Renderizar con tooltips hover
+    html_parts = ['<div class="latin-text-container"><p>']
     
     for item in analyzed_text:
-        current_sentence.append(item)
-        if item.get("is_punctuation") and item["form"] in ".!?":
-            sentences.append(current_sentence)
-            current_sentence = []
-    
-    if current_sentence:  # Agregar última oración si no termina en puntuación
-        sentences.append(current_sentence)
-    
-    # Renderizar oraciones
-    html_parts = ["<div style='font-family: \"Cardo\", serif; font-size: 1.2em; line-height: 2; text-align: justify;'>"]
-    
-    for sentence in sentences:
-        html_parts.append("<p>")
-        for item in sentence:
-            form = item["form"]
+        form = item["form"]
+        
+        if item.get("is_punctuation"):
+            html_parts.append(form)
+        else:
+            analyses = item["analyses"]
             
-            if item.get("is_punctuation"):
-                html_parts.append(form)
-            else:
-                analyses = item["analyses"]
+            if analyses:
+                # Palabra analizada
+                primary = analyses[0]  # Tomar el análisis más probable
                 
-                if analyses:
-                    # Palabra analizada
-                    primary = analyses[0]  # Tomar el análisis más probable
-                    
-                    # Determinar color según maestría
-                    mastery = get_word_mastery(session, primary["word_id"])
-                    if mastery >= 70:
-                        css_class = "word-known"
-                    elif mastery >= 40:
-                        css_class = "word-learning"
-                    else:
-                        css_class = "word-unknown"
-                    
-                    # Crear ID único para este análisis
-                    word_id = f"word_{item['position']}"
-                    
-                    # Formatear análisis morfológico
-                    morph_text = LatinTextAnalyzer.format_morphology(
-                        primary["morphology"], 
-                        primary["pos"]
-                    )
-                    
-                    # HTML para palabra interactiva
-                    word_html = f'''<span class="interactive-word {css_class}" 
-                        onclick="document.getElementById('{word_id}_analysis').style.display = 
-                        document.getElementById('{word_id}_analysis').style.display === 'none' ? 'block' : 'none'">
-                        {form}
-                    </span>'''
-                    
-                    html_parts.append(word_html)
-                    
-                    # Popup de análisis (inicialmente oculto)
-                    analysis_html = f'''
-                    <div id="{word_id}_analysis" class="analysis-popup" style="display: none;">
-                        <strong>{primary["lemma"]}</strong>
-                        <div>{primary["translation"]}</div>
-                        <div><em>{morph_text}</em></div>
-                        <span class="morphology-tag">{primary["pos"]}</span>
-                    </div>
-                    '''
-                    html_parts.append(analysis_html)
+                # Determinar color según maestría
+                mastery = get_word_mastery(session, primary["word_id"])
+                if mastery >= 70:
+                    css_class = "word-known"
+                elif mastery >= 40:
+                    css_class = "word-learning"
+                elif mastery > 0:
+                    css_class = "word-unknown"
                 else:
-                    # Palabra desconocida (no en BD)
-                    html_parts.append(f'<span style="color: #94a3b8;">{form}</span>')
-            
+                    css_class = "word-no-review"  # Sin reseñas aún
+                
+                # Formatear análisis morfológico
+                morph_text = LatinTextAnalyzer.format_morphology(
+                    primary["morphology"], 
+                    primary["pos"]
+                )
+                
+                # Traducir parte del discurso
+                pos_map = {
+                    "noun": "sustantivo",
+                    "verb": "verbo",
+                    "adjective": "adjetivo", 
+                    "pronoun": "pronombre",
+                    "adverb": "adverbio",
+                    "preposition": "preposición",
+                    "conjunction": "conjunción"
+                }
+                pos_display = pos_map.get(primary["pos"], primary["pos"])
+                
+                # HTML para palabra con tooltip hover
+                word_html = f'''<span class="interactive-word {css_class}">
+                    {form}
+                    <span class="tooltip">
+                        <span class="tooltip-lemma">{primary["lemma"]}</span>
+                        <span class="tooltip-translation">{primary["translation"]}</span>
+                        <span class="tooltip-morphology">{morph_text}</span>
+                        <span class="tooltip-pos">{pos_display}</span>
+                    </span>
+                </span>'''
+                
+                html_parts.append(word_html)
+            else:
+                # Palabra desconocida (no en BD)
+                html_parts.append(f'<span style="color: #94a3b8; font-style: italic;">{form}</span>')
+        
+        # Agregar espacio después de palabras (no después de puntuación)
+        if not item.get("is_punctuation"):
             html_parts.append(" ")
-        html_parts.append("</p>")
     
-    html_parts.append("</div>")
+    html_parts.append("</p></div>")
     
     return "".join(html_parts)
+
+
+# Initialize session state for selected text
+if 'selected_text_id' not in st.session_state:
+    st.session_state.selected_text_id = None
 
 # Load texts from database
 with get_session() as session:
     texts = session.exec(select(Text).order_by(Text.difficulty)).all()
     
-    if not texts:
-        st.info("No hay textos disponibles. Usa el panel de Admin para añadir textos clásicos.")
+    # Check if we're in reading view
+    if st.session_state.selected_text_id is not None:
+        # READING VIEW - Show selected text with analysis
+        selected_text = session.exec(
+            select(Text).where(Text.id == st.session_state.selected_text_id)
+        ).first()
         
-        # Show sample text with interactive analysis
-        st.markdown("### CAPITVLVM PRIMVM: IMPERIVM ROMANVM")
-        
-        sample_text = "Rōma in Italiā est. Italia in Eurōpā est. Graecia in Eurōpā est. Italia et Graecia in Eurōpā sunt."
-        
-        interactive_html = render_interactive_text(sample_text, session)
-        st.markdown(interactive_html, unsafe_allow_html=True)
-        
-        st.markdown("---")
-        st.info("💡 **Consejo:** Haz click en cualquier palabra para ver su análisis morfológico completo.")
-        
-        # Leyenda de colores
-        st.markdown("""
-        **Leyenda de colores:**
-        - <span style='color: #10b981; font-weight: bold;'>Verde</span>: Palabra conocida (maestría ≥70%)
-        - <span style='color: #f59e0b; font-weight: bold;'>Naranja</span>: Palabra en aprendizaje (maestría 40-70%)
-        - <span style='color: #ef4444; font-weight: bold;'>Rojo</span>: Palabra desconocida (maestría <40%)
-        - <span style='color: #94a3b8;'>Gris</span>: Palabra no en vocabulario
-        """, unsafe_allow_html=True)
-    else:
-        # Show text list with mastery scores
-        st.markdown("### Textos Disponibles")
-        
-        for text in texts:
-            mastery = calculate_mastery(session, text.id)
-            
-            # Get word count
-            word_count = session.exec(
-                select(TextWordLink).where(TextWordLink.text_id == text.id)
-            ).all()
-            
-            col1, col2, col3 = st.columns([3, 1, 1])
-            
-            with col1:
-                st.markdown(f"**{text.title}**")
-                if text.author:
-                    st.caption(f"por {text.author.name}")
-            
-            with col2:
-                st.metric("Nivel", text.difficulty)
-            
-            with col3:
-                color = "green" if mastery >= 70 else "orange" if mastery >= 40 else "red"
-                st.markdown(f"<div style='text-align: center;'><span style='color: {color}; font-size: 1.5em; font-weight: bold;'>{mastery}%</span><br><small>Maestría</small></div>", unsafe_allow_html=True)
-            
-            # Progress bar
-            st.progress(mastery / 100)
-            
-            # Expandable content with interactive text
-            with st.expander(f"📖 Leer '{text.title}'"):
-                # Render interactive text
-                interactive_html = render_interactive_text(text.content, session)
-                st.markdown(interactive_html, unsafe_allow_html=True)
-                
-                st.markdown("---")
-                st.info(f"📊 Este texto contiene {len(word_count)} palabras únicas del vocabulario.")
-                
-                # Tips
-                st.markdown("""
-                💡 **Ayuda:**
-                - **Haz click** en cualquier palabra para ver su análisis morfológico
-                - Los colores indican tu nivel de maestría con cada palabra
-                - Las palabras grises no están en tu vocabulario activo
-                """)
-                
-                if mastery < 70:
-                    st.warning(f"💡 Practica el vocabulario de este texto en el módulo **Vocabularium** para mejorar tu maestría.")
+        if selected_text:
+            # Back button
+            if st.button("⬅️ Volver a la lista de lecciones"):
+                st.session_state.selected_text_id = None
+                st.rerun()
             
             st.markdown("---")
+            
+            # Text header
+            col1, col2 = st.columns([3, 1])
+            with col1:
+                st.markdown(f"## {selected_text.title}")
+                if selected_text.author:
+                    st.caption(f"📜 {selected_text.author.name}")
+            
+            with col2:
+                mastery = calculate_mastery(session, selected_text.id)
+                color = "green" if mastery >= 70 else "orange" if mastery >= 40 else "purple"
+                st.markdown(
+                    f"<div style='text-align: center;'>"
+                    f"<span style='color: {color}; font-size: 2em; font-weight: bold;'>{mastery}%</span><br>"
+                    f"<small>Maestría</small></div>",
+                    unsafe_allow_html=True
+                )
+            
+            st.progress(mastery / 100)
+            st.markdown("---")
+            
+            # Render interactive text with morphological analysis
+            interactive_html = render_interactive_text(selected_text.content, session)
+            st.markdown(interactive_html, unsafe_allow_html=True)
+            
+            # Legend below text
+            st.markdown("---")
+            
+            col1, col2 = st.columns(2)
+            
+            with col1:
+                st.markdown("""
+                **Leyenda de colores:**
+                - <span style='color: #10b981; font-weight: bold;'>●</span> Verde: Palabra bien aprendida (≥70%)
+                - <span style='color: #f59e0b; font-weight: bold;'>●</span> Naranja: En progreso (40-70%)
+                - <span style='color: #8b5cf6; font-weight: bold;'>●</span> Púrpura: Con dificultades (<40%)
+                - <span style='color: #64748b; font-weight: bold;'>●</span> Gris: Aún no estudiada
+                """, unsafe_allow_html=True)
+            
+            with col2:
+                st.markdown("""
+                **💡 Ayuda:**
+                - Pasa el cursor sobre las palabras para análisis instantáneo
+                - Las líneas punteadas indican palabras analizables
+                - Los tooltips muestran lema, traducción y gramática
+                """)
+            
+            # Stats and recommendations
+            st.markdown("---")
+            word_count = session.exec(
+                select(TextWordLink).where(TextWordLink.text_id == selected_text.id)
+            ).all()
+            
+            col1, col2 = st.columns(2)
+            with col1:
+                st.info(f"📊 Este texto contiene **{len(word_count)} palabras únicas** del vocabulario")
+            
+            with col2:
+                if mastery < 70:
+                    st.warning("💡 Practica el vocabulario en **Vocabularium** para mejorar tu maestría")
+                else:
+                    st.success("🎉 ¡Excelente dominio de este texto!")
+        
+        else:
+            st.error("Texto no encontrado")
+            if st.button("Volver a la lista"):
+                st.session_state.selected_text_id = None
+                st.rerun()
+    
+    else:
+        # LIST VIEW - Show all available lessons
+        if not texts:
+            st.info("No hay textos disponibles. Usa el panel de Admin para añadir textos clásicos.")
+            
+            # Show sample text
+            st.markdown("### 📚 Ejemplo: CAPITVLVM PRIMVM")
+            
+            sample_text = "Rōma in Italiā est. Italia in Eurōpā est. Graecia in Eurōpā est."
+            
+            interactive_html = render_interactive_text(sample_text, session)
+            st.markdown(interactive_html, unsafe_allow_html=True)
+            
+            st.markdown("---")
+            st.info("💡 **Consejo:** Pasa el cursor sobre las palabras para ver su análisis morfológico")
+            
+            # Compact legend
+            st.markdown("""
+            **Colores:** 
+            <span style='color: #10b981; font-weight: bold;'>●</span> Verde (≥70%) | 
+            <span style='color: #f59e0b; font-weight: bold;'>●</span> Naranja (40-70%) | 
+            <span style='color: #8b5cf6; font-weight: bold;'>●</span> Púrpura (<40%) | 
+            <span style='color: #64748b; font-weight: bold;'>●</span> Gris (sin estudiar)
+            """, unsafe_allow_html=True)
+        
+        else:
+            # Show text list (no analysis here for performance)
+            st.markdown("### 📚 Lecciones Disponibles")
+            st.caption(f"Total: {len(texts)} lecciones • Haz clic para leer con análisis morfológico")
+            
+            st.markdown("---")
+            
+            for text in texts:
+                mastery = calculate_mastery(session, text.id)
+                
+                # Card for each text
+                col1, col2, col3, col4 = st.columns([4, 1, 1, 1])
+                
+                with col1:
+                    st.markdown(f"**{text.title}**")
+                    if text.author:
+                        st.caption(f"📜 {text.author.name}")
+                
+                with col2:
+                    st.metric("Nivel", text.difficulty)
+                
+                with col3:
+                    color = "green" if mastery >= 70 else "orange" if mastery >= 40 else "purple"
+                    st.markdown(
+                        f"<div style='text-align: center;'>"
+                        f"<span style='color: {color}; font-size: 1.5em; font-weight: bold;'>{mastery}%</span><br>"
+                        f"<small>Maestría</small></div>",
+                        unsafe_allow_html=True
+                    )
+                
+                with col4:
+                    if st.button("📖 Leer", key=f"read_{text.id}"):
+                        st.session_state.selected_text_id = text.id
+                        st.rerun()
+                
+                # Progress bar
+                st.progress(mastery / 100, text=f"Progreso: {mastery}%")
+                
+                st.markdown("---")
+            
+            # Help section at bottom
+            st.markdown("### 💡 Cómo usar Lectio")
+            
+            col1, col2 = st.columns(2)
+            
+            with col1:
+                st.markdown("""
+                **📖 Lectura Interactiva:**
+                - Selecciona una lección haciendo clic en "Leer"
+                - Pasa el cursor sobre palabras para análisis instantáneo
+                - Los tooltips muestran lema, traducción y morfología
+                """)
+            
+            with col2:
+                st.markdown("""
+                **🎯 Sistema de Maestría:**
+                - Verde (≥70%): Palabras bien dominadas
+                - Naranja (40-70%): En proceso de aprendizaje
+                - Púrpura (<40%): Necesitan más práctica
+                - Gris: Aún no estudiadas
+                """)
