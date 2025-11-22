@@ -10,10 +10,18 @@ import csv
 sqlite_file_name = "lingua_latina.db"
 sqlite_url = f"sqlite:///{sqlite_file_name}"
 
-engine = create_engine(sqlite_url)
+engine = create_engine(sqlite_url, echo=False, connect_args={"check_same_thread": False})
+
+# Flag to prevent multiple initializations
+_db_initialized = False
 
 def create_db_and_tables():
-    SQLModel.metadata.create_all(engine)
+    """Create database tables only once"""
+    global _db_initialized
+    if not _db_initialized:
+        SQLModel.metadata.create_all(engine)
+        _db_initialized = True
+
 
 def get_session():
     return Session(engine)
