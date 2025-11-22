@@ -112,12 +112,13 @@ class TextWordLink(SQLModel, table=True):
     
     id: Optional[int] = Field(default=None, primary_key=True)
     text_id: int = Field(foreign_key="text.id")
-    word_id: int = Field(foreign_key="word.id")
+    word_id: Optional[int] = Field(default=None, foreign_key="word.id")  # NULL para palabras no en vocabulario
     sentence_number: int = Field(default=1)
     position_in_sentence: int = Field(default=1)
+    form: Optional[str] = None  # Forma exacta como aparece en el texto (para CLTK)
     morphology_json: Optional[str] = None  # JSON: {"case": "nom", "number": "sg"}
     syntax_role: Optional[str] = None  # "subject", "direct_object", etc.
-    notes: Optional[str] = None  # Explicaciones contextuales
+    notes: Optional[str] = None  # Explicaciones contextuales o análisis CLTK adicional
     
     # Relaciones
     text: Optional["Text"] = Relationship(back_populates="word_links")

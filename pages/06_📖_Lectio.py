@@ -184,11 +184,16 @@ def get_word_mastery(session, word_id):
     else:
         return 20
 
-def render_interactive_text(text_content: str, session):
+def render_interactive_text(text_id: int, text_content: str, session):
     """Renderiza texto latino con tooltips hover para análisis morfológico"""
+    from utils.lectio_analyzer import get_text_analysis_from_cache
     
-    # Analizar el texto
-    analyzed_text = LatinTextAnalyzer.analyze_text(text_content, session)
+    # Intentar obtener análisis CLTK cacheado
+    analyzed_text = get_text_analysis_from_cache(session, text_id)
+    
+    # Si no hay análisis CLTK, usar sistema actual con InflectedForm
+    if not analyzed_text:
+        analyzed_text = LatinTextAnalyzer.analyze_text(text_content, session)
     
     # Renderizar con tooltips hover
     html_parts = ['<div class="latin-text-container"><p>']
@@ -199,28 +204,44 @@ def render_interactive_text(text_content: str, session):
         if item.get("is_punctuation"):
             html_parts.append(form)
         else:
-            analyses = item["analyses"]
+            # Para análisis CLTK, item ya tiene todos los campos
+            # Para análisis InflectedForm, item["analyses"] contiene las opciones
             
-            if analyses:
-                # Palabra analizada
-                primary = analyses[0]  # Tomar el análisis más probable
-                
+            lemma = item.get("lemma")
+            translation = item.get("translation")
+            pos = item.get("pos")
+            morphology = item.get("morphology", {})
+            word_id = item.get("word_id")
+            
+            # Si no hay lemma directamente, buscar en analyses (sistema antiguo)
+            if not lemma and item.get("analyses"):
+                analyses = item["analyses"]
+                if analyses:
+                    primary = analyses[0]
+                    lemma = primary["lemma"]
+                    translation = primary["translation"]
+                    pos = primary["pos"]
+                    morphology = primary["morphology"]
+                    word_id = primary.get("word_id")
+            
+            if lemma:
                 # Determinar color según maestría
-                mastery = get_word_mastery(session, primary["word_id"])
-                if mastery >= 70:
-                    css_class = "word-known"
-                elif mastery >= 40:
-                    css_class = "word-learning"
-                elif mastery > 0:
-                    css_class = "word-unknown"
+                if word_id:
+                    mastery = get_word_mastery(session, word_id)
+                    if mastery >= 70:
+                        css_class = "word-known"
+                    elif mastery >= 40:
+                        css_class = "word-learning"
+                    elif mastery > 0:
+                        css_class = "word-unknown"
+                    else:
+                        css_class = "word-no-review"
                 else:
-                    css_class = "word-no-review"  # Sin reseñas aún
+                    # Palabra no en vocabulario (solo CLTK)
+                    css_class = "word-no-review"
                 
                 # Formatear análisis morfológico
-                morph_text = LatinTextAnalyzer.format_morphology(
-                    primary["morphology"], 
-                    primary["pos"]
-                )
+                morph_text = LatinTextAnalyzer.format_morphology(morphology, pos)
                 
                 # Traducir parte del discurso
                 pos_map = {
@@ -230,16 +251,20 @@ def render_interactive_text(text_content: str, session):
                     "pronoun": "pronombre",
                     "adverb": "adverbio",
                     "preposition": "preposición",
-                    "conjunction": "conjunción"
+                    "conjunction": "conjunción",
+                    "conj": "conjunción",
+                    "prep": "preposición",
+                    "adv": "adverbio",
+                    "proper_noun": "nombre propio"
                 }
-                pos_display = pos_map.get(primary["pos"], primary["pos"])
+                pos_display = pos_map.get(pos, pos)
                 
                 # HTML para palabra con tooltip hover
                 word_html = f'''<span class="interactive-word {css_class}">
                     {form}
                     <span class="tooltip">
-                        <span class="tooltip-lemma">{primary["lemma"]}</span>
-                        <span class="tooltip-translation">{primary["translation"]}</span>
+                        <span class="tooltip-lemma">{lemma}</span>
+                        <span class="tooltip-translation">{translation}</span>
                         <span class="tooltip-morphology">{morph_text}</span>
                         <span class="tooltip-pos">{pos_display}</span>
                     </span>
@@ -247,7 +272,7 @@ def render_interactive_text(text_content: str, session):
                 
                 html_parts.append(word_html)
             else:
-                # Palabra desconocida (no en BD)
+                # Palabra desconocida (no en BD ni CLTK)
                 html_parts.append(f'<span style="color: #94a3b8; font-style: italic;">{form}</span>')
         
         # Agregar espacio después de palabras (no después de puntuación)
@@ -303,7 +328,7 @@ with get_session() as session:
             st.markdown("---")
             
             # Render interactive text with morphological analysis
-            interactive_html = render_interactive_text(selected_text.content, session)
+            interactive_html = render_interactive_text(selected_text.id, selected_text.content, session)
             st.markdown(interactive_html, unsafe_allow_html=True)
             
             # Legend below text
@@ -360,7 +385,8 @@ with get_session() as session:
             
             sample_text = "Rōma in Italiā est. Italia in Eurōpā est. Graecia in Eurōpā est."
             
-            interactive_html = render_interactive_text(sample_text, session)
+            # For preview, use text_id=-1 (will use fallback system)
+            interactive_html = render_interactive_text(-1, sample_text, session)
             st.markdown(interactive_html, unsafe_allow_html=True)
             
             st.markdown("---")
