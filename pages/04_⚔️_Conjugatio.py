@@ -46,7 +46,7 @@ with get_session() as session:
     user = session.exec(select(UserProfile)).first()
     user_level = user.level if user else 1
 
-st.markdown(f"###📚 Nivel {user_level} - Verbos")
+st.markdown(f"### 📚 Nivel {user_level} - Verbos")
 
 # Tense translation map
 TENSE_MAP = {
