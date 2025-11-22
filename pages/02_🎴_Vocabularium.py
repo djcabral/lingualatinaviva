@@ -119,41 +119,50 @@ def handle_review(session, word, quality):
     st.rerun()
 
 with get_session() as session:
-    # Get words based on study mode
-    if st.session_state.study_mode == "general":
-        all_words = session.exec(select(Word)).all()
-    else:  # text_prep
-        if st.session_state.selected_text_id:
-            # Get words linked to the selected text
-            links = session.exec(
-                select(TextWordLink).where(TextWordLink.text_id == st.session_state.selected_text_id)
-            ).all()
-            word_ids = [link.word_id for link in links]
-            all_words = [session.get(Word, wid) for wid in word_ids]
-            
-            if not all_words:
-                st.info("Este texto no tiene palabras vinculadas aún.")
-                st.stop()
-        else:
-            st.warning("Selecciona un texto para estudiar.")
-            st.stop()
-    
-    # --- WORD SELECTION LOGIC ---
-    
-    # 1. Check for due reviews first (SRS)
-    # In a real implementation, we would query ReviewLog for due items.
-    # For this demo, we'll simulate it or prioritize words with low repetition counts if they exist.
-    
-    # 2. Select new words based on priority
+    # OPTIMIZATION: Check if we already have a word to avoid expensive queries
+    word = None
+    if st.session_state.current_word_id is not None:
+        word = session.get(Word, st.session_state.current_word_id)
+        # If word not found (deleted?), reset
+        if not word:
+            st.session_state.current_word_id = None
+
+    # Only run selection logic if we need a new word
     if st.session_state.current_word_id is None:
-        word = None
+        
+        # --- WORD SELECTION LOGIC ---
+        
+        # 1. Check for due reviews first (SRS)
+        due_word_ids = []
         
         if st.session_state.study_mode == "general":
-            # Priority Logic:
-            # User can select a "batch" or "tier" of words to focus on.
-            # For now, we'll default to a progressive system:
-            # Pick words from the top 500 frequency that haven't been reviewed much.
+            # Get the latest review for each word
+            all_reviews = session.exec(
+                select(ReviewLog).order_by(ReviewLog.review_date.desc())
+            ).all()
             
+            latest_reviews = {}
+            for review in all_reviews:
+                if review.word_id not in latest_reviews:
+                    latest_reviews[review.word_id] = review
+            
+            # Find due words
+            now = datetime.utcnow()
+            for word_id, review in latest_reviews.items():
+                next_review = review.review_date + timedelta(days=review.interval)
+                if next_review <= now:
+                    due_word_ids.append(word_id)
+                    
+        # 2. Select word
+        
+        # PRIORITY 1: Due Reviews (SRS)
+        if due_word_ids:
+            st.info(f"📝 Tienes {len(due_word_ids)} palabras para repasar hoy.")
+            word_id = random.choice(due_word_ids)
+            word = session.get(Word, word_id)
+            
+        # PRIORITY 2: New Words (if no reviews due)
+        elif st.session_state.study_mode == "general":
             priority_tier = st.sidebar.selectbox(
                 "🎯 Prioridad de Aprendizaje",
                 [100, 500, 1000, 2000, 5000, "Todas"],
@@ -162,28 +171,23 @@ with get_session() as session:
             
             query = select(Word).where(Word.status == 'active')
             
+            # Exclude words that have already been reviewed (and are not due)
+            reviewed_word_ids = list(latest_reviews.keys()) if 'latest_reviews' in locals() else []
+            if reviewed_word_ids:
+                query = query.where(Word.id.not_in(reviewed_word_ids))
+            
             if isinstance(priority_tier, int):
                 query = query.where(Word.frequency_rank_global <= priority_tier)
-                query = query.where(Word.frequency_rank_global > 0) # Ensure valid rank
+                query = query.where(Word.frequency_rank_global > 0)
                 
-            # Order by frequency rank to prioritize most common words
-            # But also mix in some randomness so we don't just see "et, et, et"
-            # Ideally: Select top X unreviewed words and pick one.
-            
             potential_words = session.exec(query).all()
             
             if potential_words:
-                # Simple SRS simulation: prioritize words with 0 reviews or low quality
-                # For now, just weighted random favoring high frequency
-                # We take the top 20 available words in the filtered list and pick one
-                # to ensure we stick to the high frequency ones first.
-                
-                # Sort by rank (ascending = most frequent)
                 potential_words.sort(key=lambda w: w.frequency_rank_global if w.frequency_rank_global else 99999)
-                
-                # Take top 50 candidates from the current tier
                 candidates = potential_words[:50]
                 word = random.choice(candidates)
+            else:
+                st.success("¡Has estudiado todas las palabras nuevas de este nivel! 🎉")
             
         else:  # text_prep
             if st.session_state.selected_text_id:
@@ -192,28 +196,85 @@ with get_session() as session:
                 ).all()
                 word_ids = [link.word_id for link in links]
                 if word_ids:
-                    # Prioritize words in the text that are also high frequency?
-                    # Or just random from text? User asked for text focus.
-                    # Let's pick random from text for now.
                     word = session.get(Word, random.choice(word_ids))
+                else:
+                    st.info("Este texto no tiene palabras vinculadas aún.")
+                    st.stop()
+            else:
+                st.warning("Selecciona un texto para estudiar.")
+                st.stop()
         
         if word:
             st.session_state.current_word_id = word.id
         else:
             st.warning("No hay palabras disponibles con los filtros actuales.")
             st.stop()
-    else:
-        word = session.get(Word, st.session_state.current_word_id)
     
     if word is None:
         st.error("Error cargando palabra")
         st.stop()
     
+    # --- SIDEBAR TRANSLATION EDITOR ---
+    if st.session_state.get('is_admin', False):
+        with st.sidebar:
+            st.divider()
+            st.markdown("### 🔧 Corrector Rápido")
+            st.info("Edita la traducción de la tarjeta actual.")
+            
+            current_translation = word.translation or ""
+            # Use a key based on word ID to ensure it resets when word changes
+            new_translation = st.text_input(
+                "Traducción:", 
+                value=current_translation,
+                key=f"trans_edit_{word.id}"
+            )
+            
+            if st.button("💾 Guardar Cambios", key=f"save_{word.id}"):
+                if new_translation and new_translation != current_translation:
+                    word.translation = new_translation
+                    session.add(word)
+                    session.commit()
+                    st.success("¡Actualizado!")
+                    st.rerun()
+
+    
     # Display word card
+    
+    # Homonym handling
+    display_word = word.latin
+    disambiguation_hint = ""
+    
+    if any(char.isdigit() for char in word.latin):
+        # Strip digits for display
+        display_word = ''.join([c for c in word.latin if not c.isdigit()])
+        
+        # Generate hint based on POS
+        if word.part_of_speech == 'verb':
+            if word.conjugation:
+                disambiguation_hint = f"({word.conjugation})"
+            elif word.principal_parts:
+                # Try to show just the infinitive if possible, or full parts
+                parts = word.principal_parts.split(', ')
+                if len(parts) >= 2:
+                    disambiguation_hint = f"({parts[1]})"
+                else:
+                    disambiguation_hint = f"({word.principal_parts})"
+        
+        elif word.part_of_speech == 'noun':
+            if word.genitive:
+                disambiguation_hint = f"(Gen: {word.genitive})"
+            elif word.declension:
+                disambiguation_hint = f"({word.declension} decl.)"
+                
+        elif word.part_of_speech == 'adjective':
+             if word.genitive: # e.g. felix, felicis
+                disambiguation_hint = f"({word.genitive})"
+    
     st.markdown(
         f"""
         <div class="vocab-card">
-            <div class="vocab-latin">{word.latin}</div>
+            <div class="vocab-latin">{display_word}</div>
+            {f'<div style="font-size: 0.6em; color: #888; margin-top: -10px; font-style: italic;">{disambiguation_hint}</div>' if disambiguation_hint else ''}
         </div>
         """,
         unsafe_allow_html=True
@@ -264,3 +325,7 @@ with get_session() as session:
         with col4:
             if st.button("⭐ " + get_text('easy', st.session_state.language), use_container_width=True):
                 handle_review(session, word, 5)
+
+# Render sidebar footer
+from utils.ui import render_sidebar_footer
+render_sidebar_footer()

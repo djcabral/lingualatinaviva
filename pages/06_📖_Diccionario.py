@@ -2,6 +2,7 @@ import streamlit as st
 from sqlmodel import Session, create_engine, select, or_
 from database.models import Word
 from utils.latin_logic import LatinMorphology
+from utils.i18n import get_text
 
 # Page config
 st.set_page_config(page_title="Diccionario Latino-Español", page_icon="📖")
@@ -55,7 +56,8 @@ if search_term:
             st.success(f"Se encontraron {len(results)} resultado(s)")
             
             for word in results:
-                with st.expander(f"**{word.latin}** — {word.part_of_speech}", expanded=len(results)==1):
+                pos_translated = get_text(word.part_of_speech, st.session_state.get('language', 'es'))
+                with st.expander(f"**{word.latin}** — {pos_translated}", expanded=len(results)==1):
                     # Spanish definition
                     if word.definition_es:
                         st.markdown(f"**📖 Definición:** {word.definition_es}")

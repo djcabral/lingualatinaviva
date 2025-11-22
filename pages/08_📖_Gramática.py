@@ -29,7 +29,8 @@ st.markdown(
 st.info("📚 Consulta rápida de gramática latina. Encuentra tablas de declinaciones, conjugaciones y más.")
 
 # Create tabs for different grammar topics
-grammar_tabs = st.tabs(["🏛️ Declinaciones", "⚔️ Conjugaciones", "👤 Pronombres", "✨ Adjetivos", "📝 Sintaxis"])
+# Create tabs for different grammar topics
+grammar_tabs = st.tabs(["🏛️ Declinaciones", "⚔️ Conjugaciones", "👤 Pronombres", "✨ Adjetivos", "📝 Sintaxis", "💡 Consejos"])
 
 # ===== TAB 1: DECLENSIONS =====
 with grammar_tabs[0]:
@@ -569,11 +570,23 @@ with grammar_tabs[2]:
 | **Acc.** | **tē** | **vōs** |
 | **Abl.** | **tē** | **vōbīs** |
             """)
-    
-    # Demonstrative
+
+    # Reflexive Pronoun
+    with st.expander("🔄 Pronombre Reflexivo (3ª Persona)"):
+        st.markdown("**sē** (se, a sí mismo/a/os/as)")
+        st.caption("💡 No tiene Nominativo. Es igual para singular y plural.")
+        st.markdown("""
+| Caso | Forma | Traducción |
+|:----:|:-----:|:-----------|
+| **Gen.** | **suī** | de sí mismo/a/os/as |
+| **Dat.** | **sibi** | para sí mismo... |
+| **Acc.** | **sē / sēsē** | a sí mismo... |
+| **Abl.** | **sē / sēsē** | con/por sí mismo... |
+        """)
+
+    # Demonstrative Pronouns
     with st.expander("👉 Pronombres Demostrativos"):
-        st.markdown("**hic, haec, hoc** (este, esta, esto)")
-        
+        st.markdown("### hic, haec, hoc (este, esta, esto)")
         st.markdown("""
 | Caso | Masc. Sg | Fem. Sg | Neut. Sg | Masc. Pl | Fem. Pl | Neut. Pl |
 |:----:|:--------:|:-------:|:--------:|:--------:|:-------:|:--------:|
@@ -582,6 +595,74 @@ with grammar_tabs[2]:
 | **Dat.** | huic | huic | huic | hīs | hīs | hīs |
 | **Acc.** | hunc | hanc | hoc | hōs | hās | haec |
 | **Abl.** | hōc | hāc | hōc | hīs | hīs | hīs |
+        """)
+        
+        st.divider()
+        
+        st.markdown("### ille, illa, illud (aquel, aquella, aquello)")
+        st.markdown("""
+| Caso | Masc. Sg | Fem. Sg | Neut. Sg | Masc. Pl | Fem. Pl | Neut. Pl |
+|:----:|:--------:|:-------:|:--------:|:--------:|:-------:|:--------:|
+| **Nom.** | ille | illa | illud | illī | illae | illa |
+| **Gen.** | illīus | illīus | illīus | illōrum | illārum | illōrum |
+| **Dat.** | illī | illī | illī | illīs | illīs | illīs |
+| **Acc.** | illum | illam | illud | illōs | illās | illa |
+| **Abl.** | illō | illā | illō | illīs | illīs | illīs |
+        """)
+        
+        st.divider()
+        
+        st.markdown("### iste, ista, istud (ese, esa, eso)")
+        st.caption("💡 Se declina igual que *ille*.")
+        st.markdown("""
+| Caso | Masc. Sg | Fem. Sg | Neut. Sg | Masc. Pl | Fem. Pl | Neut. Pl |
+|:----:|:--------:|:-------:|:--------:|:--------:|:-------:|:--------:|
+| **Nom.** | iste | ista | istud | istī | istae | ista |
+| **Gen.** | istīus | istīus | istīus | istōrum | istārum | istōrum |
+| **Dat.** | istī | istī | istī | istīs | istīs | istīs |
+| **Acc.** | istum | istam | istud | istōs | istās | ista |
+| **Abl.** | istō | istā | istō | istīs | istīs | istīs |
+        """)
+        
+        st.divider()
+        
+        st.markdown("### is, ea, id (él, ella, ello / este, ese)")
+        st.caption("💡 Usado como pronombre personal de 3ª persona o demostrativo débil.")
+        st.markdown("""
+| Caso | Masc. Sg | Fem. Sg | Neut. Sg | Masc. Pl | Fem. Pl | Neut. Pl |
+|:----:|:--------:|:-------:|:--------:|:--------:|:-------:|:--------:|
+| **Nom.** | is | ea | id | eī / iī | eae | ea |
+| **Gen.** | eius | eius | eius | eōrum | eārum | eōrum |
+| **Dat.** | eī | eī | eī | eīs / iīs | eīs / iīs | eīs / iīs |
+| **Acc.** | eum | eam | id | eōs | eās | ea |
+| **Abl.** | eō | eā | eō | eīs / iīs | eīs / iīs | eīs / iīs |
+        """)
+
+    # Relative Pronoun
+    with st.expander("🔗 Pronombre Relativo"):
+        st.markdown("### quī, quae, quod (que, el cual, quien)")
+        st.markdown("""
+| Caso | Masc. Sg | Fem. Sg | Neut. Sg | Masc. Pl | Fem. Pl | Neut. Pl |
+|:----:|:--------:|:-------:|:--------:|:--------:|:-------:|:--------:|
+| **Nom.** | quī | quae | quod | quī | quae | quae |
+| **Gen.** | cuius | cuius | cuius | quōrum | quārum | quōrum |
+| **Dat.** | cui | cui | cui | quibus | quibus | quibus |
+| **Acc.** | quem | quam | quod | quōs | quās | quae |
+| **Abl.** | quō | quā | quō | quibus | quibus | quibus |
+        """)
+
+    # Interrogative Pronoun
+    with st.expander("❓ Pronombre Interrogativo"):
+        st.markdown("### quis, quid (¿quién?, ¿qué?)")
+        st.caption("💡 En plural es igual que el relativo (*quī, quae, quae*).")
+        st.markdown("""
+| Caso | Masc./Fem. Sg | Neutro Sg |
+|:----:|:-------------:|:---------:|
+| **Nom.** | **quis** | **quid** |
+| **Gen.** | cuius | cuius |
+| **Dat.** | cui | cui |
+| **Acc.** | quem | **quid** |
+| **Abl.** | quō | quō |
         """)
 
 # ===== TAB 4: ADJECTIVES =====
@@ -601,35 +682,242 @@ with grammar_tabs[3]:
 | **Acc.** | bon**um** | bon**am** | bon**um** | bon**ōs** | bon**ās** | bon**a** |
 | **Abl.** | bon**ō** | bon**ā** | bon**ō** | bon**īs** | bon**īs** | bon**īs** |
         """)
-
-# ===== TAB 5: BASIC SYNTAX =====
-with grammar_tabs[4]:
-    st.markdown("## Sintaxis Básica")
     
-    with st.expander("📐 Funciones de los Casos", expanded=True):
+    with st.expander("🌟 Adjetivos de 2ª Clase (3ª Declinación)"):
+        st.info("Siguen la 3ª declinación de temas en -i (Parisílabos). Abl. sg. en **-ī**, Gen. pl. en **-ium**, Nom/Ac pl. neutro en **-ia**.")
+        
+        st.markdown("### 1. Tres Terminaciones (-er, -is, -e)")
+        st.markdown("**acer, acris, acre** (agudo, enérgico)")
+        st.caption("Masc: *acer*, Fem: *acris*, Neut: *acre*. (Solo cambia en el Nominativo singular).")
+        
+        st.markdown("### 2. Dos Terminaciones (-is, -e)")
+        st.markdown("**fortis, forte** (fuerte, valiente)")
+        st.caption("Masc/Fem: *fortis*, Neut: *forte*. (La mayoría son de este tipo).")
+        
         st.markdown("""
-| Caso | Función Principal | Ejemplo |
-|:----:|:------------------|:--------|
-| **Nominativo** | Sujeto | *Puella* cantat (La niña canta) |
-| **Genitivo** | Posesión, pertenencia | Liber *puellae* (El libro de la niña) |
-| **Dativo** | Objeto indirecto | Do librum *puellae* (Doy el libro a la niña) |
-| **Acusativo** | Objeto directo | Video *puellam* (Veo a la niña) |
-| **Ablativo** | Instrumento, lugar, modo | Cum *puellā* (Con la niña) |
-| **Vocativo** | Llamada, invocación | *Puella*, veni! (¡Niña, ven!) |
+| Caso | Masc./Fem. Sg | Neutro Sg | Masc./Fem. Pl | Neutro Pl |
+|:----:|:-------------:|:---------:|:-------------:|:---------:|
+| **Nom.** | fort**is** | fort**e** | fort**ēs** | fort**ia** |
+| **Gen.** | fort**is** | fort**is** | fort**ium** | fort**ium** |
+| **Dat.** | fort**ī** | fort**ī** | fort**ibus** | fort**ibus** |
+| **Acc.** | fort**em** | fort**e** | fort**ēs** | fort**ia** |
+| **Abl.** | fort**ī** | fort**ī** | fort**ibus** | fort**ibus** |
         """)
-    
-    with st.expander("📏 Orden de Palabras"):
+        
+        st.markdown("### 3. Una Terminación")
+        st.markdown("**fēlīx, fēlīcis** (feliz)")
+        st.caption("Masc/Fem/Neut: *fēlīx* en el nominativo. Se distinguen en los demás casos.")
         st.markdown("""
-**Orden típico en latín:** SOV (Sujeto - Objeto - Verbo)
+| Caso | Masc./Fem. Sg | Neutro Sg | Masc./Fem. Pl | Neutro Pl |
+|:----:|:-------------:|:---------:|:-------------:|:---------:|
+| **Nom.** | fēlīx | fēlīx | fēlīc**ēs** | fēlīc**ia** |
+| **Gen.** | fēlīc**is** | fēlīc**is** | fēlīc**ium** | fēlīc**ium** |
+| **Acc.** | fēlīc**em** | fēlīx | fēlīc**ēs** | fēlīc**ia** |
+| **Abl.** | fēlīc**ī** | fēlīc**ī** | fēlīc**ibus** | fēlīc**ibus** |
+        """)
+
+    with st.expander("📈 Grados del Adjetivo (Comparativo y Superlativo)"):
+        st.markdown("### 1. Comparativo de Superioridad")
+        st.markdown("Se forma añadiendo **-ior** (M/F) y **-ius** (N) a la raíz.")
+        st.markdown("**Ejemplo:** *altus* (alto) → *altior, altius* (más alto)")
+        st.info("⚠️ Se declina como la 3ª declinación CONSONÁNTICA (Imparisílabo). Abl. sg. en **-e**, Gen. pl. en **-um**.")
+        
+        st.markdown("""
+| Caso | Masc./Fem. Sg | Neutro Sg | Masc./Fem. Pl | Neutro Pl |
+|:----:|:-------------:|:---------:|:-------------:|:---------:|
+| **Nom.** | altior | altius | altiōr**ēs** | altiōr**a** |
+| **Gen.** | altiōr**is** | altiōr**is** | altiōr**um** | altiōr**um** |
+| **Acc.** | altiōr**em** | altius | altiōr**ēs** | altiōr**a** |
+| **Abl.** | altiōr**e** | altiōr**e** | altiōr**ibus** | altiōr**ibus** |
+        """)
+        
+        st.divider()
+        
+        st.markdown("### 2. Superlativo")
+        st.markdown("Se forma generalmente añadiendo **-issimus, -a, -um** a la raíz.")
+        st.markdown("**Ejemplo:** *altus* → *altissimus, -a, -um* (altísimo / el más alto)")
+        st.caption("Se declina como un adjetivo de 1ª/2ª declinación (*bonus, -a, -um*).")
+        
+        st.markdown("**Excepciones:**")
+        st.markdown("- Adjetivos en **-er**: añaden *-rimus* (*pucher* → *pulcherrimus*)")
+        st.markdown("- Adjetivos en **-lis**: añaden *-limus* (*facilis* → *facillimus*)")
+        
+        st.divider()
+        
+        st.markdown("### 3. Comparación Irregular")
+        st.markdown("""
+| Positivo | Comparativo | Superlativo | Significado |
+|:---------|:------------|:------------|:------------|
+| **bonus** | melior, -ius | optimus | bueno, mejor, óptimo |
+| **malus** | peior, -ius | pessimus | malo, peor, pésimo |
+| **magnus** | maior, -ius | maximus | grande, mayor, máximo |
+| **parvus** | minor, minus | minimus | pequeño, menor, mínimo |
+| **multus** | plūs | plūrimus | mucho, más, muchísimo |
+        """)
+
+# ===== TAB 5: SYNTAX =====
+with grammar_tabs[4]:
+    st.markdown("## Sintaxis Latina")
+    st.info("La sintaxis estudia cómo se combinan las palabras para formar oraciones. En latín, las **desinencias (casos)** son la clave.")
+
+    # 1. The Complements
+    with st.expander("🧱 Los Complementos y los Casos", expanded=True):
+        st.markdown("### Guía Rápida de Funciones")
+        st.markdown("""
+| Caso | Función | ¿Qué es? | Pregunta | Ejemplo |
+|:---:|:---|:---|:---|:---|
+| **Nominativo** | **Sujeto** | Quien realiza la acción o de quien se habla. | ¿Quién? | *__Puella__ cantat.* (La niña canta) |
+| | **Atributo** | Cualidad del sujeto con verbos copulativos (sum). | ¿Cómo es? | *Puella __pulchra__ est.* (La niña es hermosa) |
+| **Vocativo** | **Apelación** | A quien nos dirigimos directamente. | — | *__Marce__, veni!* (¡Marco, ven!) |
+| **Acusativo** | **Objeto Directo (OD)** | Recibe la acción directamente. | ¿Qué? / ¿A quién? | *Puer __puellam__ videt.* (El niño ve a la niña) |
+| | **Dirección (CC)** | Hacia dónde se va (con *ad* o *in*). | ¿Adónde? | *__Ad urbem__ eo.* (Voy a la ciudad) |
+| | **Sujeto de Inf.** | En oraciones de Acusativo + Infinitivo. | ¿Quién? | *Dico __te__ bonum esse.* (Digo que tú eres bueno) |
+| **Genitivo** | **Complemento del Nombre (CN)** | Posesión o pertenencia. | ¿De quién? | *Liber __pueri__.* (El libro del niño) |
+| | **Partitivo** | El todo del que se toma una parte. | ¿De qué? | *Pars __militum__.* (Parte de los soldados) |
+| **Dativo** | **Objeto Indirecto (OI)** | Destinatario o beneficiario de la acción. | ¿A quién? / ¿Para quién? | *Do librum __tibi__.* (Te doy el libro a ti) |
+| | **Posesivo** | Con *sum*, indica al poseedor. | ¿De quién? | *Liber est __mihi__.* (Tengo un libro / El libro es para mí) |
+| **Ablativo** | **CC Instrumento** | Con qué se hace la acción. | ¿Con qué? | *__Gladio__ pugnat.* (Lucha con la espada) |
+| | **CC Lugar** | Dónde ocurre (con *in*). | ¿Dónde? | *__In horto__ est.* (Está en el jardín) |
+| | **CC Compañía** | Con quién (con *cum*). | ¿Con quién? | *__Cum amico__ venit.* (Viene con un amigo) |
+| | **Agente** | Quien hace la acción en pasiva (con *a/ab*). | ¿Por quién? | *Amor __a patre__.* (Soy amado por el padre) |
+        """)
+
+    # 2. Sentence Types
+    with st.expander("🏗️ Tipos de Oraciones"):
+        st.markdown("### Según la actitud del hablante")
+        st.markdown("""
+- **Enunciativas:** Afirman o niegan un hecho. (*Puer currit.*)
+- **Interrogativas:** Hacen una pregunta. (*Quis venit?* - ¿Quién viene?)
+    - Partículas: *-ne* (pregunta general), *nonne* (espera 'sí'), *num* (espera 'no').
+- **Imperativas:** Dan una orden. (*Veni huc!* - ¡Ven aquí!)
+- **Exclamativas:** Expresan emoción. (*Quam pulchra est!* - ¡Qué hermosa es!)
+- **Desiderativas:** Expresan un deseo (usualmente subjuntivo). (*Utinam veniat!* - ¡Ojalá venga!)
+        """)
+        
+        st.divider()
+        
+        st.markdown("### Oraciones Compuestas")
+        st.markdown("""
+- **Coordinadas:** Unidas por conjunciones (*et, sed, aut*). Tienen el mismo nivel.
+    - *Puer currit __et__ puella saltat.*
+- **Subordinadas:** Dependen de una oración principal.
+    - **Sustantivas:** Actúan como sujeto u objeto (ej. Infinitivo, *ut* completivo).
+    - **Adjetivas (Relativo):** Actúan como adjetivo (*Puer __qui__ currit...*).
+    - **Adverbiales:** Actúan como adverbio (Temporal, Causal, Final, etc.).
+        """)
+
+    # 3. Special Constructions
+    with st.expander("🚀 Construcciones Especiales (¡Claves para traducir!)"):
+        st.markdown("### 1. Acusativo + Infinitivo (Oración de Infinitivo)")
+        st.info("Muy común con verbos de **lengua** (decir), **entendimiento** (saber, creer) y **sentido** (ver, oír).")
+        st.markdown("""
+**Estructura:** Verbo Principal + [ **Sujeto en Acusativo** + **Verbo en Infinitivo** ]
+
+**Cómo traducir:**
+1. Traduce el verbo principal.
+2. Añade un "**que**".
+3. Traduce el Acusativo como **Sujeto**.
+4. Traduce el Infinitivo como un verbo conjugado.
 
 **Ejemplo:**
-- *Puella* (S) *rosam* (O) *amat* (V)
-- La niña ama la rosa
+> *Video* [ *puerum* *currere* ]
+> - *Video* = Veo
+> - *que*
+> - *puerum* = el niño
+> - *currere* = corre
+> = **Veo que el niño corre.**
+        """)
+        
+        st.divider()
+        
+        st.markdown("### 2. Doble Acusativo")
+        st.info("Algunos verbos piden DOS acusativos: uno de persona y otro de cosa o predicativo.")
+        st.markdown("""
+**Verbos que enseñan / piden / ocultan:**
+- *Doceo* (enseñar): *Doceo __pueros__ __grammaticam__.* (Enseño gramática a los niños).
+- *Posco* (pedir): *Posco __te__ __pecuniam__.* (Te pido dinero).
+- *Celo* (ocultar): *Celo __te__ __veritatem__.* (Te oculto la verdad).
 
-**Pero el orden es flexible** por las terminaciones de caso.
+**Verbos que nombran / eligen / hacen (Predicativo):**
+- *Appello* (llamar): *Romani __Ciceronem__ __consulem__ creaverunt.* (Los romanos eligieron cónsul a Cicerón).
+  - *Ciceronem* = OD
+  - *consulem* = Predicativo del OD
+        """)
+        
+        st.divider()
+        
+        st.markdown("### 3. Ablativo Absoluto")
+        st.info("Construcción independiente que indica las circunstancias (tiempo, causa) de la oración principal.")
+        st.markdown("""
+**Estructura:** [ **Sustantivo en Ablativo** + **Participio en Ablativo** ]
 
-**Énfasis:** La palabra más importante suele ir al principio o al final.
+**Cómo traducir:**
+- Literal: "Habiendo sido..." o "Siendo..."
+- Mejor: "Cuando...", "Como...", "Después de que..."
+
+**Ejemplo:**
+> [ *Urbe* *capta* ], hostes discesserunt.
+> - *Urbe* = ciudad (abl)
+> - *capta* = capturada (part. perf. pasivo abl)
+> - Literal: "La ciudad capturada..."
+> - Traducción: **Una vez capturada la ciudad**, los enemigos se marcharon.
         """)
 
-st.markdown("---")
-st.success("💡 **Tip:** Usa esta sección como referencia rápida mientras practicas en los módulos de Declinatio y Conjugatio.")
+# ===== TAB 6: TRANSLATION TIPS =====
+with grammar_tabs[5]:
+    st.markdown("## 💡 Consejos para el Traductor")
+    
+    with st.expander("🕵️ El Método Detective (Paso a Paso)", expanded=True):
+        st.markdown("""
+Ante una oración latina, no traduzcas palabra por palabra. Sigue este orden lógico:
+
+1.  **🔍 Busca el VERBO:** Es el corazón de la oración.
+    - ¿Es singular o plural? (Te dice el número del sujeto).
+    - ¿Es activo o pasivo?
+    - ¿Es transitivo (busca OD) o copulativo (busca Atributo)?
+
+2.  **👤 Busca el SUJETO (Nominativo):**
+    - Debe concordar con el verbo en número.
+    - Si no hay Nominativo explícito, el sujeto está en el verbo (él/ella/ello).
+
+3.  **📦 Busca el OBJETO DIRECTO (Acusativo):**
+    - Solo si el verbo es transitivo.
+    - Responde a "¿Qué?" o "¿A quién?".
+
+4.  **🎁 Busca los COMPLEMENTOS (Resto de casos):**
+    - Dativo (¿Para quién?).
+    - Ablativo (¿Con qué? ¿Dónde? ¿Cuándo?).
+
+5.  **🧩 Encaja las piezas:**
+    - *Puer* (S) *rosam* (OD) *amat* (V).
+    - El niño (S) ama (V) la rosa (OD).
+        """)
+
+    with st.expander("⚠️ Falsos Amigos y Trampas Comunes"):
+        st.markdown("""
+- **Constat:** No es "consta", sino "cuesta" (dinero) o "es evidente".
+- **Tandem:** No es una bicicleta, significa "finalmente".
+- **Autem:** No es "auto", significa "sin embargo" o "por otro lado".
+- **Enim:** Significa "pues" o "en efecto" (siempre va en segunda posición).
+- **Cum:** Puede ser preposición ("con" + Abl) o conjunción ("cuando/como" + Subjuntivo). ¡Mira qué le sigue!
+- **Ut:** ¡El camaleón del latín!
+    - + Indicativo: "Como" o "Cuando".
+    - + Subjuntivo: "Para que" (Final) o "Que" (Completiva/Consecutiva).
+        """)
+
+    with st.expander("⚔️ Estrategia con Participios"):
+        st.markdown("""
+El latín ama los participios. El español prefiere oraciones subordinadas.
+
+**Participio de Presente (*amans*):**
+- Traduce como gerundio ("amando") o relativo ("que ama").
+- *Puer currens* = El niño corriendo / El niño que corre.
+
+**Participio de Perfecto (*amatus*):**
+- Traduce como participio ("amado") o pasiva ("que fue amado").
+- *Urbs capta* = La ciudad capturada / La ciudad que fue capturada.
+
+**Participio de Futuro (*amaturus*):**
+- Traduce como perífrasis ("que va a amar", "dispuesto a amar").
+- *Ave moritura* = Ave que va a morir.
+        """)

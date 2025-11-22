@@ -41,9 +41,9 @@ Thumbs.db
 .streamlit/secrets.toml
 
 # Database
-*.db
-*.sqlite
-*.sqlite3
+# *.db  <-- Commented out to allow uploading the initial database for Streamlit Cloud demo
+# *.sqlite
+# *.sqlite3
 
 # Logs
 *.log

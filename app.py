@@ -216,3 +216,7 @@ else:
                     """,
                     unsafe_allow_html=True
                 )
+
+    # Render sidebar footer
+    from utils.ui import render_sidebar_footer
+    render_sidebar_footer()

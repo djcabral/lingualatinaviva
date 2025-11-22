@@ -9,6 +9,7 @@ if root_path not in sys.path:
 from database.connection import get_session
 from database.models import Text, TextWordLink, Word, ReviewLog
 from utils.text_analyzer import LatinTextAnalyzer
+from utils.text_cache import get_text_analysis_from_cache
 from sqlmodel import select
 
 st.set_page_config(page_title="Lectio", page_icon="📖", layout="wide")
@@ -54,6 +55,7 @@ def add_interactive_text_css():
         transform: translateX(-50%);
         z-index: 1000;
         width: 280px;
+        max-width: 90vw;  /* No más ancho que el 90% del viewport */
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
         padding: 12px 15px;
@@ -61,8 +63,18 @@ def add_interactive_text_css():
         box-shadow: 0 8px 16px rgba(0,0,0,0.3);
         transition: opacity 0.3s, visibility 0.3s;
         pointer-events: none;
+        white-space: normal;
+        word-wrap: break-word;
     }
     
+    /* Ajustar tooltip cuando está cerca del borde izquierdo */
+    .latin-text-container .interactive-word:first-child .tooltip,
+    .interactive-word:nth-child(-n+3) .tooltip {
+        left: 0;
+        transform: translateX(0);
+    }
+    
+    /* Flecha del tooltip */
     .interactive-word .tooltip::after {
         content: "";
         position: absolute;
@@ -74,6 +86,13 @@ def add_interactive_text_css():
         border-color: #764ba2 transparent transparent transparent;
     }
     
+    /* Flecha también se ajusta cuando está a la izquierda */
+    .latin-text-container .interactive-word:first-child .tooltip::after,
+    .interactive-word:nth-child(-n+3) .tooltip::after {
+        left: 20px;
+    }
+    
+    /* Mostrar tooltip al hacer hover */
     .interactive-word:hover .tooltip {
         visibility: visible;
         opacity: 1;
@@ -186,7 +205,7 @@ def get_word_mastery(session, word_id):
 
 def render_interactive_text(text_id: int, text_content: str, session):
     """Renderiza texto latino con tooltips hover para análisis morfológico"""
-    from utils.lectio_analyzer import get_text_analysis_from_cache
+    from utils.text_cache import get_text_analysis_from_cache
     
     # Intentar obtener análisis CLTK cacheado
     analyzed_text = get_text_analysis_from_cache(session, text_id)
@@ -330,6 +349,64 @@ with get_session() as session:
             # Render interactive text with morphological analysis
             interactive_html = render_interactive_text(selected_text.id, selected_text.content, session)
             st.markdown(interactive_html, unsafe_allow_html=True)
+            
+            # --- SIDEBAR VOCABULARY EDITOR ---
+            with st.sidebar:
+                st.divider()
+                st.markdown("### 🔧 Corrector Rápido")
+                st.info("Corrige traducciones mientras lees.")
+                
+                # Get analysis data for the editor
+                analysis_data = get_text_analysis_from_cache(session, selected_text.id)
+                
+                if analysis_data:
+                    # Filter valid words with IDs
+                    valid_words = []
+                    seen_ids = set()
+                    
+                    for item in analysis_data:
+                        # Handle both direct structure and 'analyses' list structure
+                        wid = item.get("word_id")
+                        latin = item.get("lemma")
+                        trans = item.get("translation")
+                        
+                        if not wid and item.get("analyses"):
+                            primary = item["analyses"][0]
+                            wid = primary.get("word_id")
+                            latin = primary.get("lemma")
+                            trans = primary.get("translation")
+                            
+                        if wid and latin and wid not in seen_ids:
+                            valid_words.append((wid, latin, trans))
+                            seen_ids.add(wid)
+                    
+                    # Sort by Latin word
+                    valid_words.sort(key=lambda x: x[1])
+                    
+                    if valid_words:
+                        selected_word_tuple = st.selectbox(
+                            "Selecciona palabra:",
+                            options=valid_words,
+                            format_func=lambda x: f"{x[1]} ({x[2][:20]}...)" if x[2] else f"{x[1]}"
+                        )
+                        
+                        if selected_word_tuple:
+                            wid, latin, trans = selected_word_tuple
+                            st.markdown(f"**Latín:** {latin}")
+                            
+                            new_trans = st.text_input("Traducción:", value=trans if trans else "")
+                            
+                            if st.button("💾 Guardar Corrección"):
+                                if new_trans:
+                                    word_to_update = session.get(Word, wid)
+                                    if word_to_update:
+                                        word_to_update.translation = new_trans
+                                        session.add(word_to_update)
+                                        session.commit()
+                                        st.success("¡Guardado!")
+                                        st.rerun()
+                else:
+                    st.caption("No hay datos de análisis disponibles.")
             
             # Legend below text
             st.markdown("---")

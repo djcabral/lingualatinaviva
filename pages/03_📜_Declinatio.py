@@ -140,32 +140,112 @@ with practice_tabs[0]:
             st.session_state.user_declension_answers = {}
         
         if is_demonstrative:
-            # Display with 3 genders
-            st.markdown("### Paradigma Completo (m / f / n)")
+            # Display with 3 genders (separate inputs)
+            st.markdown("### Paradigma Completo")
             
             for case, label in zip(cases, case_labels):
-                st.markdown(f"**{label}**")
+                st.markdown(f"#### {label}")
                 col_sg, col_pl = st.columns(2)
                 
                 with col_sg:
-                    st.markdown("*Singularis*")
+                    st.caption("Singularis (Masc / Fem / Neut)")
+                    c1, c2, c3 = st.columns(3)
+                    
+                    # Keys
                     key_m = f"{case[:3]}_sg_m"
                     key_f = f"{case[:3]}_sg_f"
                     key_n = f"{case[:3]}_sg_n"
+                    
+                    # Correct forms
                     form_m = forms.get(key_m, "—")
                     form_f = forms.get(key_f, "—")
                     form_n = forms.get(key_n, "—")
-                    st.info(f"{form_m} / {form_f} / {form_n}")
+                    
+                    # Inputs
+                    if st.session_state.show_declension_answers:
+                        # MASCULINE
+                        ans_m = st.session_state.user_declension_answers.get(f"input_sg_{case}_m", "")
+                        corr_m = normalize_latin(ans_m.strip()).lower() == normalize_latin(form_m).lower()
+                        with c1:
+                            if form_m == "—": st.info("—")
+                            elif corr_m: st.success(form_m)
+                            else: st.error(f"{ans_m} → {form_m}")
+                        
+                        # FEMININE
+                        ans_f = st.session_state.user_declension_answers.get(f"input_sg_{case}_f", "")
+                        corr_f = normalize_latin(ans_f.strip()).lower() == normalize_latin(form_f).lower()
+                        with c2:
+                            if form_f == "—": st.info("—")
+                            elif corr_f: st.success(form_f)
+                            else: st.error(f"{ans_f} → {form_f}")
+                            
+                        # NEUTER
+                        ans_n = st.session_state.user_declension_answers.get(f"input_sg_{case}_n", "")
+                        corr_n = normalize_latin(ans_n.strip()).lower() == normalize_latin(form_n).lower()
+                        with c3:
+                            if form_n == "—": st.info("—")
+                            elif corr_n: st.success(form_n)
+                            else: st.error(f"{ans_n} → {form_n}")
+                    else:
+                        with c1: 
+                            if form_m == "—": st.text_input("M", value="—", key=f"input_sg_{case}_m", disabled=True, label_visibility="collapsed")
+                            else: st.text_input("M", key=f"input_sg_{case}_m", placeholder="Masc", label_visibility="collapsed")
+                        with c2: 
+                            if form_f == "—": st.text_input("F", value="—", key=f"input_sg_{case}_f", disabled=True, label_visibility="collapsed")
+                            else: st.text_input("F", key=f"input_sg_{case}_f", placeholder="Fem", label_visibility="collapsed")
+                        with c3: 
+                            if form_n == "—": st.text_input("N", value="—", key=f"input_sg_{case}_n", disabled=True, label_visibility="collapsed")
+                            else: st.text_input("N", key=f"input_sg_{case}_n", placeholder="Neut", label_visibility="collapsed")
                 
                 with col_pl:
-                    st.markdown("*Pluralis*")
+                    st.caption("Pluralis (Masc / Fem / Neut)")
+                    c1, c2, c3 = st.columns(3)
+                    
+                    # Keys
                     key_m = f"{case[:3]}_pl_m"
                     key_f = f"{case[:3]}_pl_f"
                     key_n = f"{case[:3]}_pl_n"
+                    
+                    # Correct forms
                     form_m = forms.get(key_m, "—")
                     form_f = forms.get(key_f, "—")
                     form_n = forms.get(key_n, "—")
-                    st.info(f"{form_m} / {form_f} / {form_n}")
+                    
+                    # Inputs
+                    if st.session_state.show_declension_answers:
+                        # MASCULINE
+                        ans_m = st.session_state.user_declension_answers.get(f"input_pl_{case}_m", "")
+                        corr_m = normalize_latin(ans_m.strip()).lower() == normalize_latin(form_m).lower()
+                        with c1:
+                            if form_m == "—": st.info("—")
+                            elif corr_m: st.success(form_m)
+                            else: st.error(f"{ans_m} → {form_m}")
+                        
+                        # FEMININE
+                        ans_f = st.session_state.user_declension_answers.get(f"input_pl_{case}_f", "")
+                        corr_f = normalize_latin(ans_f.strip()).lower() == normalize_latin(form_f).lower()
+                        with c2:
+                            if form_f == "—": st.info("—")
+                            elif corr_f: st.success(form_f)
+                            else: st.error(f"{ans_f} → {form_f}")
+                            
+                        # NEUTER
+                        ans_n = st.session_state.user_declension_answers.get(f"input_pl_{case}_n", "")
+                        corr_n = normalize_latin(ans_n.strip()).lower() == normalize_latin(form_n).lower()
+                        with c3:
+                            if form_n == "—": st.info("—")
+                            elif corr_n: st.success(form_n)
+                            else: st.error(f"{ans_n} → {form_n}")
+                    else:
+                        with c1: 
+                            if form_m == "—": st.text_input("M", value="—", key=f"input_pl_{case}_m", disabled=True, label_visibility="collapsed")
+                            else: st.text_input("M", key=f"input_pl_{case}_m", placeholder="Masc", label_visibility="collapsed")
+                        with c2: 
+                            if form_f == "—": st.text_input("F", value="—", key=f"input_pl_{case}_f", disabled=True, label_visibility="collapsed")
+                            else: st.text_input("F", key=f"input_pl_{case}_f", placeholder="Fem", label_visibility="collapsed")
+                        with c3: 
+                            if form_n == "—": st.text_input("N", value="—", key=f"input_pl_{case}_n", disabled=True, label_visibility="collapsed")
+                            else: st.text_input("N", key=f"input_pl_{case}_n", placeholder="Neut", label_visibility="collapsed")
                 
                 st.markdown("---")
         else:
@@ -185,13 +265,18 @@ with practice_tabs[0]:
                         is_correct = normalize_latin(user_answer.strip()).lower() == normalize_latin(correct_form).lower()
                         
                         # Display with color coding
-                        if is_correct:
+                        if correct_form == "—":
+                            st.info("—")
+                        elif is_correct:
                             st.success(f"✅ {label}: **{correct_form}**")
                         else:
                             st.error(f"❌ {label}: Tu respuesta: '{user_answer}' → Correcto: **{correct_form}**")
                     else:
                         # Empty input for practice
-                        st.text_input(label, value="", key=f"input_sg_{case}", placeholder=f"{label} singular", label_visibility="collapsed")
+                        if correct_form == "—":
+                            st.text_input(label, value="—", key=f"input_sg_{case}", disabled=True, label_visibility="collapsed")
+                        else:
+                            st.text_input(label, value="", key=f"input_sg_{case}", placeholder=f"{label} singular", label_visibility="collapsed")
             
             with col2:
                 st.markdown("#### Pluralis")
@@ -206,13 +291,18 @@ with practice_tabs[0]:
                         is_correct = normalize_latin(user_answer.strip()).lower() == normalize_latin(correct_form).lower()
                         
                         # Display with color coding
-                        if is_correct:
+                        if correct_form == "—":
+                            st.info("—")
+                        elif is_correct:
                             st.success(f"✅ {label}: **{correct_form}**")
                         else:
                             st.error(f"❌ {label}: Tu respuesta: '{user_answer}' → Correcto: **{correct_form}**")
                     else:
                         # Empty input for practice
-                        st.text_input(label, value="", key=f"input_pl_{case}", placeholder=f"{label} plural", label_visibility="collapsed")
+                        if correct_form == "—":
+                            st.text_input(label, value="—", key=f"input_pl_{case}", disabled=True, label_visibility="collapsed")
+                        else:
+                            st.text_input(label, value="", key=f"input_pl_{case}", placeholder=f"{label} plural", label_visibility="collapsed")
         
         # Show XP feedback if available
         if 'xp_feedback' in st.session_state and st.session_state.show_declension_answers:
@@ -226,36 +316,61 @@ with practice_tabs[0]:
             if st.button("✅ Verificar", use_container_width=True):
                 # Save user answers
                 st.session_state.user_declension_answers = {}
-                for case in cases:
-                    sg_key = f"input_sg_{case}"
-                    pl_key = f"input_pl_{case}"
-                    if sg_key in st.session_state:
-                        st.session_state.user_declension_answers[sg_key] = st.session_state[sg_key]
-                    if pl_key in st.session_state:
-                        st.session_state.user_declension_answers[pl_key] = st.session_state[pl_key]
+                
+                if is_demonstrative:
+                    # Save all 3 genders x 2 numbers x 6 cases = 36 inputs
+                    for case in cases:
+                        for num in ["sg", "pl"]:
+                            for g in ["m", "f", "n"]:
+                                key = f"input_{num}_{case}_{g}"
+                                if key in st.session_state:
+                                    st.session_state.user_declension_answers[key] = st.session_state[key]
+                else:
+                    # Save regular inputs
+                    for case in cases:
+                        sg_key = f"input_sg_{case}"
+                        pl_key = f"input_pl_{case}"
+                        if sg_key in st.session_state:
+                            st.session_state.user_declension_answers[sg_key] = st.session_state[sg_key]
+                        if pl_key in st.session_state:
+                            st.session_state.user_declension_answers[pl_key] = st.session_state[pl_key]
                 
                 # Calculate score and award XP
                 correct_count = 0
                 total_count = 0
                 
                 for case in cases:
-                    # Singular
-                    sg_key = f"input_sg_{case}"
-                    user_answer_sg = st.session_state.user_declension_answers.get(sg_key, "")
-                    correct_form_sg = forms.get(f"{case[:3]}_sg", "")
-                    if user_answer_sg.strip():  # Solo contar si el usuario respondió
-                        total_count += 1
-                        if normalize_latin(user_answer_sg.strip()).lower() == normalize_latin(correct_form_sg).lower():
-                            correct_count += 1
-                    
-                    # Plural
-                    pl_key = f"input_pl_{case}"
-                    user_answer_pl = st.session_state.user_declension_answers.get(pl_key, "")
-                    correct_form_pl = forms.get(f"{case[:3]}_pl", "")
-                    if user_answer_pl.strip():  # Solo contar si el usuario respondió
-                        total_count += 1
-                        if normalize_latin(user_answer_pl.strip()).lower() == normalize_latin(correct_form_pl).lower():
-                            correct_count += 1
+                    if is_demonstrative:
+                        # Check 3 genders
+                        for num in ["sg", "pl"]:
+                            for g in ["m", "f", "n"]:
+                                key = f"input_{num}_{case}_{g}"
+                                user_ans = st.session_state.user_declension_answers.get(key, "")
+                                corr_form = forms.get(f"{case[:3]}_{num}_{g}", "")
+                                
+                                if user_ans.strip():
+                                    total_count += 1
+                                    if normalize_latin(user_ans.strip()).lower() == normalize_latin(corr_form).lower():
+                                        correct_count += 1
+                    else:
+                        # Regular check
+                        # Singular
+                        sg_key = f"input_sg_{case}"
+                        user_answer_sg = st.session_state.user_declension_answers.get(sg_key, "")
+                        correct_form_sg = forms.get(f"{case[:3]}_sg", "")
+                        if user_answer_sg.strip():  # Solo contar si el usuario respondió
+                            total_count += 1
+                            if normalize_latin(user_answer_sg.strip()).lower() == normalize_latin(correct_form_sg).lower():
+                                correct_count += 1
+                        
+                        # Plural
+                        pl_key = f"input_pl_{case}"
+                        user_answer_pl = st.session_state.user_declension_answers.get(pl_key, "")
+                        correct_form_pl = forms.get(f"{case[:3]}_pl", "")
+                        if user_answer_pl.strip():  # Solo contar si el usuario respondió
+                            total_count += 1
+                            if normalize_latin(user_answer_pl.strip()).lower() == normalize_latin(correct_form_pl).lower():
+                                correct_count += 1
                 
                 # Award XP: 5 points per correct answer
                 xp_gained = correct_count * 5
@@ -475,32 +590,112 @@ with practice_tabs[1]:
         is_demonstrative = any(key.endswith('_m') or key.endswith('_f') or key.endswith('_n') for key in forms.keys())
         
         if is_demonstrative:
-            # Display with 3 genders (demonstrative pronouns/adjectives)
-            st.markdown("### Paradigma Completo (m / f / n)")
+            # Display with 3 genders (separate inputs)
+            st.markdown("### Paradigma Completo")
             
             for case, label in zip(cases, case_labels):
-                st.markdown(f"**{label}**")
+                st.markdown(f"#### {label}")
                 col_sg, col_pl = st.columns(2)
                 
                 with col_sg:
-                    st.markdown("*Singularis*")
+                    st.caption("Singularis (Masc / Fem / Neut)")
+                    c1, c2, c3 = st.columns(3)
+                    
+                    # Keys
                     key_m = f"{case[:3]}_sg_m"
                     key_f = f"{case[:3]}_sg_f"
                     key_n = f"{case[:3]}_sg_n"
+                    
+                    # Correct forms
                     form_m = forms.get(key_m, "—")
                     form_f = forms.get(key_f, "—")
                     form_n = forms.get(key_n, "—")
-                    st.info(f"{form_m} / {form_f} / {form_n}")
+                    
+                    # Inputs
+                    if st.session_state.show_free_answers:
+                        # MASCULINE
+                        ans_m = st.session_state.user_free_answers.get(f"free_input_sg_{case}_m", "")
+                        corr_m = normalize_latin(ans_m.strip()).lower() == normalize_latin(form_m).lower()
+                        with c1:
+                            if form_m == "—": st.info("—")
+                            elif corr_m: st.success(form_m)
+                            else: st.error(f"{ans_m} → {form_m}")
+                        
+                        # FEMININE
+                        ans_f = st.session_state.user_free_answers.get(f"free_input_sg_{case}_f", "")
+                        corr_f = normalize_latin(ans_f.strip()).lower() == normalize_latin(form_f).lower()
+                        with c2:
+                            if form_f == "—": st.info("—")
+                            elif corr_f: st.success(form_f)
+                            else: st.error(f"{ans_f} → {form_f}")
+                            
+                        # NEUTER
+                        ans_n = st.session_state.user_free_answers.get(f"free_input_sg_{case}_n", "")
+                        corr_n = normalize_latin(ans_n.strip()).lower() == normalize_latin(form_n).lower()
+                        with c3:
+                            if form_n == "—": st.info("—")
+                            elif corr_n: st.success(form_n)
+                            else: st.error(f"{ans_n} → {form_n}")
+                    else:
+                        with c1: 
+                            if form_m == "—": st.text_input("M", value="—", key=f"free_input_sg_{case}_m", disabled=True, label_visibility="collapsed")
+                            else: st.text_input("M", key=f"free_input_sg_{case}_m", placeholder="Masc", label_visibility="collapsed")
+                        with c2: 
+                            if form_f == "—": st.text_input("F", value="—", key=f"free_input_sg_{case}_f", disabled=True, label_visibility="collapsed")
+                            else: st.text_input("F", key=f"free_input_sg_{case}_f", placeholder="Fem", label_visibility="collapsed")
+                        with c3: 
+                            if form_n == "—": st.text_input("N", value="—", key=f"free_input_sg_{case}_n", disabled=True, label_visibility="collapsed")
+                            else: st.text_input("N", key=f"free_input_sg_{case}_n", placeholder="Neut", label_visibility="collapsed")
                 
                 with col_pl:
-                    st.markdown("*Pluralis*")
+                    st.caption("Pluralis (Masc / Fem / Neut)")
+                    c1, c2, c3 = st.columns(3)
+                    
+                    # Keys
                     key_m = f"{case[:3]}_pl_m"
                     key_f = f"{case[:3]}_pl_f"
                     key_n = f"{case[:3]}_pl_n"
+                    
+                    # Correct forms
                     form_m = forms.get(key_m, "—")
                     form_f = forms.get(key_f, "—")
                     form_n = forms.get(key_n, "—")
-                    st.info(f"{form_m} / {form_f} / {form_n}")
+                    
+                    # Inputs
+                    if st.session_state.show_free_answers:
+                        # MASCULINE
+                        ans_m = st.session_state.user_free_answers.get(f"free_input_pl_{case}_m", "")
+                        corr_m = normalize_latin(ans_m.strip()).lower() == normalize_latin(form_m).lower()
+                        with c1:
+                            if form_m == "—": st.info("—")
+                            elif corr_m: st.success(form_m)
+                            else: st.error(f"{ans_m} → {form_m}")
+                        
+                        # FEMININE
+                        ans_f = st.session_state.user_free_answers.get(f"free_input_pl_{case}_f", "")
+                        corr_f = normalize_latin(ans_f.strip()).lower() == normalize_latin(form_f).lower()
+                        with c2:
+                            if form_f == "—": st.info("—")
+                            elif corr_f: st.success(form_f)
+                            else: st.error(f"{ans_f} → {form_f}")
+                            
+                        # NEUTER
+                        ans_n = st.session_state.user_free_answers.get(f"free_input_pl_{case}_n", "")
+                        corr_n = normalize_latin(ans_n.strip()).lower() == normalize_latin(form_n).lower()
+                        with c3:
+                            if form_n == "—": st.info("—")
+                            elif corr_n: st.success(form_n)
+                            else: st.error(f"{ans_n} → {form_n}")
+                    else:
+                        with c1: 
+                            if form_m == "—": st.text_input("M", value="—", key=f"free_input_pl_{case}_m", disabled=True, label_visibility="collapsed")
+                            else: st.text_input("M", key=f"free_input_pl_{case}_m", placeholder="Masc", label_visibility="collapsed")
+                        with c2: 
+                            if form_f == "—": st.text_input("F", value="—", key=f"free_input_pl_{case}_f", disabled=True, label_visibility="collapsed")
+                            else: st.text_input("F", key=f"free_input_pl_{case}_f", placeholder="Fem", label_visibility="collapsed")
+                        with c3: 
+                            if form_n == "—": st.text_input("N", value="—", key=f"free_input_pl_{case}_n", disabled=True, label_visibility="collapsed")
+                            else: st.text_input("N", key=f"free_input_pl_{case}_n", placeholder="Neut", label_visibility="collapsed")
                 
                 st.markdown("---")
         else:
@@ -517,12 +712,17 @@ with practice_tabs[1]:
                         user_answer = st.session_state.user_free_answers.get(f"free_input_sg_{case}", "")
                         is_correct = normalize_latin(user_answer.strip()).lower() == normalize_latin(correct_form).lower()
                         
-                        if is_correct:
+                        if correct_form == "—":
+                            st.info("—")
+                        elif is_correct:
                             st.success(f"✅ {label}: **{correct_form}**")
                         else:
                             st.error(f"❌ {label}: Tu respuesta: '{user_answer}' → Correcto: **{correct_form}**")
                     else:
-                        st.text_input(label, value="", key=f"free_input_sg_{case}", placeholder=f"{label} singular", label_visibility="collapsed")
+                        if correct_form == "—":
+                            st.text_input(label, value="—", key=f"free_input_sg_{case}", disabled=True, label_visibility="collapsed")
+                        else:
+                            st.text_input(label, value="", key=f"free_input_sg_{case}", placeholder=f"{label} singular", label_visibility="collapsed")
             
             with col2:
                 st.markdown("#### Pluralis")
@@ -534,12 +734,17 @@ with practice_tabs[1]:
                         user_answer = st.session_state.user_free_answers.get(f"free_input_pl_{case}", "")
                         is_correct = normalize_latin(user_answer.strip()).lower() == normalize_latin(correct_form).lower()
                         
-                        if is_correct:
+                        if correct_form == "—":
+                            st.info("—")
+                        elif is_correct:
                             st.success(f"✅ {label}: **{correct_form}**")
                         else:
                             st.error(f"❌ {label}: Tu respuesta: '{user_answer}' → Correcto: **{correct_form}**")
                     else:
-                        st.text_input(label, value="", key=f"free_input_pl_{case}", placeholder=f"{label} plural", label_visibility="collapsed")
+                        if correct_form == "—":
+                            st.text_input(label, value="—", key=f"free_input_pl_{case}", disabled=True, label_visibility="collapsed")
+                        else:
+                            st.text_input(label, value="", key=f"free_input_pl_{case}", placeholder=f"{label} plural", label_visibility="collapsed")
         
         st.markdown("---")
         
@@ -549,34 +754,59 @@ with practice_tabs[1]:
             if st.button("✅ Verificar", use_container_width=True, key="verify_free"):
                 # Save user answers
                 st.session_state.user_free_answers = {}
-                for case in cases:
-                    sg_key = f"free_input_sg_{case}"
-                    pl_key = f"free_input_pl_{case}"
-                    if sg_key in st.session_state:
-                        st.session_state.user_free_answers[sg_key] = st.session_state[sg_key]
-                    if pl_key in st.session_state:
-                        st.session_state.user_free_answers[pl_key] = st.session_state[pl_key]
+                
+                if is_demonstrative:
+                    # Save all 3 genders x 2 numbers x 6 cases = 36 inputs
+                    for case in cases:
+                        for num in ["sg", "pl"]:
+                            for g in ["m", "f", "n"]:
+                                key = f"free_input_{num}_{case}_{g}"
+                                if key in st.session_state:
+                                    st.session_state.user_free_answers[key] = st.session_state[key]
+                else:
+                    # Save regular inputs
+                    for case in cases:
+                        sg_key = f"free_input_sg_{case}"
+                        pl_key = f"free_input_pl_{case}"
+                        if sg_key in st.session_state:
+                            st.session_state.user_free_answers[sg_key] = st.session_state[sg_key]
+                        if pl_key in st.session_state:
+                            st.session_state.user_free_answers[pl_key] = st.session_state[pl_key]
                 
                 # Calculate score (NO XP awarded in free practice)
                 correct_count = 0
                 total_count = 0
                 
                 for case in cases:
-                    sg_key = f"free_input_sg_{case}"
-                    user_answer_sg = st.session_state.user_free_answers.get(sg_key, "")
-                    correct_form_sg = forms.get(f"{case[:3]}_sg", "")
-                    if user_answer_sg.strip():
-                        total_count += 1
-                        if normalize_latin(user_answer_sg.strip()).lower() == normalize_latin(correct_form_sg).lower():
-                            correct_count += 1
-                    
-                    pl_key = f"free_input_pl_{case}"
-                    user_answer_pl = st.session_state.user_free_answers.get(pl_key, "")
-                    correct_form_pl = forms.get(f"{case[:3]}_pl", "")
-                    if user_answer_pl.strip():
-                        total_count += 1
-                        if normalize_latin(user_answer_pl.strip()).lower() == normalize_latin(correct_form_pl).lower():
-                            correct_count += 1
+                    if is_demonstrative:
+                        # Check 3 genders
+                        for num in ["sg", "pl"]:
+                            for g in ["m", "f", "n"]:
+                                key = f"free_input_{num}_{case}_{g}"
+                                user_ans = st.session_state.user_free_answers.get(key, "")
+                                corr_form = forms.get(f"{case[:3]}_{num}_{g}", "")
+                                
+                                if user_ans.strip():
+                                    total_count += 1
+                                    if normalize_latin(user_ans.strip()).lower() == normalize_latin(corr_form).lower():
+                                        correct_count += 1
+                    else:
+                        # Regular check
+                        sg_key = f"free_input_sg_{case}"
+                        user_answer_sg = st.session_state.user_free_answers.get(sg_key, "")
+                        correct_form_sg = forms.get(f"{case[:3]}_sg", "")
+                        if user_answer_sg.strip():
+                            total_count += 1
+                            if normalize_latin(user_answer_sg.strip()).lower() == normalize_latin(correct_form_sg).lower():
+                                correct_count += 1
+                        
+                        pl_key = f"free_input_pl_{case}"
+                        user_answer_pl = st.session_state.user_free_answers.get(pl_key, "")
+                        correct_form_pl = forms.get(f"{case[:3]}_pl", "")
+                        if user_answer_pl.strip():
+                            total_count += 1
+                            if normalize_latin(user_answer_pl.strip()).lower() == normalize_latin(correct_form_pl).lower():
+                                correct_count += 1
                 
                 # Just show score, NO XP
                 if total_count > 0:

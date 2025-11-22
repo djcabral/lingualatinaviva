@@ -34,6 +34,29 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+# Admin Authentication
+if 'is_admin' not in st.session_state:
+    st.session_state.is_admin = False
+
+if not st.session_state.is_admin:
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        st.markdown("### 🔒 Acceso Restringido")
+        password = st.text_input("Contraseña de Administrador", type="password")
+        if st.button("Ingresar", type="primary", use_container_width=True):
+            if password == "admin123":  # Simple hardcoded password
+                st.session_state.is_admin = True
+                st.rerun()
+            else:
+                st.error("Contraseña incorrecta")
+    st.stop()
+
+# Logout button
+with st.sidebar:
+    if st.button("🔒 Cerrar Sesión"):
+        st.session_state.is_admin = False
+        st.rerun()
+
 # Sidebar Navigation
 section = st.sidebar.radio(
     "Sección",
@@ -611,7 +634,7 @@ if section == "Vocabulario":
 elif section == "Textos":
     st.markdown("## 📜 Gestión de Textos")
     
-    text_tabs = st.tabs(["➕ Añadir Texto", "📚 Ver Textos"])
+    text_tabs = st.tabs(["➕ Añadir Texto", "📚 Ver Textos", "🛠️ Herramientas"])
     
     with text_tabs[0]:
         st.markdown("### Nuevo Texto")
@@ -624,12 +647,21 @@ elif section == "Textos":
         
         with col2:
             level = st.number_input("Nivel", 1, 10, 1)
+            book = st.number_input("Libro (opcional)", 0, 100, 0, help="Número de libro (ej: 1)")
+            chapter = st.number_input("Capítulo (opcional)", 0, 100, 0, help="Número de capítulo (ej: 5)")
             st.info("El sistema analizará el texto y vinculará el vocabulario automáticamente.")
         
         if st.button("💾 Guardar Texto", use_container_width=True, type="primary"):
             if title and content:
                 with get_session() as session:
-                    new_text = Text(title=title, author=author, content=content, difficulty=level)
+                    new_text = Text(
+                        title=title, 
+                        author=author, 
+                        content=content, 
+                        difficulty=level,
+                        book_number=book if book > 0 else None,
+                        chapter_number=chapter if chapter > 0 else None
+                    )
                     session.add(new_text)
                     session.commit()
                     session.refresh(new_text)
@@ -664,6 +696,57 @@ elif section == "Textos":
                 with st.expander(f"{t.title} (Nivel {t.difficulty})"):
                     st.write(t.content[:200] + "...")
                     st.caption(f"Autor: {t.author.name if t.author else 'Desconocido'}")
+
+    with text_tabs[2]:
+        st.markdown("### 🛠️ Herramientas de Análisis")
+        
+        st.info("Ejecuta el análisis morfológico profundo (Stanza) para todos los textos. Útil después de añadir textos o corregir vocabulario.")
+        
+        if st.button("🔄 Re-analizar Todos los Textos", type="primary"):
+            try:
+                from utils.stanza_analyzer import StanzaAnalyzer, analyze_and_save_text
+                
+                if not StanzaAnalyzer.is_available():
+                    st.error("❌ Stanza no está disponible. Revisa la instalación.")
+                else:
+                    with get_session() as session:
+                        texts = session.exec(select(Text)).all()
+                        
+                        progress_bar = st.progress(0)
+                        status_text = st.empty()
+                        
+                        total_analyzed = 0
+                        total_saved = 0
+                        errors = []
+                        
+                        for i, text in enumerate(texts):
+                            status_text.text(f"Analizando: {text.title}...")
+                            
+                            try:
+                                analyzed, saved = analyze_and_save_text(
+                                    text.id,
+                                    text.content,
+                                    session
+                                )
+                                total_analyzed += analyzed
+                                total_saved += saved
+                            except Exception as e:
+                                errors.append(f"{text.title}: {str(e)}")
+                            
+                            progress_bar.progress((i + 1) / len(texts))
+                        
+                        status_text.text("¡Análisis completado!")
+                        st.success(f"✅ Procesados {len(texts)} textos. {total_analyzed} palabras analizadas.")
+                        
+                        if errors:
+                            st.warning(f"⚠️ Hubo {len(errors)} errores:")
+                            for err in errors:
+                                st.write(f"- {err}")
+                                
+            except ImportError:
+                st.error("❌ No se pudo importar el módulo de análisis. Verifica que stanza esté instalado.")
+            except Exception as e:
+                st.error(f"❌ Error inesperado: {str(e)}")
 
 # --- SECTION: STATS ---
 elif section == "Estadísticas":
