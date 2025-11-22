@@ -27,20 +27,23 @@ def get_session():
     return Session(engine)
 
 def init_db():
+    """Initialize database, create tables, and ensure user profile exists"""
     create_db_and_tables()
-    # Check if we have words, if not import seed
-    with get_session() as session:
-        statement = select(Word)
-        results = session.exec(statement).first()
-        if not results:
-            import_seed_data(session)
-        
-        # Check for user profile
-        user = session.exec(select(UserProfile)).first()
-        if not user:
-            new_user = UserProfile(username="Discipulus", level=1, xp=0, streak=0)
-            session.add(new_user)
-            session.commit()
+    
+    # Only try to check/create user if tables already exist
+    # Avoid queries during initial setup that can trigger registry errors
+    if os.path.exists(sqlite_file_name):
+        try:
+            with get_session() as session:
+                # Check for user profile
+                user = session.exec(select(UserProfile)).first()
+                if not user:
+                    new_user = UserProfile(username="Discipulus", level=1, xp=0, streak=0)
+                    session.add(new_user)
+                    session.commit()
+        except Exception as e:
+            # Log but don't fail - tables will be created
+            print(f"Note: Could not initialize user during setup: {e}")
 
 def import_seed_data(session: Session):
     # This assumes running from project root
