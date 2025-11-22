@@ -164,11 +164,12 @@ else:
     
     # Quick stats overview
     from database.connection import get_session
-    from database.models import UserProfile, Word
     from sqlmodel import select
+    # Import models only once - they're already imported in connection.py
+    import database.models as models
     
     with get_session() as session:
-        user = session.exec(select(UserProfile)).first()
+        user = session.exec(select(models.UserProfile)).first()
         if user:
             col1, col2, col3, col4 = st.columns(4)
             
@@ -206,7 +207,7 @@ else:
                 )
             
             with col4:
-                total_words = session.exec(select(Word)).all()
+                total_words = session.exec(select(models.Word)).all()
                 st.markdown(
                     f"""
                     <div class="stat-box">
