@@ -11,7 +11,7 @@ def render_sidebar_footer():
             <p style="font-size: 0.9em; color: #666;">
                 ¿Te gusta Lingua Latina Viva?
             </p>
-            <a href="https://www.buymeacoffee.com/tu_usuario" target="_blank">
+            <a href="https://www.buymeacoffee.com/djcabralc" target="_blank">
                 <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 40px !important;width: 145px !important;" >
             </a>
             <p style="font-size: 0.8em; color: #888; margin-top: 10px;">
