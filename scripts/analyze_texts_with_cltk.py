@@ -1,5 +1,5 @@
 """
-Script para analizar todos los textos existentes con CLTK
+Script para analizar todos los textos existentes con Stanza
 Solo necesario ejecutar UNA VEZ en la máquina del administrador
 """
 
@@ -13,21 +13,22 @@ if not any('latin-python' in p for p in sys.path):
 from database.connection import get_session
 from database.models import Text
 from sqlmodel import select
-from utils.cltk_analyzer import CLTKAnalyzer, analyze_and_save_text
+from utils.cltk_analyzer import StanzaAnalyzer, analyze_and_save_text
 
 
 def main():
-    """Analiza todos los textos con CLTK y guarda los resultados"""
+    """Analiza todos los textos con Stanza y guarda los resultados"""
     
-    # Verificar disponibilidad de CLTK
-    if not CLTKAnalyzer.is_available():
-        print("❌ CLTK no está disponible")
-        print(CLTKAnalyzer.install_instructions())
-        print("\nPara instalar CLTK:")
-        print("  pip install cltk")
+    # Verificar disponibilidad de Stanza
+    if not StanzaAnalyzer.is_available():
+        print("❌ Stanza no está disponible")
+        print(StanzaAnalyzer.install_instructions())
+        print("\nPara instalar Stanza:")
+        print("  pip install stanza")
+        print("  python -c \"import stanza; stanza.download('la')\"")
         return
     
-    print("🔬 Iniciando análisis de todos los textos con CLTK...")
+    print("🔬 Iniciando análisis de todos los textos con Stanza...")
     print("=" * 60)
     
     with get_session() as session:

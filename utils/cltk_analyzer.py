@@ -1,8 +1,11 @@
 """
-Analizador de textos latinos usando CLTK (Classical Language Toolkit)
+Analizador de textos latinos usando Stanza (Stanford NLP)
 
-Este módulo usa CLTK como dependencia opcional para analizar textos.
-El análisis se guarda en TextWordLink para uso posterior sin necesidad de CLTK.
+Stanza es uno de los mejores modelos para latín en 2025:
+- Modelos entrenados en PROIEL, Perseus, IT-TB, UDante
+- Muy precisa lematización y POS tagging
+- Análisis de dependencias y NER
+- Sin problemas de GPU
 """
 
 import json
@@ -10,99 +13,100 @@ import sys
 import os
 from typing import List, Dict, Optional, Tuple
 
-# Check if CLTK is available
-CLTK_AVAILABLE = False
+# Force CPU mode to avoid GPU issues
+os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+
+# Check if Stanza is available
+STANZA_AVAILABLE = False
 try:
-    from cltk import NLP
-    from cltk.languages.utils import get_lang
-    CLTK_AVAILABLE = True
+    import stanza
+    STANZA_AVAILABLE = True
 except ImportError:
     pass
 
 
-class CLTKAnalyzer:
-    """Analizador de textos latinos usando CLTK"""
+class StanzaAnalyzer:
+    """Analizador de textos latinos usando Stanza"""
     
     def __init__(self):
-        """Inicializa el analizador CLTK si está disponible"""
+        """Inicializa el analizador Stanza si está disponible"""
         self.nlp = None
-        if CLTK_AVAILABLE:
+        if STANZA_AVAILABLE:
             try:
-                self.nlp = NLP(language="lat", suppress_banner=True)
+                # Intentar cargar modelo de latín
+                self.nlp = stanza.Pipeline('la', processors='tokenize,mwt,pos,lemma', use_gpu=False)
             except Exception as e:
-                print(f"⚠️  Error al inicializar CLTK: {e}")
+                print(f"⚠️ Modelo de latín no descargado. Error: {e}")
+                print("   Ejecuta: stanza.download('la')")
                 self.nlp = None
     
     @staticmethod
     def is_available() -> bool:
-        """Verifica si CLTK está disponible"""
-        return CLTK_AVAILABLE
+        """Verifica si Stanza está disponible"""
+        return STANZA_AVAILABLE
     
     @staticmethod
     def install_instructions() -> str:
-        """Retorna instrucciones para instalar CLTK"""
+        """Retorna instrucciones para instalar Stanza"""
         return """
-Para usar análisis CLTK, instala las dependencias:
+Para usar análisis Stanza, instala las dependencias:
 
-    pip install cltk
+    pip install stanza
 
-La primera vez que uses CLTK, descargará modelos (~250MB).
+Luego descarga el modelo de latín:
+
+    python -c "import stanza; stanza.download('la')"
+
 Esto solo es necesario para ADMINISTRADORES que añaden textos nuevos.
-Los usuarios finales NO necesitan CLTK instalado.
+Los usuarios finales NO necesitan Stanza instalado.
         """
     
     def analyze_text(self, text: str) -> List[Dict]:
         """
-        Analiza un texto latino con CLTK
+        Analiza un texto latino con Stanza
         
         Args:
             text: Texto latino a analizar
             
         Returns:
-            Lista de diccionarios con análisis de cada palabra:
-            [
-                {
-                    "form": "forma original",
-                    "lemma": "lema",
-                    "pos": "parte del discurso",
-                    "morphology": {...},
-                    "is_punctuation": bool
-                },
-                ...
-            ]
+            Lista de diccionarios con análisis de cada palabra
         """
         if not self.nlp:
-            raise RuntimeError("CLTK no está disponible. " + self.install_instructions())
+            raise RuntimeError("Stanza no está disponible. " + self.install_instructions())
         
         try:
-            # Procesar texto con CLTK
-            doc = self.nlp.analyze(text=text)
+            # Procesar texto con Stanza
+            doc = self.nlp(text)
             
             results = []
             position = 0
             
-            for word in doc.words:
-                # Extraer información morfológica
-                analysis = {
-                    "position": position,
-                    "form": word.string,
-                    "lemma": word.lemma if hasattr(word, 'lemma') else word.string,
-                    "pos": self._normalize_pos(word.upos if hasattr(word, 'upos') else None),
-                    "morphology": self._extract_morphology(word),
-                    "is_punctuation": self._is_punctuation(word.string)
-                }
-                
-                results.append(analysis)
-                position += 1
+            for sentence in doc.sentences:
+                for word in sentence.words:
+                    # Verificar si es puntuación
+                    is_punct = word.upos == 'PUNCT'
+                    
+                    # Extraer información morfológica
+                    analysis = {
+                        "position": position,
+                        "form": word.text,
+                        "lemma": word.lemma if word.lemma else word.text,
+                        "pos": self._normalize_pos(word.upos),
+                        "morphology": self._extract_morphology(word),
+                        "is_punctuation": is_punct
+                    }
+                    
+                    results.append(analysis)
+                    position += 1
             
             return results
             
         except Exception as e:
-            print(f"❌ Error al analizar texto con CLTK: {e}")
+            print(f"❌ Error al analizar texto con Stanza: {e}")
             raise
     
     def _normalize_pos(self, upos: Optional[str]) -> str:
-        """Normaliza etiquetas POS de CLTK a nuestro sistema"""
+        """Normaliza etiquetas POS de Stanza a nuestro sistema"""
         if not upos:
             return "unknown"
         
@@ -118,46 +122,25 @@ Los usuarios finales NO necesitan CLTK instalado.
             "SCONJ": "conjunction",
             "INTJ": "interjection",
             "NUM": "numeral",
-            "PROPN": "proper_noun"
+            "PROPN": "proper_noun",
+            "PUNCT": "punctuation"
         }
         
         return pos_map.get(upos, upos.lower())
     
     def _extract_morphology(self, word) -> Dict:
-        """Extrae información morfológica de una palabra CLTK"""
+        """Extrae información morfológica de una palabra Stanza"""
         morph = {}
         
-        # Extraer características morfológicas si existen
-        if hasattr(word, 'feats') and word.feats:
-            # CLTK usa formato "Case=Nom|Number=Sing|Gender=Fem"
-            for feat in word.feats.split('|'):
-                if '=' in feat:
-                    key, value = feat.split('=', 1)
+        # Stanza ya tiene feats parseado como dict
+        if word.feats:
+            # Parse feats format: "Case=Nom|Number=Sing|Gender=Fem"
+            for feat_pair in word.feats.split('|'):
+                if '=' in feat_pair:
+                    key, value = feat_pair.split('=', 1)
                     morph[key.lower()] = value.lower()
         
-        # Normalizar nombres de características
-        morph_normalized = {}
-        
-        key_map = {
-            'case': 'case',
-            'number': 'number',
-            'gender': 'gender',
-            'tense': 'tense',
-            'mood': 'mood',
-            'voice': 'voice',
-            'person': 'person',
-            'degree': 'degree'
-        }
-        
-        for old_key, new_key in key_map.items():
-            if old_key in morph:
-                morph_normalized[new_key] = morph[old_key]
-        
-        return morph_normalized
-    
-    def _is_punctuation(self, text: str) -> bool:
-        """Verifica si el texto es puntuación"""
-        return text.strip() in '.,;:!?-—()[]{}""\'\'«»'
+        return morph
     
     def format_morphology_spanish(self, morphology: Dict, pos: str) -> str:
         """Formatea morfología en español para mostrar al usuario"""
@@ -190,6 +173,7 @@ Los usuarios finales NO necesitan CLTK instalado.
         if 'tense' in morphology:
             tense_map = {
                 'pres': 'presente',
+                'past': 'pasado',
                 'impf': 'imperfecto',
                 'fut': 'futuro',
                 'perf': 'perfecto',
@@ -223,7 +207,7 @@ Los usuarios finales NO necesitan CLTK instalado.
 
 def analyze_and_save_text(text_id: int, text_content: str, session) -> Tuple[int, int]:
     """
-    Analiza un texto con CLTK y guarda el análisis en TextWordLink
+    Analiza un texto con Stanza y guarda el análisis en TextWordLink
     
     Args:
         text_id: ID del texto en la base de datos
@@ -236,25 +220,21 @@ def analyze_and_save_text(text_id: int, text_content: str, session) -> Tuple[int
     from database.models import TextWordLink, Word
     from sqlmodel import select
     from utils.latin_logic import LatinMorphology
+    from sqlalchemy import text as sql_text
     
-    # Verificar si CLTK está disponible
-    if not CLTKAnalyzer.is_available():
+    # Verificar si Stanza está disponible
+    if not StanzaAnalyzer.is_available():
         raise RuntimeError(
-            "CLTK no está disponible.\n" + 
-            CLTKAnalyzer.install_instructions()
+            "Stanza no está disponible.\n" + 
+            StanzaAnalyzer.install_instructions()
         )
     
-    # Limpiar análisis anteriores
-    existing_links = session.exec(
-        select(TextWordLink).where(TextWordLink.text_id == text_id)
-    ).all()
-    
-    for link in existing_links:
-        session.delete(link)
+    # Limpiar análisis anteriores (usar raw SQL para evitar problemas)
+    session.exec(sql_text(f"DELETE FROM textwordlink WHERE text_id = {text_id}"))
     session.commit()
     
-    # Analizar con CLTK
-    analyzer = CLTKAnalyzer()
+    # Analizar con Stanza
+    analyzer = StanzaAnalyzer()
     analyses = analyzer.analyze_text(text_content)
     
     print(f"📊 Texto analizado: {len(analyses)} tokens encontrados")
@@ -263,35 +243,53 @@ def analyze_and_save_text(text_id: int, text_content: str, session) -> Tuple[int
     
     for analysis in analyses:
         # Intentar encontrar palabra en vocabulario
-        normalized_form = LatinMorphology.normalize_latin(analysis['lemma'])
+        normalized_lemma = LatinMorphology.normalize_latin(analysis['lemma'])
         
         word = session.exec(
             select(Word).where(
                 (Word.latin == analysis['lemma']) |
-                (Word.latin == normalized_form)
+                (Word.latin == normalized_lemma)
             )
         ).first()
         
-        # Crear TextWordLink
-        link = TextWordLink(
-            text_id=text_id,
-            word_id=word.id if word else None,
-            position_in_sentence=analysis['position'],
-            form=analysis['form'],
-            morphology_json=json.dumps(analysis['morphology']),
-            syntax_role=None  # Puede ser extendido después
-        )
+        # Preparar datos para INSERT
+        word_id_value = word.id if word else None
+        morphology_str = json.dumps(analysis['morphology'])
         
-        # Guardar lemma y POS adicionales si no está en vocabulario
+        # Guardar notes si no está en vocabulario
+        notes_str = None
         if not word:
-            # Temporalmente guardar en notes
-            link.notes = json.dumps({
+            notes_str = json.dumps({
                 "lemma": analysis['lemma'],
                 "pos": analysis['pos'],
-                "cltk_analysis": True
+                "stanza_analysis": True
             })
         
-        session.add(link)
+        # Usar raw SQL INSERT con cursor directo de SQLite
+        # Esto evita problemas de metadata caching de SQLAlchemy
+        import sqlite3
+        db_path = 'data/latin_learning.db'
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        
+        cursor.execute("""
+            INSERT INTO textwordlink 
+            (text_id, word_id, sentence_number, position_in_sentence, form, morphology_json, syntax_role, notes)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        """, (
+            text_id,
+            word_id_value,
+            1,
+            analysis['position'],
+            analysis['form'],
+            morphology_str,
+            None,
+            notes_str
+        ))
+        
+        conn.commit()
+        conn.close()
+        
         saved_count += 1
     
     session.commit()
