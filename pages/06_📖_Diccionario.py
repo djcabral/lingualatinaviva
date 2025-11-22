@@ -37,7 +37,7 @@ with col2:
 
 if search_term:
     # Normalize search term
-    search_normalized = morphology.normalize_latin(search_term.strip())
+    search_normalized = morphology.normalize_latin(search_term.strip().lower())
     
     with Session(engine) as session:
         # Search in database
@@ -118,6 +118,16 @@ if search_term:
             st.warning("No se encontraron resultados")
             st.info("💡 **Sugerencia:** Intenta buscar sin macrones (á → a, ē → e)")
 
+# Load CSS
+def load_css():
+    import os
+    css_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "assets", "style.css")
+    if os.path.exists(css_path):
+        with open(css_path) as f:
+            st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+load_css()
+
 # Browse by category
 st.markdown("---")
 st.markdown("### Explorar por categoría")
@@ -142,12 +152,25 @@ with Session(engine) as session:
         'interjection': 'Interjecciones'
     }
     
-    cols = st.columns(4)
-    for i, (pos, label) in enumerate(pos_spanish.items()):
-        with cols[i % 4]:
-            count = pos_counts.get(pos, 0)
-            if count > 0:
-                st.metric(label, count)
+    # Create rows of 4
+    items = list(pos_spanish.items())
+    for i in range(0, len(items), 4):
+        cols = st.columns(4)
+        for j in range(4):
+            if i + j < len(items):
+                pos, label = items[i + j]
+                count = pos_counts.get(pos, 0)
+                
+                with cols[j]:
+                    st.markdown(
+                        f"""
+                        <div class="stat-box">
+                            <div class="stat-value">{count}</div>
+                            <div class="stat-label">{label}</div>
+                        </div>
+                        """,
+                        unsafe_allow_html=True
+                    )
 
 # Footer with attribution
 st.markdown("---")

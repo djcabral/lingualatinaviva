@@ -177,7 +177,6 @@ if section == "Vocabulario":
         st.markdown("### 📥 Importar Vocabulario desde CSV/Excel")
         
         # Import CSV handler
-        sys.path.append(os.path.dirname(os.path.dirname(__file__)))
         from utils.csv_handler import VocabularyImporter, TemplateGenerator
         
         st.info("📝 Importa múltiples palabras a la vez usando archivos CSV o Excel.")
@@ -664,7 +663,7 @@ elif section == "Textos":
             for t in texts:
                 with st.expander(f"{t.title} (Nivel {t.difficulty})"):
                     st.write(t.content[:200] + "...")
-                    st.caption(f"Autor: {t.author or 'Desconocido'}")
+                    st.caption(f"Autor: {t.author.name if t.author else 'Desconocido'}")
 
 # --- SECTION: STATS ---
 elif section == "Estadísticas":

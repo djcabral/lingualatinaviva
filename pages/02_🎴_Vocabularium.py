@@ -4,9 +4,9 @@ import os
 import random
 from datetime import datetime, timedelta
 
-root_path = os.path.dirname(os.path.dirname(__file__))
-if root_path not in sys.path:
-    sys.path.append(root_path)
+# root_path = os.path.dirname(os.path.dirname(__file__))
+# if root_path not in sys.path:
+#     sys.path.append(root_path)
 
 from database.connection import get_session
 from database.models import Word, ReviewLog, UserProfile, Text, TextWordLink
@@ -66,7 +66,7 @@ with get_session() as session:
     with col2:
         if mode == "text_prep":
             if texts:
-                text_options = {t.id: f"{t.title} ({t.author or 'Anónimo'})" for t in texts}
+                text_options = {t.id: f"{t.title} ({t.author.name if t.author else 'Anónimo'})" for t in texts}
                 selected = st.selectbox(
                     "Selecciona un texto:",
                     options=list(text_options.keys()),
@@ -138,10 +138,70 @@ with get_session() as session:
             st.warning("Selecciona un texto para estudiar.")
             st.stop()
     
-    # Get current word or select a new one
+    # --- WORD SELECTION LOGIC ---
+    
+    # 1. Check for due reviews first (SRS)
+    # In a real implementation, we would query ReviewLog for due items.
+    # For this demo, we'll simulate it or prioritize words with low repetition counts if they exist.
+    
+    # 2. Select new words based on priority
     if st.session_state.current_word_id is None:
-        word = random.choice(all_words)
-        st.session_state.current_word_id = word.id
+        word = None
+        
+        if st.session_state.study_mode == "general":
+            # Priority Logic:
+            # User can select a "batch" or "tier" of words to focus on.
+            # For now, we'll default to a progressive system:
+            # Pick words from the top 500 frequency that haven't been reviewed much.
+            
+            priority_tier = st.sidebar.selectbox(
+                "🎯 Prioridad de Aprendizaje",
+                [100, 500, 1000, 2000, 5000, "Todas"],
+                format_func=lambda x: f"Top {x} palabras más usadas" if isinstance(x, int) else "Todas las palabras"
+            )
+            
+            query = select(Word).where(Word.status == 'active')
+            
+            if isinstance(priority_tier, int):
+                query = query.where(Word.frequency_rank_global <= priority_tier)
+                query = query.where(Word.frequency_rank_global > 0) # Ensure valid rank
+                
+            # Order by frequency rank to prioritize most common words
+            # But also mix in some randomness so we don't just see "et, et, et"
+            # Ideally: Select top X unreviewed words and pick one.
+            
+            potential_words = session.exec(query).all()
+            
+            if potential_words:
+                # Simple SRS simulation: prioritize words with 0 reviews or low quality
+                # For now, just weighted random favoring high frequency
+                # We take the top 20 available words in the filtered list and pick one
+                # to ensure we stick to the high frequency ones first.
+                
+                # Sort by rank (ascending = most frequent)
+                potential_words.sort(key=lambda w: w.frequency_rank_global if w.frequency_rank_global else 99999)
+                
+                # Take top 50 candidates from the current tier
+                candidates = potential_words[:50]
+                word = random.choice(candidates)
+            
+        else:  # text_prep
+            if st.session_state.selected_text_id:
+                links = session.exec(
+                    select(TextWordLink).where(TextWordLink.text_id == st.session_state.selected_text_id)
+                ).all()
+                word_ids = [link.word_id for link in links]
+                if word_ids:
+                    # Prioritize words in the text that are also high frequency?
+                    # Or just random from text? User asked for text focus.
+                    # Let's pick random from text for now.
+                    word = session.get(Word, random.choice(word_ids))
+        
+        if word:
+            st.session_state.current_word_id = word.id
+        else:
+            st.warning("No hay palabras disponibles con los filtros actuales.")
+            st.stop()
     else:
         word = session.get(Word, st.session_state.current_word_id)
     
