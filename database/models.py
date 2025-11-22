@@ -172,3 +172,7 @@ class InflectedForm(SQLModel, table=True):
     
     # Relación
     word: Optional["Word"] = Relationship()
+
+
+# Importar modelos de análisis sintáctico
+from database.syntax_models import SentenceAnalysis, SyntaxCategory, SentenceCategoryLink
