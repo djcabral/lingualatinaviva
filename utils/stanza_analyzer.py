@@ -93,7 +93,10 @@ Los usuarios finales NO necesitan Stanza instalado.
                         "lemma": word.lemma if word.lemma else word.text,
                         "pos": self._normalize_pos(word.upos),
                         "morphology": self._extract_morphology(word),
-                        "is_punctuation": is_punct
+                        "is_punctuation": is_punct,
+                        # Syntax info
+                        "head": word.head,
+                        "deprel": word.deprel
                     }
                     
                     results.append(analysis)
@@ -217,7 +220,7 @@ def analyze_and_save_text(text_id: int, text_content: str, session) -> Tuple[int
     Returns:
         Tupla (palabras_analizadas, palabras_guardadas)
     """
-    from database.models import TextWordLink, Word
+    from database import TextWordLink, Word
     from sqlmodel import select
     from utils.latin_logic import LatinMorphology
     
@@ -248,7 +251,7 @@ def analyze_and_save_text(text_id: int, text_content: str, session) -> Tuple[int
     for analysis in analyses:
         # PASO 1: Primero intentar buscar la FORMA exacta en InflectedForm (nuestro vocabulario)
         # Esto evita errores de Stanza como "rosas" → "ros" en vez de "rosa"
-        from database.models import InflectedForm
+        from database import InflectedForm
         import re
         
         # Normalizar: quitar macrones Y puntuación/comillas

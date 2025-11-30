@@ -3,7 +3,7 @@ Script para identificar y corregir palabras con tipo 'other' o tipos incorrectos
 """
 
 from database.connection import get_session
-from database.models import Word
+from database import Word
 from sqlmodel import select
 
 def analyze_other_words():

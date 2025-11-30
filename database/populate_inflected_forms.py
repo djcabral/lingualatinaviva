@@ -12,7 +12,7 @@ if not any('latin-python' in p for p in sys.path):
     sys.path.insert(0, os.getcwd())
 
 from database.connection import get_session
-from database.models import Word, InflectedForm
+from database import Word, InflectedForm
 from utils.latin_logic import LatinMorphology
 from sqlmodel import select
 

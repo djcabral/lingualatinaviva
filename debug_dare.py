@@ -3,7 +3,7 @@ import os
 sys.path.append(os.path.dirname(__file__))
 
 from utils.latin_logic import LatinMorphology
-from database.models import Word
+from database import Word
 
 def debug_dare():
     # Simulate the Word object for 'dare'

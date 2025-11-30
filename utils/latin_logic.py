@@ -17,47 +17,55 @@ class LatinMorphology:
         return normalized
 
     @staticmethod
-    def decline_noun(word: str, declension: str, gender: str, genitive: str, irregular_forms: Optional[str] = None, parisyllabic: Optional[bool] = None) -> Dict[str, str]:
+    def decline_noun(word: str, declension: str, gender: str, genitive: str, irregular_forms: Optional[str] = None, parisyllabic: Optional[bool] = None, is_plurale_tantum: bool = False, is_singulare_tantum: bool = False) -> Dict[str, str]:
         """
         Generates full declension table for a noun.
         Returns a dict with keys like 'nom_sg', 'gen_pl', etc.
+        
+        Args:
+            is_plurale_tantum: If True, word only exists in plural (e.g., castra, arma)
+            is_singulare_tantum: If True, word only exists in singular
         """
+        # Clean up homonym markers (digits) from word and genitive
+        clean_word = ''.join([c for c in word if not c.isdigit()])
+        clean_genitive = ''.join([c for c in genitive if not c.isdigit()])
+        
         forms = {}
         stem = ""
         
         # Simplified stem extraction logic
         if declension == "1":
-            stem = word[:-1] if word.endswith("a") else word
+            stem = clean_word[:-1] if clean_word.endswith("a") else clean_word
             endings = {
                 "nom_sg": "a", "voc_sg": "a", "gen_sg": "ae", "dat_sg": "ae", "acc_sg": "am", "abl_sg": "ā",
                 "nom_pl": "ae", "voc_pl": "ae", "gen_pl": "ārum", "dat_pl": "īs", "acc_pl": "ās", "abl_pl": "īs"
             }
         elif declension == "2":
-            if word.endswith("us"):
-                stem = word[:-2]
+            if clean_word.endswith("us"):
+                stem = clean_word[:-2]
                 endings = {
                     "nom_sg": "us", "voc_sg": "e", "gen_sg": "ī", "dat_sg": "ō", "acc_sg": "um", "abl_sg": "ō",
                     "nom_pl": "ī", "voc_pl": "ī", "gen_pl": "ōrum", "dat_pl": "īs", "acc_pl": "ōs", "abl_pl": "īs"
                 }
-            elif word.endswith("um"): # Neuter
-                stem = word[:-2]
+            elif clean_word.endswith("um"): # Neuter
+                stem = clean_word[:-2]
                 endings = {
                     "nom_sg": "um", "voc_sg": "um", "gen_sg": "ī", "dat_sg": "ō", "acc_sg": "um", "abl_sg": "ō",
                     "nom_pl": "a", "voc_pl": "a", "gen_pl": "ōrum", "dat_pl": "īs", "acc_pl": "a", "abl_pl": "īs"
                 }
-            elif word.endswith("r"): # puer, ager
-                stem = genitive[:-1] # pueri -> puer
+            elif clean_word.endswith("r"): # puer, ager
+                stem = clean_genitive[:-1] # pueri -> puer
                 endings = {
                     "nom_sg": "", "voc_sg": "", "gen_sg": "ī", "dat_sg": "ō", "acc_sg": "um", "abl_sg": "ō",
                     "nom_pl": "ī", "voc_pl": "ī", "gen_pl": "ōrum", "dat_pl": "īs", "acc_pl": "ōs", "abl_pl": "īs"
                 }
             else:
                  # Fallback
-                stem = word
+                stem = clean_word
                 endings = {}
 
         elif declension == "3":
-            stem = genitive[:-2] # rex, regis -> reg
+            stem = clean_genitive[:-2] # rex, regis -> reg
             is_neuter = gender == 'n'
             is_parisyllabic = parisyllabic if parisyllabic is not None else False
             
@@ -85,7 +93,7 @@ class LatinMorphology:
                     }
                 
         elif declension == "4":
-            stem = word[:-2]
+            stem = clean_word[:-2]
             if gender == 'n': # cornu
                  endings = {
                     "nom_sg": "ū", "voc_sg": "ū", "gen_sg": "ūs", "dat_sg": "ū", "acc_sg": "ū", "abl_sg": "ū",
@@ -108,9 +116,9 @@ class LatinMorphology:
 
         for case, ending in endings.items():
             if case.startswith("nom_sg") and declension in ["2", "3"] and ending == "":
-                forms[case] = word # Special handling for nom_sg where it's the base
+                forms[case] = clean_word # Special handling for nom_sg where it's the base
             elif case.startswith("acc_sg") and declension == "3" and gender == 'n':
-                 forms[case] = word
+                 forms[case] = clean_word
             else:
                 forms[case] = stem + ending
                 
@@ -123,6 +131,18 @@ class LatinMorphology:
                         forms[key] = value
             except json.JSONDecodeError:
                 pass # Ignore invalid JSON
+
+        # Handle pluralia tantum (only plural forms exist)
+        if is_plurale_tantum:
+            for key in list(forms.keys()):
+                if '_sg' in key:
+                    forms[key] = "—"
+        
+        # Handle singularia tantum (only singular forms exist)
+        if is_singulare_tantum:
+            for key in list(forms.keys()):
+                if '_pl' in key:
+                    forms[key] = "—"
 
         return forms
 
@@ -668,4 +688,115 @@ class LatinMorphology:
                 pass # Ignore invalid JSON
 
         return forms
+
+    @staticmethod
+    def get_participles(word: str, conjugation: str, principal_parts: str) -> Dict[str, str]:
+        """
+        Generates participles for a verb.
+        Returns a dict with keys: 'pres_act', 'perf_pass', 'fut_act', 'fut_pass'
+        """
+        forms = {}
+        parts = principal_parts.split(", ")
+        if len(parts) < 3:
+            return {}
+
+        # 1: amo, amare, amavi, amatum
+        # 2: moneo, monere, monui, monitum
+        # 3: rego, regere, rexi, rectum
+        # 3io: capio, capere, cepi, captum
+        # 4: audio, audire, audivi, auditum
+
+        pres_stem = parts[1][:-3] # amar -> am (1), moner -> mon (2), reger -> reg (3), audir -> aud (4)
+        if conjugation == "1":
+            pres_stem = parts[1][:-3] # ama
+        elif conjugation == "2":
+            pres_stem = parts[1][:-3] # mone
+        elif conjugation == "3":
+            pres_stem = parts[1][:-3] # reg
+        elif conjugation == "4":
+            pres_stem = parts[1][:-3] # audi
+
+        # Present Active Participle (ns, ntis)
+        if conjugation == "1":
+            forms["pres_act"] = pres_stem + "ns, " + pres_stem + "ntis"
+        elif conjugation == "2":
+            forms["pres_act"] = pres_stem + "ns, " + pres_stem + "ntis"
+        elif conjugation == "3":
+            forms["pres_act"] = pres_stem + "ēns, " + pres_stem + "entis"
+        elif conjugation == "4":
+            forms["pres_act"] = pres_stem + "iēns, " + pres_stem + "ientis"
+
+        # Perfect Passive Participle (us, a, um) - from 4th principal part (supine)
+        if len(parts) >= 4 and parts[3]:
+            ppp = parts[3] # amatum
+            if ppp.endswith("um"):
+                base = ppp[:-2] # amat
+                forms["perf_pass"] = f"{base}us, -a, -um"
+            else:
+                forms["perf_pass"] = ppp # Fallback
+
+        # Future Active Participle (urus, a, um) - from 4th principal part
+        if len(parts) >= 4 and parts[3]:
+            ppp = parts[3]
+            if ppp.endswith("um"):
+                base = ppp[:-2]
+                forms["fut_act"] = f"{base}ūrus, -a, -um"
+            else:
+                 forms["fut_act"] = "-"
+
+        # Future Passive Participle (Gerundive) - (ndus, a, um)
+        if conjugation == "1":
+            forms["fut_pass"] = pres_stem + "ndus, -a, -um"
+        elif conjugation == "2":
+            forms["fut_pass"] = pres_stem + "ndus, -a, -um"
+        elif conjugation == "3":
+            forms["fut_pass"] = pres_stem + "endus, -a, -um"
+        elif conjugation == "4":
+            forms["fut_pass"] = pres_stem + "iendus, -a, -um"
+
+        return forms
+
+
+# =============================================================================
+# FUNCIONES WRAPPER PARA COMPATIBILIDAD CON IMPORTS LEGACY
+# =============================================================================
+# Las páginas antiguas importan funciones standalone que no existían.
+# Estas wrappers mantienen compatibilidad sin cambiar todas las páginas.
+
+_morphology = LatinMorphology()
+
+def get_declension_forms(word: str, declension: str, gender: str, genitive: str, **kwargs):
+    """
+    Wrapper para LatinMorphology.decline_noun()
+    
+    Usado por: Declinatio.py, Analysis.py
+    """
+    return _morphology.decline_noun(word, declension, gender, genitive, **kwargs)
+
+
+def get_conjugation_forms(word: str, conjugation: str, principal_parts: str, **kwargs):
+    """
+    Wrapper para LatinMorphology.conjugate_verb()
+    
+    Usado por: Conjugatio.py, Analysis.py
+    """
+    return _morphology.conjugate_verb(word, conjugation, principal_parts, **kwargs)
+
+
+def get_pronoun_forms(pronoun: str):
+    """
+    Wrapper para LatinMorphology.decline_pronoun()
+    
+    Usado por: Declinatio.py
+    """
+    return _morphology.decline_pronoun(pronoun)
+
+
+def get_demonstrative_genders():
+    """
+    Retorna lista de géneros para demostrativos.
+    
+    Usado por: Declinatio.py
+    """
+    return ["m", "f", "n"]
 

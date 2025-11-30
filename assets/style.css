@@ -91,3 +91,54 @@ table tbody td {
 table tbody td:first-child {
     font-weight: 600 !important;
 }
+
+/* Pretty Table Component */
+.pretty-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 1em;
+    font-family: 'Cardo', serif;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    border-radius: 10px 10px 0 0;
+    overflow: hidden;
+}
+
+.pretty-table thead tr {
+    background-color: #f8f9fa;
+    /* Light background for header */
+    color: #333;
+    text-align: left;
+    font-family: 'Cinzel', serif;
+    font-weight: bold;
+}
+
+/* Dark mode adjustment for header */
+@media (prefers-color-scheme: dark) {
+    .pretty-table thead tr {
+        background-color: #262730;
+        color: #fff;
+    }
+}
+
+.pretty-table th,
+.pretty-table td {
+    padding: 12px 15px;
+}
+
+.pretty-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.pretty-table tbody tr:nth-of-type(even) {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.pretty-table tbody tr:last-of-type {
+    border-bottom: 2px solid #888;
+}
+
+.pretty-table tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    cursor: default;
+}

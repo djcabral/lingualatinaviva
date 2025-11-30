@@ -71,10 +71,34 @@ DataTable {
     border: tall #8b4513;
 }
 
+DataTable > .datatable--header {
+    background: transparent;
+    color: #2c1b0e;
+    text-style: normal;
+    border-bottom: solid #8b4513;
+}
+
+DataTable > .datatable--cursor {
+    background: #f5e6d3;
+    color: #2c1b0e;
+}
+
 .scriptorium DataTable {
     background: #2e2218;
     color: #d4c5b0;
     border: tall #5d2906;
+}
+
+.scriptorium DataTable > .datatable--header {
+    background: transparent;
+    color: #d4c5b0;
+    text-style: normal;
+    border-bottom: solid #5d2906;
+}
+
+.scriptorium DataTable > .datatable--cursor {
+    background: #1a120b;
+    color: #d4c5b0;
 }
 
 /* Specific Widgets */

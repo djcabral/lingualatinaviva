@@ -1,7 +1,19 @@
 from typing import Optional, List
 from sqlmodel import Field, SQLModel, Relationship
 from datetime import datetime
+import logging
 
+logger = logging.getLogger(__name__)
+
+# CRITICAL: Prevent duplicate model registration
+# This module should only be loaded ONCE per Python process
+# If you see this warning, it indicates a potential registry duplication issue
+if '__MODELS_MODULE_LOADED__' in globals():
+    logger.warning("⚠️  WARNING: database.models is being reloaded! This may cause 'Multiple classes found' errors.")
+    logger.warning("    Check your imports - models should only be imported through database/__init__.py")
+else:
+    globals()['__MODELS_MODULE_LOADED__'] = True
+    logger.debug("database.models loaded successfully")
 
 class Author(SQLModel, table=True):
     """Autor clásico latino"""
@@ -39,6 +51,12 @@ class Word(SQLModel, table=True):
     
     # For 3rd declension nouns: True = parisyllabic (gen_pl -ium), False = imparisyllabic (gen_pl -um)
     parisyllabic: Optional[bool] = None
+    
+    # Pluralia tantum: solo existe en plural (e.g., castra, arma, divitiae)
+    is_plurale_tantum: bool = Field(default=False)
+    
+    # Singularia tantum: solo existe en singular
+    is_singulare_tantum: bool = Field(default=False)
     
     # NUEVOS CAMPOS - Fase 1
     author_id: Optional[int] = Field(default=None, foreign_key="author.id")
@@ -84,6 +102,13 @@ class UserProfile(SQLModel, table=True):
     xp: int = Field(default=0)
     streak: int = Field(default=0)
     last_login: datetime = Field(default_factory=datetime.utcnow)
+    
+    # Campos gamificados (Sistema de Desafíos)
+    total_stars: int = Field(default=0)
+    challenges_completed: int = Field(default=0)
+    perfect_challenges: int = Field(default=0)  # Con 3 estrellas
+    current_challenge_id: Optional[int] = None
+    badges_json: Optional[str] = None  # JSON: ["declension_master", "speed_demon", ...]
 
 class Text(SQLModel, table=True):
     """Texto latino para lectura progresiva"""
@@ -174,5 +199,86 @@ class InflectedForm(SQLModel, table=True):
     word: Optional["Word"] = Relationship()
 
 
-# Importar modelos de análisis sintáctico
-from database.syntax_models import SentenceAnalysis, SyntaxCategory, SentenceCategoryLink
+class Challenge(SQLModel, table=True):
+    """Desafío gamificado del mapa de aprendizaje"""
+    __table_args__ = {'extend_existing': True}
+    
+    id: Optional[int] = Field(default=None, primary_key=True)
+    order: int = Field(index=True, unique=True)  # Posición en el mapa (1, 2, 3...)
+    title: str  # "Rosa: Nominativo y Acusativo"
+    description: str  # Descripción completa del desafío
+    
+    # Tipo de desafío
+    challenge_type: str  # "declension", "conjugation", "multiple_choice", "translation", "syntax"
+    
+    # Configuración del desafío (JSON)
+    # Ejemplo declension: {"word": "rosa", "cases": ["nominative", "accusative"], "numbers": ["singular", "plural"]}
+    # Ejemplo conjugation: {"verb": "amo", "tense": "present", "mood": "indicative"}
+    # Ejemplo multiple_choice: {"questions": [{"text": "...", "options": [...], "correct": 0}]}
+    config_json: str
+    
+    # Recompensas
+    xp_reward: int = Field(default=10)
+    
+    # Prerequisites (IDs de desafíos previos que deben completarse)
+    requires_challenge_ids: Optional[str] = None  # NULL o "1,2,3"
+    
+    # Metadatos educativos
+    grammar_topic: Optional[str] = None  # "1st_declension", "present_indicative"
+    difficulty_level: int = Field(default=1)  # 1-10
+    
+    # Relaciones
+    progress: List["UserChallengeProgress"] = Relationship(back_populates="challenge")
+
+
+class UserChallengeProgress(SQLModel, table=True):
+    """Progreso del usuario en cada desafío"""
+    __table_args__ = {'extend_existing': True}
+    
+    id: Optional[int] = Field(default=None, primary_key=True)
+    user_id: int = Field(default=1)  # Por ahora usuario único
+    challenge_id: int = Field(foreign_key="challenge.id", index=True)
+    
+    # Estado
+    status: str = Field(default="locked")  # "locked", "unlocked", "in_progress", "completed"
+    stars: int = Field(default=0)  # 0-3 estrellas
+    attempts: int = Field(default=0)
+    
+    # Métricas
+    best_score: float = Field(default=0.0)  # 0.0-100.0 (porcentaje de aciertos)
+    total_errors: int = Field(default=0)
+    completion_time: Optional[int] = None  # Segundos (NULL si no completado)
+    
+    # Timestamps
+    unlocked_at: Optional[datetime] = None
+    first_attempt_at: Optional[datetime] = None
+    last_attempt_at: Optional[datetime] = None
+    completed_at: Optional[datetime] = None
+    
+    # Relación
+    challenge: Optional["Challenge"] = Relationship(back_populates="progress")
+
+
+class Lesson(SQLModel, table=True):
+    """Lección del curso de gramática latina"""
+    __table_args__ = {'extend_existing': True}
+    
+    id: Optional[int] = Field(default=None, primary_key=True)
+    lesson_number: int = Field(index=True, unique=True)  # 1-40+
+    title: str  # "Primeros Pasos", "El Sujeto (Nominativo)", etc.
+    level: str  # "basico", "avanzado", "experto"
+    
+    # Content
+    content_markdown: str  # Full markdown content of the lesson
+    image_path: Optional[str] = None  # Path to main lesson image (relative to static/)
+    
+    # Metadata
+    is_published: bool = Field(default=True)
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+    
+    # Display order within level (for custom sorting)
+    order_in_level: int = Field(default=0)
+
+
+

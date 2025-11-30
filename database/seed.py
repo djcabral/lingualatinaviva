@@ -11,7 +11,7 @@ sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 from database.connection import create_db_and_tables, get_session, engine
 import json
-from database.models import Word, UserProfile, Text
+from database import Word, UserProfile, Text
 from sqlmodel import select
 import csv
 
@@ -74,7 +74,7 @@ def seed_texts():
             print("Database already contains texts. Skipping seed.")
             return
         
-        from database.models import Author
+        from database import Author
         
         with open(json_path, 'r', encoding='utf-8') as f:
             texts_data = json.load(f)

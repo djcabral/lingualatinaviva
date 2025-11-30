@@ -1,0 +1,25 @@
+# Dependencias para entrenamiento de IA con GPU
+# Instalación: pip install -r requirements-training.txt
+
+# PyTorch con soporte CUDA 11.8 (compatible con GTX 1060 - compute capability 6.1)
+# IMPORTANTE: GTX 1060 tiene compute capability 6.1, PyTorch 2.0.1 es la última versión que la soporta
+--extra-index-url https://download.pytorch.org/whl/cu118
+torch==2.0.1
+torchvision==0.15.2
+torchaudio==2.0.2
+
+# Transformers y Hugging Face (versiones compatibles con PyTorch 2.0.1)
+transformers==4.30.0
+datasets==2.12.0
+accelerate==0.20.0
+sentencepiece>=0.1.99
+protobuf==3.20.3
+
+# Métricas de evaluación
+sacrebleu>=2.3.0
+evaluate>=0.4.0
+
+# Utilidades (NumPy 1.x para compatibilidad con PyTorch 2.0.1)
+numpy<2.0.0
+tqdm>=4.65.0
+pyarrow<12.0.0

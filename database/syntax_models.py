@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 from sqlmodel import Field, SQLModel, Relationship
 from datetime import datetime
 import json
@@ -40,7 +40,9 @@ class SentenceAnalysis(SQLModel, table=True):
     verified: bool = Field(default=False)  # Revisión manual
     
     # Relaciones
-    category_links: list["SentenceCategoryLink"] = Relationship(back_populates="sentence")
+    category_links: List["SentenceCategoryLink"] = Relationship(back_populates="sentence")
+    token_annotations: List["TokenAnnotation"] = Relationship(back_populates="sentence")
+    structures: List["SentenceStructure"] = Relationship(back_populates="sentence")
 
 
 class SyntaxCategory(SQLModel, table=True):
@@ -68,3 +70,36 @@ class SentenceCategoryLink(SQLModel, table=True):
     # Relaciones
     sentence: Optional["SentenceAnalysis"] = Relationship(back_populates="category_links")
     category: Optional["SyntaxCategory"] = Relationship(back_populates="sentence_links")
+
+
+class TokenAnnotation(SQLModel, table=True):
+    """Anotación manual para una palabra específica en una oración."""
+    __table_args__ = {'extend_existing': True}
+    
+    id: Optional[int] = Field(default=None, primary_key=True)
+    sentence_id: int = Field(foreign_key="sentenceanalysis.id", index=True)
+    token_index: int  # Índice de la palabra en la oración (0-based)
+    token_text: str   # Texto de la palabra (para verificación)
+    
+    # Análisis Pedagógico
+    pedagogical_role: str  # Ej: "Sujeto", "Objeto Directo", "Núcleo del Predicado"
+    case_function: Optional[str] = None  # Ej: "Ablativo de Instrumento", "Dativo Posesivo"
+    explanation: Optional[str] = None  # Explicación en lenguaje natural
+    
+    # Relación
+    sentence: Optional["SentenceAnalysis"] = Relationship(back_populates="token_annotations")
+
+
+class SentenceStructure(SQLModel, table=True):
+    """Estructura de alto nivel de la oración (cláusulas)."""
+    __table_args__ = {'extend_existing': True}
+    
+    id: Optional[int] = Field(default=None, primary_key=True)
+    sentence_id: int = Field(foreign_key="sentenceanalysis.id", index=True)
+    
+    clause_type: str  # "Principal", "Subordinada Adverbial", "Subordinada Sustantiva"
+    construction_type: Optional[str] = None  # "Ablativo Absoluto", "AcI", "Cum Histórico"
+    notes: Optional[str] = None
+    
+    # Relación
+    sentence: Optional["SentenceAnalysis"] = Relationship(back_populates="structures")

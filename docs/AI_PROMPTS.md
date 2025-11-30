@@ -34,6 +34,149 @@ ANTES DE CUALQUIER CAMBIO:
 ¿Entiendes el contexto y estás listo para trabajar?
 ```
 
+## 🚨 ERRORES CRÍTICOS - RESOLVER PRIMERO (26 NOV 2025 - 00:01h)
+
+**APLICACIÓN COMPLETAMENTE ROTA - PRIORIDAD MÁXIMA**
+
+```
+ERROR PRINCIPAL: SQLAlchemy InvalidRequestError
+Multiple classes found for path "database.models.Word" in the registry
+
+SÍNTOMAS:
+- Todas las páginas fallan al cargar (09_Analizador, 10_Sintaxis, 11_Diccionario, 13_Scriptorium, 99_Admin)
+- Dashboard (01_Inicio.py) también afectado
+- Error en TODAS las queries: session.exec(select(Word))
+
+CAUSA PROBABLE:
+- Modelos SQLModel siendo registrados múltiples veces
+- Posible importación circular
+- Conflicto entre database.models y database.integration_models
+
+SOLUCIÓN URGENTE:
+1. Verificar imports en database/connection.py
+2. Buscar imports duplicados de Word en toda la app:
+   grep -r "from database.models import Word" pages/
+3. Verificar que integration_models.py NO redefine Word
+4. Asegurar que solo hay UNA definición de Word en database/models.py
+5. Limpiar cache de Python: find . -type d -name __pycache__ -exec rm -rf {} +
+6. Reiniciar servidor Streamlit
+
+COMANDO DIAGNÓSTICO:
+cd /home/diego/Projects/latin-python
+grep -rn "class Word" database/
+grep -rn "from.*models import.*Word" .
+
+NOTA: Este error apareció DESPUÉS de modificar Vocabulario con integration_models.
+```
+
+## 🐛 OTROS ERRORES DETECTADOS (Resolver después del crítico)
+
+### 1. Error en generate_recommendations()
+```
+TypeError: generate_recommendations() got an unexpected keyword argument 'limit'
+File: pages/01_🏠_Inicio.py, line 125
+```
+**STATUS:** ✅ CORREGIDO (removido parámetro limit)
+
+### 2. Error en decline_noun() - Homónimos con números
+```
+Error: "No se pudo generar la declinación para Balbus2"
+Palabra: Balbus2 (genitivo: Balbus2i)
+Declensión: 2ª, Género: m
+```
+**CAUSA:** La función decline_noun() no maneja palabras con dígitos (homónimos marcados como word2, word3, etc.)
+
+**SOLUCIÓN REQUERIDA:**
+```python
+def decline_noun(word: str, declension: str, gender: str, genitive: str, ...):
+    # Limpiar dígitos del final ANTES de procesar
+    clean_word = ''.join([c for c in word if not c.isdigit()])
+    clean_genitive = ''.join([c for c in genitive if not c.isdigit()])
+    
+    # Ahora usar clean_word para extraer stem
+    if declension == "2":
+        if clean_word.endswith("us"):
+            stem = clean_word[:-2]
+            # ...resto de lógica
+```
+
+### 3. Minor: Typo en banner de Vocabulario
+```
+File: pages/03_🎴_Vocabulario.py
+"filtrará automáticamente" tiene error de espacio
+```
+
+## Prompt de Continuación - Integración Orgánica (DESPUÉS DE RESOLVER ERRORES)
+
+**📌 TAREA PAUSADA - 26 de Noviembre 2025**
+
+```
+⚠️ ATENCIÓN: NO continuar con integración hasta resolver errores críticos arriba.
+
+CONTEXTO:
+Estoy trabajando en la Fase 3 del Plan de Integración Orgánica de Módulos para Lingua Latina Viva.
+El objetivo es transformar los módulos independientes en un ecosistema cohesivo de aprendizaje.
+
+DOCUMENTOS CLAVE:
+1. /home/diego/.gemini/antigravity/brain/4a92856b-82e8-4138-8e90-147be201f198/implementation_plan.md
+   → Plan completo de integración (leer primero)
+   
+2. /home/diego/.gemini/antigravity/brain/c40756f3-f424-4143-b796-727250e87b74/task.md
+   → Estado actual y checklist de tareas
+   
+3. /home/diego/.gemini/antigravity/brain/c40756f3-f424-4143-b796-727250e87b74/vocabulario_integration.md
+   → Documentación de último cambio completado
+
+ESTADO ACTUAL:
+✅ Fase 1: Fundamentos - COMPLETADO
+   - Tablas de integración creadas (LessonVocabulary, UserProgressSummary, etc.)
+   - Servicios de integración implementados
+   - Datos iniciales poblados
+
+✅ Fase 2: Dashboard Unificado - COMPLETADO
+   - Dashboard con recomendaciones personalizadas
+   - Mapa visual de 40 lecciones
+   - Progreso por módulo
+
+✅ Fase 3: Módulos Individuales - PARCIAL
+   - ✅ 02_📘_Curso.py - Sección "Practica esta Lección"
+   - ✅ 03_🎴_Vocabulario.py - Filtros por lección + banner + navegación contextual
+   - ⏸️ 04_📜_Declinaciones.py - PENDIENTE
+   - ⏸️ 05_⚔️_Conjugaciones.py - PENDIENTE
+   - ⏸️ 06_📖_Lecturas.py - PENDIENTE
+   - ⏸️ 08_🎯_Desafios.py - PENDIENTE
+   - ⏸️ 10_📐_Sintaxis.py - PENDIENTE
+
+PRÓXIMA TAREA (cuando errores estén resueltos):
+Modificar pages/04_📜_Declinaciones.py para agregar:
+1. Banner contextual mostrando lección actual
+2. Selector de lección (1-40) con filtro de vocabulario
+3. Tracking de ejercicios completados
+4. Feedback de progreso
+5. Enlaces contextuales a otros módulos
+
+PASOS A SEGUIR:
+1. ✅ PRIMERO: Resolver error crítico SQLAlchemy (ver arriba)
+2. ✅ SEGUNDO: Corregir decline_noun() para homónimos
+3. Leer el implementation_plan.md sección "Fase 3: Declinaciones"
+4. Revisar archivo actual pages/04_📜_Declinaciones.py
+5. Importar modelos necesarios (LessonVocabulary, UserProgressSummary, ExerciseAttempt)
+6. Implementar cambios siguiendo mismo patrón que Vocabulario
+7. Actualizar task.md marcando tarea como completada
+8. Documentar cambios en nuevo archivo walkthrough
+
+MODELO A SEGUIR:
+Ver vocabulario_integration.md para referencia del patrón de integración aplicado.
+
+RESTRICCIONES:
+- Mantener funcionalidad SRS existente
+- No romper ejercicios actuales
+- UI debe seguir estética romana
+- Todos los términos en español
+
+¿Listo para resolver errores críticos primero?
+```
+
 ## Prompts por Tipo de Tarea
 
 ### 1. Añadir Nueva Funcionalidad

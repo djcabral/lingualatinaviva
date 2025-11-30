@@ -1,5 +1,5 @@
 from sqlmodel import Session, select, create_engine
-from database.models import Word
+from database import Word
 
 sqlite_file_name = "lingua_latina.db"
 sqlite_url = f"sqlite:///{sqlite_file_name}"

@@ -1,7 +1,7 @@
 import os
 from sqlmodel import Session, select
 from database.connection import engine
-from database.models import Word
+from database import Word
 from utils.collatinus_importer import CollatinusImporter
 
 def populate_frequency():

@@ -7,7 +7,7 @@ import json
 import re
 from typing import List, Dict, Optional
 from sqlmodel import select
-from database.models import InflectedForm, Word
+from database import InflectedForm, Word
 from utils.latin_logic import LatinMorphology
 
 

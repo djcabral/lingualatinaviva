@@ -21,3 +21,8 @@ def render_sidebar_footer():
         """,
         unsafe_allow_html=True
     )
+    
+    # Dev Reminder
+    with st.sidebar.expander("🛠️ Estado del Proyecto", expanded=True):
+        st.caption("Recordatorio para el Desarrollador")
+        st.info("🎨 **Imágenes IA**: La cuota se renueva cada 4 horas. ¡Recuerda solicitar nuevas ilustraciones!")

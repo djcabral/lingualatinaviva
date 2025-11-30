@@ -9,7 +9,7 @@ if not any('latin-python' in p for p in sys.path):
     sys.path.insert(0, os.getcwd())
 
 from database.connection import get_session
-from database.models import Word
+from database import Word
 from sqlmodel import select
 
 # Diccionario de correcciones: ID -> Nueva traducción

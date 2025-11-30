@@ -62,45 +62,146 @@ def clean_latin_text(text: str) -> str:
     return text.strip()
 
 
+def is_latin_sentence(text: str) -> bool:
+    """
+    Verifica si una oración parece ser latín basándose en terminaciones comunes.
+    Retorna True si pasa el umbral de 'densidad latina'.
+    """
+    # Palabras comunes en inglés que indican que no es texto latino
+    english_indicators = {
+        "the", "and", "of", "to", "in", "is", "that", "it", "was", "for", 
+        "on", "are", "as", "with", "his", "they", "at", "be", "this", "have",
+        "from", "or", "one", "had", "by", "word", "but", "not", "what", "all",
+        "were", "we", "when", "your", "can", "said", "there", "use", "an",
+        "each", "which", "she", "do", "how", "their", "if", "will", "up", "other",
+        "about", "out", "many", "then", "them", "these", "so", "some", "her",
+        "would", "make", "like", "him", "into", "time", "has", "look", "two",
+        "more", "write", "go", "see", "number", "no", "way", "could", "people",
+        "my", "than", "first", "water", "been", "call", "who", "oil", "its", "now",
+        "find", "long", "down", "day", "did", "get", "come", "made", "may", "part"
+    }
+    
+    # Terminaciones latinas comunes
+    latin_endings = (
+        "us", "a", "um", "ae", "i", "o", "is", "as", "os", "es", "ibus", "iem",
+        "rum", "uum", "tur", "nt", "at", "et", "it", "mus", "tis", "ntur", "ris",
+        "re", "m", "s", "t"
+    )
+    
+    words = text.lower().split()
+    if not words:
+        return False
+        
+    # 1. Check for English indicators
+    english_count = sum(1 for w in words if w in english_indicators)
+    if english_count / len(words) > 0.2: # Si más del 20% son palabras inglesas comunes
+        return False
+        
+    # 2. Check for Latin density
+    latin_matches = 0
+    for w in words:
+        # Limpiar puntuación
+        w_clean = re.sub(r'[^\w]', '', w)
+        if len(w_clean) < 2: continue
+        
+        if w_clean.endswith(latin_endings) or w_clean in ["et", "in", "ad", "non", "sed", "si"]:
+            latin_matches += 1
+            
+    density = latin_matches / len(words)
+    return density > 0.5 # Al menos 50% de palabras con apariencia latina
+
+
 def extract_sentences(text: str) -> List[Tuple[str, int]]:
     """
     Extrae oraciones latinas del texto
     Retorna: [(sentence, chapter_number), ...]
     """
     sentences = []
-    current_chapter = 1
     
-    # Split por párrafos
-    paragraphs = text.split('\n\n')
+    # Roman numeral regex (strict)
+    roman_regex = re.compile(r'^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$')
     
-    for para in paragraphs:
-        # Detectar cambio de capítulo
-        chapter_match = re.search(r'(?:Chapter|Capitulum|Cap\.?)\s+(\d+|[IVX]+)', para, re.IGNORECASE)
-        if chapter_match:
-            # Convertir romano a arábigo si es necesario
-            chapter_num = chapter_match.group(1)
-            if chapter_num.isdigit():
-                current_chapter = int(chapter_num)
+    def from_roman(s):
+        """Convierte romano a entero"""
+        if not s: return 0
+        roman_map = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
+        result = 0
+        prev_value = 0
+        for char in reversed(s):
+            value = roman_map.get(char, 0)
+            if value < prev_value:
+                result -= value
             else:
-                # Conversión básica de romanos
-                roman_map = {'I': 1, 'V': 5, 'X': 10, 'L': 50}
-                current_chapter = sum(roman_map.get(c, 0) for c in chapter_num)
-            continue
-        
-        # Extraer oraciones (termina en . ! ? ; o :)
-        para_sentences = re.split(r'([.!?;:])\s+', para)
-        
-        for i in range(0, len(para_sentences)-1, 2):
-            if i+1 < len(para_sentences):
-                sentence = para_sentences[i] + para_sentences[i+1]
-                sentence = sentence.strip()
-                
-                # Filtrar oraciones muy cortas o que no parezcan latín
-                if len(sentence) > 10 and re.search(r'[a-zA-Z]', sentence):
-                    # Verificar que tiene características de latín (no es solo números o inglés)
-                    if not re.match(r'^(The|And|Exercise|Vocabulary|Notes)', sentence):
-                        sentences.append((sentence, current_chapter))
+                result += value
+            prev_value = value
+        return result
+
+    # Split por líneas para procesar estructura
+    lines = text.split('\n')
     
+    current_chapter = 1 # Default
+    current_block = ""
+    
+    # Filtros de secciones no deseadas
+    skip_sections = ["PREFACE", "INTRODUCTION", "VOCABULARY", "INDEX"]
+    skipping = False
+    
+    for line in lines:
+        line = line.strip()
+        if not line: continue
+        
+        # Check for section headers to skip
+        if any(section in line.upper() for section in skip_sections):
+            skipping = True
+            continue
+            
+        # Detectar capítulo (re-enable processing if we were skipping)
+        words = line.split()
+        last_word = words[-1] if words else ""
+        is_chapter_header = False
+        new_chapter = 0
+        
+        if len(words) == 1 and roman_regex.match(line) and from_roman(line) < 100:
+            new_chapter = from_roman(line)
+            is_chapter_header = True
+            skipping = False # New chapter likely means back to text
+        elif len(words) < 6 and roman_regex.match(last_word) and from_roman(last_word) < 100:
+             if line.isupper() or len(line) < 20:
+                new_chapter = from_roman(last_word)
+                is_chapter_header = True
+                skipping = False
+        
+        if skipping:
+            continue
+            
+        if is_chapter_header:
+            # Procesar bloque anterior
+            if current_block:
+                # Dividir por puntuación final, pero cuidando abreviaturas comunes si las hubiera
+                block_sentences = re.split(r'(?<=[.?!])\s+', current_block)
+                for s in block_sentences:
+                    s = s.strip()
+                    # Filtros de calidad
+                    if len(s) > 10 and re.search(r'[a-zA-Z]', s):
+                        if not re.search(r'^(Page|PAGE|Chapter|CHAPTER|Exercise|Vocabulary)', s):
+                            if is_latin_sentence(s):
+                                sentences.append((s, current_chapter))
+            
+            current_chapter = new_chapter
+            current_block = ""
+        else:
+            current_block += " " + line
+            
+    # Procesar último bloque
+    if current_block and not skipping:
+        block_sentences = re.split(r'(?<=[.?!])\s+', current_block)
+        for s in block_sentences:
+            s = s.strip()
+            if len(s) > 10:
+                 if not re.search(r'^(Page|PAGE|Chapter|CHAPTER|Exercise|Vocabulary)', s):
+                    if is_latin_sentence(s):
+                        sentences.append((s, current_chapter))
+
     return sentences
 
 

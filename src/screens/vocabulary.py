@@ -4,7 +4,7 @@ from textual.widgets import Header, Footer, Button, Static, Label
 from textual.containers import Container, Vertical, Horizontal
 from sqlmodel import select
 from database.connection import get_session
-from database.models import Word, ReviewLog, UserProfile
+from database import Word, ReviewLog, UserProfile
 from utils.srs import calculate_next_review
 import random
 from datetime import datetime

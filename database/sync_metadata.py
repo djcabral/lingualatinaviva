@@ -15,7 +15,7 @@ def sync_metadata():
     print("🔄 Sincronizando metadata de SQLModel con base de datos...")
     
     # Import modelos y engine
-    from database.models import *
+    from database import *
     from database.connection import engine
     from sqlmodel import SQLModel
     

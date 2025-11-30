@@ -6,7 +6,7 @@ Script de Migración Fase 3: Verbos Irregulares y Expansión Masiva
 """
 
 from database.connection import get_session
-from database.models import Word
+from database import Word
 from sqlmodel import select
 import json
 

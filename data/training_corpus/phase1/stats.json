@@ -1,0 +1,11 @@
+{
+  "total_pairs": 30304,
+  "train_pairs": 27273,
+  "validation_pairs": 3031,
+  "sources": {
+    "bible100": 30286,
+    "phaedrus": 11,
+    "eutropius": 3,
+    "caesar": 4
+  }
+}

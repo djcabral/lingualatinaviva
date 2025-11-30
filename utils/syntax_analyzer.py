@@ -3,7 +3,7 @@ Utilidad para análisis sintáctico automático de oraciones latinas usando Lati
 """
 import json
 from typing import Optional, List, Dict
-from database.syntax_models import SentenceAnalysis
+from database import SentenceAnalysis
 
 try:
     import spacy
@@ -17,7 +17,7 @@ except ImportError:
 class LatinSyntaxAnalyzer:
     """Analiza oraciones latinas y extrae funciones sintácticas usando LatinCy"""
     
-    def __init__(self, model_name: str = "la_core_web_md"):
+    def __init__(self, model_name: str = "la_core_web_lg"):
         """
         Inicializa el analizador con el modelo de LatinCy
         
@@ -25,15 +25,20 @@ class LatinSyntaxAnalyzer:
             model_name: Nombre del modelo spaCy (la_core_web_sm, la_core_web_md, o la_core_web_lg)
         """
         if not LATINCY_AVAILABLE:
-            raise ImportError("LatinCy no está instalado. Ejecuta: pip install latincy")
+            print("WARNING: LatinCy/SpaCy no están completamente instalados.")
         
         try:
             self.nlp = spacy.load(model_name)
-        except OSError:
-            print(f"Modelo {model_name} no encontrado. Descargando...")
-            import subprocess
-            subprocess.run(["python", "-m", "spacy", "download", model_name], check=True)
-            self.nlp = spacy.load(model_name)
+        except (OSError, ImportError):
+            print(f"Modelo {model_name} no encontrado. Intentando descargar...")
+            try:
+                import subprocess
+                subprocess.run(["python", "-m", "spacy", "download", model_name], check=True)
+                self.nlp = spacy.load(model_name)
+            except Exception as e:
+                print(f"No se pudo descargar el modelo: {e}")
+                print("⚠️ Usando modelo en blanco 'la' como fallback. El análisis sintáctico será limitado.")
+                self.nlp = spacy.blank("la")
     
     def analyze_sentence(
         self,
@@ -202,13 +207,109 @@ class LatinSyntaxAnalyzer:
             return "simple"
     
     def _generate_tree_diagram(self, doc) -> str:
-        """Genera diagrama de árbol de dependencias en formato SVG"""
+        """Genera diagrama de árbol de dependencias en formato SVG con etiquetas en español"""
         try:
-            svg = displacy.render(doc, style="dep", options={
-                "compact": True,
-                "distance": 120,
+            # Mapa de traducción de dependencias (abreviaturas en español)
+            # Las abreviaturas cortas evitan que se corten en el árbol SVG
+            dep_map = {
+                # Funciones del sujeto
+                "nsubj": "Sujeto",
+                "nsubj:pass": "Suj. Pasivo",
+                "csubj": "Suj. Oracional",
+                
+                # Funciones del objeto
+                "obj": "C. Directo",
+                "iobj": "C. Indirecto",
+                
+                # Complementos circunstanciales
+                "obl": "C. Circunst.",
+                "obl:tmod": "C. Tiempo",
+                "obl:arg": "C. Obligatorio",
+                
+                # Modificadores
+                "advmod": "C. Adverbial",
+                "amod": "Modificador",
+                "det": "Determinante",
+                "nummod": "Mod. Numérico",
+                
+                # Preposiciones y marcadores
+                "case": "Preposición",
+                "mark": "Conj. Subord.",
+                
+                # Auxiliares y cópula
+                "aux": "Auxiliar",
+                "aux:pass": "Aux. Pasivo",
+                "cop": "Cópula",
+                
+                # Coordinación
+                "cc": "Conj. Coord.",
+                "conj": "Coordinado",
+                
+                # Aposición y relativas
+                "appos": "Aposición",
+                "acl": "Or. Adjetiva",
+                "acl:relcl": "Or. Relativa",
+                "relcl": "Or. Relativa",
+                
+                # Subordinadas
+                "advcl": "Or. Adverbial",
+                "ccomp": "Or. Completiva",
+                "xcomp": "C. Predicativo",
+                
+                # Vocativo y otros
+                "vocative": "Vocativo",
+                "discourse": "Interjección",
+                "expl": "Expletiva",
+                
+                # Raíz
+                "ROOT": "RAÍZ",
+                
+                # Puntuación
+                "punct": "Puntuación",
+                
+                # Casos especiales
+                "flat": "Nombre Comp.",
+                "compound": "Compuesto",
+                "fixed": "Expr. Fija",
+                "orphan": "Huérfano",
+                "goeswith": "Fragmento",
+                "reparandum": "Corrección",
+                "dep": "Dependencia"
+            }
+            
+            # Crear una copia del doc para modificar etiquetas visuales sin alterar el análisis
+            # Nota: spaCy no permite modificar doc fácilmente, así que usaremos opciones de displacy
+            # o modificaremos el SVG resultante.
+            # Mejor opción: Crear un diccionario manual para displacy
+            
+            words = []
+            arcs = []
+            
+            for token in doc:
+                words.append({
+                    "text": token.text,
+                    "tag": token.pos_
+                })
+                
+                if token.dep_ != "ROOT":
+                    label = dep_map.get(token.dep_, token.dep_)
+                    arcs.append({
+                        "start": min(token.i, token.head.i),
+                        "end": max(token.i, token.head.i),
+                        "label": label,
+                        "dir": "left" if token.i < token.head.i else "right"
+                    })
+            
+            manual_data = {"words": words, "arcs": arcs}
+            
+            svg = displacy.render(manual_data, style="dep", manual=True, options={
+                "compact": True,  # True = arcos rectos, False = arcos curvos
+                "distance": 150,
                 "word_spacing": 30,
-                "font": "Cardo"
+                "arrow_stroke": 2,
+                "arrow_width": 8,
+                "font": "Cardo, serif",
+                "bg": "#ffffff00" # Transparente
             })
             return svg
         except Exception as e:

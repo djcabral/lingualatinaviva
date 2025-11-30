@@ -1,5 +1,5 @@
 import math
-from database.models import UserProfile
+from database import UserProfile
 
 def calculate_level(xp: int) -> int:
     """

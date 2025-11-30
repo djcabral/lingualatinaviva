@@ -25,6 +25,13 @@ venv/
 env/
 ENV/
 myenv/
+.venv/
+venv-training/
+
+# Large Data
+data/dictionaries/
+data/reference_dictionaries/
+data/collatinus_compiled.pickle
 
 # IDE
 .vscode/
@@ -40,13 +47,16 @@ Thumbs.db
 # Streamlit
 .streamlit/secrets.toml
 
-# Database
-# *.db  <-- Commented out to allow uploading the initial database for Streamlit Cloud demo
-# *.sqlite
-# *.sqlite3
+# Database (keep only schema/migrations in repo)
+*.db
+*.sqlite
+*.sqlite3
+*.whl
 
 # Logs
 *.log
+logs/
+logs-*.txt
 
 # Temporary files
 *.tmp
@@ -56,15 +66,62 @@ tmp/
 # Backup files
 *.bak
 *.backup
+backups/
 
 # Test files
 .pytest_cache/
 .coverage
 htmlcov/
 
-# Project specific
-verify_*.py
-clean_*.py
+# Internal Planning Documents (not for public repo)
+PLAN_*.md
+PROMPT_*.md
+ESTADO_*.md
+FASE*.md
+IDEAS.md
+MENU_*.md
+TAREAS_*.md
+PROPUESTA_*.md
+VISION_*.md
+TRAINING_*.md
+REPORTE_*.md
+COLAB_*.md
+
+# Development/Debug Scripts (one-off utilities)
+test_*.py
+debug_*.py
 fix_*.py
 check_*.py
+verify_*.py
+analyze_*.py
+demo_*.py
+inspect_*.py
+brute_force_*.py
+clean_*.py
+rescue_*.py
+paradigm_*_test.py
+reset_*.py
 reimport_*.py
+update_*.py
+reproduce_*.py
+complete_*.py
+populate_*.py
+generate_*.py
+convert_*.py
+create_tables.py
+health_check.py
+gpu_setup_check.py
+
+# Training Notebooks
+colab_training*.ipynb
+*.ipynb.backup
+
+# Models and Large Files
+models/
+
+# Windows/Installer Artifacts
+windows-build/
+installer/
+
+# PDF Documentation (large files)
+pdf/

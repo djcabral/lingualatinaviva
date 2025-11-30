@@ -1,6 +1,11 @@
 import streamlit as st
-from database import init_db
 import os
+import sys
+
+# Add project root to path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from database import init_db
 
 # Page Config
 st.set_page_config(
@@ -13,7 +18,7 @@ st.set_page_config(
 if "language" not in st.session_state:
     st.session_state.language = "es"
 
-from i18n import get_text
+from utils.i18n import get_text
 
 # Load CSS
 def load_css():
@@ -48,7 +53,7 @@ nav_options = {
 }
 
 for page, label in nav_options.items():
-    if st.sidebar.button(label, use_container_width=True):
+    if st.sidebar.button(label, width='stretch'):
         navigate_to(page)
 
 st.sidebar.markdown("---")

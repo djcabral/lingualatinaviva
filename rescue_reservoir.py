@@ -2,7 +2,7 @@ import os
 import sys
 from sqlmodel import Session, select
 from database.connection import engine
-from database.models import Word
+from database import Word
 from utils.collatinus_importer import CollatinusImporter
 
 def rescue_reservoir_words():

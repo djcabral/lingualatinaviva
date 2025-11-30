@@ -1,7 +1,7 @@
 import streamlit as st
 from sqlmodel import select
 from database import get_session
-from database.models import UserProfile
+from database import UserProfile
 
 from i18n import get_text
 

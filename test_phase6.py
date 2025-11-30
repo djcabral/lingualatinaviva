@@ -6,7 +6,7 @@ from sqlmodel import Session, select, func
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 from database.connection import engine
-from database.models import Word, Text, TextWordLink, Author
+from database import Word, Text, TextWordLink, Author
 
 def verify():
     print("Verifying Phase 6...")

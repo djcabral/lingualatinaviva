@@ -21,7 +21,7 @@ from sqlmodel import Session, create_engine, select
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from database.models import Word
+from database import Word
 
 
 class CollatinusImporter:

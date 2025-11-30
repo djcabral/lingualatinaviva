@@ -8,7 +8,7 @@ in CSV and Excel formats, with validation and template generation.
 import pandas as pd
 import io
 from typing import Dict, List, Optional, Tuple
-from database.models import Word
+from database import Word
 
 
 class VocabularyImporter:
@@ -200,7 +200,7 @@ class TemplateGenerator:
         return pd.DataFrame([
             {
                 'latin': 'puella',
-                'translation': 'girl',
+                'translation': 'niña',
                 'genitive': 'puellae',
                 'gender': 'f',
                 'declension': '1',
@@ -209,7 +209,7 @@ class TemplateGenerator:
             },
             {
                 'latin': 'filius',
-                'translation': 'son',
+                'translation': 'hijo',
                 'genitive': 'filii',
                 'gender': 'm',
                 'declension': '2',
@@ -218,7 +218,7 @@ class TemplateGenerator:
             },
             {
                 'latin': 'rex',
-                'translation': 'king',
+                'translation': 'rey',
                 'genitive': 'regis',
                 'gender': 'm',
                 'declension': '3',
@@ -233,7 +233,7 @@ class TemplateGenerator:
         return pd.DataFrame([
             {
                 'latin': 'amo',
-                'translation': 'to love',
+                'translation': 'amar',
                 'principal_parts': 'amo, amāre, amāvi, amātum',
                 'conjugation': '1',
                 'level': 1,
@@ -241,7 +241,7 @@ class TemplateGenerator:
             },
             {
                 'latin': 'video',
-                'translation': 'to see',
+                'translation': 'ver',
                 'principal_parts': 'videō, vidēre, vīdī, vīsum',
                 'conjugation': '2',
                 'level': 1,
@@ -249,7 +249,7 @@ class TemplateGenerator:
             },
             {
                 'latin': 'sum',
-                'translation': 'to be',
+                'translation': 'ser/estar',
                 'principal_parts': 'sum, esse, fuī, futūrus',
                 'conjugation': 'irregular',
                 'level': 1,
@@ -263,23 +263,81 @@ class TemplateGenerator:
         return pd.DataFrame([
             {
                 'latin': 'et',
-                'translation': 'and',
+                'translation': 'y',
                 'part_of_speech': 'conjunction',
                 'level': 1,
                 'is_invariable': True
             },
             {
                 'latin': 'magnus',
-                'translation': 'great/large',
+                'translation': 'grande',
                 'part_of_speech': 'adjective',
                 'level': 1,
                 'is_invariable': False
             },
             {
                 'latin': 'bene',
-                'translation': 'well',
+                'translation': 'bien',
                 'part_of_speech': 'adverb',
                 'level': 2,
                 'is_invariable': True
             }
         ])
+
+
+# =============================================================================
+# FUNCIONES WRAPPER PARA COMPATIBILIDAD CON IMPORTS LEGACY
+# =============================================================================
+
+def import_vocabulary_from_csv(file_bytes: bytes, filename: str, session) -> Tuple[int, List[str]]:
+    """
+    Wrapper para importar vocabulario desde CSV/Excel.
+    
+    Usado por: Admin.py
+    
+    Returns:
+        Tuple[int, List[str]]: (número de palabras importadas, lista de errores)
+    """
+    try:
+        importer = VocabularyImporter()
+        df = importer.parse_file(file_bytes, filename)
+        
+        # Detectar tipo de palabra basado en columnas
+        if 'genitive' in df.columns:
+            word_type = 'noun'
+        elif 'principal_parts' in df.columns:
+            word_type = 'verb'
+        else:
+            word_type = 'other'
+        
+        # Validar
+        is_valid, errors = importer.validate_dataframe(df, word_type)
+        if not is_valid:
+            return 0, errors
+        
+        # Convertir a objetos Word
+        words = importer.dataframe_to_words(df, word_type)
+        
+        # Guardar en base de datos
+        for word in words:
+            session.add(word)
+        session.commit()
+        
+        return len(words), []
+    
+    except Exception as e:
+        return 0, [f"Error al importar: {str(e)}"]
+
+
+def export_vocabulary_to_excel(words: List[Word], word_type: str = 'noun') -> bytes:
+    """
+    Wrapper para exportar vocabulario a Excel.
+    
+    Usado por: Admin.py
+    
+    Returns:
+        bytes: Archivo Excel en formato bytes
+    """
+    exporter = VocabularyExporter()
+    df = exporter.words_to_dataframe(words, word_type)
+    return exporter.to_excel(df)

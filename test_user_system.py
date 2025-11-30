@@ -5,7 +5,7 @@ from sqlmodel import Session, select, func
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 from database.connection import engine
-from database.models import UserProfile, ReviewLog, Word
+from database import UserProfile, ReviewLog, Word
 
 def diagnose():
     print("=== Diagnóstico del Sistema de Usuario ===\n")

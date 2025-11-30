@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from database.models import ReviewLog
+from database import ReviewLog
 
 def calculate_next_review(quality: int, previous_review: ReviewLog = None) -> dict:
     """

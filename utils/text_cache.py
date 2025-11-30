@@ -2,7 +2,7 @@
 Nuevo analizador de texto para Lectio que prioriza análisis CLTK cacheado
 """
 
-from database.models import TextWordLink, Word
+from database import TextWordLink, Word
 from sqlmodel import select
 import json
 

@@ -1,0 +1,27 @@
+[theme]
+primaryColor = "#8B4513"
+backgroundColor = "#F5F5DC"
+secondaryBackgroundColor = "#E8E8D0"
+textColor = "#2C2416"
+font = "serif"
+
+[server]
+headless = true
+port = 8502
+
+[browser]
+gatherUsageStats = false
+
+[runner]
+# Disable warning about faster rerun
+fastReruns = true
+
+[client]
+# Show errors in release mode
+showErrorDetails = true
+toolbarMode = "minimal"
+
+[ui]
+# Hide streamlit branding
+hideTopBar = false
+

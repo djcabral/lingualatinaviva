@@ -9,7 +9,7 @@ Este script:
 """
 
 from database.connection import get_session
-from database.models import Author, Word, WordFrequency
+from database import Author, Word, WordFrequency
 from sqlmodel import select
 
 # Datos de autores iniciales

@@ -3,7 +3,7 @@ Script para corregir las partes principales de los verbos en la base de datos
 """
 
 from database.connection import get_session
-from database.models import Word
+from database import Word
 from sqlmodel import select
 
 # Partes principales completas de verbos comunes

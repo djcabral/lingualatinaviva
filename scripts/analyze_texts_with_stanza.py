@@ -11,7 +11,7 @@ if not any('latin-python' in p for p in sys.path):
     sys.path.insert(0, os.getcwd())
 
 from database.connection import get_session
-from database.models import Text
+from database import Text
 from sqlmodel import select
 from utils.stanza_analyzer import StanzaAnalyzer, analyze_and_save_text
 

@@ -9,7 +9,7 @@ if not any('latin-python' in p for p in sys.path):
     sys.path.insert(0, os.getcwd())
 
 from database.connection import engine
-from database.models import SQLModel, InflectedForm
+from database import SQLModel, InflectedForm
 
 def create_inflected_form_table():
     """Crea la tabla InflectedForm en la base de datos"""

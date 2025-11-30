@@ -10,6 +10,7 @@ if current_dir not in sys.path:
 
 from database.connection import init_db
 from utils.i18n import get_text
+from utils.ui_helpers import load_css
 
 # Page configuration
 st.set_page_config(
@@ -20,12 +21,6 @@ st.set_page_config(
 )
 
 # Load custom CSS
-def load_css():
-    css_path = os.path.join(os.path.dirname(__file__), "assets", "style.css")
-    if os.path.exists(css_path):
-        with open(css_path) as f:
-            st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-
 load_css()
 
 # Initialize database
@@ -73,7 +68,7 @@ if st.session_state.first_visit:
     
     col1, col2, col3 = st.columns([1, 1, 1])
     with col2:
-        if st.button("✨ Ingredere (Entrar)", use_container_width=True):
+        if st.button("✨ Ingredere (Entrar)", width='stretch'):
             st.session_state.first_visit = False
             st.rerun()
 else:
@@ -127,34 +122,30 @@ else:
     with col1:
         st.markdown("### 🎯 ¿Qué es Lingua Latina Viva?")
         st.markdown("""
-        **Lingua Latina Viva** es una plataforma interactiva de aprendizaje de latín clásico diseñada 
-        para desarrollar fluidez real mediante práctica intensiva y progresiva.
+        **Lingua Latina Viva** es un organismo vivo de aprendizaje, estructurado en cuatro pilares fundamentales para cultivar la fluidez real:
         
-        **Características principales:**
-        - 📚 **Vocabulario SRS**: Sistema de repetición espaciada para memorización eficiente
-        - 📜 **Declinaciones**: Práctica intensiva de sustantivos, adjetivos y pronombres
-        - ⚔️ **Conjugaciones**: Dominio completo de las formas verbales latinas
-        - 🔍 **Análisis Morfológico**: Identifica y analiza formas gramaticales
-        - 📖 **Gramática Rápida**: Referencia completa de paradigmas y reglas
-        - 📖 **Lectio**: Lectura progresiva de textos clásicos auténticos
+        ### 1. 📘 Lección (Fundamento)
+        La base teórica y la inmersión textual.
+        *   **Curso y Lecturas**: Progresión graduada desde oraciones simples hasta textos auténticos.
+        *   **Gramática**: Referencia constante de las reglas del juego.
         
-        **Basado en metodología europea tradicional** con enfoque en:
-        - Progresión estricta por niveles (1-10)
-        - Paradigmas completos desde el principio
-        - Vocabulario de textos clásicos auténticos
-        """)
-    
-    with col2:
-        st.markdown("### 🎓 Objetivo")
-        st.info("""
-        **Meta:** Alcanzar fluidez de lectura en latín clásico a través de:
+        ### 2. 🧠 Memorización (Adquisición)
+        La interiorización de los bloques de construcción.
+        *   **Vocabulario SRS**: Sistema inteligente para retener palabras a largo plazo.
+        *   **Diccionario**: Herramienta de consulta rápida.
         
-        1. Memorización de vocabulario esencial
-        2. Automatización de declinaciones y conjugaciones
-        3. Reconocimiento rápido de formas
-        4. Lectura progresiva de autores clásicos
+        ### 3. ⚔️ Práctica (Automatización)
+        El gimnasio mental para ganar velocidad y precisión.
+        *   **Declinaciones y Conjugaciones**: Ejercicios intensivos de morfología.
+        *   **Aventura y Desafíos**: Gamificación para poner a prueba tus habilidades.
         
-        Inspirado en el método Ørberg y la tradición pedagógica europea.
+        ### 4. 🔍 Análisis (Comprensión Profunda)
+        La disección de la lengua para entender su lógica interna.
+        *   **Sintaxis**: Visualización de la estructura de las oraciones.
+        *   **Analizador**: Herramienta para desglosar cualquier palabra.
+        
+        ---
+        **Metodología**: Inspirada en la tradición humanista y el método natural, buscamos que *vivas* la lengua, no solo que la estudies.
         """)
         
         st.markdown("### 🚀 Comienza Ahora")
@@ -164,12 +155,12 @@ else:
     
     # Quick stats overview
     from database.connection import get_session
-    from sqlmodel import select
-    # Import models only once - they're already imported in connection.py
-    import database.models as models
+    from sqlmodel import select, func
+    # Import through a function to avoid duplicate registration
+    from database import UserProfile, Word
     
     with get_session() as session:
-        user = session.exec(select(models.UserProfile)).first()
+        user = session.exec(select(UserProfile)).first()
         if user:
             col1, col2, col3, col4 = st.columns(4)
             
@@ -207,11 +198,11 @@ else:
                 )
             
             with col4:
-                total_words = session.exec(select(models.Word)).all()
+                word_count = session.exec(select(func.count(Word.id))).one()
                 st.markdown(
                     f"""
                     <div class="stat-box">
-                        <div class="stat-value">{len(total_words)}</div>
+                        <div class="stat-value">{word_count}</div>
                         <div class="stat-label">Vocabula</div>
                     </div>
                     """,

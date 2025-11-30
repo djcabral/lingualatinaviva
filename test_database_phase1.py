@@ -8,7 +8,7 @@ Verifica que:
 """
 
 from database.connection import get_session
-from database.models import Author, Word, WordFrequency, SyntaxPattern, Text, TextWordLink
+from database import Author, Word, WordFrequency, SyntaxPattern, Text, TextWordLink
 from sqlmodel import select
 import sqlite3
 

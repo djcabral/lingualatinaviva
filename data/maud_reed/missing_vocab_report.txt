@@ -1,0 +1,6660 @@
+Forma	Lema	POS
+"Aeneas		NOUN
+"Brevissimum	"brevus	ADJ
+"Domine	"hdomina	NOUN
+"Ille	"hilla	DET
+"Nonne	"nonnet	SCONJ
+"Num		NOUN
+"O	"o	INTJ
+"Quod	"quod	SCONJ
+"Romam		NOUN
+"Tu		NOUN
+"cur		ADV
+"eo	"eo	VERB
+"huc	"huc	ADV
+"inter	"inter	ADV
+"mi	"mit	NOUN
+"nullamiamfeminamintradomum		NOUN
+"te		VERB
+"vocatus		VERB
+#B	#b	NOUN
+'O	'o	AUX
+'s	's	ADJ
+'s	's	NOUN
+(as		NOUN
+(cupio	(cupio	PART
+(deponent	(deponent	VERB
+(duco	(duco	VERB
+(iubeo	(iubeo	VERB
+(the	(htha	NOUN
+*Frascati	*frascor	VERB
+*This	*thae	VERB
+,2		NOUN
+,2	,2	NOUN
+,c	,c	NOUN
+,n	,n	NOUN
+-Ilookupat	-ilookupats	VERB
+-Imount	-imoo	VERB
+-Inotice		ADV
+-Irest	-irest	AUX
+-a,-um		NOUN
+-a,-um-silent		VERB
+-a,-um-sudden	-a,-um-sudden	NOUN
+-a,-urn	h-a,-urns	NOUN
+-aa	h-aas	NOUN
+-ae,/.		NOUN
+-ae,/.	-ae,/.	NOUN
+-ae,/.—olive	-ae,/.—oliue	VERB
+-ae,f.—life	-ae,f.—lif	VERB
+-ae,f.—pride	-ae,f.—pride	ADV
+-ae,ƒ.—fillet		VERB
+-arum	-a	NOUN
+-atis	-ates	NOUN
+-cendi		VERB
+-censum		NOUN
+-censum	-census	NOUN
+-cepi	-cipio	VERB
+-ceptum	-ceo	VERB
+-ceptum	-ceptus	VERB
+-ces		NOUN
+-cessi	-cessis	VERB
+-cessu	-cessus	NOUN
+-cidi	-citdus	VERB
+-cipis	-cipes	VERB
+-cisum	-cido	VERB
+-colui	-coluus	VERB
+-cubui	-cubuis	VERB
+-datum	-datus	NOUN
+-dedi	-do	VERB
+-di	-dum	NOUN
+-dictum		VERB
+-dictum	-dictus	VERB
+-didi	-ditdus	VERB
+-dixi	-dico	VERB
+-duxi	-duo	VERB
+-e-sweet	-e-sweet	ADP
+-em	-	NOUN
+-en	-en	INTJ
+-entis-absent		VERB
+-ere	-eo	VERB
+-ere	-o	VERB
+-eris	h-erus	NOUN
+-erum	-eer	NOUN
+-er—is		NOUN
+-es		NOUN
+-etis	h-et	NOUN
+-fectum	-fectum	VERB
+-fendi		VERB
+-fensum	-fensus	VERB
+-flixi	-flico	VERB
+-fudi		VERB
+-fugi	-fuge	VERB
+-fugitum	-fugitus	NOUN
+-gressus	-gressus	VERB
+-hendi	-hende	VERB
+-hensum	-hensum	NOUN
+-i		NOUN
+-i		PRON
+-i	-i	NOUN
+-i,m		ADV
+-i,m		VERB
+-i,m	-i,m	ADV
+-i,m	-i,m	VERB
+-i,n.-dream	-i,n.-drea	VERB
+-i,to	-i,to	VERB
+-icis	-icis	NOUN
+-idis	-ides	NOUN
+-iectum	-iectum	NOUN
+-inis	-inis	NOUN
+-inis,f.-multitude	-hinis,f.-multituda	VERB
+-inis,f.—virgin	-inis,f.—virgin	NOUN
+-ire	-io	VERB
+-iri	-io	VERB
+-it		VERB
+-ita		ADJ
+-itis	-ites	NOUN
+-itum	-itus	NOUN
+-itum-I	-itum-iesis	DET
+-ium	-ius	NOUN
+-iunctum	-iunctum	NOUN
+-ivi		VERB
+-ivi	-ibi	VERB
+-ivi	-io	VERB
+-ivi	h-ivis	VERB
+-lapsus	-lapsus	VERB
+-latum	-latum	VERB
+-legi		VERB
+-legi	-ligus	VERB
+-lictum	-lictum	VERB
+-mersi		VERB
+-misi	-mitto	VERB
+-missum	-mido	VERB
+-motum	-motus	NOUN
+-movi	h-movis	VERB
+-noteven	-notevensiastes	INTJ
+-ntis	-ntes	NOUN
+-ntis	-ntes	VERB
+-ntis,f.-serpent		VERB
+-ntis-huge		VERB
+-ntis-violent	-ntis-violent	VERB
+-odis	-odes	NOUN
+-onis	-on	NOUN
+-ontis	-ontes	NOUN
+-opis	-opis	NOUN
+-or	-or	ADJ
+-orum	-um	NOUN
+-otis	h-otus	VERB
+-persi	-perses	VERB
+-pletum	-pletus	VERB
+-po	-po	ADV
+-positum	-pono	VERB
+-positum	-positus	VERB
+-pressi	-pressis	VERB
+-puli	-pule	NOUN
+-puli	-pulus	NOUN
+-pulsum	-pulsum	VERB
+-quietum	-quietus	NOUN
+-quievi	-quievi	VERB
+-reptum	-reptum	VERB
+-rexi	-retxus	VERB
+-ri	-ris	ADV
+-ris	-r	NOUN
+-ru	-ru	ADV
+-rum-untouched	-rum-untouched	VERB
+-scendi	-scendi	VERB
+-scensum	-scensus	VERB
+-scidi	-scido	VERB
+-secutus	-sequor	VERB
+-sedi	-setdus	VERB
+-seendi	-seendi	VERB
+-silui	-siluus	VERB
+-situm	-situs	VERB
+-sivi		VERB
+-spectum	-spectus	NOUN
+-spexi	-speo	VERB
+-spexi	-spexis	VERB
+-stiti	-stes	VERB
+-stratum		VERB
+-stratum	-stratum	VERB
+-stravi	-stro	VERB
+-sului	-suluius	VERB
+-tendi		VERB
+-tentum	-tentum	NOUN
+-tinui	-tinui	VERB
+-tractum	-tractum	VERB
+-traxi	-trao	VERB
+-tuli	-fero	VERB
+-ud	-ud	VERB
+-uit	-uo	VERB
+-ulis	-ulis	NOUN
+-um		SCONJ
+-um	-um	ADV
+-um	-um	DET
+-um	-um	NOUN
+-um	-um	SCONJ
+-um-abundant		VERB
+-um-best	-um-bsum	AUX
+-um-dear		VERB
+-um-endless		VERB
+-um-from		VERB
+-um-given		NOUN
+-um-golden	-um-golde	NOUN
+-um-great		VERB
+-um-nearest	-um-nearsum	VERB
+-um-neighbour		VERB
+-um-no	-um-nus	NOUN
+-um-persis	-um-pers	VERB
+-um-purple	h-um-purples	VERB
+-um-some	-hum-soma	VERB
+-um-stormy	-um-stormy	ADV
+-um-unavenged		VERB
+-um—one	-usm—o	VERB
+-urn		NOUN
+-urn		VERB
+-us	-us	NOUN
+-us	-ush	DET
+-us	-ush	NOUN
+-us,ƒ.—hand	-us,ƒ.—handaeus	ADJ
+-utis	-utus	NOUN
+-utum	-utum	VERB
+-uum	-uus	NOUN
+-veni	-venis	VERB
+-ventum	-ventum	NOUN
+-versum		VERB
+-versum	-verse	VERB
+-versum	-versum	VERB
+-versu—m		NOUN
+-verti	-vero	VERB
+-vexi	-veo	VERB
+-vici	-vice	NOUN
+-ycis	-yceus	NOUN
+.-	.-s	NOUN
+...EGIAC	...egiacetera	
+...nec-neither...nor	...nec-neither...nor	VERB
+.W	.w	INTJ
+.c	.c	NOUN
+.r	.r	NOUN
+/.		NOUN
+/.	/.	NOUN
+/.—Sparta	/.—sparta	NOUN
+/—.	/—.	NOUN
+/—.	/—.	VERB
+0	0	ADV
+0	0	CCONJ
+0	0	NOUN
+0	0	PART
+000032877805	000032877805s	NOUN
+0Persephone,memoriae	0persephone,memoria	NOUN
+0femina,”inquit	0femina,”inquam	VERB
+0jc		NOUN
+1-1	1-1	VERB
+1-1occupy,seize	1-1occupy,seizes	VERB
+1-1recall	1-1recall	NOUN
+1-1trouble,distress	1-1trouble,distressaeus	ADJ
+1-I	1-i	ADP
+1-I	1-i	NOUN
+1-Iarouse	1-iarouse	ADV
+1-Iattack	1-iattack	ADV
+1-Iavoid	1-iavoiditulum	NOUN
+1-Ibuild	1-ibuild	NOUN
+1-Icall	1-icall	NOUN
+1-Ichange	1-ichanga	VERB
+1-Iconfuse,disturb		NOUN
+1-Idedicate	1-idedico	VERB
+1-Idelight	1-idelight	ADV
+1-Ieducate	1-ieduco	VERB
+1-Ienter	1-ienter	ADV
+1-Ihasten	1-ihaste	NOUN
+1-Ihide	1-ihides	ADV
+1-Ihopefor	1-ihopefor	NOUN
+1-Ihunt	1-iho	VERB
+1-Iinvite	1-iinviet	VERB
+1-Ikill		NOUN
+1-Iofferup	1-iofferupm	ADV
+1-Ipray	1-ipray	ADV
+1-Iput	1-ipud	PART
+1-Ishirk	h1-ishirks	NOUN
+1-Ishout	1-ishout	NOUN
+1-Istrengthen		NOUN
+1-Istrive	1-istriue	VERB
+1-Itakecareof	1-itakecareof	ADV
+1-Ithink		VERB
+1-Itoss	1-itossensis	ADJ
+1-Itry	1-itryaeus	ADJ
+1-Iwander	1-iwander	NOUN
+1-Iwant,miss	1-iwant,miss	VERB
+1-Iwrestle,strive	1-iwrestle,striveensis	ADJ
+1-yearloans	1-yearloo	PART
+13th	13th	ADV
+1flee	1flee	ADJ
+1—Iarm	1—iarms	NOUN
+2,-ui-Ilie	2,-ui-ilius	NOUN
+2,-ui-Iwardoff	2,-ui-iwardoffs	NOUN
+2-I	2-is	ADV
+2-I	2-is	DET
+2-I	2-is	NOUN
+2-Ideserve	2-ideservus	NOUN
+2-Igrieve	2-igrievearchia	NOUN
+2-Iwarn		NOUN
+2-month	2-month	ADV
+2017withfundingfrom		ADJ
+278-9AM	278-9am	ADV
+3,dedidi,deditum	3,dedidi,deditus	VERB
+3,rexi	3,rexis	VERB
+3,—rui	3,—ruo	NOUN
+3S!r		VERB
+3Y	3ys	NOUN
+4,-silui,-sultum	4,-silui,-sultus	NOUN
+4dayspriortodue	4dayspriortodue	ADV
+51im	51im	NOUN
+5r	5r	VERB
+5ra	5ra	NOUN
+5ram	5ra	NOUN
+5’7I		NOUN
+67	67	ADV
+6B	6b	NOUN
+6s	6s	NOUN
+779		NOUN
+;L	;l	VERB
+A.—H.	a.—h.s	ADJ
+ABBREVIATIONS	abbreviations	INTJ
+AD	ad	INTJ
+AD2	ad2	NOUN
+ALCESTIS		ADJ
+ALCESTIS	alcestis	CCONJ
+ALCESTIS	alcestis	NOUN
+AUG12		NOUN
+Acriterpugna-	acriterpugna-	NOUN
+Ad	ad	ADP
+Adapted	adapted	ADV
+Adbuc		VERB
+Adhunc	adhunc	DET
+Admetus	admetus	NOUN
+Advenientium	aduenio	VERB
+Aeetes	aeetes	NOUN
+Aegaeum	aegaeus	ADJ
+Aeneas,-ae,m	aeneas,-ae,ms	NOUN
+Aeneas,aTro-	aeneas,atro-	NOUN
+Africae	africa	ADJ
+Ag	ag	ADP
+Ag	ag	INTJ
+Aga-	aga-	ADP
+Aga-	aga-	NOUN
+Al	al	INTJ
+Alba	alba	ADJ
+AlbaLonga	albalongus	ADJ
+AlbaLonga,-ae,/.	albalonga,-ae,/.	VERB
+Albae	alba	ADJ
+Alcestis	alcestis	NOUN
+Algidus,-i,m.—MountAlgidus	algidus,-i,m.—mountalgidus	VERB
+Alia	alius	DET
+Aliae	alius	DET
+Alii	alium	DET
+Aliiludisvariisintersecertant	aliiludisvariisintersecerto	VERB
+Allmadlydancingthroughthepleasantvalley	allmadlydancingthroughthepleasantvalley	ADV
+Also	alsus	ADJ
+Alta	alo	ADJ
+Am	ams	VERB
+Amatisne	amatisnus	VERB
+An	an	PART
+And,stronginallits		NOUN
+AndgloriousHector	andglorioushector	NOUN
+Andlaiditgleamingon	andlaiditgleamingon	NOUN
+Andro-	andro-n	VERB
+Andunderneathisloritten	andunderneathislorittes	NOUN
+Anima	anima	NOUN
+Apollo,-inis,m	apollo,-inis,m	INTJ
+Apollo,godof	apollo,godof	NOUN
+Appia	appius	ADJ
+Appia-the	appia-the	ADJ
+Apu	apu	ADP
+Arae	arus	ADJ
+Arg	args	INTJ
+Argive	argiuus	ADV
+Askyourteachertoreadittoyou	askyourteachertoreadittoyou	ADP
+Asonetravelsaboutonthese	asonetravelsaboutonthese	ADV
+Atergo	atergus	NOUN
+Athenian	athenias	NOUN
+Aurora,-ae,/.	aurora,-ae,/.	NOUN
+Aurora,goddess	aurora,goddess	ADJ
+Aves		NOUN
+B	bornellum	NOUN
+B.A.	b.a.	ADV
+B.C.	b.c.	ADJ
+B2	b2	ADV
+BELOW	below	ADV
+BOMBAY	bombay	ADV
+BOOKS	books	NOUN
+BOSTON	boston	ADV
+Ba	ba	INTJ
+Bearingagoryharness	bearingagoryharness	NOUN
+Berkeley	berkeley	NOUN
+Book		ADJ
+Book	book	ADJ
+Book	book	ADV
+BookIV		VERB
+BookVH	bookvh	NOUN
+BookVI		NOUN
+BookXH	bookxh	ADJ
+BookXL	bookxl	NOUN
+Britannicae	britannicus	ADJ
+Britannus	britannus	ADJ
+Brundusium	brundusium	NOUN
+Buthackthechilduponhisnurse’sbreast		NOUN
+Butthough	butthough	ADJ
+By		NOUN
+By	by	NOUN
+By	lby	NOUN
+ByRev.A.Calvert,M.A.	byrev.a.calvert,m.a.	NOUN
+ByRev.G.H.		NOUN
+ByRev.J.Bond,M.A.,andRev.A.S.Walpole	byrev.j.bond,m.a.,andrev.a.s.walpola	NOUN
+ByT.E.Page	byt.e.page	ADV
+ByW.Welch,M.A.,andC.	byw.welch,m.a.,andc.	ADV
+ByWalter	bywalter	NOUN
+C	c	NOUN
+C	c	PRON
+C2		VERB
+CAESAR	caesar	ADV
+CALCUTTA		NOUN
+CAMPI		NOUN
+CAMPI	hcampis	NOUN
+CANADA		NOUN
+CATULLUS	catullus	NOUN
+CENTAUR	centaur	ADP
+CERES	cero	NOUN
+CICADAE		NOUN
+CLASSICS	classics	ADP
+CLASSICS	classics	ADV
+CLASSICS	classics	VERB
+CO	cois	NOUN
+COCLES	cocles	NOUN
+COMPANY	company	NOUN
+COPYRIGHT		NOUN
+CROESUS		NOUN
+CURR		ADV
+CURR	curr	ADV
+CYRUS		NOUN
+CYRUS	hcyruss	NOUN
+CaesardefeatedPompey	caesardefeatedpompey	VERB
+Calvert,M.A.	calvert,m.a.	NOUN
+Cam	cam	NOUN
+Can-	can-	ADV
+Capes	capes	NOUN
+Capi-	capi-	VERB
+Captl-	captl-	NOUN
+Caput	caput	NOUN
+CartLaginem	cartlago	NOUN
+Centaur		VERB
+CentralItaly	centralitaly	ADJ
+Ceres	ceres	NOUN
+Ceres,goddess	ceres,goddess	NOUN
+Ceyx	ceyx	ADV
+Charon,-ontis,m.-Charon,the	charon,-ontis,m.-charon,the	NOUN
+Chironis	chiron	NOUN
+Christus,-i,m.-Christ	christus,-i,m.-christ	AUX
+Cicadae	cicadus	ADJ
+CivesigituradForumaurum	civesigituradforumaurum	NOUN
+Classical	classical	ADV
+Clement	clemet	VERB
+Clytaem-	clytaem-s	NOUN
+Clytaemnestra	clytaemnestra	NOUN
+Clytaemnestra,-ae,/.	clytaemnestra,-ae,/.s	NOUN
+Co-	co-o	VERB
+Colchis,acountryeastofthe	colchis,acountryeastofthe	ADJ
+Col—son	col—son	NOUN
+Continued	continuid	ADJ
+Croesus,kingof	croesus,kingof	ADP
+Crown’’dwithgreenleaves,andfacesallonflame	crown’’dwithgreenleaves,andfacesallonflamis	NOUN
+Cu	cu	NOUN
+Cumeainpratisnitidisluderegaudebat	cumeainpratisnitidisluderegaudo	VERB
+Cumtamen	cumtamen	NOUN
+D2	d2	VERB
+DALLAS		ADV
+DAYS	days	NOUN
+DEAMICITIA	deamicitia	NOUN
+DEPT	dept	VERB
+Darda-		NOUN
+Dardan-	dardan-	NOUN
+Dehocmiratus	dehocmiratus	NOUN
+Delius,-a,-um-Delian	delius,-a,-um-delia	NOUN
+Delphicum	delphicus	ADJ
+Delphicus	delphicus	ADJ
+Demontibus	demontis	ADJ
+Destinyisaccomplished,andshedies	destinyisaccomplished,andshedies	NOUN
+Diana,goddessof	diana,goddessof	NOUN
+Dianaesumusinfide	dianaesumusinfido	NOUN
+Diuetacriterpugnabantfratres	diuetacriterpugnabantfratr	NOUN
+Duffield	duffieldt	NOUN
+Dumrex	dumrex	NOUN
+E5mano	e5manus	ADJ
+EDUCATION-PSYCHOLOGY	education-psychology	VERB
+ELEMENTMOr	elementmor	VERB
+EU	eu	INTJ
+Edmano	edmanus	ADJ
+Ego,"inquit	ego,"inqesco	VERB
+EgoiuvenemRomanum	egoiuvenemromanus	NOUN
+Elysiis	elysius	ADJ
+Elysios	elysius	ADJ
+Eoenimexitinerevenerat	eoenimexitinerevenerats	VERB
+Eomani	eomanus	ADJ
+Erebus,theabode	erebus,theabode	VERB
+Etnos	etnus	NOUN
+Etr	etr	ADV
+Etrus-	etrus-	NOUN
+Etrusc5s	etrusc5s	INTJ
+Etrusci	etruscus	ADJ
+Etruscos	etruscus	ADJ
+Eur	eur	INTJ
+Eurydice,wife	eurydice,wifo	VERB
+Eurydice,wife	eurydice,wifs	NOUN
+Except		ADJ
+Exhis	exhus	ADJ
+Explanations	explanations	NOUN
+F	f	NOUN
+F2	f2	NOUN
+FACILITY		ADJ
+FAGE	fagus	NOUN
+FERRIS	ferris	ADV
+FIRSTORATIONAGAINSTCATILINE		CCONJ
+FOURTH	fourth	NOUN
+FROM		NOUN
+Fairsilver-shaftedQueenforeverchaste	fairsilver-shaftedqueenforeverchastis	VERB
+Fatis	fata	NOUN
+Fearingthebrassandcrestcfhorse’shair		NOUN
+First	first	VERB
+FirstEdition	firstedition	NOUN
+FirstthroughtheEuxineseasborealltheflourofGreece	firstthroughtheeuxineseasborealltheflourofgreecio	VERB
+Flavum	flauus	ADJ
+Flewett	flewett	NOUN
+Ford	ford	NOUN
+ForwellIhnow,atheartandinmythought	forwellihnow,atheartandinmythought	NOUN
+From	from	ADV
+G	gherardesca	NOUN
+G.Duffield		NOUN
+G.Duffield,M.A.	g.duffield,m.a.	NOUN
+GENERAL		NOUN
+GIFT		NOUN
+GLASGOW	glasgowicus	VERB
+GRUNDY		CCONJ
+GeneralLibrary		NOUN
+GeneralVocabulary		NOUN
+Gives	gives	ADJ
+Gives	gives	NOUN
+Givesomnessaxaplurima	givesomnessaxaplurima	ADJ
+GlimRdmanioppidumparvumhabitabant	glimrdmanioppidumparvumhabito	VERB
+Grae-		ADJ
+Graeci	graeci	ADJ
+Graecorum	graeci	ADJ
+Graecos	graeci	ADJ
+Graecus,-a	graecus,-us	NOUN
+Graeeus	graeeus	ADJ
+Gratl	gratl	NOUN
+Gra—ves	gra—ues	NOUN
+Great	greo	VERB
+Greekwarrior	greekwarrior	ADJ
+Grundy	grundy	NOUN
+H		NOUN
+H0R1TIU8	h0r1tiu8s	NOUN
+HALCYONE	halcyon	ADV
+HECTOR		INTJ
+HECUBA		NOUN
+HIST	hist	NOUN
+HORACEe	horacee	VERB
+HORATIUS	horatius	ADV
+Ha	ha	INTJ
+Hades	hades	NOUN
+Halcyone	halcyon	NOUN
+HancolimveteresvltamcoluereSdblni	hancolimveteresvltamcolueresdblni	NOUN
+Hasting,oronreturn		VERB
+He	he	INTJ
+Heholdsearsofcornandacupforwine	heholdsearsofcornandacupforwine	NOUN
+Heispouringouthis	heispouringouthis	NOUN
+Hellespont	hellespo	VERB
+Hermightycharms,herfuriouslovingfit	hermightycharms,herfuriouslovingfit	VERB
+Hicdum	hicdum	ADV
+HicolimquidemCaesariamicussocius	hicolimquidemcaesariamicussocius	ADJ
+Hie	hie	ADV
+Hieluposursos	hieluposursos	ADJ
+Hienoniamperterritusest	hienoniamperterritusest	VERB
+Hisdictisiuvenemamplexus	hisdictisiuvenemamplexus	VERB
+Hisfalsedfaith,andlovetoolightlyflit		VERB
+Homi-	homi-	NOUN
+HorM	horms	INTJ
+HumIse	humise	VERB
+I	i	VERB
+IASON		NOUN
+IJT	ijt	NOUN
+IL		ADJ
+ILIAD		ADJ
+IMia	imia	NOUN
+IMiam	imia	NOUN
+INBRITAIN	inbritainm	ADJ
+INTRODUCTION	introductionicus	ADJ
+INVASION	invasion	CCONJ
+Iadorn,equip	iadorn,equip	PRON
+Iam	iam	ADV
+Iarrange	iarrangus	VERB
+Ibear	ibeor	VERB
+Ibeg,askfor	ibeg,askfor	NOUN
+Ibring,take	ibring,take	ADJ
+Icometo		ADJ
+Icometogether	icometogether	NOUN
+Icometowards		NOUN
+Icommit,entrust	icommit,entrust	VERB
+Iconquer	iconquer	ADV
+Icultivate	icultivas	VERB
+Ideceive	ideceiue	CCONJ
+Idecide	idecid	VERB
+Idefend		VERB
+Idibus	idus	NOUN
+Idisperse,scatter(di-spargo	idisperse,scatter(di-spargo	NOUN
+Idrive		VERB
+Idriveout	idriveout	ADJ
+Idus	idus	NOUN
+Iembrace	iembrace	ADV
+Ienter	iento	ADV
+Iescape	iescapus	VERB
+If		INTJ
+If	uifs	INTJ
+Igo	igo	ADV
+Igodown	igodown	ADV
+Igovern,steer	igovern,steer	NOUN
+Igreet	igreo	VERB
+Ihave,hold	ihave,hold	VERB
+Ihe	ihus	ADV
+Ihear	ihear	VERB
+Iinhabit,livein	iinhabit,livein	ADV
+Iinvite	iinvite	VERB
+Iinvit—e		VERB
+Iioratiusinhisharness		ADJ
+Ijira,-ae,/.	ijira,-ae,/.s	NOUN
+Ijointo	ijointo	ADV
+Ikill		ADJ
+Ilack,amwithout	ilack,amwithout	NOUN
+Ilia	ile	NOUN
+Ilia,-ae,/.		NOUN
+Ilia,anameofRhea	ilia,anameofrheus	ADJ
+Iliaedumsenimiumquerenti	iliaedumsenimiumquerentes	VERB
+Ilie	ilius	DET
+Ilieback		VERB
+Ill	ills	DET
+Im		INTJ
+Im-		VERB
+Imake	imake	ADV
+Imakemorecertain,inform	imakemorecertain,inform	ADV
+Imiss,want	imiss,wo	VERB
+Imp		VERB
+InForoRomanomlnaesunttempliVestaerotundi	infororomanomlnaesunttemplivestaerotundus	NOUN
+Inec	inec	ADV
+Inferi,-drum,m.pi	inferi,-drum,m.pus	NOUN
+Inlettersallofgold	inlettersallofgold	NOUN
+Intee	intees	ADP
+IntereaNeptunusvelapurpurea	intereaneptunusvelapurpureus	ADV
+IntereaPoenisummis		ADJ
+IntereaPorsennaefactaRomanosn5nfefellerunt	intereaporsennaefactaromanosn5nfefellero	VERB
+InternetArchive	internetarchive	CCONJ
+Interpastores	interpastor	NOUN
+Inthepurelightofever-present		VERB
+InvarioushabitsontheAppianroad	invarioushabitsontheappianroad	VERB
+Iolcus	iolcus	NOUN
+Iovis-gen	iovis-ge	NOUN
+Ipbigeneia	ipbigeneius	ADJ
+Ipersuade(governsadat	ipersuade(governsado	VERB
+Iphigeneiam	iphigeneia	NOUN
+Iplungedown,drown	iplungedown,drown	PRON
+Ipour		VERB
+Ipraise	hipraise	VERB
+Iprepare	iprepor	VERB
+Ipromise		NOUN
+Iprostrate	iprostratus	VERB
+Ipseinmedium	ipseinmedium	ADJ
+Ipulloff	ipulloff	ADV
+Iputdown		NOUN
+Iputin,oron	iputin,oron	ADJ
+Ireceive	ireceiue	ADV
+Irefuse	irefusus	ADV
+Ire—ign	ire—ignula	ADJ
+Iride	iridus	ADV
+Irideorsail	irideorsail	VERB
+Irim-Iris	irim-iris	NOUN
+Irun	irun	DET
+Iseize	iseize	VERB
+Isell(thepricewillbeinthe	isell(thepricewillbeinthus	ADJ
+Ishear		VERB
+Ishirk,refuse	ishirk,refusa	NOUN
+Isit	isit	VERB
+Isnatchout	isnatchout	SCONJ
+Istand		ADJ
+Istep	istep	ADJ
+ItaetInferietSuperi	itaetinferietsuperi	ADV
+Itafirma	itafirmus	ADJ
+Itali	italus	ADJ
+Italia,-ae,/.—Italy	italia,-ae,/.—italy	VERB
+Italia,-ae,f.-Italy	italia,-ae,f.-italy	VERB
+Italiamnavigavit	italiamnavigo	VERB
+Italian		NOUN
+Italian	italia	NOUN
+Italicas	italicus	ADJ
+Italicos	italicus	ADJ
+Italicus	italicus	ADJ
+Italis	italus	ADJ
+Italos	italus	ADJ
+Italumina	italuminus	NOUN
+Italus,-i,TO	italus,-i,toc	VERB
+Italy	italy	ADV
+Itaque	itaque	CCONJ
+Itaque	itaque	PART
+ItaqueManibusdedicata	itaquemanibusdedico	VERB
+Itearoff(de-rapio	itearoff(de-rapio	VERB
+Ithrow		NOUN
+Ithrow,hurl		ADJ
+Its	its	ADV
+ItstandsintheComitium	itstandsinthecomitius	NOUN
+Iturn	iturn	PRON
+Iudices	iudices	NOUN
+Iulia	iulius	ADJ
+Iulius,-i,m.-Julius	iulius,-i,m.-julus	NOUN
+Iundertake(sub-capio	iundertake(sub-capio	VERB
+Iuvenis	iuvenis	NOUN
+Iviolate	iviolas	VERB
+I—setfree	i—setfree	ADJ
+J		NOUN
+JUL12'78-4		NOUN
+Jeans	jeo	VERB
+JiancRemusetfrdter,sicfortisEtruriacrevit	jiancremusetfrdter,sicfortisetruriacresco	VERB
+Jones	jones	NOUN
+KETDRR	cetdrr	NOUN
+Keats	ceats	ADV
+Kheae	kheus	ADJ
+Komanorumestpater,eturbemR5mamfortem	komanorumestpater,eturbemr5mamfors	ADV
+Kosis		ADJ
+LAMMERS	lammers	NOUN
+LD21A-30m-5,'75	ld21a-30m-5,'75	NOUN
+LEGENDS		ADV
+LL.D.	ll.d.	NOUN
+LONDON		VERB
+LOUISE		NOUN
+L^dia,-ae,/.	l^dia,-ae,/.s	NOUN
+Lace-	lace-s	NOUN
+Lacedae-	lacedae-	ADJ
+Lacertis	lacertus	NOUN
+Lacri-		NOUN
+Lacrimabant	lacrimo	VERB
+Laetl	laetl	ADJ
+Lartius	lartius	ADJ
+Lartius,-i,m	lartius,-i,m	ADV
+Latin	latin	ADJ
+Latin	latin	ADV
+Latinis	latina	ADJ
+Legends	legends	ADV
+Lictorsandrods,theensigns		NOUN
+Lih—ri	lih—ri	VERB
+Litt.D.	litt.d.	NOUN
+Ludimagisterluliamlaudat	ludimagisterluliamlaudo	VERB
+Lydia,a		ADJ
+M	marcus	NOUN
+M.A.	m.a.	ADJ
+M.Williams	m.williamss	NOUN
+MACAULAY		VERB
+MACMILLAN	macmillan	NOUN
+MACMILLAN	macmillans	NOUN
+MACMILLANCOMPANY	macmillancompany	NOUN
+MARS		NOUN
+MARTIN		NOUN
+MAY	mays	ADJ
+MBttlS	mbttls	ADJ
+MEDEA	medea	ADJ
+METTIUS		NOUN
+MIDDLE	middle	NOUN
+MILTON	milton	NOUN
+MONTH	months	ADJ
+MUSAE	musae	ADV
+Ma	hma	INTJ
+Macaulay	macaulay	NOUN
+Magister	magister	NOUN
+Manes	manes	NOUN
+Manesdescendere	manesdescendeo	VERB
+Marchant		VERB
+Mars,Martis	mars,martis	NOUN
+Martiis	martius	ADJ
+Martio	martius	ADJ
+Martius	martius	ADJ
+Martius—a	martius—a	AUX
+Matressenes	matressenes	NOUN
+Maxirne	maxirnis	ADV
+Ma—deley		VERB
+Media,-ae,/.	media,-ae,/.um	VERB
+Media,acountry	media,acountrys	ADJ
+Melhuish	melhuish	NOUN
+Menelaus,-i,m	menelaus,-i,m	ADJ
+Menelaus,-i,m	menelaus,-i,m	ADV
+Menelaus,king	menelaus,king	VERB
+Mercuriumvidebat	mercuriumvidebat	VERB
+Mercurius,-i,m	mercurius,-i,m	ADV
+Mercury,mes-		NOUN
+Met	metis	ADV
+Metabus	metabus	NOUN
+Mistress	mistress	ADJ
+Moreover	moreover	ADJ
+Mount	moo	VERB
+MtrSAE		NOUN
+Multasfabulaspuerisetpuellismagisterbenignus	multasfabulaspuerisetpuellismagisterbenignus	ADJ
+Multispostannis	multispostannis	NOUN
+My		PRON
+N		INTJ
+N		NOUN
+N	hn	INTJ
+N	hns	NOUN
+N	n	INTJ
+N	n	NOUN
+N5n	n5n	PART
+NEW		NOUN
+NORTHERN	northern	CCONJ
+NOV		NOUN
+NRLF		NOUN
+Nall	nall	NOUN
+Nall,M.A.	nall,m.a.	NOUN
+Nautae	nautae	NOUN
+Nautae	nautes	NOUN
+Nautamm	nautamm	NOUN
+Navicula	navicula	NOUN
+Nbnne	nbnne	ADV
+Ndn	ndn	ADV
+Neminem	nemo	PRON
+Neminem,adbucviviiin	neminem,adbucviviiin	PART
+Nemo	nemo	PRON
+Neptune,god	neptune,god	ADJ
+Nihildmagis	nihildmagis	ADV
+Nondiuregisexercitusbostiumimpetumsustinebat	nondiuregisexercitusbostiumimpetumsustinebats	VERB
+Nondumnobis	nondumnos	NOUN
+Nonfrustra	nonfrustra	ADV
+Nonne	nonne	ADV
+Nontameninsulam	nontameninsulus	NOUN
+Norlongingsvain(now	norlongingsvain(now	ADJ
+Norpain,norcold	norpain,norcold	NOUN
+Northirst,norhungeronthathappyshore	northirst,norhungeronthathappyshor	VERB
+Nowadays	nowadays	NOUN
+Numfemina,"inquit	numfemina,"inquio	VERB
+Nunquamne	nunquamne	ADV
+OCT		NOUN
+ODES	odes	INTJ
+OF		DET
+OF		NOUN
+OF	of	DET
+OF	ofotheus	NOUN
+ORATION	oration	ADJ
+ORPHEUS	orpheus	NOUN
+OSomne,”inquit	osomne,”inquitula	AUX
+OUasskB	ouasskb	NOUN
+OUm		NOUN
+Obm	obm	ADV
+Ol	ol	INTJ
+OlimPersephoneinpratiserrabat	olimpersephoneinpratiserro	VERB
+Oliva	oliua	NOUN
+Oppidan		NOUN
+Orembassiesfromregionsfar	orembassiesfromregionsfar	ADV
+Orlightlytripalongthefloweryglade	orlightlytripalongthefloweryglado	VERB
+Orph^s	orph^s	NOUN
+Orpheu	orpheu	NOUN
+Orpheus,a	orpheus,as	NOUN
+OrpheusiswearingThraciandress,which		VERB
+OrpheusplayingtheLyre	orpheusplayingthelyro	VERB
+Orphim	orphim	NOUN
+Ov	ov	INTJ
+Owen	owen	VERB
+P	p	ADP
+P	p	NOUN
+PA		PRON
+PA	pa	PRON
+PM	pmum	NOUN
+PRINTED	priinted	NOUN
+PROARC		NOUN
+PROPERTIUS		NOUN
+Pal	pal	VERB
+Pantin		ADV
+Pantin	pantin	ADV
+Parentes	parens	NOUN
+Paris,-idis,m	paris,-idis,m	NOUN
+Paris,aprinceof	paris,aprinceof	ADP
+Patruusmeusfiliamtuamad	patruusmeusfiliamtuamad	ADV
+Paucis	paucus	DET
+Pegasus	pegasus	NOUN
+Pelias	pelias	ADJ
+Pelias,fatherofJason	pelias,fatherofjason	NOUN
+Perse-	perse-	NOUN
+Persephone,-es,/.	persephone,-es,/.s	NOUN
+Persephone,-es,f.-Persephone	persephone,-es,f.-persepho	NOUN
+Persephonecumvirdsudinlectdsedebat	persephonecumvirdsudinlectdsedebo	VERB
+Persia	persia	NOUN
+Persians	persians	VERB
+Persicos	persicus	ADJ
+Persicus	persicus	NOUN
+Perturbati	perturbatus	ADJ
+PiRATAE	piratae	NOUN
+Pioneer	pioneer	ADV
+Piratae	piratus	VERB
+PlRlTAE		NOUN
+Placidi	placidus	ADJ
+Poenos	poenus	ADJ
+Popu-	popu-	ADP
+Por-	por-	ADV
+Postpaucos	postpaucus	NOUN
+Praedamquoquemultamndsdomumreportabimus	praedamquoquemultamndsdomumreportabimus	VERB
+Praetors,Proconsulstotheirprovinces		NOUN
+Priam,kingof	priam,kingof	NOUN
+Printedin	printedin	ADJ
+Pronouns	pronouns	VERB
+Published	published	ADV
+Pulcbrae	pulcbra	NOUN
+Punico	punicus	ADJ
+Qu		INTJ
+QuemCaesaramplexusgratiispraemiis	quemcaesaramplexusgratiispraemia	NOUN
+QuicumCamilla	quicumcamilla	NOUN
+Quirinus	quirinus	ADJ
+Quirites,-ium	quirites,-is	NOUN
+Quofacto,Caesarnoncrudelem	quofacto,caesarnoncrudelis	ADJ
+Quoo	quoo	ADV
+R		ADP
+R		INTJ
+R		NOUN
+R	r	ADP
+R	r	NOUN
+R	rius	NOUN
+R.J.	r.j.	NOUN
+R32	r32	NOUN
+R32	r32	PRON
+R325	r325	ADJ
+R5mae	r5ma	ADJ
+R5mam	r5ma	ADJ
+R5mam	r5ma	NOUN
+R5man	r5mans	NOUN
+R5man5s		NOUN
+R5nia	r5nia	NOUN
+REC'D	rec'd	ADJ
+REED		NOUN
+REGIONAL	regional	ADV
+RETURNTOthe	returntothe	ADJ
+RETuRB	returb	ADJ
+ROMA		NOUN
+ROMAN	roman	ADJ
+ROMANI	romani	NOUN
+ROME		NOUN
+ROMULUM	romulum	NOUN
+ROMULUS		NOUN
+Rbeam	rbeo	VERB
+Rdmae	rdma	ADJ
+Rdmam	rdma	ADJ
+Rdmana.e	rdmana.e	NOUN
+Rdmanae	rdmanus	ADJ
+Rdmanarum	rdmanus	ADJ
+Rdmanas	rdmanus	ADJ
+Rdmands	rdmands	VERB
+Rdmani	rdmanus	ADJ
+Rdmanis	rdmanus	ADJ
+Reflexive	reflexiuus	ADV
+Reflexivepro-	reflexivepro-	VERB
+Renewalsandrechargesmaybemade4daysprior	renewalsandrechargesmaybemade4daysprior	VERB
+Reprinted1924	reprinted1924s	NOUN
+Rev		VERB
+Rev.H.M.Stephenson,M.A.	rev.h.m.stephenson,m.a.	NOUN
+RheaSilvia	rheasiluia	NOUN
+RheaSilvia,-ae,/.		NOUN
+Rhenus,-i	rhenus,-i	NOUN
+Rhenus,-i,m.-—Rhine	rhenus,-i,m.-—rhine	NOUN
+RiverTiber	rivertiber	VERB
+Ro	hros	PRON
+Roman5s	roman5s	NOUN
+RomanPeople	romanpeople	VERB
+Romangen	romange	VERB
+Romanhero	romanherus	ADJ
+RomaniaPoenissupera-	romaniapoenissupera-	ADJ
+Romani—qui	romani—qui	ADJ
+Romanname	romanname	VERB
+Romanname(MarkAntony	romanname(markantony	NOUN
+Romanosdocereconabantur,utipsi	romanosdocereconabantur,utipsis	VERB
+Rubrae	rubra	ADJ
+S		ADJ
+S		ADP
+S		ADV
+S	s	ADJ
+S	s	ADP
+S	s	ADV
+S	s	CCONJ
+SCHOOL	school	ADJ
+SELECT		ADV
+SELECTIONS		ADV
+SELECTIONS		CCONJ
+SHAKESPEARE	shakespeareius	VERB
+SOLON	solon	VERB
+SPENSER	spenser	NOUN
+ST	hst	INTJ
+STAMPED		CCONJ
+STORIES		ADV
+SUMMARY	summary	ADV
+SY	sy	ADP
+SYMONDS		ADV
+Sa	sa	INTJ
+Sabinas	sabinus	ADJ
+Sabini	sabinus	ADJ
+Sallust	sallust	NOUN
+Sapi-	sapi-	NOUN
+Satis	satis	ADV
+SedMecuriusadregnumInferdrum	sedmecuriusadregnuminferder	NOUN
+SedSextusquo	sedsextusquus	ADJ
+Sedcumservumquendamanimad	sedcumservumquendamanimad	ADV
+Sedinfinita	sedinfinitus	ADJ
+Sedintanto	sedintantus	NOUN
+Sednequeagricolaene	sednequeagricolaeno	ADJ
+Sedquod	sedquod	SCONJ
+SedsomnusMetaniramnontenebat	sedsomnusmetaniramnontenebo	VERB
+Selections	selections	ADV
+Selections,adaptedforBeginners	selections,adaptedforbeginners	NOUN
+Senate	seno	VERB
+Servi	seruius	NOUN
+Servimeirogumingentem	servimeirogumingens	ADJ
+Setupandelectrotyped		ADV
+Sextus,aRoman		VERB
+Sh	sh	ADV
+Shakespeare	shakespeo	VERB
+Shalllivethespiritofthynurse	shalllivethespiritofthynurso	ADV
+Shrankcrying,frightenedathisfather'slooks	shrankcrying,frightenedathisfather'slooks	DET
+Shuckburgh		VERB
+Si	si	SCONJ
+Siautemtuoculos	siautemtuoculus	NOUN
+Sibyllinis	sibyllinus	ADJ
+Sicily	sicily	ADJ
+Sicily	sicily	ADV
+Simul	simul	ADV
+Sinautemdixeromeuxoremmeamiamsepulturum	sinautemdixeromeuxoremmeamiamsepulturum	ADV
+South		ADV
+Spa	spas	NOUN
+Spar-	spar-s	NOUN
+St	st	INTJ
+StMartin'sStreetLondon	stmartin'sstreetlondon	NOUN
+States	stas	NOUN
+Statim	statim	ADV
+Statuam	statua	NOUN
+Stone,M.A.	stone,m.a.	NOUN
+Stygis	styx	NOUN
+Su	su	AUX
+Subitd		VERB
+Subitopiratapuellaminnaviculamiactat	subitopiratapuellaminnaviculamiacto	VERB
+Subj.—that	subj.—tho	AUX
+Subjunctive	subiunctiuus	CCONJ
+Super!,-6rum,m.pi	super!,-6rum,m.pi	VERB
+Superb		VERB
+Swiss	swiss	NOUN
+T	titus	INTJ
+T	titus	NOUN
+THE		AUX
+THE		DET
+THE		NOUN
+THERISEOFTHEATHENIANEMPIRE	theriseoftheathenianempire	ADV
+THIRD		ADV
+TO		NOUN
+TO.—hearth	to.—hearths	NOUN
+TORONTO		NOUN
+TO—play,school	to—play,schools	NOUN
+Ta	ta	INTJ
+Tabulas	tabula	NOUN
+Tarquin,the	tarquin,tho	NOUN
+Tequo	tequus	ADJ
+Terrdris	terrdrus	ADJ
+TerreHaute.Indiana	terrehaute.indianus	ADV
+The		NOUN
+The	tahe	NOUN
+The	thes	NOUN
+The	tohe	NOUN
+ThePoet		NOUN
+ThedaywillcomewhenIliostheholy	thedaywillcomewheniliostheholy	ADP
+Thefawnislisteningto	thefawnislisteningtus	VERB
+Theirvalourtook	theirvalourtook	ADJ
+Theleaderisfairest	theleaderisfairest	VERB
+There'midElysianmeadowstakethyrest		VERB
+Thespiritofthysire	thespiritofthysir	VERB
+Thessaliaeoram,regnavisset	thessaliaeoram,regnavisset	NOUN
+This	this	NOUN
+This	thus	NOUN
+Thouartnotdead,myProte	thouartnotdead,myprotes	NOUN
+Thoushaltgivehisfair-hairedarmies	thoushaltgivehisfair-hairedarmies	ADV
+Thr	thrs	ADV
+Thraciae	thracia	ADJ
+ThyhomeisnowanIslandoftheBlest	thyhomeisnowanislandoftheblsum	AUX
+Tiberis,-is,to	tiberis,-is,to	ADV
+Tiberis,-is,—m	tiberis,-is,—m	ADJ
+TithSnus,-i,m	tithsnus,-i,m	VERB
+Tithonus,hus-	tithonus,hus-	ADJ
+To	to	INTJ
+Tohismusicplantsandflowers	tohismusicplantsandflowers	ADJ
+Tr5ia	tr5ias	NOUN
+Triptole-	triptole-	NOUN
+Triptomenus	triptomenus	ADJ
+Troiani	troiani	ADJ
+Troianis	troiani	ADJ
+Troianis	troianus	ADJ
+Troianus	troianus	ADJ
+Trojans	trojans	VERB
+Tullia	tullia	NOUN
+Tumcorpore		ADJ
+Tummulieres	tummulieres	NOUN
+TuquoqueHelenamtecumdomumadregiamtuam	tuquoquehelenamtecumdomumadregiamtuus	VERB
+Turn	turn	ADJ
+Turn	turn	ADV
+TurnCereslacrimas	turncereslacrima	NOUN
+Turnagricolapiratasvocat	turnagricolapiratasvocats	VERB
+Tusculum	tusculum	NOUN
+Tuscus	tuscus	ADJ
+T—.		VERB
+U	u	NOUN
+UC-NRLF	uc-nrlf	NOUN
+UR	ur	VERB
+USED	used	ADV
+UbiautemBacchusesomndseexcitavit,etundas	ubiautembacchusesomndseexcitavit,etundas	NOUN
+Ui-	ui-	ADJ
+Umbrae	umbrus	NOUN
+UniversityofAlberta	universityofalberta	NOUN
+UniversityofCalifornia	universityofcalifornia	ADJ
+Upbornebypityinghands,thefeebleframe	upbornebypityinghands,thefeebleframe	NOUN
+Urbempetiverunt	urbempetiverunt	VERB
+VERSE	uerro	NOUN
+VOCABULARY	uocabulary	ADV
+VOCABULARYOFWORDSINQUOTEDPASSAGES	uocabularyofwordsinquotedpassages	INTJ
+Vale	ualeo	VERB
+Vds	uds	ADV
+Vds	uds	PRON
+Vebementer	uebementer	ADV
+Vela	uela	NOUN
+Ven	uen	INTJ
+Venti	uentius	NOUN
+Verba	uerbum	NOUN
+Ves	ues	VERB
+VestMium	uestmium	NOUN
+Vesta	vesta	NOUN
+Vesta'ssacredfire		VERB
+Vesta,goddessof	uesta,goddessof	INTJ
+Vestal,belongingto		NOUN
+Vestales	uestales	ADJ
+Vestalis	uestalis	NOUN
+Vestigiis	uestigium	NOUN
+Viae	uia	NOUN
+Victis	uinco	VERB
+Vincent	uinco	VERB
+Vir-	uir-	ADV
+Virgil	uirgil	NOUN
+Virgines	uirgo	NOUN
+Virginesvestalespropeignemsacrumdeosorabant	uirginesvestalespropeignemsacrumdeosorabant	VERB
+Virginum	uirgo	NOUN
+Viri	uir	NOUN
+Vito,1	uito,1	NOUN
+VmGiL.	umgil.	NOUN
+Vocat	uoco	VERB
+Volsci	uolscus	VERB
+W		INTJ
+W	w	NOUN
+WC2	wc2	NOUN
+WHICH		NOUN
+WORDS		NOUN
+WORDS	words	ADV
+WORDS	words	NOUN
+Warkior		VERB
+WhenTriptolemusgrewup,CeresandPersephonesenthim	whentriptolemusgrewup,ceresandpersephonesenthim	NOUN
+Why,hefoundnoone	why,hefoundnoo	NOUN
+With	with	ADV
+WithExercises	withexercisis	VERB
+Words		NOUN
+World	worldus	NOUN
+Y	hys	NOUN
+Z	z	NOUN
+^f—orc	^f—orc	NOUN
+^just	^just	VERB
+^loca	^locus	VERB
+^nowhere	^nowhio	VERB
+^why	^why	ADJ
+aGreek		ADJ
+aPeliafratreexpulsus	apeliafratreexpulsus	VERB
+aRoman	aromans	NOUN
+aSabine	asabino	VERB
+aThes	athis	NOUN
+aUi	aui	ADV
+ab	ab	ADP
+ab,a,prep.gov.abl.-by,from		PRON
+ab,prep.—gov		NOUN
+abAeeta	abaieetus	NOUN
+abenam	aobena	NOUN
+abeo	abeo	VERB
+abeuntem	abeo	VERB
+abhinc	abhinc	ADV
+ability	ability	VERB
+abipsauxoremonitus		VERB
+abl	abl	ADV
+abl.--hy	abal.--hy	ADP
+abl.-along	abl.-alongs	NOUN
+abl.-downfrom	abl.-downfrom	PART
+abl.-for	abl.-for	NOUN
+abl.-in	abl.-in	ADP
+abl.-under	abl.-under	NOUN
+ablative	ablatiuus	ADV
+able	able	NOUN
+abomnibus		ADJ
+abound		VERB
+about	about	ADP
+about	about	SCONJ
+about,concerning	about,concerning	NOUN
+above		VERB
+absen	abses	NOUN
+absolvere	absolveo	VERB
+ac-and	ac-andus	NOUN
+acc		NOUN
+acc	acc	NOUN
+acc.-across		NOUN
+acc.-among	acc.-amongs	VERB
+acc.-before	acc.-befor	NOUN
+acc.-between		VERB
+acc.-into	acc.-intum	NOUN
+acc.-near	acc.-neo	VERB
+acc.-on		VERB
+acc.-onaccount	acc.-onaccoo	VERB
+acc.-round	acc.-roundus	ADJ
+acc.-round	acc.-roundus	VERB
+acc.-through		NOUN
+acc.-to		NOUN
+acc.-towards		NOUN
+acc.—after	acc.—after	NOUN
+acc.—against		VERB
+acce	acce	VERB
+accept	accept	VERB
+accessible	accessible	NOUN
+acchus	acchus	NOUN
+accidencehas	accidencehas	NOUN
+accomplish		NOUN
+accountof		VERB
+accusative	accusatiuus	ADV
+ace	aceo	NOUN
+ace.—into,onto	ace.—into,ontus	NOUN
+acertainone,acertain	acertainone,acertais	VERB
+acie	acies	NOUN
+acies	acies	NOUN
+acinvallem	acinvall	NOUN
+acityinLat	acityinlat	NOUN
+acityinLatium	acityinlatium	NOUN
+ack	ack	NOUN
+acquit	acquo	VERB
+across	acrossensis	ADJ
+active,I	active,i	ADV
+ad	ad	ADP
+ad,prep.gov.acc.-to,towards		NOUN
+ad-rightupto	adc-rightupto	VERB
+adalteram	adaltera	NOUN
+adapted		ADV
+adat	ado	VERB
+adbuc	acbuc	NOUN
+add(ad-iacio	add(ad-iacio	VERB
+added	added	VERB
+addomumtenebrosam	addomumtenebrodo	ADJ
+addrabant	addro	VERB
+addraverunt	addro	VERB
+adeo	adeo	ADV
+adflumen	asflumen	NOUN
+adhastamingentem	adhastamingo	VERB
+adhuc	adhuc	ADV
+adhuc,adv.-still,yet,hitherto	ahuc,adv.-still,yet,hitherto	VERB
+adhucimpavidusinfluminisripastabat,etTiberim	adhucimpavidusinfluminisripastabat,ettiberis	VERB
+adiun	adiun	VERB
+adiungo	adiungo	VERB
+adivisset	adiveo	VERB
+adj	aj	NOUN
+adj.-eleven		NOUN
+adj.-seven		NOUN
+adj.-twenty		NOUN
+adjective	adiectiuus	VERB
+adlucemascendet	adlucemascendo	VERB
+adludumperagros	adludumperagr	ADJ
+admaritumme	admaritumme	ADV
+administra	administra	NOUN
+ado	ado	ADP
+adolescens	adolesco	NOUN
+adolescentem	adolesco	NOUN
+adolescentes	adolesco	ADJ
+adolescentes	adolesco	NOUN
+adolescentes	adolesco	VERB
+adora-	adora-s	NOUN
+adorabant	adoro	VERB
+adorabantetinsummdbonore	adorabantetinsummdbonor	VERB
+adorabatCroesus	asorabatcroesus	VERB
+adorabunt	adoro	VERB
+adoramus	adoro	VERB
+adorant	adoro	VERB
+adorn	adorns	NOUN
+adorn	adorns	VERB
+adorn,equip	adporn,equip	VERB
+adorned		VERB
+adresistendum	adresisto	VERB
+adstans	adstans	VERB
+adstantem	adstans	VERB
+adstantes	adstans	VERB
+adteadduxi,uttueaminterancillastuascustodias	adteadduxi,uttueaminterancillastuascustodio	VERB
+adtem	adto	NOUN
+adtempla	adtemplum	NOUN
+adulto	adultus	ADJ
+adultus	adultus	NOUN
+adunum-toaman	adunum-toamans	NOUN
+adurbem	adurbs	NOUN
+adv	arv	NOUN
+adv	arv	VERB
+adv.-atonce	adv.-atonce	VERB
+adv.-atthesametime	adv.-atthesametima	VERB
+adv.-before	adv.-befor	NOUN
+adv.-by		ADP
+adv.-bychance	adv.-bychance	VERB
+adv.-cruelly	adv.-cruellyensis	VERB
+adv.-equally	adv.-equallys	ADJ
+adv.-every		VERB
+adv.-first	adv.-first	VERB
+adv.-for	adv.-for	NOUN
+adv.-hence	adv.-hence	VERB
+adv.-how	adv.-hows	VERB
+adv.-in		VERB
+adv.-justas	adv.-justo	VERB
+adv.-keenly	adv.-keenly	PRON
+adv.-meanwhile	adv.-meanwhilis	NOUN
+adv.-nay	adv.-nayor	NOUN
+adv.-not	adv.-not	VERB
+adv.-notyet		VERB
+adv.-nowhere	adv.-nowho	VERB
+adv.-often	adv.-ofte	NOUN
+adv.-on	adv.-ons	VERB
+adv.-once	adv.-once	VERB
+adv.-partly	adv.-partly	VERB
+adv.-rather	adv.-rather	VERB
+adv.-right	adv.-right	VERB
+adv.-secretly		NOUN
+adv.-so		VERB
+adv.-sometimes	adv.-sometimo	VERB
+adv.-then		NOUN
+adv.-thence	adv.-thence	VERB
+adv.-there	adv.-tho	VERB
+adv.-therefore	adv.-therefor	NOUN
+adv.-to-day	adv.-to-day	ADV
+adv.-wherefore	adv.-wherefor	NOUN
+adv.—always		VERB
+adv.—little		NOUN
+adv.—meanwhile	adv.—meanwhils	NOUN
+adv.—so		VERB
+adv.—then	adv.—the	NOUN
+advance	advanco	VERB
+advance,goforward		NOUN
+advenerit		VERB
+advenerunt	aduenio	VERB
+adveni	aduenio	VERB
+adveniens	aduenio	VERB
+advenientem	aduenio	VERB
+advenit	aduenio	VERB
+advenit-vir		VERB
+adverb		VERB
+adverse,hos-	adverse,hos-	ADP
+adversi		VERB
+adversus,-a,-um		ADP
+advice	advicio	VERB
+advise	adviso	VERB
+ae		DET
+ae	ae	DET
+ae	ae	INTJ
+ae	ae	NOUN
+ae,m.-Pelias	ae,m.-pelia	NOUN
+aedibus	aedis	NOUN
+aeger,-ra,-rum	aeger,-ra,-rum	ADJ
+aera-air	aera-air	NOUN
+afamous	afamous	ADJ
+affai		NOUN
+affero	affero	VERB
+afferre	affero	VERB
+after	after	ADV
+afterthemannerof[abl		VERB
+afterthenoun		NOUN
+afterwards		ADJ
+afui-I	afui-i	ADV
+ag	ag	PRON
+again	again	VERB
+against		VERB
+ager	ager	NOUN
+ager,-ri,to	ager,-ri,to	NOUN
+aggredi	aggredior	VERB
+aggredior	aggredior	VERB
+aggressum	aggriteor	VERB
+aggressus	aggredior	VERB
+aggressus	aggresdior	VERB
+agios	agius	ADJ
+agmgnagap		NOUN
+ago,3,egi,actum-Ilead,drive	ago,3,egi,actum-ilead,driue	NOUN
+ago—Ilead	ago—ileads	NOUN
+agrds		NOUN
+agri	ager	NOUN
+agris	ager	NOUN
+agrls		NOUN
+agros	ager	NOUN
+ahis	ahus	NOUN
+aided	aided	ADV
+aight,right	aight,right	NOUN
+aiidiebat	aiidio	VERB
+aim	aim	NOUN
+aining		VERB
+air	airarchia	NOUN
+ak	ak	PRON
+al	alm	NOUN
+alamity	alamityio	NOUN
+alere	alo	VERB
+alia	alius	DET
+aliae	alius	DET
+alias	alius	DET
+alidrum	alider	NOUN
+aliena	alienus	ADJ
+alienam	alienus	ADJ
+alienus	alienus	ADJ
+alii	alium	DET
+aliis	alius	DET
+alios	alius	DET
+aliquis	aliquis	PRON
+aliquosfecere	aliquosficio	VERB
+aliter	aliter	ADV
+alium	alius	DET
+alius	alius	DET
+alius...alius-one...another	alius...alius-one...anotherarchia	NOUN
+alive	aliue	ADV
+alive,living	alive,living	PART
+all	all	ADP
+allata	affero	VERB
+allatum	allor	VERB
+allatus	affero	VERB
+allow	allows	NOUN
+allowing		NOUN
+allsid	allsid	NOUN
+all—,every		NOUN
+almost		ADP
+alo	alo	NOUN
+alone,only	alone,only	VERB
+alongtime	alongtima	ADV
+aloud	aloud	ADJ
+already	alreadys	ADJ
+also	alsus	ADJ
+alsoBombayCalcuttaMadras	alsobombaycalcuttamadra	NOUN
+alt5s	alt5s	NOUN
+alter-one	alter-o	NOUN
+altissimam	altissimus	ADJ
+altos	alo	ADJ
+altum-I	altum-i	ADV
+alui	alo	VERB
+always	always	NOUN
+al—l	al—ls	NOUN
+am	am	ADP
+am	amm	NOUN
+am	amt	ADP
+am5re	am5re	VERB
+aman,ahuman	aman,ahumans	VERB
+amdrem	amdr	NOUN
+ame	ame	ADV
+amica	amica	NOUN
+amice,"inquit	amice,"inqo	VERB
+amicitia	amicitia	NOUN
+amicitiam	amicitia	NOUN
+amicos-si		NOUN
+amicumfidum	amicumfidus	ADJ
+amile	amilis	ADJ
+amoena	amoenus	ADJ
+amoenis	amoenus	ADJ
+amoenos	amoenus	ADJ
+amoenus	amoenus	ADJ
+amoenus,-a,-um-lovely,plea	amoenus,-a,-um-lovely,pleus	ADJ
+among	amongs	VERB
+amor	amor	NOUN
+amore	amor	NOUN
+amorem	amor	NOUN
+amy	amys	NOUN
+an	an	PART
+an-	an-	NOUN
+anItalian	anitalias	NOUN
+anItaliantribe	anitaliantribo	VERB
+anabl		VERB
+anameofthe	anameofthe	ADV
+ancestral	ancestral	VERB
+and		ADP
+and		INTJ
+and		NOUN
+and	and	ADJ
+and	and	ADP
+and	and	INTJ
+and	and	NOUN
+and	andicus	NOUN
+and	andius	ADJ
+and	andus	ADJ
+and	andus	NOUN
+andBookVI	andbookvi	NOUN
+andPriam,andthefolk	andpriam,andthefolk	NOUN
+andallthegods•	andallthegods•	VERB
+anddat	anddo	VERB
+andering	andering	NOUN
+andhismother'sheartrejoice	andhismother'sheartrejoicio	NOUN
+andin		NOUN
+andnight	andnight	VERB
+andnot,no	andnot,no	DET
+andotherStories	andotherstories	NOUN
+andover	andovo	ADJ
+andrulewithmightinTroy		VERB
+andshe	andshe	DET
+andstretchedhisarmstotakethechild	andstretchedhisarmstotakethechild	NOUN
+andtospareof		ADV
+andtospareof	andtospareofs	ADJ
+andyeother		VERB
+anearly	anearly	ADJ
+ang	angs	NOUN
+anger	anger	NOUN
+angry		VERB
+angulls	angullsus	NOUN
+angulo	angulo	NOUN
+angustd	angustd	NOUN
+angusto	angusto	ADJ
+ani-		NOUN
+anima	anima	NOUN
+animadversis	animaduerto	VERB
+animadverteret	animaduerto	VERB
+animadvertit	animaduerto	VERB
+animadverto	animaduerto	VERB
+animaeibi	animaeibi	NOUN
+animal	animal	NOUN
+animal,-alis,n.—animal,living	animal,-alis,n.—animal,living	NOUN
+animalia	animal	NOUN
+animam	anima	NOUN
+animamlevibuscrediditauris		VERB
+animi	animus	NOUN
+animis	animus	NOUN
+animo	animus	NOUN
+animo-with	animo-withs	NOUN
+animohaberet	animohabeo	VERB
+animomoratur	animomorao	VERB
+animos	animus	NOUN
+animum	animus	NOUN
+animus	animus	NOUN
+ani—madverto	ani—madvertus	VERB
+anndrum	annder	NOUN
+annds		VERB
+annds	annds	NOUN
+annis-three	annis-three	NOUN
+annisex	annisex	NOUN
+annosbenebeatequevivebat,donecdormientiquon		NOUN
+announc	announc	ADV
+anor	anor	NOUN
+answer		VERB
+ante,prep.gov.ac	ante,prep.gov.ac	INTJ
+antiqui	antiqui	ADJ
+antiquus,-a,-um-ancient,old	ahntiquus,-a,-um-ancient,old	NOUN
+antrum,-i	antrum,-i	NOUN
+anxious	anxious	ADJ
+apertas	aperio	ADJ
+apertus	apertus	ADJ
+aplan	apalan	VERB
+app	appo	VERB
+appear	appeo	VERB
+appearance(aspicio	appearance(aspicio	VERB
+applaud	applaud	NOUN
+apportabant	apporto	VERB
+apportabit	apporto	VERB
+apportabunt	apporto	VERB
+apportate	apporto	VERB
+apportaverat	apporto	VERB
+apportaverunt	apporto	VERB
+apportaveruntettemplummagnumaedificaverunt	apportaveruntettemplummagnumaedifico	VERB
+apporto	apporto	VERB
+approach		VERB
+apricasolegaudent	apricasolegaudeo	VERB
+apud	apud	ADP
+apudChironasecumeducatos	apudchironasecumeduco	VERB
+apudamicumpaulis	apudamicumpaulus	ADJ
+aqua	aqua	NOUN
+aquae	aqua	NOUN
+aquam	aqua	NOUN
+aquis	aqua	NOUN
+ar	ar	NOUN
+ar	arsiastes	NOUN
+ara,-ae,f.—altar	ara,-ae,f.—altor	VERB
+arabant	aro	VERB
+arant	aro	VERB
+arc	arco	NOUN
+ardly	ardly	ADJ
+ards	ardsicus	NOUN
+are	areo	VERB
+aries	aries	NOUN
+arietem	aries	NOUN
+arieti	aries	NOUN
+arietis	aries	NOUN
+ark,dim	ark,dim	ADV
+arls	arlso	NOUN
+arls	arlss	NOUN
+arm	arhim	NOUN
+armaRomana	armaromanus	NOUN
+armacurabunt,et	armacurabunt,ets	NOUN
+armed	armed	NOUN
+armen	armen	NOUN
+armorumsonitumtotoGermaniacaelo	armorumsonitumtotogermaniacaelus	NOUN
+arms		NOUN
+army	army	VERB
+aro	aro	NOUN
+arou	arousiastes	NOUN
+arriveat	arriveo	VERB
+arrow		NOUN
+ars,artis,/.	ars,artis,/.s	VERB
+arted	arted	NOUN
+artus,-uum,m.pl.-limbs	artus,-uum,m.pl.-limbsarchia	NOUN
+artus,-uum,to.p—i		NOUN
+artuscarosamplexa	artuscarosamplecto	VERB
+arum,/.pi	arum,/.pi	NOUN
+asanoun-an	asanoun-ans	ADJ
+asaying	asayingt	NOUN
+asc	ascs	NOUN
+asdo	asdus	NOUN
+aside	asis	VERB
+ask	ask	NOUN
+askfor	askfor	NOUN
+asole	asolo	NOUN
+aspectus,-us,m.-sight,aspect	auspectus,-us,m.-sight,aspect	NOUN
+assoo	assoo	NOUN
+assoonas	assoona	NOUN
+assunandshowers	assunandshowero	VERB
+asum	asus	NOUN
+atLincoln	atlincoln	NOUN
+atcantucommotaeErebidesedibnsimis		ADJ
+atch,seize	atch,seizes	VERB
+ate,tell	ate,tell	NOUN
+ater,-ra	ater,-ra	NOUN
+atergo	atergo	NOUN
+atergo-from	atergo-from	NOUN
+athome	athomus	NOUN
+atime		ADV
+atonc	atonc	ADV
+atonce	atonce	NOUN
+atowninthesouthof		NOUN
+atownsman		NOUN
+atque,conj.—and	atque,conj.—andus	ADJ
+atquisciebatquaesibibarbarus		VERB
+atrae	atrus	ADJ
+attack	atctack	VERB
+atthehouse	atthehousus	ADV
+attuli	affero	VERB
+atum	atus	VERB
+au	aue	CCONJ
+auanu,insolitistremueruni	auanu,insolitistremuerunus	NOUN
+aud	aud	ADV
+audacter,adv.-boldly	audacter,adv.-boldly	NOUN
+audacterito	audactero	VERB
+audio,4	audio,4	NOUN
+audio,4-Ihear	audio,4-iheo	VERB
+auditaMusdrumsacerdds	auditamusdrumsacerdds	NOUN
+aufc		NOUN
+aufcem	aufx	NOUN
+aura,-ae,f.-breeze	aura,-ae,f.-breezeo	VERB
+aurum,-i		NOUN
+ausussum	ausituor	VERB
+aut...aut	aut...aut	CCONJ
+autLacedaemoniumTarentum	autlacedaemoniumtarentus	NOUN
+auteminsummopericulomanusadcaelumDeos		NOUN
+author	author	VERB
+authority		VERB
+autvirtuteautingenio	autvirtuteautingenium	NOUN
+auxUio	auxuius	NOUN
+auxiiium	auxiiius	NOUN
+av	av	ADP
+avenger		ADJ
+aves	auis	NOUN
+avilla	avilla	NOUN
+avis	auis	NOUN
+avis	avis	NOUN
+aviumDisImmortalibus	aviumdisimmortalis	NOUN
+avum	auus	NOUN
+avus	auus	NOUN
+await	awaio	VERB
+away	away	NOUN
+away,depart		NOUN
+ax	ax	NOUN
+ay	ay	NOUN
+ayoung	ayoung	NOUN
+azed	azed	NOUN
+a—se	a—se	ADJ
+a―		VERB
+b		CCONJ
+b		NOUN
+b	b	CCONJ
+b	b	INTJ
+b	b	NOUN
+b	bies	NOUN
+b	bt	NOUN
+bUm	bum	NOUN
+ba	ba	NOUN
+ba	ba	VERB
+babebant	babo	VERB
+babebatur	babo	VERB
+babebunt	babeo	VERB
+babemus	babeo	VERB
+babent	babeo	VERB
+babet	babeo	VERB
+babitabat	babito	VERB
+babitabis	babito	VERB
+babitabit	babito	VERB
+babitamus		VERB
+babuit	babeo	VERB
+bac	bac	DET
+back	back	NOUN
+back,return		ADJ
+bad	bad	ADP
+baerebat	baero	VERB
+baggage	baggagus	INTJ
+band	bandius	ADJ
+band,group	band,group	NOUN
+bandofthedawngoddess	bandofthedawngoddess	ADV
+bandofthedawngoddess	bandofthedawngoddess	NOUN
+bank	bamnk	NOUN
+bantur	bo	VERB
+barba,-ae,f.-beard		NOUN
+barbarae	barbarus	ADJ
+barbaras	barbara	ADJ
+barbari	barbarus	NOUN
+barbaris	barbarus	ADJ
+barbaris	barbarus	NOUN
+barbaros	barbarus	ADJ
+barbaros	barbarus	NOUN
+barbarous	barbarous	NOUN
+barbarus	barbarus	NOUN
+base	basis	NOUN
+basta	basta	NOUN
+bastae	basta	NOUN
+bastam	basta	NOUN
+bastas	bastus	ADJ
+bastis	bastus	NOUN
+battle		NOUN
+battle	battle	NOUN
+batur	bo	VERB
+bbenter	bbenter	ADV
+be	be	ADP
+be	be	ADV
+be	be	NOUN
+be	be	SCONJ
+be	be	VERB
+be-	be-	ADJ
+bear	beor	VERB
+bearable	bearable	NOUN
+beate	beate	ADV
+beate,adv.-happily	beate,adv.-happily	ADV
+beatissi	beatissus	ADJ
+beatissima	beatissimus	ADJ
+beatissimam	beatissimus	ADJ
+beatumvoco	beatumvoco	VERB
+beautiful		ADJ
+beautiful	beautiful	ADV
+beauty	beauty	ADJ
+bebat	bo	VERB
+beborne	beborno	VERB
+bec	bec	NOUN
+because	becausus	NOUN
+been	bee	NOUN
+been	been	ADV
+been	been	NOUN
+beendiscon-	beendiscon-s	NOUN
+before	befus	NOUN
+beg	begiculus	NOUN
+begin	begin	NOUN
+beginners	beginners	ADJ
+beginning	beginning	ADV
+behalfof	behalfof	NOUN
+beheve	beheue	ADV
+behind		NOUN
+behind	behind	NOUN
+behold		ADJ
+being	being	ADJ
+being	being	ADP
+being	being	NOUN
+bellum,-i		NOUN
+belonging	belonging	ADJ
+belonging	belongings	ADJ
+belongingto		ADJ
+bendover	bendover	ADJ
+bene,adv.-well		VERB
+benignam	benignus	ADJ
+benignis	benignus	ADJ
+benignlspuellamoravit	benignlspuellamoro	VERB
+benigno	benignus	ADJ
+benignoludimagistro	benignoludimagister	NOUN
+benignum	benignus	ADJ
+benignus	benignus	ADJ
+berba	berbum	NOUN
+berbosa	berbosus	ADJ
+berbosis	berbosus	ADJ
+besiege	besiex	VERB
+best	bsum	VERB
+betis	beto	VERB
+betrans	betro	VERB
+better	better	ADV
+between	between	NOUN
+betweenstorms	betweenstormss	ADJ
+beyond	beyond	ADV
+bi	bi	ADV
+bid	bid	NOUN
+bieme	biemo	VERB
+biemem	biemes	NOUN
+bind	bind	NOUN
+bipennis,-is,f.-two-edgedaxe	bipennis,-is,f.-two-edgedaxis	NOUN
+bird		NOUN
+bis,adv.-twice	bis,adv.-twicio	VERB
+bitur	bo	VERB
+blacksmiths	blacksmithss	NOUN
+blessed	blessed	NOUN
+blood	blood	NOUN
+blue	blua	VERB
+bo	bo	ADP
+board		NOUN
+bodie	bodie	ADV
+body		NOUN
+bona,-orum,n.pl.-goods		NOUN
+bonds	bonds	VERB
+bonore	bonur	NOUN
+book	bohok	ADJ
+book	bohok	NOUN
+book	book	ADJ
+book	book	NOUN
+books	books	ADJ
+booksto	bookstus	ADJ
+booty	booty	NOUN
+borders,territories	borders,territories	ADV
+born	borns	NOUN
+borrebant	borro	VERB
+bos,bovis,c		NOUN
+bospes	bospes	NOUN
+bospitis	bospo	VERB
+bospitium	bospitium	NOUN
+boste	bostis	NOUN
+bostes	bostes	NOUN
+bostibus	bost	NOUN
+bostium	bostium	NOUN
+both	both	NOUN
+bothpastandpresent	bothpastandpreso	VERB
+braccbia	braccbium	NOUN
+bracchiismeistenebo,sedinnuptaadManesdescen-		NOUN
+bram	bra	NOUN
+branch		NOUN
+brave		NOUN
+braveRoman	braveromans	ADV
+bravest	bravsum	VERB
+brave—ly	brave—ly	NOUN
+brdsam	brdsa	NOUN
+break	break	ADJ
+break	break	ADV
+breast		NOUN
+breathe	breathe	ADV
+breezes	breezes	ADJ
+bridge		ADJ
+brinded	brinded	ADJ
+bring	bring	ADP
+bring	bring	NOUN
+bringback	bringback	ADV
+bringtoge	bringtogus	VERB
+broidered	broideredor	VERB
+brother	brother	ADJ
+brotherofHelle	brotherofhellus	VERB
+brotherofRomulus	brotherofromulus	NOUN
+brought	brought	NOUN
+broughtbackthegoldenfleece	broughtbackthegoldenfleecus	ADV
+buic	bic	DET
+build	build	NOUN
+bullock	bullocks	NOUN
+bumi	bumum	NOUN
+burden	burde	NOUN
+burn		NOUN
+burst	burst	NOUN
+bus	s	NOUN
+bushaerentes	bushaereo	VERB
+but	but	NOUN
+but	butius	NOUN
+butthe	butthe	ADV
+by	by	ADP
+by,from		ADJ
+bybringing	bybringing	ADV
+bycalling	bycallings	NOUN
+byehance	byehance	VERB
+bylittle		NOUN
+byll	byll	ADJ
+bylli	byllus	NOUN
+byone	byo	NOUN
+bystorm	bystorm	NOUN
+bythe	bythus	NOUN
+bytheRomansof	bytheromansofs	NOUN
+bythehand	bythehand	NOUN
+c	c	CCONJ
+c	cicus	CCONJ
+c	cies	CCONJ
+c	que	CCONJ
+c.-	c.-	NOUN
+c.-citizen	c.-citizen	NOUN
+c.-companion	c.-companion	NOUN
+c.-dog		NOUN
+c.-guard		NOUN
+c.-halcyon	c.-halcyon	NOUN
+c.-host	c.-host	NOUN
+c.-husband	c.-husband	ADJ
+c.-infant	c.-info	VERB
+c.-leader	c.-leader	NOUN
+c.-witness		NOUN
+c.—client	c.—clio	VERB
+c.—parent	c.—pao	VERB
+ca	ca	CCONJ
+cackling	cackling	VERB
+cadens	cado	VERB
+cadere	cado	VERB
+cado,3,cecidi	cado,3,cecis	NOUN
+cado,3,cecidi,casum-Ifall	cado,3,cecidi,casum-ifall	ADP
+cadunt	cado	VERB
+cae	ca	NOUN
+caedo,3,cecidi,caesum	caedo,3,cecidi,caedo	VERB
+cael5		NOUN
+cael5	cael5	NOUN
+caelum,-i,n	caelum,-i,n	ADV
+cal	cal	NOUN
+calamitatem	calamitas	NOUN
+called	calledo	VERB
+calltogether		NOUN
+calm	calm	NOUN
+camp	camp	NOUN
+camp5s	camp5ss	NOUN
+campds	campdss	NOUN
+campumturbatos	campumturbo	VERB
+can	can	ADJ
+can	can	NOUN
+canebant	cano	VERB
+canebat	cano	VERB
+canentem	cano	VERB
+canere	cano	VERB
+canereincepit	canereincipio	VERB
+canes	canis	NOUN
+canis	canis	NOUN
+canit	cano	VERB
+cannot	cannot	NOUN
+cano	cano	VERB
+cano,3,cecini	cano,3,cecinus	NOUN
+cano,3,—cecini	cano,3,—cecini	NOUN
+cantibusgaudent	cantibusgaudeo	VERB
+cantum-Ising		NOUN
+canunt	cano	VERB
+capiUis	capiuis	VERB
+capillds		NOUN
+capilli	capillus	NOUN
+capilliin	capilliin	NOUN
+capillis	capillus	NOUN
+capillos	capillus	NOUN
+capillus	capillus	NOUN
+capita	caput	NOUN
+capite	caput	NOUN
+capitehorruerunt		VERB
+capitibus	caput	NOUN
+capitis—,n	capitis—,n	NOUN
+capitol	capitolium	NOUN
+captivd		VERB
+captivos	captiuus	NOUN
+captum-I	captum-i	ADP
+caput	caput	NOUN
+car	car	NOUN
+cards	cards	NOUN
+care	careo	VERB
+care,secure	care,securo	VERB
+carefully		NOUN
+careo,2,-ui	careo,2,-ui	ADP
+carissima	carissimus	ADJ
+carissimaefuissedicuntur		VERB
+carissimam	carissimus	ADJ
+carissime	carissimus	ADJ
+carius	carior	ADJ
+carmin-		NOUN
+carminanonprius	carminanonpre	ADV
+carry	carry	NOUN
+carryback	carryback	NOUN
+carto	cartus	NOUN
+carumamicumbabebat	carumamicumbabo	VERB
+cas-	cas-	NOUN
+casa	casa	NOUN
+casae	casa	NOUN
+casam	casa	NOUN
+casas	casa	NOUN
+case	casa	NOUN
+casis	casa	NOUN
+castdown	castdown	NOUN
+castforth	castforths	NOUN
+catch		NOUN
+cated(colo	cated(colus	NOUN
+causa-for	causa-for	NOUN
+cause	cause	NOUN
+cava	cavus	ADJ
+cavis	cauus	NOUN
+cavus	cauus	NOUN
+ce	co	NOUN
+ce	co	VERB
+ce	hce	ADV
+ce	hce	INTJ
+ce	hce	NOUN
+cecidit	cado	VERB
+cecinerunt	cano	VERB
+cecinit	cano	VERB
+ceive,escapethenoticeof		VERB
+celeriter,adv.-swiftly,quickly		VERB
+centaur	centaur	VERB
+centauri	centaurus	NOUN
+centauro	centaurus	ADJ
+centauros	centaurus	NOUN
+centaurum	centaurus	NOUN
+centaurus	centaurus	NOUN
+ceps	ceps	NOUN
+certain	certai	NOUN
+certatim,adv.—inrivalry(certo	certatim,adv.—inrivalry(certus	NOUN
+certiorem	certior	ADJ
+certioremfacio	certioremfacio	VERB
+certiores	certior	ADJ
+certiorfio	certiorfio	ADJ
+certus,-a	hcertus,-a	DET
+cervi	ceruus	NOUN
+cervos	ceruus	NOUN
+ceterae	ceterus	DET
+ceteram	ceterus	ADJ
+ceterarum	ceterus	DET
+ceteri,-—ae,-a	ceteri,-—ae,-a	NOUN
+ceteri-therest	ceteri-thersum	VERB
+ceteris	ceterus	DET
+ceteris	ceterus	NOUN
+ceterisducibusvictis	ceterisducibusvctum	VERB
+ceteros	ceterus	DET
+ceteros	ceterus	NOUN
+ceterus	ceterus	NOUN
+ceu,adv.—evenas,justas	ceu,adv.—evenas,justa	NOUN
+ch	ch	NOUN
+chain,fetter	chain,fetter	NOUN
+change	chango	VERB
+charmingstyleabitofRomanlifeandarousinga		VERB
+chief	chief	ADJ
+chief	chief	NOUN
+chief,prin	chief,pris	NOUN
+chieftain	chieftais	NOUN
+child		NOUN
+child	child	NOUN
+children	childre	NOUN
+chras	chra	NOUN
+chrior	cher	ADJ
+ci	cio	NOUN
+cibus,-i,m.-food	cibus,-i,m.-food	NOUN
+cibusdeficit	cibusdeficio	VERB
+cihus	cihus	NOUN
+cin	cin	ADV
+cinctae	cinco	VERB
+cingo,3,cinxi,cinctum-Igird	cingo,3,cinxi,cinctum-igirds	NOUN
+cipes	cipeo	NOUN
+circ	circs	VERB
+circulation	circulation	NOUN
+circum,prep	circum,prep	NOUN
+circumventam	circumuenio	VERB
+citadel		VERB
+cives	ciuis	NOUN
+civibus	ciuis	NOUN
+civilized,from		ADJ
+civitatem	ciuitas	NOUN
+civitatem^		NOUN
+civium	ciuis	NOUN
+ck,carry		NOUN
+cl!v	cl!v	ADJ
+class	class	NOUN
+classicalauthors	classicalauthors	ADJ
+clear	cleo	VERB
+cleave	cleaue	ADV
+cling	cling	NOUN
+clivds		NOUN
+clivds	clivds	NOUN
+clivds	clivdx	NOUN
+clivis	cliuus	NOUN
+clivos	cliuus	NOUN
+clivum	cliuus	NOUN
+cllvds		NOUN
+cloak	cloaks	NOUN
+coUegit	couango	VERB
+coactum-I	coactum-i	ADP
+coast	cous	VERB
+coeuntfiuntqueparentes	coeuntfiuntqueparor	VERB
+cognitus,-a,-um-known,from	cognitus,-a,-um-known,from	ADJ
+col	col	NOUN
+colbgebant	colbgo	VERB
+cold		NOUN
+collectae		VERB
+collectam	collecta	VERB
+collum,-i,n	collum,-i,n	VERB
+colo,3,-ui,cultum	colo,3,-ui,cultum	NOUN
+column,armyonthemarch	column,armyonthemarchs	NOUN
+cometoastand	cometoastandus	ADJ
+cometogether	cometogether	NOUN
+cometothehelp		NOUN
+comevis	comeuis	NOUN
+commit	commo	VERB
+committo-Ijoin	committo-ijoinum	VERB
+common	common	VERB
+commota	commoueo	VERB
+commotus	commoueo	VERB
+communis,-e-	communis,-e-	VERB
+comp		VERB
+comparative	comparatiuus	ADV
+compel	compel	VERB
+complaining		NOUN
+con	con	ADP
+con	con	ADV
+con	con	PART
+con-	con-s	NOUN
+conceal	conceal	ADJ
+concerning	concerning	VERB
+condemn		VERB
+condicidnes	condicid	NOUN
+condicidnes	condicidno	VERB
+confero,-ferre,-tuli,collatum	confero,-ferre,-tuli,collo	VERB
+confi-	confi-	VERB
+conflict		VERB
+coniecit	conicio	VERB
+coniecti	conicio	VERB
+coniicio	coniicio	VERB
+coniuge	coniunx	NOUN
+coniugem	coniunx	NOUN
+coniugialis	coniugialis	ADJ
+coniugis	coniunx	NOUN
+coniunx	coniunx	NOUN
+conj.--or	conj.--or	NOUN
+conj.-and	conj.-andus	VERB
+conj.-but	caonj.-but	NOUN
+conj.-for	conj.-for	NOUN
+conj.—although	conj.—although	VERB
+conjugal	conjugal	NOUN
+conjunction	conjunction	NOUN
+conquercompletely		ADJ
+conscendo,3		VERB
+conserva	conseruo	VERB
+conservabat,ettandemgeminis,iamadolescentibus	conservabat,ettandemgeminis,iamadolesco	NOUN
+conservabatur	conseruo	VERB
+conservabimus	conseruo	VERB
+conservabis	conseruo	VERB
+conservabit	conseruo	VERB
+conservabo	conseruo	VERB
+conservant	conseruo	VERB
+conservantur	conseruo	VERB
+conservarent	conseruo	VERB
+conservat	conseruo	VERB
+conservata	conseruo	VERB
+conservatum	conseruo	VERB
+conservatus	conseruo	VERB
+conservaveris	conseruo	VERB
+conservaverunt	conseruo	VERB
+conservavit	conseruo	VERB
+considered	considered	ADV
+consistentlywith	consistentlywith	VERB
+constructionis	constructio	NOUN
+constructions	constructions	NOUN
+consulo-I	consulo-i	VERB
+consult	consult	VERB
+contain		VERB
+contend		VERB
+contenduntludo	contenduntludo	VERB
+continued		ADJ
+contra,prep	contra,prep	VERB
+contra,prep.gov		ADJ
+contrabarbaros	contrabarbar	VERB
+convenerant	conuenio	VERB
+convenerunt	conuenio	VERB
+conversa	conuerto	VERB
+converterunt	conuerto	VERB
+converti	conuerto	VERB
+convocabo	conuoco	VERB
+convocat	conuoco	VERB
+convocaverunt	conuoco	VERB
+convocavit	conuoco	VERB
+copiae,-arum,/.pi	copiae,-arum,/.pio	NOUN
+copiasin		SCONJ
+corn	corn	NOUN
+corporain	corporais	VERB
+corporemortali	corporemortalis	ADJ
+corpus,-oris,n	corpus,-oris,n	NOUN
+corum	corus	NOUN
+couch	couch	NOUN
+coun	coun	NOUN
+country		VERB
+countryandhowat		VERB
+countrylife	countrylifis	ADJ
+cour		VERB
+cover	cover	VERB
+cow	cow	ADP
+cow-	cow-io	NOUN
+cowardice	cowardico	VERB
+cowardly	cowardly	NOUN
+cradle	cradle	NOUN
+crag	crags	NOUN
+crash	carash	NOUN
+cremo,1-Iburn	cremo,1-iburnanus	DET
+cresco,3,crevi,cretum	cresco,3,crevi,cretum	NOUN
+crest	crsum	VERB
+cretum-I	cretum-i	NOUN
+crevi	creuis	VERB
+crista	crista	NOUN
+cristae	cristus	ADJ
+cristam	crista	ADJ
+crossover	crossover	NOUN
+crucis,f.-cross	crucis,f.-crosss	ADJ
+crudeiem	crudeies	NOUN
+crudelis,-e-cruel	crudelis,-e-cruel	ADJ
+crudeliter	crudeliter	ADV
+cruel	cruel	CCONJ
+cruelly		NOUN
+ct	ct	ADV
+ctum	ctus	VERB
+cuipavidoterrore	cuipavidoterror	NOUN
+cul	cul	NOUN
+cultivate	cultivo	VERB
+cultosItaliaecampos	cultositaliaecampus	NOUN
+cultum-I	cultum-i	ADV
+culture,civilization(colo	culture,civilization(colus	NOUN
+cum,conj.-when		NOUN
+cum,millecoloribusfulgens	cum,millecoloribusfulgeo	VERB
+cumPersephone	cumpersepho	NOUN
+cumacivequodam	cumacivequodus	ADV
+cumcaputobscuranitidumferruginetexit	cumcaputobscuranitidumferrugineticio	VERB
+cume	cumo	VERB
+cumhos	cumhus	NOUN
+cumprlmumIliacasDanaivenistisaderas	cumprlmumiliacasdanaivenistisaderas	VERB
+cumvenient,siccisosculafallegenis	cumvenient,siccisosculafallegeni	NOUN
+cumvidisset	cumvideo	VERB
+cumvultumeius	cumvultumeius	ADJ
+cunTs	cunts	NOUN
+cunas	cuna	NOUN
+cunis	cuna	NOUN
+cupidus,-a,-um-fond,desirous	cupidus,-a,-um-fond,desirous	ADJ
+cupio,-ere,-ivi,-itum—Idesire	cupio,-ere,-ivi,-itum—idesio	VERB
+cur,adv.-why	cur,adv.-why	VERB
+cura,-a—e,/.	cura,-a—e,/.s	VERB
+curro,3,cucurri,cursum	curro,3,cucurri,cursus	NOUN
+curro,3,cucurri—,cursum	curro,3,cucurri—,cursus	PRON
+cursum-I	cursum-i	NOUN
+cursumtenereposset		VERB
+curvato	curuo	VERB
+curvatum	curvatus	VERB
+curvatumtendens	curvatumtendo	VERB
+curvatus	curuo	VERB
+cus	cus	NOUN
+custddes	custddo	NOUN
+custodio,4-Iguard	custodio,4-iguarden	NOUN
+custos,-odis,c		VERB
+cut	cut	ADV
+cut	cut	NOUN
+cut	cut	SCONJ
+cyone	cyo	NOUN
+cyonem	cyo	NOUN
+c—o	c—o	NOUN
+d,race	d,rax	NOUN
+d-	d-	ADV
+d5na	d5na	NOUN
+dam	dam	ADP
+dan-		ADP
+dance	danco	VERB
+danger	dango	ADJ
+dangerous	dangerous	VERB
+dark	dark	NOUN
+dark,dim	dark,dis	NOUN
+dark-		VERB
+darkness		ADJ
+data	datum	VERB
+dative	datiuus	ADV
+datum-I	datum-i	NOUN
+datus,-a		VERB
+daughter	daughto	ADV
+daughter	daughtor	ADV
+day	day	ADV
+day	day	NOUN
+days-periods	damys-periods	ADP
+dcs	dcss	NOUN
+dded	dded	NOUN
+ddna		VERB
+ddnum	ddnus	NOUN
+ddtes	ddto	VERB
+de,prep	de,prep	ADP
+de,prep.gov		NOUN
+de-	de-	VERB
+dead	deads	NOUN
+dear	deo	VERB
+death	death	NOUN
+dec	dec	ADV
+deceive	deceiue	ADV
+deceptisuntTrdiani	deceptisunttrdiani	NOUN
+decision	decision	NOUN
+declension	declension	NOUN
+decree	decree	VERB
+decreverunt		VERB
+decrevi-fromdecerno	decrevi-fromdecerno	VERB
+dederistuaflentibus	dederistuaflo	VERB
+dedi-from	dedu-from	DET
+dedo,3	dedo,3	ADJ
+dedrum	dedrus	ADJ
+deds	ddso	VERB
+deed	deed	VERB
+def	def	ADV
+defen	defen	VERB
+defend		VERB
+dehis	dehus	ADJ
+deiecta	deiectus	VERB
+deiicio	deiicio	VERB
+del	del	NOUN
+del-	del-	NOUN
+delay	delayo	VERB
+delaying		VERB
+delectati	delector	VERB
+delight	delight	VERB
+delp	delps	NOUN
+dels		VERB
+demissum	demissus	VERB
+demissus	demissus	VERB
+demum,adv.—atlength	demum,adv.—atlength	NOUN
+dence	dences	NOUN
+denique,adv.-atlast,inshort	denique,adv.-atlast,inshorts	VERB
+deos-by	deos-bys	NOUN
+depend-	depend-	ADP
+deposivit-bore	deposivit-bor	NOUN
+deposivitolivam	deposivitoliuus	ADJ
+dequotibidixi	dequotibidico	VERB
+der,bristle		NOUN
+dera	der	VERB
+dering	dering	VERB
+descendo,3,-scendi,scensum	descendo,3,-scendi,scendo	VERB
+description	descriptium	NOUN
+desibebant	desibo	VERB
+desirable	desirable	NOUN
+deskofany	deskofany	VERB
+dessofthedawn	dessofthedawn	NOUN
+dessoftherainbow		VERB
+dessofwarandhandicraft		VERB
+destinedtobe,from		ADJ
+destroy		VERB
+destroyed		VERB
+determine	determen	NOUN
+detracta	detracto	VERB
+detraho	detraho	VERB
+deumraptaveruntetinnavem		NOUN
+devastate	deuasto	VERB
+devenerelocos	devenerelocus	ADJ
+devicerat	deuinco	VERB
+devicit	deuinco	VERB
+devicta	deuinco	VERB
+dextra,-ae,f.-righthand	dextra,-ae,f.-righthand	ADJ
+dextram	dextera	NOUN
+dic-Isay	dic-isay	NOUN
+dice,—3	dice,—3	NOUN
+dico,3,dixi,dictum	dico,3,dixi,dictus	VERB
+dictis,in	dictis,in	ADV
+dictum,-i,n.—asaying(dico	dictum,-i,n.—asaying(dico	VERB
+dida	didus	ADJ
+died	dieds	VERB
+dies,-ei	dies,-ei	NOUN
+difficulties	difficulties	ADV
+difficulttokeepuptkeinterestwhileacomplicated		NOUN
+digitized	digitized	NOUN
+dignus,-a,-um	dignus,-a,-um	ADJ
+diligenter—carefully		PRON
+dim	dim	ADV
+din	dins	CCONJ
+ding	ding	NOUN
+dingof	dingof	ADJ
+dinner	dinno	NOUN
+dinner	dinno	VERB
+directed		VERB
+dirty,mean	dirty,meant	NOUN
+dirus,-a,-um		VERB
+discjdo,3	discjdo,3	NOUN
+disco,3,didici-Ilearn		ADV
+discretion	discretion	NOUN
+disease	diseaso	VERB
+disimmortalibus	disimmortal	ADJ
+dismayed	dismayeds	NOUN
+dispute	disputio	VERB
+distance	distanco	VERB
+distin	distin	VERB
+distinctfromthetown		VERB
+district		NOUN
+district		VERB
+disturbance(turbo	disturbance(turbo	VERB
+ditch	ditchs	ADV
+dition	dition	NOUN
+diustabat	diusto	VERB
+diutiusmorari	diutiusmoro	VERB
+divina	diuinus	ADJ
+divine	diuine	ADJ
+divinis	diuinus	ADJ
+divinorum	diuinus	ADJ
+divinus,-a	divinus,-a	ADJ
+divitem	diues	ADJ
+divites	diues	ADJ
+divitiae,-arum,/.pi		NOUN
+divitias	diuitia	NOUN
+divitibus	diues	VERB
+divitiis	diuitia	NOUN
+divitissimus	divis	ADJ
+divitissimus	divitus	ADJ
+divlna	divlna	NOUN
+divuium	divuius	ADJ
+div—ine	div—inus	NOUN
+dixerat,pavidustimore	dixerat,pavidustimor	NOUN
+dliudicdtdllterelinqueret	dliudicdtdllterelinquo	VERB
+dlmovitobstantespropinquos	dlmovitobstantespropinquus	ADJ
+dlvlnum	dlvlnum	NOUN
+dly	dly	NOUN
+doceo,2,doeui,d	doceo,2,doeui,d	VERB
+doctissimos	doctissimus	ADJ
+doctus,-a,-um-learned(doceo	doctus,-a,-um-learned(doceus	VERB
+does	does	NOUN
+dolphin	dolphin	NOUN
+domi-athome	domi-athomus	VERB
+dominion	dominion	NOUN
+domumreportavit	domumreporto	VERB
+domus,—-us		NOUN
+donamulta	donamultus	VERB
+doneby		ADP
+donec,conj.-until	donec,conj.-until	VERB
+donia,whoconqueredPersia		NOUN
+donotgo	domotgo	VERB
+door	doo	NOUN
+dormio,4-Isleep	dormio,4-isleep	NOUN
+dormitabat	dormito	VERB
+dormito	dormo	VERB
+dornuto,1	dornuto,1	NOUN
+dos,-otis,c		VERB
+down		NOUN
+down		VERB
+down	down	NOUN
+down(de-caedo	down(de-caedo	VERB
+downfrom	downfromaeus	VERB
+draculum	draculum	NOUN
+draculumDelpbicum	draculumdelpbicus	NOUN
+drag	drag	NOUN
+dram	dra	NOUN
+draw		NOUN
+draw,drag	draw,drags	NOUN
+drawup		NOUN
+dreadful	dreadful	NOUN
+dred		NOUN
+dress	dressalonicensis	NOUN
+dress	dressalonicensis	VERB
+drive	driue	ADV
+drive,impel		VERB
+driveout	driveout	CCONJ
+drum,m.pi	drum,m.pio	VERB
+du	dunte	ADP
+dubioquesecansaequoracursu	dubioquesecansaequoracursus	NOUN
+ducitopesanimumqueferro	ducitopesanimumqueferro	VERB
+ductoresDanaum	ductoresdana	NOUN
+ductum-I	ductum-i	VERB
+ductum-Ilead	ductum-ileads	NOUN
+dudbus		ADJ
+dueo	dueo	VERB
+dulcerldeatadpatrem	dulcerldeatadpatr	NOUN
+dulcis,e	dulcis,es	NOUN
+dulcissi-	dulcissi-	INTJ
+dum,conj.-while	dum,conj.-whilis	ADJ
+dumvivebat	dumvivo	VERB
+during	during	ADJ
+durisutilextonsabipennibus	durisutilextonsabipennis	ADJ
+dutos	dutus	ADJ
+dwell	dwell	VERB
+dwellin	dwellis	NOUN
+dwelling		NOUN
+e,-es,/.	e,-es,/.s	ADJ
+e,/		NOUN
+e,l	e,l	INTJ
+e5	e5s	NOUN
+eaapud	eaapud	ADV
+eace	eax	NOUN
+each		ADJ
+each		NOUN
+each		PRON
+each		VERB
+eachseparately	eachseparately	NOUN
+ealmofthedead		NOUN
+earable	earable	NOUN
+earlier	earlor	VERB
+early	early	VERB
+earns	earns	DET
+ears	ears	NOUN
+earth		NOUN
+easily		ADJ
+easy	easy	DET
+easyaspossible		ADJ
+ecce-behold	ecce-beholdsiastes	INTJ
+ed	ed	NOUN
+ed	ed	VERB
+ed	edus	NOUN
+educated	aeducated	ADJ
+effece	effecio	VERB
+effect	effect	NOUN
+effervo	efferuo	NOUN
+effort	efforts	VERB
+effundo,3,-fudi,-fusum	effundo,3,-fudi,-fusum	ADV
+efiudit	efiudo	VERB
+efore	efor	NOUN
+egi-fromago	egi-fromago	VERB
+ego-I.		VERB
+egredior,-i	egredior,-im	PRON
+egremiosuae	egremiosuus	ADJ
+eheu-alas	eheu-ala	NOUN
+eiusbracchia	eiusbracchium	NOUN
+eiusegressa	eiusegredior	VERB
+ejus-fromis	ejus-fromo	NOUN
+ek	ek	SCONJ
+el	el	ADV
+el	el	PART
+eleven	eleve	NOUN
+ellow	ellow	NOUN
+els	els	VERB
+else	else	ADV
+else	elsus	ADV
+elves	eluis	NOUN
+em-		NOUN
+em-	em-o	VERB
+emanibus	emanus	NOUN
+emnt	emnt	VERB
+emperor	empero	VERB
+end	enden	ADJ
+end	endis	ADJ
+endings	endings	VERB
+endu	endus	NOUN
+ene	enes	NOUN
+enemy	enemy	ADV
+engaged		NOUN
+engthen	engthe	NOUN
+enough	ensough	ADJ
+enough	ensough	NOUN
+enter	enter	ADV
+entes	ens	ADJ
+entior	entis	ADJ
+entrance	entrance	VERB
+entum	ens	NOUN
+envy(governsadat	envy(governsado	VERB
+eo,adv.-thither	eo,adv.-thitherius	ADJ
+eon	eos	NOUN
+eosstatuasessearbitratus,unusexhostibusbarbam	eosstatuasessearbitratus,unusexhostibusbarba	NOUN
+eotempore	eotempus	NOUN
+ep	epitulum	NOUN
+ep	epium	NOUN
+ep	epus	NOUN
+ep.gov		NOUN
+epa	epas	NOUN
+eq	eq	ADV
+equ	equ	NOUN
+equ5s	equ5s	NOUN
+equdrum	equdrs	NOUN
+equds	equds	NOUN
+eques,-itis,c		VERB
+eques,-itis,c	eques,-itis,cs	VERB
+equesEdmanus	equesedmanus	NOUN
+equip		NOUN
+equipped	equipped	ADJ
+equitumqueinRdmanosduxerunt		VERB
+equonecredite	equonecredio	VERB
+equus,-i,to	equus,-i,to	PRON
+er	er	INTJ
+er	er	NOUN
+er-	er-	NOUN
+eral	eral	AUX
+eratomnes	eratomn	ADJ
+erbia	erbium	NOUN
+ereptum-from		VERB
+erga,prep.gov	erga,prep.gov	NOUN
+erous	erous	NOUN
+errdribus	errdr	NOUN
+ery	ery	INTJ
+ery	ery	NOUN
+es,etundevenisti,alterumsolumcalceumgerens	es,etundevenisti,alterumsolumcalceumgero	VERB
+escapethen	escapethe	NOUN
+ess	ess	AUX
+esse,fui—Iam	esse,fui—iam	ADV
+est,very		AUX
+estimate	estimo	NOUN
+es—t		VERB
+et...et	et...et	ADP
+et...et-both...and	et...et-both...andus	ADJ
+eta	eta	NOUN
+eta	etus	ADJ
+etaequoraponti	etaequorapontum	NOUN
+etamoenavirecta	etamoenavirigo	VERB
+etanira	etanira	NOUN
+etaquarapida	etaquarapidus	ADJ
+etcaeruleae	etcaeruleus	ADJ
+etcibumvinum	etcibumvinus	ADJ
+etcineri	etcineo	NOUN
+etcivesperterritossibiinomnibus	etcivesperterritossibiinomnis	ADJ
+etdebellaresuperbos	etdebellaresuperbus	ADJ
+etferociter	etferociter	ADV
+etfrumentum	etfrumentum	NOUN
+etfulvaluctanturharena	etfulvaluctanturharenus	ADJ
+etgratus	etgratus	VERB
+etgravia		ADJ
+ethostiumaciem	ethostiumacies	NOUN
+etiam,conj.—even,also	etiam,conj.—even,also	ADV
+etime	etimo	ADV
+etinprimis		ADJ
+etinviridi	etinviridus	VERB
+etis,f.-rest	etis,f.-rest	AUX
+etlaeta	etlaetus	ADJ
+etmagna	etmagnus	ADJ
+etmultosannosCroesum	etmultosannoscroesum	ADV
+etomniumrerummaximeviri	etomniumrerummaximevio	NOUN
+etpatriscollo	etpatriscollo	NOUN
+etpopulumreditusmorantem	etpopulumreditusmorans	VERB
+etsiquiddolituruseris		VERB
+ettalibus	ettalis	ADJ
+etu	etus	NOUN
+etum	etus	NOUN
+etvalidababebant	etvalidababo	VERB
+etvirgines	etvirgi	NOUN
+etvultuserenoadaramprocessit,etvitam		VERB
+eu	eu	ADV
+eundem-from		DET
+eundo	eundus	VERB
+euntem	iens	VERB
+euntes	iens	VERB
+euntes-presentpart	aeuntes-presentpart	ADV
+eve	eue	NOUN
+even	aeven	VERB
+even	even	NOUN
+even,al	heven,al	NOUN
+evening		VERB
+evenly	evenly	VERB
+ever		ADJ
+ever	ever	ADJ
+ever	ever	VERB
+evergreen	evergreen	NOUN
+everlasting	everlasting	VERB
+eversa	euerto	VERB
+eversa-overturned		VERB
+everteret	euerto	VERB
+every	every	ADV
+every	every	INTJ
+every-	every-	NOUN
+everyday	everyday	VERB
+evita	euito	VERB
+evitaexcedo	evitaexcedo	VERB
+evolav-		INTJ
+evolavit	euolo	VERB
+ew	ew	INTJ
+ex-		VERB
+ex-see		PART
+exItalia	exitalis	ADJ
+exc	exc	ADV
+exc	exco	ADV
+exceedingly	exceedingly	VERB
+excel	excel	VERB
+except	except	VERB
+excldemus	excldeo	VERB
+exer-	exer-	ADP
+exercentmembrapalaestris	exercentmembrapalaester	VERB
+exerceo,2	exerceo,2	ADP
+exerceo,2-Iexercise	exerceo,2-iexerciso	VERB
+exercise	exercises	NOUN
+exercises	exerciseo	NOUN
+exercitumduxit	exercitumduco	VERB
+exercitusinterseconfligunt	exercitusinterseconfligo	VERB
+exhausted,fromconficio	exhausted,fromconficio	VERB
+exinsidiis	exinsidium	NOUN
+expect	expecto	VERB
+expello,3,-puli,pulsum	expello,3,-puli,pulsum	ADV
+explain	explais	VERB
+explains		VERB
+expres	expr	NOUN
+expu	expu	VERB
+expulsus,-a,-um-fromexpello	expulsus,-a,-um-fromexpello	VERB
+exstinctus	exstinctus	VERB
+extensively		VERB
+extremd	extremd	ADJ
+extremdpontestabitetcontraEtruscdspugnabit	extremdpontestabitetcontraetruscdspugnao	VERB
+e—,/		NOUN
+f	f	ADP
+f	f	CCONJ
+f	f	INTJ
+f	f	NOUN
+f	f	VERB
+f	fm	INTJ
+f	fm	NOUN
+f	fm	VERB
+f	ft	PRON
+f	hf	INTJ
+f	hfs	INTJ
+f-light	f-light	ADV
+f.-Alcestis	f.-alcesta	NOUN
+f.-Appian	f.-appia	NOUN
+f.-Argo	f.-argo	ADV
+f.-Aurora	f.-aurora	NOUN
+f.-Mount	f.-moo	VERB
+f.-Styx		VERB
+f.-Tullia	f.-tullia	NOUN
+f.-a	f.-a	ADV
+f.-army	f.-army	ADJ
+f.-care	f.-co	VERB
+f.-cause	f.-causa	NOUN
+f.-confusion	f.-confusion	NOUN
+f.-daughter	f.-daughter	NOUN
+f.-faith	f.-faith	NOUN
+f.-form	f.-form	NOUN
+f.-friendship	f.-friendships	VERB
+f.-home	f.-homa	NOUN
+f.-image	f.-images	INTJ
+f.-offspring	f.-offsprings	NOUN
+f.-road	f.-road	ADP
+f.-shore	f.-shor	NOUN
+f.-siege	f.-siego	VERB
+f.-sing	f.-sing	NOUN
+f.-supper	f.-supper	ADV
+f.-the	f.-thus	NOUN
+f.-virtue	f.-virtua	NOUN
+f.-weather	f.-weather	NOUN
+f.-woman'sname	f.-woman'snames	ADV
+f.-—prize	f.-—prizes	NOUN
+f.pl.-dark	f.pl.-dark	NOUN
+f.pl.-re	f.pl.-re	ADP
+f.pl.-riches	f.pl.-riches	NOUN
+f0k		ADV
+fRome	fromus	ADJ
+fa	fa	INTJ
+fa	fa	NOUN
+face,expression	face,expression	NOUN
+faced	faced	ADV
+facile	facile	ADV
+facile	facilis	ADV
+facilis	facilis	ADJ
+facillimam	facillimus	ADJ
+facio,-ere,feci,factum	facio,-ere,feci,facio	VERB
+factum,-i,n.—adeed(facio	factum,-i,n.—adeed(facio	VERB
+factum-I	factum-i	NOUN
+fai	fais	NOUN
+fail	fail	NOUN
+fail(governsdat	fail(governsdo	VERB
+faint		VERB
+fair	fair	NOUN
+faithful	faithful	NOUN
+fal	fal	NOUN
+fall	fall	VERB
+fallo,3,fefelli,falsum	fallo,3,fefelli,falsum	ADV
+falsaminpectore	falsaminpector	NOUN
+falsum	falsum	ADJ
+falsum-I	falsum-i	NOUN
+fama,-ae,f.-fame	fama,-ae,f.-fames	DET
+fame	fames	NOUN
+fameiam	fameia	NOUN
+famem	fames	NOUN
+fames	fames	NOUN
+familia	familia	NOUN
+familiarize	familiarizes	NOUN
+famo	famus	NOUN
+famous	famous	ADJ
+fat	fat	VERB
+father	father	NOUN
+fatherland,coun-	fatherland,coun-s	NOUN
+fatherofmetus	fatherofmetus	NOUN
+fatum,-i	fatum,-i	NOUN
+fault	fault	VERB
+favebant	faueo	VERB
+favebat	faueo	VERB
+faveo,2,favi,fautum-Ifavour		VERB
+favorbecausehedidnotforgettheinstructionsof	favorbecausehedidnotforgettheinstructionsof	NOUN
+favour		NOUN
+favourable	favourable	NOUN
+favourable(sequor	favourable(sequor	VERB
+fa—r	fa—r	NOUN
+feOUl	feouls	ADV
+fearless		NOUN
+fecto	fego	VERB
+fectus-exhausted	fectus-exhausteds	ADJ
+felix,-icis-fortunate	felix,-icis-fortunatus	ADJ
+feltneedofteachersasitfurnishesanotherhelpful	feltneedofteachersasitfurnishesanotherhelpful	ADJ
+femina,-ae,f.-woman	femina,-ae,f.-womans	VERB
+feminine	femino	NOUN
+fera,-ae,f.-wildbeast(ferus		ADJ
+ferax,-acis,fertile	ferax,-acis,fertilis	ADJ
+ferdcem	ferdx	ADJ
+ferdces	ferdx	NOUN
+ferdciter	ferdciter	ADV
+fere,adv.-almost,about	fere,adv.-almost,about	VERB
+ferendus	ferendus	VERB
+fero-Ibetakemyself		NOUN
+ferociter	ferociter	ADV
+ferociter,adv.-fiercely	ferociter,adv.-fiercely	ADJ
+ferox,ferocis,—fierce	ferox,ferocis,—fierce	ADV
+ferrugo	ferrugo	NOUN
+ferrum,-i,n.-iron	ferrum,-i,n.-iron	NOUN
+ferryman	ferrymans	NOUN
+few	few	NOUN
+few	fewis	NOUN
+feweasy	feweasy	NOUN
+ffeerree	ffeerree	VERB
+ffliam	fflia	ADJ
+fi^.Iligenter	fi^.iligenter	ADV
+fiba	fiba	NOUN
+fibabus	fibas	NOUN
+fibo	fibo	VERB
+fibum	fibum	NOUN
+ficiscerentur	ficisco	VERB
+fid	fid	NOUN
+fidemviolo	fidemviolus	VERB
+field	field	NOUN
+field,land	field,landus	NOUN
+fierce	fierco	VERB
+fiercely		VERB
+fiercel—y	fiercel—y	VERB
+fight		VERB
+fiha	fiha	NOUN
+fihae	fiha	NOUN
+fihae	fihus	NOUN
+fileo	fileus	NOUN
+filevi		NOUN
+filiababitabat	filiababito	VERB
+filiacara	filiacara	NOUN
+filiamvocabat	filiamvoco	VERB
+filiolo	filiolus	NOUN
+filiolum	filiolus	NOUN
+filiolumrelinquere	filiolumrelinquo	VERB
+filiolus	filiolus	NOUN
+filiomm	filioms	NOUN
+filius,-i,m.-son	filius,-i,m.-sos	NOUN
+filius,matre	filius,mater	NOUN
+fill	fill	NOUN
+fills	fills	NOUN
+films		NOUN
+find	findo	VERB
+finisabeisconstitutus	finisabeisconstitutus	VERB
+finish	finish	NOUN
+fir	fir	NOUN
+firm,strong	firm,strongs	ADJ
+firm,strong	firm,strongs	NOUN
+firmus,-a,-um	firmus,-a,-um	ADJ
+first	first	ADJ
+first	first	ADV
+firstandseconddeclensionshasin		VERB
+fix	fix	VERB
+fixed	fixed	VERB
+fl	fl	ADV
+flame	flama	NOUN
+flamma,-ae,f.-flame	flamma,-ae,f.-flamis	VERB
+flammarumqueglobos	flammarumqueglobus	NOUN
+flashing	flashing	NOUN
+flavi	flo	VERB
+flavis	flauus	NOUN
+flavos	flauus	ADJ
+flavus,-a,-um-yellow,yellow	flavus,-a,-um-yellow,yellows	NOUN
+flbam	flba	NOUN
+fldrebant	fldro	VERB
+fldrebat	fldro	VERB
+flee		VERB
+fleece	fleex	NOUN
+fleo,2		VERB
+fletum-Iweep	fletum-iweep	NOUN
+flight	flight	ADV
+float	floo	VERB
+floreo,2,-ui-Iflourish,flower		VERB
+flor—is	flor—us	NOUN
+flower	flower	ADJ
+flowers	flowers	VERB
+fluence	fluence	NOUN
+flumen,-inis,n.—river	flumen,-inis,n.—river	ADV
+flumenimperio	flumenimperium	NOUN
+flumenterribilepergit	flumenterribilepergo	VERB
+fluo,3,fluxi,flu	fluo,3,fluxi,flu	ADV
+fluo,3,fluxi,fluxum	fluo,3,fluxi,flugo	NOUN
+fmstra	fmstrum	ADJ
+fo	fo	NOUN
+fo	fo	SCONJ
+foamy	foamys	ADJ
+foedus	foedus	NOUN
+foedusinalitibus	foedusinalit	NOUN
+fold	fold	NOUN
+follow	follow	NOUN
+following	folilowing	NOUN
+folly	follys	NOUN
+food	foods	NOUN
+foot	foots	ADJ
+foot	foots	NOUN
+footstep	footstep	NOUN
+forces	forx	NOUN
+foreign	foreigno	ADJ
+forest	forsum	VERB
+forestsodeartoher	forestsodeartoher	VERB
+foretell	foretells	NOUN
+forge	forgo	VERB
+forhimself		NOUN
+form	form	ADV
+formdsa	formdsa	ADJ
+forms	formss	ADV
+fornax	fornax	NOUN
+fortasse,adv.-perhaps		VERB
+fortheirfatherland	fortheirfatherlandus	NOUN
+fortidres	fortidris	ADJ
+fortis,-e-brave		VERB
+fortiter,adv.-bravely	fortiter,adv.-bravely	ADV
+forward		NOUN
+fought	fought	ADV
+found		NOUN
+founded	foundeds	ADJ
+foundero	foundo	VERB
+fovebit	foueo	VERB
+foveo,2,fovi,fotum-Icherish		NOUN
+fovere	foueo	VERB
+fovet	foueo	VERB
+fr		NOUN
+fr	fries	NOUN
+fr	frula	NOUN
+fractihellofdtisquerepulsi	fractihellofdtisquerepulsum	VERB
+fragdre	fragdres	NOUN
+fragilis	fragilis	ADJ
+fragor	fragor	NOUN
+fragore	fragor	NOUN
+frastra	frastra	NOUN
+fratremcontenditetomnianarravit	fratremcontenditetomnianarro	VERB
+fratri-		NOUN
+fretum,-i,n.-strait,sea	fretum,-i,n.-strait,sea	VERB
+friend		NOUN
+friendly		ADJ
+frighten	frightes	NOUN
+frightened		VERB
+from		NOUN
+from		VERB
+from	frome	NOUN
+from	fromensis	NOUN
+from	fromensis	PRON
+from	fromensis	VERB
+from	frum	NOUN
+fromallsides	fromallsis	ADJ
+fromcommoveo		VERB
+fromdo	fromdo	NOUN
+frommunio	frommunio	NOUN
+fromperterreo	fromperterreus	ADJ
+fromsubiicio	fromsubiicius	VERB
+fromthere	fromtho	VERB
+frondis,f.—foliage	frondis,f.—foliages	NOUN
+fru-		VERB
+fruitful	fruitful	NOUN
+frustralunam	frustralunus	ADJ
+fterhewas	fterhelwa	NOUN
+fuemnt		AUX
+fuga,-ae,f.-flight	fuga,-ae,f.-flighto	ADJ
+fugio,-ere,fugi,fugitum	fugio,-ere,fugi,fuges	NOUN
+fugio,-—ere,fugi,fugitum	fugio,-—ere,fugi,fugio	VERB
+fugitum-I	fugitum-i	NOUN
+ful	ful	PRON
+fulfil	fulfil	NOUN
+fulgeo,—2	fulgeo,—2	NOUN
+full	full	NOUN
+fullgrown	fullgrown	NOUN
+fulsi	fuldo	VERB
+fulsi—Ishine	fulsi—ishen	NOUN
+fulvus,-a,-um-tawny,yellow	fulvus,-a,-um-tawny,yellows	NOUN
+functus-I		NOUN
+fundentijr	fundentijrs	VERB
+funeral	funeral	NOUN
+fungerematernis	fungerematernus	ADJ
+furnish	faurnish	NOUN
+furtimDeam	furtimdea	NOUN
+fusum-Ipour		NOUN
+futu	futus	NOUN
+futurepart.moriturus—Idie	futurepart.moriturus—idies	NOUN
+futurumesse	futurumesco	VERB
+f—levi	f—levis	VERB
+f—levi,fletum	f—levi,fletus	VERB
+f—lock	f—locks	VERB
+f—ruitful	f—ruitful	NOUN
+g		ADV
+g	g	CCONJ
+g	gies	ADJ
+g	gies	CCONJ
+galea	galea	NOUN
+galea,-ae,/		NOUN
+galeam	galea	NOUN
+galeas	galea	NOUN
+galeis	galea	NOUN
+gam	go	VERB
+game	games	VERB
+gap,hole	gap,hol	NOUN
+gat	go	VERB
+gate	go	VERB
+gau	gau	ADV
+gaudid	gaudid	VERB
+gavi	go	VERB
+ge	ge	NOUN
+ge	geo	NOUN
+ge	geo	VERB
+geese	gees	NOUN
+gemia	gemia	NOUN
+gemma,-ae,/.	gemma,-ae,/.s	NOUN
+gemma,-ae,f.-jewel	gemma,-ae,f.-jewel	PART
+gemmas	gemmo	NOUN
+gen	genesis	NOUN
+gen.orabl	gen.orabls	NOUN
+gena,-ae,f.-cheek		NOUN
+geneiam	geneia	NOUN
+general	general	NOUN
+generous	generous	NOUN
+genitive	genitiuus	ADJ
+gens,gentis,f.-race	gens,gentis,f.-raca	NOUN
+gens,quaecrematofortisabIlio	gens,quaecrematofortisabilio	VERB
+gentesItaliae	gentesitalia	NOUN
+gentis,/—.		NOUN
+gero-Isucceed		NOUN
+gerund	gerund	VERB
+gestum-I	gestum-i	ADV
+get	go	VERB
+getful	getful	NOUN
+ght	ghto	VERB
+ghtning	ghtningt	NOUN
+gi	go	PRON
+gi	go	VERB
+ging		NOUN
+ginians	ginio	VERB
+ginis	gi	NOUN
+ginum	gi	NOUN
+gis	go	VERB
+gis	gus	NOUN
+give	giue	VERB
+give	givet	VERB
+given		VERB
+given	givent	VERB
+givetheyoungreader	givetheyoungreado	VERB
+gladids	gladidss	NOUN
+gladii	gladius	NOUN
+gladiis	gladius	NOUN
+gladio	gladius	NOUN
+gladiosnec		NOUN
+gladium	gladius	NOUN
+gladius	gladius	NOUN
+gladius,-i,m.-sword		NOUN
+gladius,—-i,m		NOUN
+gladly	gladly	NOUN
+globus,-i,m.-ball	globus,-i,m.-ball	ADP
+gloriouscitythoushaltbuild	gloriouscitythoushaltbuildio	NOUN
+glory	glorys	NOUN
+gly	gly	ADV
+gmdquididest	gmdquididsum	VERB
+go		INTJ
+go		NOUN
+go		PRON
+go		VERB
+goaway	goaway	NOUN
+god	god	ADV
+god	god	CCONJ
+god-		NOUN
+god-	god-	NOUN
+goddess		ADJ
+goddess		NOUN
+goddess	goddessalonicensis	ADJ
+godof	godofs	VERB
+gods		VERB
+gods	gods	VERB
+gofAlbaLonga	gofalbalongus	ADJ
+gold	gold	ADV
+golden	goldes	NOUN
+good	good	NOUN
+good	goods	NOUN
+goodbye	goodbyes	NOUN
+goon	goon	NOUN
+goup	goup	VERB
+gov	gov	NOUN
+govern	goviern	NOUN
+governing		NOUN
+governingbody		NOUN
+gradior	gradior	NOUN
+gradually	graduallys	NOUN
+gramineus	gramineus	NOUN
+grandfather	grandfather	ADJ
+grape	graps	NOUN
+grasshopper	grasshopper	ADV
+gratitude	gratituda	NOUN
+gratitude	gratitudo	VERB
+graves	grauis	ADJ
+gravi	grauis	ADJ
+gravia	grauis	ADJ
+gravis	grauis	ADJ
+gravissi	gravitior	VERB
+gravissima	grauissimus	ADJ
+gravissimaetevexabunt	gravissimaetevexo	VERB
+gravissimas	grauissimus	ADJ
+gravissimasmihidabis	gravissimasmihido	VERB
+gravissimum	gravus	ADJ
+great	greo	VERB
+greater	greater	NOUN
+greatest,very		NOUN
+greet	greo	VERB
+gremid	gremid	ADJ
+gremid	gremid	NOUN
+grex,gregis	grex,grex	NOUN
+grievous,dignified		ADV
+groan	groaniel	ADJ
+ground	ground	NOUN
+ground	groundus	ADJ
+grown	grown	NOUN
+gry	gry	ADJ
+gu	gu	ADP
+guard,sentinel	guard,sentinel	VERB
+guest	gusum	VERB
+guish,faint		VERB
+g—eni	g—enus	NOUN
+h		CCONJ
+h	h	CCONJ
+h	hh	CCONJ
+h	hhs	CCONJ
+h	hies	CCONJ
+h	hm	CCONJ
+h	ht	CCONJ
+h,f		VERB
+ha	ha	PART
+hab	hab	NOUN
+habe-	habe-	VERB
+habeo,2	habeo,2	CCONJ
+habita-	habita-	NOUN
+habitabant	habito	VERB
+habitabat	habito	VERB
+habitabis	habito	VERB
+habitant	habito	VERB
+habitantes	habito	VERB
+habitat	habito	VERB
+habitem	habito	VERB
+habitus	habitus	VERB
+hacterraregnabis	hacterraregno	VERB
+had	had	ADV
+haeccura		ADJ
+haereo,2		NOUN
+haesi,haesum	haesi,haesus	NOUN
+haesum—I	haesum—id	NOUN
+hahito	hahitus	VERB
+haired		VERB
+halcyon	halcyon	NOUN
+halcyones	halcyon	NOUN
+halcyonius	halcyonus	PRON
+half	half	NOUN
+halfof		VERB
+halt	halt	NOUN
+hand		NOUN
+hand	hanhd	NOUN
+handdown		NOUN
+handma	handmuus	ADJ
+handover		VERB
+hang		NOUN
+hangover(governsadat	hangover(governsado	VERB
+hap	hap	PART
+happen	happe	NOUN
+happily	happily	NOUN
+happy	happy	ADV
+happy,prosper-	happy,prosper-	NOUN
+happylandbodywasborneawaybythegoddessDianatothe	happylandbodywasborneawaybythegoddessdianatothe	VERB
+harass	arass	NOUN
+harbour		NOUN
+hard		VERB
+harena	harena	NOUN
+harenamquesoletepido	harenamquesoletepidus	ADJ
+hasbeenintroduced		VERB
+hastamsummis		ADJ
+hasten	haste	NOUN
+hate	ho	VERB
+hatred	hatred	ADV
+haud,adv.-not	haud,adv.-not	VERB
+have		ADJ
+have	have	INTJ
+have	havealypsis	ADJ
+havingslain	havingslais	VERB
+hbenter	hbenter	ADV
+he	he	INTJ
+he	hus	INTJ
+he,she,it	he,she,eo	VERB
+head	headm	ADJ
+head	headm	ADV
+heal	heal	NOUN
+hearted		NOUN
+heaven	heave	NOUN
+heavy		NOUN
+help	help	NOUN
+hence	hence	VERB
+hepherd	hepherdus	NOUN
+her	her	NOUN
+herba,-ae,f.-grass	herba,-ae,f.-grass	NOUN
+herbdsd		NOUN
+herbdsus	herbdsus	VERB
+herd	herd	NOUN
+herds	herds	NOUN
+here	hereo	ADV
+here	hereo	NOUN
+hero	herus	NOUN
+hers	hers	NOUN
+hiatum	hiatus	NOUN
+hiatus	hiatus	NOUN
+hicmanusobpatriampugnandovolnerapassi	hicmanusobpatriampugnandovolnerapassis	ADJ
+hie	hie	DET
+hiemis,f.-winter	hiemis,f.-winter	ADV
+highest,very		VERB
+hil	hil	PRON
+hill		ADV
+him	him	ADV
+himself,etc		NOUN
+hin	hin	ADV
+hindrance	hindrance	NOUN
+hints	hints	NOUN
+his,etc		VERB
+his,etc.(reflexive	his,etc.(reflexiue	CCONJ
+historian	historias	NOUN
+hitherand	hitherandus	NOUN
+ho	ho	INTJ
+ho	ho	NOUN
+hoc-he	oc-he	NOUN
+hodieapudtepaulisper	hodieapudtepaulisper	ADV
+hold	hold	NOUN
+hold	holdius	NOUN
+holdback,restrain	holdback,restrain	NOUN
+holdback,restrain	holdback,restrais	NOUN
+hollow	hollow	NOUN
+home	homa	VERB
+homi	homus	NOUN
+hominesnecaverunt	hominesneco	VERB
+homo,-inis,c.—aman,ahuman	homo,-inis,c.—aman,ahumans	ADJ
+hondre	hondres	NOUN
+honor,-oris,m.-honour		ADV
+honored	honored	NOUN
+honour	honour	ADV
+hope	hope	VERB
+horse	horsa	NOUN
+horse	horse	ADV
+horseman,knight	horseman,knights	ADV
+hospitality	hospitality	ADV
+hospitemducereiussit	hospitemducereiutio	VERB
+house	house	ADV
+house	housus	ADV
+household	household	NOUN
+how	howius	NOUN
+however	however	ADJ
+hrough		NOUN
+ht	ht	INTJ
+htful	htful	VERB
+httle		NOUN
+https://archive.org/details/By	https://archive.org/details/by	INTJ
+https://books.google.com	https://books.google.com	NOUN
+ht—.	ht—.	ADV
+huge	hugio	VERB
+hum	hum	NOUN
+hum	hus	NOUN
+human	human	ADV
+humeris	humerum	NOUN
+humeris	humo	NOUN
+humus,-i,f.-ground	humus,-i,f.-groundm	ADJ
+hunting		VERB
+husband	husbant	NOUN
+h—appy		VERB
+i	i	ADP
+i	i	VERB
+i,n.-stone	i,n.-sto	NOUN
+i,t	i,ts	ADV
+i-	i-	VERB
+i.e	i.e	NOUN
+i.e.tothehelpof		NOUN
+iac	iac	ADV
+iac-	iac-	VERB
+iacebant	iaceo	VERB
+iacebat	iaceo	VERB
+iacebit	iaceo	VERB
+iacent	iaceo	VERB
+iacentem	iaceo	VERB
+iaceo	iaceo	VERB
+iacet	iaceo	VERB
+iacite	iacio	VERB
+iaciunt	iacio	VERB
+iacrimis	iacrima	NOUN
+iactantur	iacto	VERB
+iactataTuscisaequoribussacra	iactatatuscisaequoribussacrum	NOUN
+iactati	iacto	VERB
+iactatur	iacto	VERB
+iacto	iacto	VERB
+iactum	iactus	NOUN
+iacuit	iaceo	VERB
+iac—eo,2		NOUN
+iage	iage	NOUN
+iam	iam	ADV
+iam-	iam-	NOUN
+iamadultus	iamadultus	ADJ
+iamdiu		ADV
+iamdiu	iamdiu	ADV
+iamdona	iamdon	ADJ
+iampaceotio	iampaceotio	NOUN
+iamtibiimminet	iamtibiimmino	VERB
+iamuxorem	iamuxor	NOUN
+iaquiunt	iaquio	VERB
+ibant-from		VERB
+iber	iber	NOUN
+ible	ible	NOUN
+ic	ic	ADV
+ickly		VERB
+id-he	id-he	DET
+idea	idea	NOUN
+idem-the	idem-thes	NOUN
+idioms	idioms	ADJ
+ie		NOUN
+ie	ia	NOUN
+ie	iia	INTJ
+ie	ius	NOUN
+iecerunt	iacio	VERB
+ieci	iacio	VERB
+igiturcumfeminisad		ADJ
+igna-	igna-	ADJ
+ignaTi	ignati	ADJ
+ignavi	igno	VERB
+ignavis	ignauus	ADJ
+ignavum	ignauus	ADJ
+igndta	igndta	ADJ
+ignis,-is,m.-fire	ignis,-is,m.-fio	VERB
+ignivastavit	ignivasto	VERB
+ihequestionexpectstheanswer		VERB
+il	il	ADV
+il	ilies	ADV
+ild	ildm	NOUN
+ili	ile	NOUN
+ilia	ile	ADJ
+ilia	ile	NOUN
+iliapostte	iliapostte	ADJ
+ille,-a,-ud-he,she,it	ille,-a,-ud-he,she,its	NOUN
+illedies	illedies	NOUN
+illeetiamexstinctomiseratus		VERB
+illevobisnarrabitquamliberalem	illevobisnarrabitquamliberalis	ADJ
+illucequovecta,multosdextra	illucequovecta,multosdextra	ADV
+im	im	ADP
+im	im	INTJ
+im-	im-	ADJ
+image,form	image,form	NOUN
+imagination	imagination	NOUN
+immdtus	immdtus	ADJ
+imme-	imme-	ADV
+immortalis,-e—immortal	immortalis,-e—immortals	NOUN
+immovable	immovable	ADJ
+imp	imps	ADP
+imp	imps	ADV
+impavida	impauidus	ADJ
+impavidus	impauidus	ADJ
+impdnemus	impdneo	VERB
+impedio,4-Ihinder	impedio,4-ihinder	VERB
+impeiiemus	impeiio	VERB
+impel,drive	impel,driue	ADV
+impers	impers	VERB
+impersonal	impersonal	NOUN
+impiaqueaeternamtimueruntsaeculanoctem		VERB
+impone-		VERB
+importunus	importunus	ADJ
+impudent(pudor		NOUN
+in,prep	in,prep	VERB
+in,prep.gov	in,prep.gov	NOUN
+in-		DET
+inGreecewherethere	ingreecewheretho	ADJ
+inSicily	ilsicily	VERB
+inThessaly	inthessaly	ADJ
+inaccessible	inaccessible	ADJ
+inafew	imafews	ADJ
+inamagic	inamagic	ADJ
+inarisdeorumvictimasmactare	inarisdeorumvictimasmacto	VERB
+inc	inc	ADV
+incaelum	incaelum	NOUN
+incendemnt		VERB
+incite	incio	VERB
+incola,-ae,f.-inhabitant	incola,-ae,f.-inhabito	VERB
+incolasvexabant	incolasvexo	VERB
+incubatAlcyonependentibusaequorenidis	incubatalcyonependentibusaequorenidus	VERB
+incubuerunt,etviribusgaudentesinaltumprovecti	incubuerunt,etviribusgaudentesinaltumprovcio	VERB
+incul	incul	ADV
+indecl	indeclo	ADV
+indeclinable	indeclinable	ADJ
+indeed	indeed	ADV
+indicative	indicatiuus	ADV
+indies	indio	NOUN
+indies	indio	VERB
+indies,adv.-fromdaytoday	indies,adv.-fromdaytody	VERB
+induo,3,-ui	induo,3,-us	NOUN
+industrii	industrius	ADJ
+industrious	industrious	ADJ
+industrius,-a,-um	industrius,-a,-um	ADV
+ineo-I		NOUN
+infant	info	VERB
+influence	influence	ADV
+inform	inform	ADV
+information	information	NOUN
+infrontof		VERB
+ing	ing	ADV
+ing	ing	NOUN
+ing(finis	ing(finis	NOUN
+ingredior,-i,-gressussum-Igo	ingredior,-i,-gressussum-igo	ADV
+inh	inh	ADV
+inhabit	inhao	VERB
+inhabit,livein	inhabit,livein	VERB
+inhistory,withallthatItaly	inhistory,withallthatitaly	NOUN
+inis,c		ADJ
+inis,m	inis,m	VERB
+initiriae	initirius	ADJ
+iniuria	iniuria	NOUN
+iniuriae	iniuria	NOUN
+iniuriam	iniuria	NOUN
+iniurias	iniuria	NOUN
+inius	inius	ADJ
+iniusta	iniustus	ADJ
+iniustam	iniustus	ADJ
+iniustus	iniustus	ADJ
+injury		NOUN
+inlikemanner	inlikemannor	NOUN
+inlitorestans	inlitoresto	VERB
+inmatrimoniumduco	inmatrimoniumducus	NOUN
+inmedios	inmedius	ADJ
+inor	inor	VERB
+inorderthat	inordertho	VERB
+inordertogivethechildconfidence	inordertogivethechildconfidence	ADJ
+inpatriaehostes	inpatriaehoss	NOUN
+inpositlquerogisiuvenesanteoraparentum	impositlquerogisiuvenesanteoraparentum	VERB
+inq	inq	ADJ
+inquit,"quodtumihimiserae	inquit,"quodtumihimiseer	DET
+inregiam	inregia	ADJ
+inrobesofstate	inrobesofstas	NOUN
+insidiae,-arum,f		NOUN
+insolitus	insolitus	ADJ
+instances	instanco	NOUN
+instarmontisequumdivlndPalladisarte	instarmontisequumdivlndpalladisars	ADV
+insteadofhimandwatch		NOUN
+instructa	instructus	VERB
+insula,-ae,f.-island	insula,-ae,f.-islandaeus	ADJ
+intended		VERB
+inter,prep	inter,prep	VERB
+interesting	interesting	ADJ
+interesting	interesting	ADV
+interesting	interesting	NOUN
+interrogative	interrogatiue	ADV
+inthe	inthus	ADV
+intheearlydaysthewildbarbariansbesiegedthe	intheearlydaysthewildbarbariansbesiegedthe	ADV
+inthemo	inthemo	ADJ
+inthepass	inthepass	NOUN
+inthepositionof	inthepositionofs	NOUN
+into,enter	into,entor	VERB
+into,onto	into,ontus	VERB
+intra,pr	intra,pr	ADV
+intra,pre	intra,pre	ADV
+intra,prep.gov		NOUN
+introduced		VERB
+introducing		VERB
+introduction	introduction	NOUN
+intuli-frominfero	intuli-frominferus	VERB
+inturn		VERB
+inustus	inuro	ADJ
+invain		VERB
+inveneris	inuenio	VERB
+invenietur	inuenio	VERB
+invenissent	inuenio	VERB
+inventasautqui	inuentasautqui	VERB
+invidere	inuideo	VERB
+invidiae	inuidia	NOUN
+inviros	invirus	NOUN
+invisum	invido	VERB
+invitant	inuito	VERB
+invitaverunt	inuito	VERB
+invitavisti	inuito	VERB
+involved	involved	VERB
+iol		ADJ
+ip	ips	ADP
+ipsePrincepsImperiiRomani	ipseprincepsimperiiromanis	NOUN
+ipsifacti,noniampatriaesolumgloriamcupiebant	ipsifacti,noniampatriaesolumgloriamcupiebo	VERB
+ir	hir	NOUN
+ir	ir	NOUN
+iredeiectummonumentaregis	iredeiectummonumentaregis	NOUN
+iron	iron	NOUN
+is,/	is,/	DET
+is,/—.		DET
+is,—ea,id	is,—ea,id	NOUN
+isgiven		NOUN
+island		ADJ
+isplaced	isplaced	VERB
+issum	itto	VERB
+it,that	it,tho	VERB
+it,this	it,thus	NOUN
+itaque	itaque	CCONJ
+itaque,conj.—and	itaque,conj.—andus	ADJ
+itbehoves	itbehouis	VERB
+itc	itcd	ADV
+itemm	itemms	NOUN
+iterum,adv.-again	iterum,adv.-agai	VERB
+its		PRON
+its		VERB
+itself	itsielf	NOUN
+itt	ittientia	NOUN
+itum-Igo	itum-igo	VERB
+itus	itus	VERB
+iube	iubeo	VERB
+iubebat	iubeo	VERB
+iubeo	iubeo	VERB
+iucunda	iucundus	ADJ
+iucundae	iucundus	ADJ
+iucundos	iucundus	ADJ
+iucundus	iucundus	ADJ
+iudex	iudex	NOUN
+iudicium	iudicium	NOUN
+iul—i	iul—i	ADJ
+ium	ium	NOUN
+iupl	iupl	ADJ
+iura	ius	NOUN
+ius	ius	NOUN
+ius,iuris,n	ius,iuris,ns	NOUN
+iussa	iussus	NOUN
+iusserat	iubeo	VERB
+iussi	iubeo	VERB
+iussit	iubeo	VERB
+iussu	iussus	NOUN
+iussu-at	iussu-o	VERB
+iussum	iubeo	VERB
+iussum—I		PRON
+iusta	iustus	ADJ
+iusti	iustus	ADJ
+iustum	iustus	ADJ
+iustus	iustus	ADJ
+iuv	iuv	ADJ
+iuvencdrum	iuvencdr	NOUN
+iuvenci	iuvencus	NOUN
+iuvencis	iuuenca	NOUN
+iuvencl	iuvencl	NOUN
+iuvencus,-i,m		VERB
+iuvene		ADJ
+iuvenem	iuuenis	ADJ
+iuvenes	iuuenis	ADJ
+iuvenes	iuuenis	NOUN
+iuveni	iuvenes	NOUN
+iuvenis	iuuenis	ADJ
+iuvenis	iuuenis	NOUN
+iuvenis,-is,c.—ayoungmanor	iuvenis,-is,c.—ayoungmanor	NOUN
+iuvenum	iuve	NOUN
+ive	iue	ADP
+ive	iue	ADV
+ixi	ixon	VERB
+iz	iz	CCONJ
+j	j	ADP
+j	j	ADV
+j	j	CCONJ
+j	jidie	ADV
+j	jt	CCONJ
+jan	jan	NOUN
+jewel	jewel	ADV
+joice	joicio	VERB
+jour		NOUN
+journey		NOUN
+journey	journeys	NOUN
+judge	judgeo	NOUN
+jump	jump	VERB
+jumpdo		VERB
+jumpdown	jumpdown	NOUN
+just	just	ADV
+justas	iustus	VERB
+k		PRON
+k	k	ADV
+kH		VERB
+kas	kas	VERB
+kb	kb	NOUN
+keenly	keenly	NOUN
+keep		NOUN
+keep	keepula	NOUN
+kind		NOUN
+kingof		NOUN
+kingofthegods		NOUN
+kiss	kiss	NOUN
+km	km	DET
+know		NOUN
+known		ADJ
+known	known	ADJ
+l		ADJ
+l		INTJ
+l		NOUN
+l	l	INTJ
+l	l	NOUN
+l	lh	ADJ
+l	lh	INTJ
+l	lh	NOUN
+l	lies	ADJ
+l	lius	ADJ
+l	lt	ADJ
+l	lt	NOUN
+l-		DET
+lYeip	lyeip	NOUN
+la	lam	ADP
+labdre	labdres	VERB
+laborantibus	laboro	VERB
+laboro	laboro	VERB
+labour		NOUN
+labour		VERB
+lac,lactis,n—.	lac,lactis,n—.	NOUN
+lacertae	lacertus	ADJ
+lacio	lacio	NOUN
+laclalultdrem	laclalultdro	VERB
+lacrimabat	lacrimo	VERB
+lacrimantem	lacrimo	VERB
+lacrimaverunt	lacrimo	VERB
+lacrimo	lacrimo	ADJ
+lacrimo,1-Iweep	lacrimo,1-iweep	VERB
+laetaetomniumrerumfecundissima	laetaetomniumrerumfecundus	ADJ
+laetus,-a,-um	laetus,-a,-ums	ADJ
+lam	lo	NOUN
+lam	lo	VERB
+lampresent	lampreso	VERB
+lan	lanitulum	NOUN
+land		NOUN
+lands		VERB
+langui-I	langui-i	NOUN
+languish		NOUN
+largiorhiccamposaetheret	largiorhiccamposaetho	VERB
+lariesa	lariedo	VERB
+last		VERB
+lastkingofRome	lastkingofroma	VERB
+lastofferingtoApollo	lastofferingtoapollo	VERB
+lastofthekingsofRome	lastofthekingsofromus	VERB
+lated		NOUN
+later	later	NOUN
+latera	latus	NOUN
+lateribus	latus	NOUN
+lationofthepoemofSimonides	lationofthepoemofsimonis	NOUN
+latos	latus	ADJ
+latum	latus	ADJ
+latum	latus	NOUN
+latum	latus	VERB
+latum-Ibear	latum-ibeor	VERB
+latus	latus	NOUN
+latusaltusqueapparuit	latusaltusqueapparsco	VERB
+laugh	laugh	NOUN
+law,justice	law,justicus	ADJ
+lawful	lawful	NOUN
+laxed,fromsolvo	laxed,fromsolvo	VERB
+ld	lde	NOUN
+ld	lt	NOUN
+le	la	NOUN
+le	lus	NOUN
+lead	leads	NOUN
+leadacross	leadacrosss	NOUN
+leadback		NOUN
+leaddown	leaddown	NOUN
+leader	leado	VERB
+leadingman	leadingmans	NOUN
+learn,findout	learn,findout	ADV
+leave		VERB
+lectum-I		NOUN
+lectum-I	lectum-i	NOUN
+led	led	ADP
+led	led	ADV
+lednes	lednis	NOUN
+legis,f.-law		NOUN
+lego,3,legi,lectum	lego,3,legi,lectum	VERB
+leo,-onis,m.-lion	leo,-onis,m.-lion	NOUN
+leo,lednis,m	leo,lednis,m	VERB
+letter	letto	NOUN
+levis,-e-light	levis,-e-light	VERB
+li	leus	NOUN
+li	lim	NOUN
+lia	lio	NOUN
+lib	libitulum	NOUN
+libenterferebant	libenterfero	VERB
+libenterproperaverunt	libenterpropero	VERB
+libentius	libentior	ADV
+liberds		ADJ
+liberds	liberds	ADV
+libero,1-Isetfree	libero,1-isetfree	NOUN
+library	lhibrary	NOUN
+librd		NOUN
+librds	librds	NOUN
+lic	lic	NOUN
+lieve	lieue	NOUN
+life	lifis	ADJ
+liftup		NOUN
+lightning	lightning	NOUN
+lignum,-i	lignum,-i	NOUN
+lik	lik	NOUN
+like	like	NOUN
+likeme	likema	VERB
+lilium,-i,n	lilium,-i,n	NOUN
+lily	lily	NOUN
+limbs	limbs	NOUN
+limo	limo	NOUN
+line	lino	NOUN
+lion	lion	NOUN
+lioness		NOUN
+liquefacta	liquefacio	VERB
+liquefactus	liquefacio	VERB
+litteraemultae	litteraemulta	VERB
+little		NOUN
+little	laittle	NOUN
+little	littleio	NOUN
+little	littles	NOUN
+littleson	littleson	NOUN
+liumcommitto-Ijoinbattle	liumcommitto-ijoinbattleor	NOUN
+living	livinge	NOUN
+living	livingientia	NOUN
+living	livingt	NOUN
+lo	lo	NOUN
+lo	los	NOUN
+loans	loo	VERB
+loca-place	loca-plax	NOUN
+locd	locd	NOUN
+long	longs	ADJ
+longe,adv.-byfar	longe,adv.-byfar	NOUN
+longing	longing	ADJ
+longingto		ADJ
+longinquas	longinquo	ADJ
+longus,-a,-um	longus,-a,-um	NOUN
+longus,-a,-um-long	longus,-a,-um-longs	VERB
+lookat	lookao	VERB
+lookat	lookat	VERB
+lookat	looko	VERB
+lookfor	lookfor	NOUN
+looking		NOUN
+loosen	looses	NOUN
+loquor,3,locutussum-Ispeak		VERB
+lose	lose	ADV
+loss	lossensis	ADJ
+love	lovs	NOUN
+loved	loveds	NOUN
+lovely		NOUN
+low	low	NOUN
+ls	lsinus	NOUN
+lsum	lsus	NOUN
+lt	lt	INTJ
+lu	lu	ADP
+luddsinvitabimus	luddsinvito	VERB
+ludo,3	laudo,3	NOUN
+lufius	lufius	NOUN
+luli	lulus	NOUN
+lulia	lule	NOUN
+lulia	lulia	NOUN
+lulia	lulium	NOUN
+lulia	lulius	NOUN
+luliae	lulia	NOUN
+luliaetpirataprdramnaviculaemultisrosisornant	luliaetpirataprdramnaviculaemultisrosisorno	VERB
+luliam	lulia	NOUN
+lulius	lulius	NOUN
+lulius,-i,TO	lulius,-i,tos	NOUN
+lum	lum	NOUN
+luminasicutincaelo	luminasicutincaelum	NOUN
+luminevestit	luminevesto	VERB
+luna,-ae,/.	luna,-ae,/.s	NOUN
+lunch,dinner		NOUN
+lupa,-ae,/.	lupa,-ae,/.s	NOUN
+luppiter	luppiter	NOUN
+luppiter,Iovis,m	luppiter,iovis,m	NOUN
+lus	lus	NOUN
+lusi,lusum—Iplay	lusi,lusum—iplay	NOUN
+lusum—Iplay		NOUN
+luvenumcborus	luvenumcborus	NOUN
+ly	ly	ADV
+ly	ly	DET
+lyra	lyra	NOUN
+l—d	l—d	VERB
+l—yre	l—yro	VERB
+m		ADP
+m		INTJ
+m		VERB
+m	hm	INTJ
+m	hms	ADP
+m	m	ADP
+m	m	ADV
+m	m	CCONJ
+m	m	INTJ
+m	m	NOUN
+m	m	VERB
+m	me	ADP
+m	me	ADV
+m	me	INTJ
+m	me	VERB
+m	mies	ADP
+m	mm	ADP
+m	mm	ADV
+m	mm	CCONJ
+m	mm	VERB
+m	ms	ADP
+m	ms	CCONJ
+m	ms	INTJ
+m	ms	NOUN
+m	ms	VERB
+m	mt	ADP
+m	mt	CCONJ
+m	mt	INTJ
+m	mt	VERB
+m	mx	ADP
+m	mx	CCONJ
+m	mx	INTJ
+m	mx	PART
+m	mx	VERB
+m-	m-	NOUN
+m-I	m-i	NOUN
+m.,acc	m.,acc	VERB
+m.--Aeneas	m.--aeneus	NOUN
+m.--Augustus	m.--augustus	NOUN
+m.-Achilles	m.-achillis	NOUN
+m.-Admetus	m.-admetus	NOUN
+m.-Aeetes	m.-aees	NOUN
+m.-Alexander	m.-alexander	ADP
+m.-Apollo	m.-apollus	PRON
+m.-Appius	m.-appus	NOUN
+m.-Belle	m.-bellus	NOUN
+m.-Brennus	m.-brennus	NOUN
+m.-Caius	m.-caius	NOUN
+m.-Ceyx	m.-ceyx	NOUN
+m.-Christian	m.-christian	NOUN
+m.-Claudius	m.-claudius	NOUN
+m.-Cyclops	m.-cyclops	NOUN
+m.-Iolcus	m.-iolcus	NOUN
+m.-Iulus	m.-iulus	NOUN
+m.-Livy		ADJ
+m.-Manlius	m.-manlius	PRON
+m.-Mars	m.-mars	NOUN
+m.-Metabus	m.-metas	NOUN
+m.-Minos	m.-minus	NOUN
+m.-Ocean	m.-ocean	NOUN
+m.-Olympus	m.-olympus	NOUN
+m.-Pegasus	m.-pegasus	NOUN
+m.-Phoebus	m.-phoes	VERB
+m.-Pluto	m.-pluto	NOUN
+m.-Senate	m.-seno	NOUN
+m.-Turnus	m.-turnus	NOUN
+m.-Ulysses	m.-ulysses	VERB
+m.-ambassador	m.-ambassador	NOUN
+m.-army	m.-army	NOUN
+m.-ashes	m.-ashes	NOUN
+m.-bed	m.-bed	NOUN
+m.-blood	m.-blood	VERB
+m.-book		NOUN
+m.-boy	m.-boy	NOUN
+m.-bread	m.-breads	NOUN
+m.-brother	m.-brother	ADJ
+m.-censor	m.-censor	NOUN
+m.-centaur		PRON
+m.-circle	m.-circlis	NOUN
+m.-colour		VERB
+m.-conqueror	m.-conqueror	VERB
+m.-crash	mh.-crash	VERB
+m.-cultivation	m.-cultivation	NOUN
+m.-custom		NOUN
+m.-day	m.-day	NOUN
+m.-disease	m.-diseasa	VERB
+m.-dust		NOUN
+m.-evening		NOUN
+m.-face	m.-fax	NOUN
+m.-fear	m.-feor	VERB
+m.-field	m.-field	NOUN
+m.-flock	m.-flocks	VERB
+m.-flower(floreo	m.-flower(floreus	ADJ
+m.-fold	m.-fold	PRON
+m.-foot	m.-foots	NOUN
+m.-friend	m.-friendus	NOUN
+m.-god	m.-god	NOUN
+m.-goingout	m.-goingout	NOUN
+m.-horse	m.-horse	ADP
+m.-horseman	m.-horsemans	NOUN
+m.-hunter	m.-hunter	ADV
+m.-lamb		NOUN
+m.-little	m.-little	NOUN
+m.-master,lord		ADJ
+m.-mid-day	m.-mid-day	ADP
+m.-mind	m.-mind	NOUN
+m.-month		NOUN
+m.-mountain	m.-mountais	VERB
+m.-movement	m.-movemeo	VERB
+m.-number	m.-number	NOUN
+m.-oar	m.-oar	NOUN
+m.-orator	m.-orator	NOUN
+m.-order,rank	m.-order,rank	NOUN
+m.-pace	m.-pax	ADV
+m.-poet	m.-poetensis	ADJ
+m.-priest	m.-priest	AUX
+m.-return	m.-returnanus	ADJ
+m.-river		VERB
+m.-sea	m.-sea	NOUN
+m.-senator	m.-senator	NOUN
+m.-shepherd	m.-shepherd	ADJ
+m.-shoe	m.-shoe	NOUN
+m.-shoulder	m.-shoulder	VERB
+m.-shower		NOUN
+m.-sing		NOUN
+m.-slave	m.-slaue	VERB
+m.-smoke		VERB
+m.-song	m.-songs	NOUN
+m.-staff	m.-staff	ADJ
+m.-stag	m.-stag	NOUN
+m.-terror	m.-terror	NOUN
+m.-traveller	m.-traveller	NOUN
+m.-trick		PRON
+m.-uncle		NOUN
+m.-wind	m.-windius	NOUN
+m.-—Peter	m.-—peter	ADV
+m.-—wolf	m.-—wolficulus	NOUN
+m.pi	um.pus	ADJ
+m.pi	um.pus	NOUN
+m.pl.-Latins		VERB
+m.pl.-Volsci	m.pl.-volscius	ADJ
+m.pl.-children	m.pl.-childres	NOUN
+m.pl.-those	m.pl.-thosus	ADV
+m.—Jupiter	m.—jupiter	NOUN
+m.—Paul	m.—paulo	ADV
+m.—Trojan	m.—trojans	NOUN
+m.—child	m.—childio	NOUN
+m.—ram	m.—ra	NOUN
+m.—wave	m.—waveetera	VERB
+m2..-—Bucepha	m2..-—bucepha	ADV
+ma	ma	INTJ
+mache	machus	NOUN
+made	madeo	ADJ
+made	madeo	NOUN
+made	madeo	VERB
+madverterunt	madvertero	VERB
+maera,afire-breathingmon	maera,afire-breathingmon	PART
+magic	magic	ADJ
+magic	magic	NOUN
+magicis	magicus	ADJ
+magicus	magicus	ADJ
+magis	magis	ADV
+magis,adv.—more	magis,adv.—mur	NOUN
+magister	magister	NOUN
+magistrate	magistro	ADV
+magistrd	magistrd	NOUN
+magistri	magister	NOUN
+magistro	magister	NOUN
+magn5		ADJ
+magnanimumheroum,pueriinnuptaequepuellae	magnanimumheroum,pueriinnuptaequepuella	ADJ
+magnanimus	magnanimus	ADJ
+magnaprogeniesIovis	magnaprogeniesiouis	NOUN
+magnd	magnd	ADJ
+magnd	magnd	ADV
+magnds	magnds	ADJ
+magnus,-a,-um	magnus,-a,-um	ADJ
+maidres	maidr	NOUN
+main	mai	NOUN
+mainly	mainly	ADJ
+maintain	maintais	VERB
+maior,maius-greater	amaior,maius-greater	ADV
+maiore	maior	ADJ
+make	make	ADV
+make	makeo	ADJ
+make	makeo	ADV
+make,do	make,dus	VERB
+malas	malus	ADJ
+maldrum	malder	NOUN
+mali	malus	NOUN
+malis	malus	ADJ
+mall	mall	VERB
+malos	malus	NOUN
+malui-I	malui-i	NOUN
+malus	malus	ADJ
+mam	ma	ADJ
+mam	ma	NOUN
+mamus,quodaegerestpuer	mamus,quodaegerestpuer	NOUN
+man	man	NOUN
+man,hero,husband	man,hero,husbandus	ADJ
+manage	manage	NOUN
+mane,adv.—inthemorning	mane,adv.—inthemorning	NOUN
+manebant	maneo	VERB
+manebas	maneo	VERB
+manebat	maneo	VERB
+manebimus	maneo	VERB
+manebit	maneo	VERB
+manebo	maneo	VERB
+maneo	maneo	VERB
+manet	maneo	VERB
+mane—inthemorning	mane—inthemorning	NOUN
+mani-	mani-	NOUN
+manner	manner	VERB
+mansi	maneo	VERB
+mansit	maneo	VERB
+mansum	maneo	NOUN
+mansum-I	mansum-i	NOUN
+mansurname	mansurnamus	VERB
+manumaudacem	manumaudax	NOUN
+many	many	NOUN
+mare	mare	NOUN
+mari	mare	NOUN
+mari-	mari-s	NOUN
+maris	mare	NOUN
+mariti-	mariti-	NOUN
+maritima	maritimus	ADJ
+maritimam	maritimus	ADJ
+maritimus	maritimus	ADJ
+maritus	maritus	NOUN
+marked		ADJ
+markedtilltheendofChapterXXXV		NOUN
+markedtotheendofchap		NOUN
+market	markets	NOUN
+marltus	marltus	NOUN
+marred	marred	ADV
+marriage	marriages	NOUN
+mas-	mals-	NOUN
+maternae-a	maternae-us	VERB
+materpropeDeliam	materpropedelia	NOUN
+matrdna	matrdna	NOUN
+matrimbnium	matrimbnium	NOUN
+matrimdnium	matrimdnius	NOUN
+matrl	matrl	NOUN
+matron	matron	NOUN
+matronaecumliberissuisddnaadtemplaferebant		VERB
+matter	matter	NOUN
+maxi	maxus	NOUN
+maxima	maximus	ADJ
+maximam	maximus	ADJ
+maximas	maximus	ADJ
+maxime	magis	ADV
+maxime	magne	ADV
+maximis	maximus	ADJ
+maximos	maximus	ADJ
+maximum-	maximum-	PRON
+maximus	maximus	ADJ
+maximus,-a,-um	maximus,-a,-um	ADJ
+may	may	ADV
+maybe	maybes	NOUN
+maygrmvthechampionhere	maygrmvthechampionho	VERB
+mdtresatqueviridefunctaquecorporavitd	mdtresatqueviridefunctaquecorporavitd	NOUN
+mdtris	mdtra	NOUN
+meadow	meadowo	VERB
+meanwhile	meanwhilis	ADJ
+mebdres	mebdris	ADJ
+melius	melior	ADJ
+melius	melior	ADV
+memento-remember	memento-remember	ADJ
+memor,-oris-mindful	memor,-oris-mindful	NOUN
+memory		ADJ
+memory	memory	ADJ
+men	men	NOUN
+ment	mo	VERB
+menter	menter	ADV
+merecipio	merecipio	VERB
+messenger	messenger	NOUN
+met	met	PART
+metamenintectum	metamenintectus	VERB
+metre	meter	NOUN
+meus,-a,-um-my	meus,-a,-um-my	NOUN
+me—us	me—us	NOUN
+mgentis	mgo	VERB
+miM	mim	ADJ
+mibtes	mibto	VERB
+middle	middle	NOUN
+miens	mio	VERB
+mientem	mio	VERB
+might	might	VERB
+mihi-dat	mihi-do	VERB
+mihtes	mihteo	VERB
+milia—a	milia—a	ADV
+mind	mind	ADV
+mind	mind	NOUN
+mind,withresignation	mind,withresignation	NOUN
+minimus	paruus	ADJ
+miraetdivina	miraetdivinus	ADJ
+mirantem	miro	VERB
+mirantes	miro	VERB
+mise	mise	VERB
+miseramruerunt	miseramrio	VERB
+miserrima	miserrimus	ADJ
+missum-Isend		VERB
+missum-downcast	missum-downcat	ADJ
+mit	mo	VERB
+mitissimus	mitus	ADJ
+mitto,3	metto,3	VERB
+ml	ml	CCONJ
+mm	mm	ADV
+mo	mo	INTJ
+mo	mo	NOUN
+modo,adv.-only	modo,adv.-onlyio	NOUN
+moe	moe	NOUN
+moenia,-ium,—%.pZ.		NOUN
+molestia,-ae,f.-trouble,vexa		NOUN
+moment	momeo	VERB
+mon	mon	ADV
+monios	monius	NOUN
+monster,por-	monster,por-	CCONJ
+monstro,1-Ishew	monstro,1-ishewarchia	NOUN
+monstrum,-i,n	monstrum,-i,n	VERB
+monstrum,-i,n.-monster,por	monstrum,-i,n.-monster,por	INTJ
+monti-	monti-s	NOUN
+montiumdominautfores	montiumdominautfor	NOUN
+moon	moon	NOUN
+morecertain	morecertais	VERB
+moreelaborate	moreelaboro	VERB
+moreover	moreovers	ADV
+moreover	moreovers	NOUN
+mortemeaGraecosmilitesetGraeciam	mortemeagraecosmilitesetgraecia	NOUN
+mortis,/.	mortis,/.s	NOUN
+mortis,/.—death	mortis,/.—death	NOUN
+mortis,f.—death	mortis,f.—death	NOUN
+most	most	ADV
+mothe	mothus	NOUN
+mother	mother	NOUN
+motibusAipes	motibusaipeo	VERB
+motionless		ADJ
+mountain		VERB
+mourn	mourn	VERB
+mouth,face	mouth,fax	NOUN
+moveaway	moveaway	VERB
+moving	moving	VERB
+muberes	mubero	VERB
+much	much	ADJ
+much	much	NOUN
+much,many	much,many	NOUN
+mul	mul	ADV
+mulier,-eris,/.	mulier,-eris,/.	NOUN
+mulsi	mulsum	NOUN
+mulsi	mulsum	VERB
+mulsum	mulsum	ADV
+mulsum	mulsum	VERB
+mulsum-I	mulsum-i	ADV
+multaaudebis	multaaudeo	VERB
+multds	multds	ADV
+multisvulneribus	multisvulnus	NOUN
+mum	mum	NOUN
+mums	mums	NOUN
+munio,4-Ifortify	munio,4-ifortifys	VERB
+murus,-i,to	murus,-i,to	NOUN
+music	music	ADV
+must	must	NOUN
+mustcross	mustcrosss	VERB
+my	myus	INTJ
+my	myus	NOUN
+mycamp		VERB
+n		INTJ
+n	hn	INTJ
+n	hns	INTJ
+n	hns	NOUN
+n	n	INTJ
+n	n	NOUN
+n,the	n,thus	NOUN
+n-	n-	ADJ
+n.-Ilium	n.-ilius	NOUN
+n.-Tusculum	n.-tusculum	NOUN
+n.-back	n.-back	NOUN
+n.-battle	n.-battled	ADV
+n.-beginning	n.-beginning	NOUN
+n.-bidding	n.-bidding	NOUN
+n.-bond	n.-bond	ADJ
+n.-breast	n.-breus	VERB
+n.-character	n.-character	ADV
+n.-country		NOUN
+n.-danger	n.-danger	NOUN
+n.-doubt		PRON
+n.-ease,leisure	n.-ease,leisur	ADV
+n.-fortifica	n.-fortificus	NOUN
+n.-forum	n.-fus	NOUN
+n.-head	n.-headensis	PRON
+n.-hospitality	n.-hospitalityus	NOUN
+n.-light	n.-light	ADV
+n.-mar	n.-mar	PRON
+n.-meadow	n.-meadows	NOUN
+n.-member	n.-member	ADJ
+n.-neck	n.-neck	VERB
+n.-period		NOUN
+n.-plan	n.-plan	ADJ
+n.-power	n.-power	ADJ
+n.-roof		NOUN
+n.-sail	n.-sail	NOUN
+n.-shame	n.-shamus	NOUN
+n.-shore	n.-shor	NOUN
+n.-sing	n.-sing	NOUN
+n.-song	n.-songs	NOUN
+n.-sort		PRON
+n.-temple	n.-temple	ADV
+n.-theatre	n.-theater	NOUN
+n.-time	nh.-tima	ADV
+n.-town		PRON
+n.-trial	n.-trial	NOUN
+n.-war	n.-war	NOUN
+n.-will	n.-will	ADJ
+n.-wine	nh.-wina	DET
+n.pl.-camp	n.pl.-campus	NOUN
+n.pl.-temples	n.pl.-templis	VERB
+n.—arm	n.—armsiastes	NOUN
+n.—crime		PRON
+n.—dart,spear	n.—dart,speo	VERB
+n.—fate	n.—for	VERB
+n.—vow,prayer	n.—vow,prayer	NOUN
+n.—wood,glade	n.—wood,glades	VERB
+n.—word		VERB
+n5men	n5men	NOUN
+n5n		NOUN
+n5s	n5s	NOUN
+n5tus	n5tus	NOUN
+nam,conj.-for	nam,conj.-for	VERB
+name	nama	NOUN
+name	namo	VERB
+nameofApollo	nameofapollus	NOUN
+nameofTroy	nameoftroy	NOUN
+naro-	naro-	NOUN
+natabant	nato	VERB
+natando	nato	VERB
+natavit	nato	VERB
+native	natiuus	ADV
+nativeof		ADJ
+nativeofEtruria	nativeofetruria	NOUN
+natosquematurosquepatres	natosquematurosquepatr	NOUN
+nauta,-ae,m.-sailor	nauta,-ae,m.-sailor	VERB
+nautls	nautlss	NOUN
+nave	nauis	NOUN
+navem	nauis	NOUN
+navemconscendo	navemconsco	VERB
+naves	nauis	NOUN
+navicula	nauicula	NOUN
+naviculae	navicula	NOUN
+naviculam	nauicula	NOUN
+naviculamproperant	naviculampropo	VERB
+navigabant	nauigo	VERB
+navigabat	nauigo	VERB
+navigabimns	navigabmo	NOUN
+navigabimus	nauigo	VERB
+navigabitis	nauigo	VERB
+navigabo	nauigo	VERB
+navigabunt	nauigo	VERB
+navigaturus	nauigo	VERB
+navigaverunt	nauigo	VERB
+navigavit	nauigo	VERB
+navium	nauis	NOUN
+nc	nc	ADV
+ncu	ncunte	ADV
+nd	nd	NOUN
+ndful	ndful	NOUN
+ndinsomecasesExercises	ndinsomecasesexercisis	VERB
+ndm	ndm	NOUN
+ndme	ndme	ADV
+ndmine	ndmen	NOUN
+ndn	ndn	NOUN
+ndn	nudns	INTJ
+ndo	ndus	ADV
+ndtus	ndtus	VERB
+ne...quidem	ne...quidem	PART
+near	neo	VERB
+necaliamreminanimohabebant	necaliamreminanimohabebo	VERB
+necaverant	necavo	VERB
+necessary	necessary	ADJ
+necquisquam-andnoone	necquisquam-andnoo	VERB
+necventossecundos	necventossecundus	VERB
+neglect	neglict	ADV
+neia	neia	NOUN
+neighbour-		NOUN
+neighbourhoodof	neighbourhoodofo	VERB
+neighbouring	neighbouring	NOUN
+neighbours	neighbours	ADV
+nel	nel	NOUN
+nel	nelo	ADV
+nelles	nello	VERB
+neminem	nemo	PRON
+nemo	nemo	PRON
+nepos,-otis,c.—grandchild	nepos,-otis,c.—grandchild	NOUN
+neq	neq	ADV
+nequa	nequis	ADJ
+nequaquam,adv.-bynomeans	nequaquam,adv.-bynomeo	VERB
+nequaquamviolavit	nequaquamviolo	VERB
+nequeilleexhismanibus	nequeilleexhisma	NOUN
+nequeuxoresnequesororeshabebant	nequeuxoresnequesororeshabebo	VERB
+ner	ner	NOUN
+neraverit	nero	VERB
+ners	nero	VERB
+ners—.	ners—.	NOUN
+ness		ADJ
+ness	nessaeus	ADJ
+nest	nsum	VERB
+nestra,wifeofAgamemnon	nestra,wifeofagamemnon	PART
+never		VERB
+next	next	ADJ
+ney	ney	ADJ
+ney	ney	NOUN
+nge	ngo	VERB
+ngerofthegods		NOUN
+ngin		NOUN
+nh	nh	ADP
+nician,relatingtotheCartha-		ADJ
+nidus,-i,m.-nest	nidus,-i,m.-nsum	AUX
+nig	nig	NOUN
+nigh,deep	nigh,deep	ADV
+night	night	NOUN
+nigno	nignus	ADJ
+nigraeferacifrondisinAlgido	nigraeferacifrondisinalgidus	ADJ
+nihil	nihil	PRON
+nihilomagis	nihilomagis	ADV
+nihilomagis-nonethemore	nihilomagis-nonethemor	ADV
+nimium,adv.—too	nimium,adv.—too	INTJ
+nine	nen	NOUN
+ninegoddesses	ninegoddeo	VERB
+nion	nion	NOUN
+nisi,conj.-unless,ifnot	nisi,conj.-unless,ifnot	VERB
+nitidus,-a,-u	nitidus,-a,-us	ADJ
+nix,nivis,j-snow	nix,nivis,j-snow	ADV
+nj	nj	ADV
+nk	nk	ADP
+nldum	nldus	ADV
+nm	nm	ADV
+nn		PRON
+nobilemquepuellamsepraebuit	nobilemquepuellamsepraebesco	VERB
+nobilissimo	nobilissimus	ADJ
+noise	noisus	ADV
+nolc	nolc	ADV
+nolihic		ADJ
+nolonger	nolonger	ADJ
+nolui—I	nolui—i	ADV
+nonagensimo	nonagensimus	ADJ
+nonagensimus	nonagentio	VERB
+nonalitertamen	nonalitertamen	ADV
+nonethemore	nonethemor	VERB
+nonewholovedsomuch	nonewholovedsomuch	NOUN
+noniam	nonia	NOUN
+nonne	nonne	ADV
+nonnullas	nonnullus	DET
+nonnullos	nonnullus	DET
+nonnullus	nonnullus	DET
+nonomnino	nonomninus	ADV
+nonte	nons	NOUN
+non—iam	non—ia	DET
+nor	nor	NOUN
+nor	nor	VERB
+northeagedmother'sself		VERB
+norunt-theyknow(noverunt	norunt-theyknow(novero	VERB
+nos-we		VERB
+not	not	INTJ
+not	not	NOUN
+notanysavehiswife	notanysavehiswifis	ADJ
+noteven	noteve	NOUN
+nothing	nothing	NOUN
+notissima	notissimus	ADJ
+notyet	notyo	VERB
+nouns	nouns	VERB
+nourish		NOUN
+now		PRON
+now	now	PART
+nowhere	nowho	VERB
+nox,noctis,f.-night	nox,noctis,f.-nightus	ADV
+ns	ns	ADP
+nsum	nsus	NOUN
+nt	nt	ADP
+ntly	ntly	NOUN
+ntry	ntry	ADJ
+ntu	ntus	NOUN
+nu-	nu-us	NOUN
+nuUo		ADJ
+nullainteromnes	nullainterom	DET
+num-an	num-ans	NOUN
+number	number	ADJ
+numen,-inis,n.-divinepower		INTJ
+numtu,tantodoloreoppressus	numtu,tantodoloreoppressus	VERB
+nunc,adv.-now		VERB
+nunctibicommendocommuniapignora		NOUN
+nunquam,adv.-never		ADJ
+nuntii	nuntium	NOUN
+nuptiae,-arum,/.pZ.	nuptiae,-arum,/.pz.	VERB
+nuptias	nuptia	NOUN
+o-	o-s	NOUN
+oHm	ohm	NOUN
+oLatonia	olatone	NOUN
+oa	oa	ADV
+ob,prep	oba,prep	NOUN
+obey	obey	ADJ
+object	object	ADV
+obscenaequecanesimportunae	obscenaequecanesimportunus	ADJ
+obsto,1,-st—iti,-stitum	obsto,1,-st—iti,-stitus	VERB
+obstupe	obstupe	VERB
+obstupefacio,-ere,-feci,-factum	obstupefacio,-ere,-feci,-facio	VERB
+obstupefacti	obstupefaco	VERB
+obstupefactus	obstupefacio	VERB
+oc	oc	ADV
+oc	oc	DET
+octum	octus	ADJ
+ocull	ocull	NOUN
+ocullplenierantlacrimamm		NOUN
+oculosquemeossomnusprofundusfunditur		VERB
+odd	odd	NOUN
+odioiraquepetent	odioiraquepeto	VERB
+odisse-I	odisse-i	ADP
+odiu	odiu	ADV
+oeleriter	oeleriter	ADV
+of	of	ADJ
+of	of	ADP
+of	of	NOUN
+of(governs	of(governs	NOUN
+ofAdmetus	ofadmetus	NOUN
+ofAlbaLonga	ofalbalongus	ADJ
+ofApolloandDiana	ofapolloanddiana	NOUN
+ofArgos	ofargum	NOUN
+ofAsiaM	ofasiam	ADV
+ofAsiaMinor	ofasiaminor	VERB
+ofColchis	ofcolcha	NOUN
+ofCorpus	ofcorpus	NOUN
+ofHeetor	ofheetor	NOUN
+ofItaly		VERB
+ofIuppiter	ofiuppitor	VERB
+ofLatin		NOUN
+ofMedea	ofmedea	VERB
+ofOrpheus	oforpheus	NOUN
+ofPhrixus	ofphrixus	VERB
+ofRome	ofromo	VERB
+ofRomulusa	ofromulundo	VERB
+ofRugby		ADV
+ofSparta	ofspario	NOUN
+ofSparta	ofsparta	VERB
+ofa	ofa	NOUN
+ofchildren	ofchildre	NOUN
+ofconstructions	ofconstructions	NOUN
+ofego	ofego	VERB
+off	offio	NOUN
+off	offo	NOUN
+offone'sguard		NOUN
+ofgold	ofgold	VERB
+ofhisdearwife	ofhisdearwifis	ADJ
+ofhow	ofhowum	NOUN
+ofhuntingandthemoon		ADJ
+ofhuntingandthemoon	ofhuntingandthemoon	NOUN
+oflife	oflifis	ADJ
+ofmodus	ofmodus	NOUN
+often	ofte	NOUN
+ofthat	oftho	VERB
+ofthe	ofthe	NOUN
+ofthe	ofthus	NOUN
+ofthe	ofthus	VERB
+oftheLowerWorld		VERB
+oftheRomanmagistrates	oftheromanmagistras	NOUN
+oftheUnderworld	oftheunderworlds	NOUN
+ofthedead	ofthedead	ADV
+ofthegods		NOUN
+ofthegods		VERB
+oftheirpower		NOUN
+ofwar	ofwararchia	VERB
+ogether	ogether	NOUN
+ohgrantthatthis	ohgrantthatthis	NOUN
+ois	ous	ADJ
+ok	ok	ADP
+ok	ok	NOUN
+ol	ol	INTJ
+ol	ol	NOUN
+old	old	NOUN
+old	oldius	NOUN
+oldofadress	oldofadressalonicensis	ADJ
+olim,adv.—.oneday,onceupon	olim,adv.—.oneday,onceupon	VERB
+olimregnabat	olimregno	VERB
+oliva	oliua	NOUN
+olivae	oliua	NOUN
+olivas	oliua	NOUN
+olivasetuvas	olivasetuua	NOUN
+oma	oma	NOUN
+omabant	omo	VERB
+omabat	omo	VERB
+omatus	omo	VERB
+omitted		VERB
+omnespuellaeartus	omnespuellaeartus	NOUN
+omnibushisniveacinguntur		VERB
+omniseritcollo	omniseritcollus	AUX
+omniumartium	omniumartis	NOUN
+omniumciviumoculos	omniumciviumoculus	NOUN
+on	hon	INTJ
+on	hon	NOUN
+on	on	ADP
+on	on	INTJ
+on	on	NOUN
+on-	on-	ADJ
+on-	on-s	ADJ
+once	onco	VERB
+onceuponatime	oanceuponatimes	ADV
+one		NOUN
+one	oneen	NOUN
+one	onis	NOUN
+one'sfathers	one'sfathers	ADJ
+onero,1—Iburden,load	onero,1—iburden,load	NOUN
+oneself	oneself	ADJ
+ongoing	ongoing	NOUN
+oni	onius	NOUN
+onl	onl	ADP
+onless		VERB
+only	only	ADJ
+only	only	NOUN
+only	only	VERB
+onlyone	onlyo	NOUN
+onthe	onthus	ADJ
+onthedatetowhichrenewed	onthedatetowhichrenewed	ADV
+ontheground	onthegroundum	VERB
+onthehands		NOUN
+ontis	on	NOUN
+onto	ontus	NOUN
+oo		NOUN
+oportet	oportet	VERB
+oppidain	oppidain	NOUN
+oppidan	oppidan	NOUN
+oppres	oppr	VERB
+oppug-	oppug-	DET
+optimas	optimas	ADJ
+optime	optimus	ADV
+or	hor	INTJ
+or	hor	NOUN
+or	hor	VERB
+or	or	NOUN
+or	or	VERB
+or,gate	or,go	VERB
+or,on		VERB
+or-		ADV
+orabl		VERB
+oracle	oraclearchia	NOUN
+oramaritima	oramaritimum	ADJ
+oramaritima	oramaritimum	NOUN
+ora—,-ae,/.		VERB
+order	order	NOUN
+ordinary	ordinary	VERB
+origin		NOUN
+oris,/.—sister	oris,/.—sister	NOUN
+oris,f.-tree	oris,f.-tree	ADP
+orn	orn	VERB
+ornato-ut	ornato-ut	NOUN
+ornavit,ettandemcumfidiscustddibusad		VERB
+orseman,knight	orseman,knight	INTJ
+orthe	orthus	VERB
+ortothe	ortothe	ADV
+ortwo	ortwos	VERB
+orwife	orwifis	VERB
+osculacum	osculacus	NOUN
+ossessed	ossessed	NOUN
+osu	osus	NOUN
+os—e	os—e	ADV
+otect	otect	NOUN
+other	other	ADJ
+other	other	NOUN
+otherhandthere	otherhandthor	VERB
+others	others	VERB
+othersbyanother	othersbyanother	NOUN
+oticeof		ADV
+ough	ouhgh	NOUN
+ound	oundus	ADJ
+ountry		VERB
+our	our	NOUN
+our	our	VERB
+ourable	ourable	NOUN
+ourown	ourowne	NOUN
+our{singu-	our{singu-	ADV
+ous	ous	NOUN
+out	out	ADV
+out	out	SCONJ
+out,read	out,reads	ADJ
+outside	outsis	NOUN
+over	ouo	ADJ
+over(governsadat	over(governsado	VERB
+overcome	overcoma	VERB
+overcome	overcomo	VERB
+overthrow		NOUN
+overturn		VERB
+ow	ow	CCONJ
+ower		NOUN
+own	own	NOUN
+o—rt		VERB
+p		ADJ
+p		CCONJ
+p		INTJ
+p		NOUN
+p	p	CCONJ
+p	p	NOUN
+p	pe	NOUN
+p	pies	NOUN
+p	pnte	NOUN
+p	ps	NOUN
+p	pt	NOUN
+p	pus	NOUN
+p.gov.acc	p.gov.acc	VERB
+p5st	p5st	ADV
+pa	pa	ADV
+pacis,/.	pacis,/.s	NOUN
+pacis,ƒ.—peace	pacis,ƒ.—peaca	NOUN
+paene,adv.-almost	paene,adv.-almostt	ADP
+painted		VERB
+palace	palacus	ADV
+palaestra	palaestra	NOUN
+paludem	palus	NOUN
+palus	palus	NOUN
+pampiniflorebant	pampinifloro	VERB
+pampinis	pampinus	NOUN
+pampinls	pampinls	NOUN
+panemde	panemde	VERB
+papaver	papauer	NOUN
+papavera	papauer	ADJ
+par-	par-	ADJ
+parabant	paro	VERB
+parare	paro	VERB
+parata	paro	VERB
+paratam	paro	ADJ
+parato	paro	VERB
+paratus	paratus	ADJ
+paratus,-a,-um		ADJ
+paraverunt	paro	VERB
+paravit	paro	VERB
+parceresubiectis		VERB
+pardon	pardon	NOUN
+pared,fromparo	pared,frompo	VERB
+parens	parens	NOUN
+parentes	parens	NOUN
+parere	paro	VERB
+pariter	pariter	ADV
+paro	paro	VERB
+pars,quaeinterItaliam	pars,quaeinteritalia	ADJ
+parsingramineis	parsingramineus	ADJ
+parspedibusplauduntchoreasetcarminadicunt	parspedibusplauduntchoreasetcarminadico	VERB
+parsum—I	parsum—i	VERB
+part	part	NOUN
+participle		VERB
+particle	particles	NOUN
+partimhocmeliusessearbitrati,itinereBrundusium	partimhocmeliusessearbitrati,itinerebrundusis	NOUN
+partis,/.	partis,/.s	NOUN
+partof		NOUN
+partofeo	partofeo	NOUN
+partof“sum	partof“sum	VERB
+partof“sum	partof“sus	NOUN
+partof“sum	partof“sus	VERB
+parva	paruus	ADJ
+parvam	paruus	ADJ
+parvamodo	parvamodo	ADV
+parvis	paruus	ADJ
+parvo	paruus	ADJ
+parvubs	parvubs	ADV
+parvula	paruulus	ADJ
+parvulafoverevolebant	parvulafoverevolo	VERB
+parvuli	paruulus	ADJ
+parvulos	paruulus	ADJ
+pas	pae	NOUN
+pass,and	pass,andus	NOUN
+passa	patior	VERB
+passages	passageo	VERB
+passages	passago	VERB
+passi	patior	VERB
+passis	patior	VERB
+passive	passiveicus	ADJ
+passussum-Isuffer	passussum-isuffero	NOUN
+pastbres	pastber	NOUN
+pastori-	pastori-	NOUN
+pater,-ris,m.-father(Senators	pater,-ris,m.-father(senators	ADV
+patermisericordia	patermisericordia	NOUN
+patertarnfortemRdmanum	patertarnfortemrdmanum	NOUN
+path	path	ADJ
+pati	patior	VERB
+patiantur	patior	VERB
+patiebantur	patior	VERB
+patieris	patior	VERB
+patior	patior	VERB
+patmus	patmus	ADJ
+patremcucurrit,etcollocarobracchiaCandidadedit	patremcucurrit,etcollocarobracchiacandidadedo	VERB
+patria,-ae,/.	patria,-ae,/.s	NOUN
+patria,summishonoribus	patria,summishonor	ADJ
+patriaetuae	patriaetuus	ADJ
+patriafugiens	patriafugio	VERB
+patriamihipr5liberiserunt	patriamihipr5liberisio	VERB
+patruus,-i,m		NOUN
+pauca	paucus	DET
+paucas	paucus	DET
+pauci,-ae,-a	pauci,-ae,-a	ADJ
+pauci,-ae,-a-few		VERB
+paucis	paucus	DET
+paucos	paucus	DET
+paullum	paullum	ADJ
+paved	paved	NOUN
+pavidus	pauidus	ADJ
+pay	pay	NOUN
+pa—rt	pa—rt	VERB
+pdma	pdma	NOUN
+pe	pe	INTJ
+pear	peo	VERB
+pem	po	NOUN
+pen	pen	NOUN
+penalty	penalty	VERB
+penal—ty,punish-	penal—ty,punish-	VERB
+pens(cado	pens(cadus	NOUN
+pensum-I	pensum-i	ADV
+people	people	ADJ
+people	peoplo	VERB
+peopleofLatium	peopleoflatis	NOUN
+pependi	pependo	VERB
+pependi—I	pependi—i	ADP
+per-	per-	ADV
+perativeofmemini	perativeofmo	VERB
+peravit	pero	VERB
+percutio,-ere	percutio,-ere	VERB
+perdamna,percaedesabipso	perdamna,percaedesabipse	VERB
+perf		NOUN
+perfect	perfect	NOUN
+perfidia,-ae,f.-treachery	perfidia,-ae,f.-treachery	NOUN
+perfidumesttdtumTroiandrumgenus,sedperfidiae	perfidumesttdtumtroiandrumgenus,sedperfidius	ADJ
+perfines	perfino	NOUN
+perform(governsanabl		VERB
+pergamnarrare	pergamnarro	VERB
+pergo,3		NOUN
+perhaps	perhapo	VERB
+periculd	periculd	NOUN
+permission	permission	NOUN
+permota	permoueo	VERB
+permoti	permoueo	VERB
+permotus	permoueo	VERB
+peromnem	peromnis	NOUN
+peromnes		ADJ
+perous	perous	ADJ
+perquediesplacidoshibernotemporeseptem	perquediesplacidoshibernotemporeseps	VERB
+perrectum-I	perrectum-i	ADP
+person	person	NOUN
+personal	personal	NOUN
+perterreo	perterreo	VERB
+perterrita	perterreo	VERB
+perterritae	perterreo	VERB
+perterritds		VERB
+perterriti	perterreo	VERB
+perterritis	perterreo	VERB
+perterritus,-a,-um-frightened		VERB
+perterritus,—-a,-um		VERB
+perterritusest	perterritussum	VERB
+perterruit	perterreo	VERB
+perterr—itus	perterr—itus	NOUN
+pertulitAusoniasadurbes	pertulitausoniasadurbs	VERB
+pervenerunt	peruenio	VERB
+pervenies	peruenio	VERB
+pervenisset	peruenio	VERB
+pervenit	peruenio	VERB
+perviasidduxerunt	perviasidduxo	VERB
+pes,pedis,—ni	pes,pedis,—nius	NOUN
+peto,3,—-ivi,-itum	peto,3,—-ivi,-itus	NOUN
+petravit	petro	VERB
+phaned		NOUN
+phlnasconvertit	phlnasconverto	VERB
+phone	pho	NOUN
+pi	pi	SCONJ
+pi	pit	ADP
+piger,-ra,-rum	piger,-ra,-r	ADJ
+piger,-ra,-rum	piger,-ra,-r	NOUN
+pigrds	pigrds	ADJ
+pigriin	pigriin	ADV
+pirata,-ae,to		NOUN
+pirate	piro	VERB
+piratls	piratlss	NOUN
+pitality	pitality	ADV
+pitch	pitch	NOUN
+pity	py	VERB
+pl.-Ides	pl.-is	NOUN
+pl.-arms	pl.-armss	ADJ
+pl.-departed		NOUN
+pl.-riches	pl.-richeo	VERB
+pl.forces	pl.forx	NOUN
+pl.—ambush	pl.—ambusht	NOUN
+placaverint	placavesco	VERB
+place	placeo	NOUN
+place	placeo	VERB
+place(ille	place(illo	VERB
+place,home	place,homus	VERB
+placida	placidus	ADJ
+placidae	placidus	ADJ
+placidam	placidus	ADJ
+placidamdare	placidamdo	VERB
+placidd	placidd	ADJ
+placido	placidus	ADJ
+placidum	placidus	ADJ
+placidus	placidus	ADJ
+placo,1-Iappease	placo,1-iappeasa	NOUN
+play		NOUN
+pleasant	pleaso	VERB
+please	pleaso	VERB
+pledge	pledges	NOUN
+plenty	plenty	NOUN
+plratis	plro	VERB
+plu	plu	ADV
+plunder	plunder	VERB
+plural	aplural	ADV
+po	pos	NOUN
+poemby		NOUN
+poen	poe	NOUN
+poenasdo		NOUN
+poenasdo-Ipaythe		NOUN
+poenassumo-Iexact	poenassumo-iexacts	VERB
+poetry		NOUN
+poets	poets	NOUN
+pon	pon	NOUN
+pono-I		NOUN
+popuH	popuh	NOUN
+popularity		NOUN
+populd	populd	NOUN
+por	por	NOUN
+porrectum	porrectum	VERB
+porrigenstenerasmanus	porrigenstenerasmanus	ADJ
+portav-		NOUN
+portus,-us,m	portus,-us,m	NOUN
+positum-Iput	positum-iput	NOUN
+possessionof(governsanabl		NOUN
+possible	possible	CCONJ
+post,prep.gov		NOUN
+postea,adv.-afterwards		ADJ
+posted		NOUN
+postquam,conj.—after	postquam,conj.—after	ADV
+posuit-humerumtenerumarcu	posuit-humerumtenerumarcus	VERB
+potui-I	potui-i	NOUN
+potuit-partofpossum	potuit-partofpossum	VERB
+potuittenuifidereligno	potuittenuifiderelignus	ADJ
+pourout	pourout	SCONJ
+power	power	NOUN
+pp		NOUN
+pr5	pr5	ADV
+practice	practicus	ADV
+prae-	prae-	VERB
+praebe-	praebe-	VERB
+praeceps	praeceps	ADJ
+praecipitem	praeceps	ADJ
+praeclarissima	praeclarissimus	ADJ
+praedicc	praedicc	VERB
+praeesset-immo	praeesset-immo	NOUN
+praestantissimus	praestans	ADJ
+praesto-I	praesto-i	NOUN
+praises	praisis	VERB
+prai—se		VERB
+pratls	pratlss	NOUN
+prdcedunt	prdcedo	VERB
+prdra	prdra	ADJ
+prebendit	prebehendo	VERB
+preca	preca	ADJ
+precataest		VERB
+precious	precious	NOUN
+prefer	prefero	VERB
+prep	praep	NOUN
+prep	prep	NOUN
+prep.gov	prep.gov	CCONJ
+prepare	prepo	VERB
+preposition	preposition	NOUN
+presentmeaning	praesentmeaning	NOUN
+preserve	preseruus	NOUN
+preserve	preservex	NOUN
+pretibsissima	pretibsus	ADJ
+pretidsior	pretidsus	VERB
+pretidsis	pretidsum	VERB
+pretidsissimam	pretidsus	ADJ
+pretiosissima	pretiosissimus	ADJ
+pretiosissimn.s	pretiosissimn.s	ADJ
+prficedo	prficedo	VERB
+price	pricus	ADV
+pride	pridus	ADV
+priest,priest-	priest,priest-	INTJ
+priest-	priest-	ADV
+primis-especially	primis-especially	NOUN
+primumagmen	primumagmen	NOUN
+primumvincere	primumvinco	VERB
+primum—-assoonaspossible	primum—-assoonaspossible	INTJ
+primum—first	primum—first	ADV
+prin-	prin-	NOUN
+prince	prince	NOUN
+prince	prince	VERB
+princeps,-eipis,c		ADV
+princi-		NOUN
+print		VERB
+printed	printed	NOUN
+prius-former	prius-former	ADV
+pro-	pro-	VERB
+proceed	proceed	VERB
+procul,adv.-far	procul,adv.-far	NOUN
+proe	proe	NOUN
+proeUis	proeui	NOUN
+proeba	proeba	NOUN
+proebainfesta	proebainfero	VERB
+proelium,-i		NOUN
+proeliumexaltanubespectabat	proeliumexaltanubespecto	VERB
+proficiscenti	prŏficiscens	VERB
+profundis	profo	ADJ
+progress	progress	ADJ
+proiicio	proiicio	NOUN
+promise		VERB
+promise	promise	ADJ
+promise	promise	VERB
+pronouns		VERB
+prope,prep	prope,prep	VERB
+proper-	proper-	ADP
+proptersuperbiamexpulsusest	proptersuperbiamexpulsussum	VERB
+pros-	pros-	PRON
+prostemite	prostemo	VERB
+prosterno,3	prosterno,3io	VERB
+prostratum	prostro	VERB
+protection(munio	protection(munius	VERB
+proteevitaexcedam	proteevitaexcedo	VERB
+provecta	proueho	VERB
+provectae	provcio	VERB
+provectam	proueho	VERB
+provecti	proveco	VERB
+provectus-advanced		ADV
+provinciae	prouincia	NOUN
+provinciam	prouincia	NOUN
+psi	psus	VERB
+pu	puo	ADV
+pudor,-oris,m.-shame	pudor,-oris,m.-shames	NOUN
+puelia	puelia	NOUN
+puellaeetpueriintegri	puellaeetpueriinteger	NOUN
+puellaequecanamus	puellaequecano	VERB
+puer,-i	puer,-us	NOUN
+puerbrum	puerbrus	NOUN
+puerd	puerd	NOUN
+pul	pul	NOUN
+pul-	pul-	ADJ
+pulcberrimas	pulcberrimus	ADJ
+pulcbmm	pulcbmm	NOUN
+pulcbra	pulcbra	ADJ
+pulcbrae	pulcbra	ADJ
+pulcherrima	pulcherrimus	ADJ
+pulchr	pulchrs	ADJ
+pulchrds	pulchrds	ADJ
+pulchri	pulchrus	ADJ
+puli	pulus	NOUN
+pulisse	puleo	VERB
+pulsum	pulsus	VERB
+pulsum-I	pulsum-i	ADV
+pulsum-I	pulsum-i	NOUN
+pulverem	puluis	NOUN
+pum	pus	NOUN
+punish		NOUN
+punish	punish	NOUN
+punished	punished	VERB
+pupil	pupil	NOUN
+purple	purplis	ADJ
+purpure	purpur	NOUN
+purpureo,solemquesuum	purpureo,solemquesuus	NOUN
+pursue	pursue	ADV
+pursuit,study	pursuit,studys	NOUN
+pus	pus	NOUN
+put	put	ADV
+put	put	CCONJ
+puta-		NOUN
+putasne	putasno	VERB
+putdown	putdown	ADV
+putin	putin	CCONJ
+puto,1	puto,1	VERB
+putout	putout	ADV
+puzzled	puzzled	VERB
+p—i	p—i	NOUN
+q		ADJ
+q		CCONJ
+q		NOUN
+q	qiculus	NOUN
+q	qies	ADJ
+q	qies	NOUN
+q	qus	ADJ
+q	qus	NOUN
+qu	qu	NOUN
+qu	qu	SCONJ
+qu5	qu5s	DET
+qu5s	qu5s	PART
+quadragensimo	quadragensimus	ADJ
+quadragensimus	quadragenso	VERB
+quadraginta,indecl.adj.―forty		VERB
+quadringenti,-ae,-a-fourhun	quadringenti,-ae,-a-fourhuns	ADV
+quaeest	quaesum	VERB
+quaeexpatrisgaleaborrebat		VERB
+quaeinsummisarboribusnidosaedificabant	quaeinsummisarboribusnidosaedifico	VERB
+quaero,3		VERB
+quammultainfoliisaviumsemiliacondunt	quammultainfoliisaviumsemiliacondo	VERB
+quamobrem	quamobr	ADV
+quamobrem	quamobrem	ADV
+quamsiclientumlonganegotia	quamsiclientumlonganegotium	NOUN
+quantityofcase-endings		VERB
+quare,adv.-wherefore	quare,adv.-wherefor	ADJ
+quasi	quasi	SCONJ
+quasi,adv.-as		VERB
+que	que	CCONJ
+queen	queen	ADV
+queenof	queenofs	NOUN
+quemsimul	quemsimul	ADV
+quen	quen	NOUN
+quequietem	quequies	NOUN
+quereditum	quereditus	NOUN
+qui-	qui-	PRON
+quia	quia	SCONJ
+quibuscum	quibuscum	ADV
+quickl	quickl	DET
+quid-who	quid-who	NOUN
+quidemconiugis	quidemconiugo	NOUN
+quidemrequiescere	quidemrequiesco	VERB
+quidquam-anyone	quidquam-anyo	NOUN
+quidquid	quidquid	DET
+quidquid-whoever	quidquid-whoever	NOUN
+quiet	quio	VERB
+quietis,/.—rest,quiet	quietis,/.—rest,quio	VERB
+quinium	quinius	NOUN
+quiquepiivatesetPhoebodignalocuti	quiquepiivatesetphoebodignalocuo	VERB
+quiquesacerdotescasti	quiquesacerdotescastis	VERB
+quiquesuimemores	quiquesuimemor	NOUN
+quis,—quis	quis,—qui	DET
+quiunt	quio	VERB
+qul	qul	ADV
+quo,adv.-whither	quo,adv.-whitheranus	NOUN
+quoRomaniiterfaceresolebant	quoromaniiterfaceresolo	VERB
+quocum	quocum	ADV
+quod,conj.-because	qhuod,conj.-becausa	ADV
+quod-who,which	quod-who,which	SCONJ
+quodpueripigrilitterasnonbenerecitant		VERB
+quonda	quonda	ADJ
+quoque,adv.-also	quoque,adv.-alsus	ADV
+quoque—aut	quoque—aut	CCONJ
+quoscriberesolebat	quoscriberesolo	VERB
+quotiensCyclopumeffervereinagros	quotienscyclopumeffervereinager	ADJ
+r		ADP
+r		CCONJ
+r		INTJ
+r	hr	ADP
+r	hr	INTJ
+r	r	ADP
+r	r	ADV
+r	r	CCONJ
+r	r	INTJ
+r	r	NOUN
+r	re	ADP
+r	re	INTJ
+r	ries	ADP
+r	ries	INTJ
+r	rm	ADP
+r	rt	ADP
+r	rt	CCONJ
+r	rx	ADP
+r	rx	CCONJ
+r,-oris,m.-	r,-oris,m.-us	NOUN
+r^	r^	NOUN
+ra	ra	ADP
+ra	ra	INTJ
+ra	ra	NOUN
+rac	rac	NOUN
+race	raca	NOUN
+raight,right	raight,rights	NOUN
+rain	rais	NOUN
+rain,shower	rain,shower	NOUN
+ram	ro	NOUN
+ramp	ramps	NOUN
+rampart	rampart	NOUN
+ramus,-—i,m	ramus,-—i,m	VERB
+rap-		VERB
+rapido	rapidus	ADJ
+rapidum	rapidus	ADJ
+rapidus	rapidus	ADJ
+rapto,1	rapto,1	NOUN
+rassy	rassy	NOUN
+rat	ro	VERB
+rates	ratis	NOUN
+ratetamfragiliperfidarupit	ratetamfragiliperfidarumpo	VERB
+rather	rather	NOUN
+rave	rauus	NOUN
+re-	re-	ADV
+re-	re-	NOUN
+re-	re-o	VERB
+reached	reached	ADJ
+reachery	reachery	NOUN
+read	reads	NOUN
+readaloud		NOUN
+reader	reader	VERB
+reading	reading	NOUN
+ready	readys	VERB
+real	real	VERB
+realise	realise	ADV
+realize	realize	VERB
+reason	reason	NOUN
+rebusdictis	rebusdicta	NOUN
+received	received	VERB
+receivedhimback	reaceivedhimback	VERB
+recharged	recharged	ADJ
+recharges	recharges	VERB
+recite	reco	VERB
+recognize	recognize	VERB
+reconditus-sequestered	reconditus-sequestered	VERB
+rectum-I	rectum-i	NOUN
+rectum-Irule	rectum-irulus	ADJ
+recturi		VERB
+recum	requus	NOUN
+recumbentibus-magna	recumbentibus-magnus	ADJ
+red	redo	ADP
+red	redo	ADV
+redditum-I	redditum-i	VERB
+reddo-I		VERB
+reddo-Ireturnthanks	reddo-ireturnthanks	NOUN
+redeo,-ire,-ivi(-ii),-itum-Igo	redeo,-ire,-ivi(-ii),-itum-igo	ADV
+reduco,3,-duxi,-ductum	reduco,3,-duxi,-duco	VERB
+reflexivepro	reflexivepro	NOUN
+refuse	refundo	VERB
+regia,-ae,/.	regia,-ae,/.s	ADJ
+regidnibus	regidn	NOUN
+region	region	NOUN
+regnaturum	regnaio	VERB
+regnum,-i,n.—kingdom,ruling		NOUN
+rego,3,rexi,rect	rego,3,rexi,recto	ADV
+regular	regular	ADJ
+rei,/.	rei,/.s	NOUN
+rejoice	rejoicio	ADV
+relation	relation	NOUN
+relax	relax	NOUN
+relevare	relevo	VERB
+relevaret	releuo	VERB
+relevo	releuo	NOUN
+reliquiae	reliquiae	NOUN
+reliquias	reliquiae	NOUN
+rely	rely	VERB
+remain	remais	NOUN
+rembeneger	rembeneger	ADJ
+remmiram	remmira	NOUN
+remoti	remoueo	VERB
+remove	remoueo	VERB
+removeret	remoueo	VERB
+render	render	VERB
+renewed	renewed	VERB
+rent	ro	VERB
+repl		VERB
+repor	repor	NOUN
+reproduction	reproduction	NOUN
+republic	republic	ADV
+repute	repus	VERB
+res,rei,f.—thing,matter,busi	res,rei,f.—thing,matter,busus	VERB
+resbene	resbene	ADJ
+resisto,3,-stiti-Iresist(governs	resisto,3,-stiti-iresist(governs	VERB
+respondeo,2,-di	respondeo,2,-dis	VERB
+respondeo,2,-di,-sum-Ireply		VERB
+rest,quiet	rest,quio	VERB
+restore	restor	NOUN
+restricted	restricted	VERB
+ret	ro	VERB
+retrd		VERB
+retreat	retreo	VERB
+return		VERB
+return,fromredeo	return,fromredeo	VERB
+returnthanks	returnthanks	NOUN
+reversa	reuertor	VERB
+reversi	reuertor	VERB
+reversus	reuertor	VERB
+reverteris	reuertor	VERB
+reverterunt	reuerto	VERB
+reverti	reuertor	VERB
+revertit	reuerto	VERB
+rex,regis	rex,rex	NOUN
+rexiraettimorevehe-	rexiraettimorevehe-	NOUN
+rexsensit	rexsengeo	VERB
+rg	rg	VERB
+ri	ris	NOUN
+ri	ris	VERB
+riage	riages	NOUN
+riage	riages	VERB
+rich		NOUN
+riches	richeo	ADJ
+riches	riches	ADJ
+right	rights	NOUN
+righten	rightes	NOUN
+rightful		VERB
+ripa,-ae	ripa,-ae	NOUN
+ripamtulit	ripamfero	VERB
+ripui	ripio	VERB
+ris	ra	NOUN
+riv	rivs	NOUN
+rivalofCaesar	rivalofcaesar	INTJ
+river	riuo	NOUN
+riverTiber	rivertiber	ADJ
+rk	rk	NOUN
+rl	rl	ADJ
+rl	rl	NOUN
+rm	rm	ADV
+rn	rn	ADP
+rn.p—i	rn.p—iaeus	DET
+rning	rning	NOUN
+ro		ADP
+ro	ro	ADP
+ro	rom	NOUN
+ro	rot	ADP
+ro-	ro-	VERB
+road	raoad	NOUN
+road	road	VERB
+road,the	road,the	NOUN
+rock	rocks	NOUN
+rogo,1	rogo,1	NOUN
+rooc		VERB
+rophon	rophon	NOUN
+rosae	rosus	NOUN
+rose	rodo	ADV
+rotun-	rotun-	PRON
+round	round	NOUN
+round	roundus	NOUN
+round,surround	round,surroundus	ADJ
+roup	roup	NOUN
+routed,fromfundo	routed,fromfo	VERB
+row	row	NOUN
+rpheus	rpheus	NOUN
+rry	rryus	ADJ
+rt	rt	PRON
+rtce	rtces	VERB
+rt—is	rt—us	ADJ
+ru	hrus	NOUN
+ru	ru	NOUN
+rubrae	rubrus	ADJ
+ruin	ruin	NOUN
+ruina,-a	ruina,-a	PRON
+rule	rula	NOUN
+rules	rulis	ADJ
+rum	s	DET
+runt	ro	VERB
+ruo,3,ru	ruo,3,rus	ADP
+rupes,-i		NOUN
+ruptum-I	ruptum-i	ADP
+rureplacido	rureplacidus	VERB
+ruris,n	ruris,n	NOUN
+rush	rush	ADJ
+rust,dark	rust,dark	NOUN
+rustic	rustic	ADV
+rutum	rutus	VERB
+rutum-Irush	rutum-irush	VERB
+rv	rv	ADP
+rx	rx	ADV
+ry	ry	ADP
+ry	ry	INTJ
+r—bo	r—boo	VERB
+s		ADJ
+s		ADV
+s		INTJ
+s	essasticus	ADJ
+s	s	ADJ
+s	s	ADV
+s	s	CCONJ
+s	s	INTJ
+s	s	PART
+s	sicus	ADJ
+s	sies	ADJ
+s	sinthius	ADJ
+s,-i		ADJ
+s5lum	s5lus	NOUN
+s5lus	s5lus	ADJ
+sSnex	ssnex	NOUN
+s^ocavit	s^oco	VERB
+sa	sa	INTJ
+sa	sa	NOUN
+sa,-ae,/.	sa,-ae,/.s	NOUN
+sac	sac	NOUN
+sacer	sacer	ADJ
+sacer-	sacer-	ADV
+sacerdos	sacerdos	NOUN
+sacerrimae	sacerrimus	ADJ
+sacerrimaputabatur	sacerrimaputo	VERB
+sacri	sacer	ADJ
+sad	sado	VERB
+saevds		ADJ
+saevi	saeuio	ADJ
+saevostimebunt	saevostimeo	VERB
+saevum	saeuus	ADJ
+safe	safe	NOUN
+safety	safetys	NOUN
+sagitta	sagitta	NOUN
+sagittam	sagitta	NOUN
+sagittas	sagitta	NOUN
+sagittis	sagitta	NOUN
+said	said	NOUN
+saidhe	saidhus	NOUN
+saidthey	saidthey	NOUN
+sail	sail	NOUN
+sailed	sailed	NOUN
+sailingorriding	sailingorriding	NOUN
+sailor	sailor	NOUN
+sake	sake	ADV
+salian	salian	NOUN
+saltus,-us,m.—uplandpasture	saltus,-us,m.—uplandpasturis	ADV
+saltuumquereconditorum	saltuumquereconditor	ADJ
+salube	salubes	VERB
+saluber	saluber	ADJ
+salubriores	salubrus	ADJ
+salus	salus	NOUN
+salut	salut	VERB
+salutas	saluto	VERB
+salutatus	saluto	VERB
+salutavit	saluto	VERB
+salutem	salus	NOUN
+saluti	salus	NOUN
+saluto	saluto	VERB
+saluto,1-Igreet	saluto,1-igreet	VERB
+same	sames	NOUN
+sang	sangius	NOUN
+sanguinepldcastisventosetvirginecaesd	sanguinepldcastisventosetvirginecaesd	NOUN
+sant	so	VERB
+sapie	sapie	NOUN
+sapiens	sapiens	ADJ
+sapiens	sapiens	NOUN
+sapiens,-ntis-wise	sapiens,-ntis-wise	ADJ
+sapientem	sapio	NOUN
+sapienti	sapio	NOUN
+sapientior	sapient	ADJ
+sapientissimus	sapientus	ADJ
+satis	satis	ADJ
+satis	satis	ADV
+savage	savages	ADJ
+savage	savages	ADV
+savage	savages	VERB
+saved	saveds	ADJ
+sax	sax	NOUN
+say	say	NOUN
+scatter	scatter	NOUN
+scelerata	scelero	ADJ
+sceleratam	scelero	ADJ
+scelera—tus	scelera—tus	NOUN
+school	school	NOUN
+scio,4-Iknow	scio,4-iknow	ADJ
+scip	scips	VERB
+scold	scoldiculus	NOUN
+scri-	scri-	VERB
+scriptor,-oris,m.—writer	scriptor,-oris,m.—writer	ADV
+scriptum-I	scriptum-i	VERB
+scutanec		NOUN
+sd	sd	ADP
+sdlum	sdlum	NOUN
+sdlum	sdlus	NOUN
+sea	seus	NOUN
+seashore	seashoro	NOUN
+seat	seo	VERB
+sec	sec	ADV
+second	second	VERB
+seconferunt	seconfero	VERB
+secretly	secretly	NOUN
+sectum-I	sectum-i	ADP
+secundls	secundls	ADV
+sed,conj.-but	sed,conj.-but	NOUN
+sedBacchumquo	sedbacchumquus	NOUN
+sedCiceronis	sedcicero	NOUN
+sedTiberinus	sedtiberinus	ADJ
+sedadlonginquasterrasnavigabat,aliisquegentibus	sedadlonginquasterrasnavigabat,aliisquego	VERB
+sedeo,2		VERB
+sedeo,2	sedeo,2	VERB
+sedi	seds	NOUN
+sedi,sessum-Isit		VERB
+sedignaviam	sedignavia	VERB
+sedlaetus	sedlaetus	ADJ
+sednon	sednon	PART
+sedperson	sedperson	NOUN
+sedrisit	sedrideo	VERB
+sedrubrae	sedrubra	ADJ
+sedtandem	sedtans	ADV
+sedubi	sedubi	ADV
+see	see	ADJ
+seek	seeks	NOUN
+seems	seemse	NOUN
+seize	seizes	VERB
+selibenter	selibenter	ADV
+semel,adv.—once	semel,adv.—once	VERB
+sempermemoriatenebitis	sempermemoriatenebo	VERB
+sempiternus,-a,-um-everlast		CCONJ
+send		VERB
+send	sendt	VERB
+sendback		NOUN
+sendback		VERB
+sennae	sennus	ADJ
+sensi,sensum—Ifeel	sensi,sensum—ifeel	ADP
+sententia,-ae,f.-opinion	sententia,-ae,f.-opinion	NOUN
+sentinel	sentinelo	VERB
+sentio,4,sensi,sensum-Ifeel	seantio,4,sensi,sensum-ifeel	VERB
+separately	separately	VERB
+sepelio,4,-ivi,-pultum-Ibury		VERB
+septemqueunasiblmurocircumdeditarces	septemqueunasiblmurocircumdeditarx	VERB
+sepultusest	sepultussum	VERB
+ser	sericulus	NOUN
+serd	serd	NOUN
+sereniintermittuntur	sereniintermitto	VERB
+serious	serious	NOUN
+sero,adv.-late	sero,adv.-lo	VERB
+servabit	seruo	VERB
+servatum	seruo	VERB
+servaturum	seruo	VERB
+servds		VERB
+servi	seruus	NOUN
+serviloco	servilocus	NOUN
+servis	seruus	NOUN
+servitutem	seruitus	NOUN
+servorum	seruus	NOUN
+servos	seruus	NOUN
+servus,-i,to	servus,-i,tus	ADJ
+setfireto	setfireto	NOUN
+setout	setout	SCONJ
+seven	seve	NOUN
+se―himself		NOUN
+shade	shado	VERB
+shadow		NOUN
+shadow	shadowm	NOUN
+shallhearthyfame	shallhearthyfames	NOUN
+shallvextheemore	shallvextheemor	NOUN
+shameless		ADJ
+sharply		NOUN
+she	she	ADP
+shelter	shelter	NOUN
+shew		VERB
+shewing		NOUN
+shewingthat	shewingtho	VERB
+shining		NOUN
+shining	sahining	NOUN
+ship		VERB
+ship	ships	VERB
+shore	shores	NOUN
+should	should	NOUN
+should	should	VERB
+shout	shout	NOUN
+shownhim,restoredAlcestistobereavedAdmetus	shownhim,restoredalcestistobereavedadmeo	VERB
+shrill	shrill	NOUN
+si	si	SCONJ
+sibi	sui	PRON
+sic	sic	ADV
+sicuttenuesumbrae	sicuttenuesumbra	ADJ
+sider	sider	NOUN
+sidionemparate	sidionemparo	VERB
+signadabant	signado	VERB
+sil	sil	NOUN
+silentium,-i,n.—silence		NOUN
+silio	silium	NOUN
+silvarum	silua	NOUN
+silvarumquevirentium	silvarumquevireo	VERB
+silvas	silua	NOUN
+silver		NOUN
+silvis	silua	NOUN
+simae	simus	ADJ
+simillima	simillimus	ADJ
+simplest	simplest	VERB
+simul	simul	ADV
+simulac	simulac	NOUN
+simulac-assoonas	simulac-assoona	NOUN
+simulacrum,-i,n	simulacrum,-i,n	NOUN
+simul—atthesametime	simul—atthesametimus	ADV
+sin,conj.-butif		VERB
+sinceto-day	sinceto-day	NOUN
+sine,prep.gov.abl.—without	sine,prep.gov.abl.—without	ADJ
+sinetestibusillis	sinetestibusillus	NOUN
+singular	singular	ADJ
+singulis	singulus	ADJ
+singulus	singulus	ADJ
+sion	sion	VERB
+sister	siste	NOUN
+sitim-thirst		PRON
+sitive	sitive	ADV
+sium	sium	NOUN
+sixteen	sixteen	NOUN
+si—ck	sic—ck	NOUN
+sky	sky	ADV
+slav		NOUN
+slay	slayus	NOUN
+sleep	sleep	NOUN
+slew	slew	NOUN
+slip	slip	ADJ
+small		NOUN
+small	small	ADP
+small	small	VERB
+smile	smilis	ADJ
+smiling	smiling	ADP
+snow		ADJ
+snowneverfall	snowneverfall	VERB
+so	so	INTJ
+so	so	NOUN
+so	so	VERB
+so,thus	so,thus	NOUN
+soUicitus	souicitus	NOUN
+solbcitis	solbcitus	VERB
+solbcitl	solbcitl	ADJ
+solbcito	solbcio	ADJ
+soldier	soldo	VERB
+solemdiem	solemdies	NOUN
+solemquisdicerefalsum	solemquisdicerefaldo	VERB
+sollicitds	sollicitds	ADJ
+sollicitis,sedetiam	sollicitis,sedetia	NOUN
+soluminGraecia	solumingraecia	NOUN
+somany	somany	VERB
+some	somus	NOUN
+some	somus	VERB
+someone	someo	NOUN
+sometimes	sometimeo	VERB
+sometimes	sometimo	VERB
+somnd	somnd	ADJ
+son	son	ADV
+son	son	NOUN
+sonans,-antis-sounding(sono	sonans,-antis-sounding(sono	VERB
+sonofAeneas	sonofaeneus	VERB
+soon	soon	NOUN
+soothe	soothe	NOUN
+soothe,stroke		VERB
+sordidus,-a,-um	sordidus,-a,-um	NOUN
+sort		VERB
+souls	souls	VERB
+sound	soundo	VERB
+sound	soundus	VERB
+sources	sourx	NOUN
+sp	spe	ADJ
+spare(governsadat	spare(governsado	VERB
+spatio	spatium	NOUN
+spatium,-i,n.—space	spatium,-i,n.—spax	ADV
+speCarthaginemcontendit	specarthaginemcontendi	VERB
+spear	speo	VERB
+specially	speciallyo	VERB
+spei,/.	spei,/.s	NOUN
+spelling	spelling	NOUN
+spes,spei,/.	spes,spei,/.s	NOUN
+spflmosas	spflmosus	ADJ
+spiratinustameo	spiratinustameus	ADJ
+spirits		NOUN
+spirits,godsofthedead	spirits,godsofthedeads	NOUN
+splendid	splendid	ADJ
+splendid	splendid	NOUN
+spoil	spoil	ADV
+spread	spreads	NOUN
+spreadoutflat	spreadoutflo	VERB
+spring	spring	NOUN
+spumdsisnatavit	spumdsisnato	VERB
+spumosas	spumosus	ADJ
+spumosis	spumosus	ADJ
+spumosum	spumosus	ADJ
+spumosus	spumosus	ADJ
+ss	ssaestio	NOUN
+ssum-I	ssum-i	VERB
+st	st	CCONJ
+st	ste	CCONJ
+st	stt	CCONJ
+st(governs		VERB
+stabant,neciamaquaefrigidaeadpontumfluebant	stabant,neciamaquaefrigidaeadpontumfluo	VERB
+stage	stage	INTJ
+stages	stago	VERB
+stand		VERB
+stand	standus	VERB
+statim	statim	ADV
+statua	statua	NOUN
+statua,-ae,f.-statue	statua,-ae,f.-statueo	VERB
+statuam	statua	NOUN
+statum—Istand	statum—istandus	ADJ
+steUas	steuas	NOUN
+steadfast	steadfasticus	NOUN
+steal	steal	NOUN
+stealthily	stealthily	NOUN
+steer	steer	VERB
+stellasrogabat	stellasrogo	VERB
+stellation	stellation	NOUN
+step	step	PRON
+steppingstoneonthewaytothe	steppingstoneonthewaytothe	NOUN
+sterno,3,stravi	sterno,3,stro	VERB
+sterslainbyBellerophon	sterslainbybellerophon	NOUN
+sti	stus	NOUN
+stick	stick	VERB
+stick,cling	stick,cling	NOUN
+still,yet		DET
+stilus,-i,m.-pen	stilus,-i,m.-pe	NOUN
+stituerunt		VERB
+stle	stle	NOUN
+stories	stories	NOUN
+storm	storm	VERB
+story		NOUN
+str	str	NOUN
+stranger	stranger	NOUN
+stratae	stratus	VERB
+stratas	stror	VERB
+stratum—Ilay	stratum—ilay	NOUN
+stratus,-a,-um-laidflat,from	stratus,-a,-um-laidflat,fromensis	VERB
+strength		ADJ
+stretch		VERB
+stringo-Idrawmysword		NOUN
+strong	strongs	NOUN
+strum	strus	ADJ
+studium,-i,n.—zeal,eagerness	studium,-i,n.—zeal,eagerness	NOUN
+study	study	VERB
+stultds	stultds	ADJ
+stultus,-a,-um,-foolish		VERB
+style	style	NOUN
+st—r		NOUN
+su	su	ADP
+su	su	INTJ
+su5		DET
+suasideranorunt		VERB
+suavissime	suauissimus	ADJ
+suavissime	suauissimus	ADV
+sub,prep	sub,prep	PART
+subdue	subduo	VERB
+subiectae-amiciores	subiectae-amicior	NOUN
+subiiciebant	subiicio	VERB
+subiicio	subiicio	VERB
+subitd		VERB
+subject	subject	PART
+subject	subject	VERB
+subjunctive	subiunctiuus	ADV
+sublatas	subfero	VERB
+sublatum-I	sublatum-i	ADV
+subvenire	subuenio	VERB
+subveniret	subuenio	VERB
+subvenisse	subuenio	VERB
+subvenisti,nunquam	subvenisti,nunqua	SCONJ
+subventuri	subventurus	VERB
+suc	suc	NOUN
+succeed		VERB
+successful	successful	VERB
+such	such	ADJ
+suddenly	suddenly	NOUN
+suggestinganegativeanswer		CCONJ
+suggestions	suggestions	NOUN
+suimortemtimebat	suimortemtimeo	VERB
+suis	sui	PRON
+sultum-I		NOUN
+sultyou	sultyou	ADV
+sultyourinterests	sultyourinterests	NOUN
+sum-I	sum-i	ADP
+sum-I	sum-i	ADV
+sum-I	sum-i	DET
+sum-Idare	sum-ido	VERB
+summd		ADJ
+summisviribus	summisviris	ADJ
+summum	summum	ADJ
+summus,-a,-um-highest,very		NOUN
+sumptum—I	sumptum—i	VERB
+suntMusarum	suntmusa	NOUN
+suntvobis	suntvos	PRON
+super-	super-	ADP
+supper	supper	ADV
+supply	supply	NOUN
+sur-	sur-	ADV
+surround	surroundus	ADJ
+susceptible	susceptible	ADJ
+sustain,holdup		NOUN
+suu	suut	PRON
+suus,-a,-um-his,etc.(reflexive	suus,-a,-um-his,etc.(reflexiue	VERB
+sw	sw	ADP
+sweet	sweo	VERB
+sword	sword	NOUN
+sy	sy	NOUN
+s—he,it		NOUN
+s—t	s—tus	NOUN
+t		ADP
+t		INTJ
+t		VERB
+t	ht	INTJ
+t	hts	ADP
+t	hts	ADV
+t	hts	INTJ
+t	t	ADP
+t	t	INTJ
+t	te	INTJ
+t	tidie	INTJ
+t	ties	ADP
+t	ties	ADV
+t	ties	INTJ
+t	tm	ADP
+t	tm	ADV
+t	tm	INTJ
+t	tm	NOUN
+t	tnte	INTJ
+t	to	VERB
+t	ts	ADP
+t	ts	CCONJ
+t	ts	INTJ
+t	ts	NOUN
+t	tt	ADP
+t	tt	ADV
+t	tt	INTJ
+t	tx	INTJ
+ta	tus	DET
+table	table	NOUN
+tablet	tablo	VERB
+tabula	tabula	NOUN
+tabulae	tabula	NOUN
+tabulas	tabula	NOUN
+tabulis	tabula	NOUN
+taciti	tacitus	ADJ
+tacitus	taceo	ADJ
+tackle	tackle	NOUN
+tackled	tackled	ADV
+take	take	ADV
+take,seize	take,seizes	ADV
+takeback,recover(re-capio	takeback,recover(re-capio	VERB
+taken	taken	ADV
+takento	takentus	NOUN
+takeover	takeover	ADJ
+takes	takes	NOUN
+takes	taks	NOUN
+tamdiu-so		NOUN
+tamen	tamen	ADV
+tamenflavae	tamenflavae	ADV
+tamquam-asthough	tamquam-asthough	NOUN
+tandem,adv.-atlast	tandem,adv.-atlus	NOUN
+tandempellem	tandempellis	NOUN
+tantus,-a,-um-sogreat	tantus,-a,-um-sogreo	VERB
+tarent	to	VERB
+tarn		ADJ
+tarn		ADV
+taunt	tao	VERB
+taverunt	to	VERB
+tavit	to	VERB
+tc	tc	ADP
+tdta	tdtus	ADJ
+tdtam	tdtus	ADJ
+tdtum	tdtus	ADJ
+tdtum	tdtus	VERB
+teach		NOUN
+teacher	teacher	ADJ
+teacher	teacher	NOUN
+tear	teo	VERB
+tec	teque	DET
+tectum-I	tectum-i	NOUN
+tego,3	tego,3	NOUN
+tellusquo	tellusquus	NOUN
+tem	to	NOUN
+temple	templem	NOUN
+templumtuum	templumtuum	NOUN
+temporequamquam	temporequamquus	NOUN
+temsentirentnonstatimaggressurumesse,primum		ADJ
+ten	ten	VERB
+tender	tender	VERB
+tenderunt		VERB
+tene-	tene-	VERB
+tenebras	tenebra	NOUN
+tenebrdsam	tenebrdndo	VERB
+tenses	tensis	NOUN
+tent	to	VERB
+tentum	teno	NOUN
+tentum-I	tentum-i	ADV
+tentum-I	tentum-i	NOUN
+tenuis,-e-thin	tenuis,-e-thin	NOUN
+tenuissimos	tenuissimus	ADJ
+ternal	ternal	NOUN
+ternpla	ternplus	ADJ
+terrasquesuaspostterga	terrasquesuaspostterga	NOUN
+terribilis,-e-terrible	terribilis,-e-terrible	NOUN
+terribill	terribill	NOUN
+terrible	terrible	NOUN
+tex-	tex-	NOUN
+texi,tectum	texi,tectum	NOUN
+texi—,tectum	texi—,tectum	NOUN
+th	ths	NOUN
+than	thans	NOUN
+than	thas	NOUN
+than,how	than,huw	ADJ
+thanGreek,butlesssothanPersian	thangreek,butlesssothanpersias	NOUN
+thank	thanks	NOUN
+thanks		NOUN
+that	tho	VERB
+thatRomemeanstous	thatromemeanstous	NOUN
+thatblestlifeiswon	thatblestlifeiswons	NOUN
+thatneverfade	thatneverfades	VERB
+the	the	ADJ
+the	the	ADV
+the	the	NOUN
+the	this	ADJ
+the	this	ADV
+the	this	NOUN
+the	thus	ADJ
+the	thus	ADV
+the	thus	NOUN
+theChimaera	thechimaer	NOUN
+theGreat	thegreo	VERB
+theGreekAnthology	thegreekanthology	NOUN
+theNine	theno	NOUN
+theTiber	thetiber	NOUN
+theUnderworld	theunderworldium	NOUN
+theanswer	theanswer	NOUN
+thebosom	thebosom	NOUN
+thebosom,anyfoldorcurve	thebosom,anyfoldorcurve	NOUN
+theclass	theclass	NOUN
+thecountry		NOUN
+thecupheldbyCroesus	thecupheldbycroesus	ADJ
+thedeeptherelay		NOUN
+thedemonstrativestowardstheend	thedemonstrativestowardstheendum	ADJ
+thefamoushistory		NOUN
+thefirstRoman	thefirstromans	NOUN
+thefriendlylist	thefriendlylist	NOUN
+thegodofsleep	thegodofsleep	VERB
+thegodofthe	thegodofthe	NOUN
+thegods		VERB
+theground,andkissed	theground,andkissed	ADJ
+thehearth	thehearths	NOUN
+thehighestofthesevenhills	thehighestofthesevenhills	NOUN
+their	their	NOUN
+theirfellowmen	theirfellowmen	NOUN
+them	the	NOUN
+themain	themain	NOUN
+themusic	themusic	NOUN
+then	then	NOUN
+thepass	thepass	NOUN
+thepeople	thepeoples	NOUN
+theportforGreece	theportforgreecem	ADV
+thequestionexpectstheanswer		NOUN
+ther	ther	NOUN
+there	theo	VERB
+therefore	therefor	NOUN
+therest	thersum	VERB
+therest-	therest-	ADJ
+therhythm		NOUN
+theright	theright	NOUN
+thesame	thesames	NOUN
+these	thesis	NOUN
+thesecaneasilybeexplained		NOUN
+thesun	thesun	NOUN
+thevan		NOUN
+thewinds		NOUN
+they	they	INTJ
+they	they	NOUN
+theyarenotdead	htheyarenotdeads	NOUN
+thily		VERB
+thin		NOUN
+thing	thing	NOUN
+thing,affair	thing,affair	INTJ
+third		NOUN
+third	thirds	NOUN
+this	thus	ADJ
+thispointonwardsthemarkingoflongsyllablesin		NOUN
+thither	thither	ADJ
+those	those	ADJ
+thosewhofought	thosewhofoughts	NOUN
+thou	thous	NOUN
+though		NOUN
+thought	thought	NOUN
+thousand	thousand	NOUN
+thousand	thousandus	ADV
+threaten	threates	NOUN
+three	three	NOUN
+three-hundredth	three-hundredthius	VERB
+through		NOUN
+through	through	NOUN
+throughages		NOUN
+throughtheworld	throughtheworlds	NOUN
+throw		NOUN
+throw		VERB
+throwforward		NOUN
+thus	thus	NOUN
+thy,your		NOUN
+ti	ti	ADV
+ti	ti	NOUN
+tiaho,3,traxi,tractum	tiaho,3,traxi,tractus	VERB
+tibi-partoftu		VERB
+tibiconsulo—Icon	tibiconsulo—icon	NOUN
+tibiinfero	tibiinfer	VERB
+tibiobviameo-Igotomeet		VERB
+ticeof	ticeofs	NOUN
+tieth	tieth	NOUN
+tieth	tieth	VERB
+tif		ADV
+tile	tilis	NOUN
+tima-scashore	tima-scashor	NOUN
+timam	timus	ADJ
+timbre	timbris	NOUN
+timdris	timder	VERB
+time,generation	time,generation	NOUN
+time-		ADV
+timeManlius	timemanlus	ADJ
+timeo,2,-ui-Ifear	timeo,2,-ui-ifeor	VERB
+timeoDanaosetdotMferentes	timeodanaosetdotmfereo	VERB
+timid	timid	ADJ
+tinued	tinued	VERB
+tio	tio	NOUN
+tion	tion	NOUN
+tion	tion	VERB
+tipa	tipa	NOUN
+tired	tired	NOUN
+tis	tus	NOUN
+tis	tus	VERB
+tius	tus	ADV
+tivesing	tivesings	NOUN
+tiz	tiz	VERB
+to	to	ADP
+to	to	INTJ
+to	tos	ADP
+to	tos	ADV
+to	tos	INTJ
+to	tos	NOUN
+to	tos	PRON
+to	tus	NOUN
+to-day	to-day	ADV
+to.—traveller	to.—travellor	NOUN
+toDiana	todian	ADJ
+toMars,themonthofMarch	tomars,themonthofmarchs	NOUN
+toVesta	tovestus	ADJ
+toZeus	tozeus	NOUN
+toamother	tuoamother	VERB
+toduedate	toduedo	VERB
+toflight		VERB
+tog	togs	NOUN
+tog	togs	VERB
+together	together	NOUN
+togo,from	togo,fromaeus	ADJ
+toil	toil	NOUN
+tol	tol	NOUN
+tolio	tolium	NOUN
+tolium	tolium	NOUN
+tonsum	tonsum	VERB
+tookthehelmetoff	tookthehelmetoffs	ADV
+toomuch	toomuch	ADJ
+tor	tor	NOUN
+torch	torchs	NOUN
+tortor	tortor	NOUN
+tortorpardret	tortorpardro	VERB
+torturer	torturo	VERB
+toss	tossensis	NOUN
+totadomuscoepitnunconusessetuum	totadomuscoepitnunconusessetuus	ADJ
+tothesea	totheseus	ADJ
+totiamIdbentibusannis	totiamidbentibusannum	NOUN
+toward		NOUN
+towards		NOUN
+towardstheend		NOUN
+towinter	towinter	ADV
+town		NOUN
+town	town	NOUN
+townwalls	townwalls	NOUN
+tr	tr	NOUN
+tr	trarchia	NOUN
+tr	trus	NOUN
+tra	tra	ADP
+tra	tra	ADV
+trace	traca	VERB
+tractum-I	tractum-i	ADP
+traditum-I		VERB
+trado,3,-idi,-itum	trado,3,-idi,-o	VERB
+trahere	traho	VERB
+traho	traho	VERB
+traho,3,traxi,tractum	traho,3,traxi,tractum	NOUN
+translatedby		VERB
+translation	translatium	VERB
+traxerunt	traho	VERB
+traxi	traho	VERB
+treacherous	treacherous	ADJ
+treachery	treachery	NOUN
+trecentensimo	trecentensimus	ADJ
+trecentensimus	trecententio	VERB
+trema	tremus	ADJ
+tremble	tremble	NOUN
+trembling	trembling	NOUN
+tres,tria-three		PART
+tribusante	tribuso	VERB
+trict	trict	VERB
+trictofItaly	trictofitaly	CCONJ
+tristis,-e		ADJ
+tristissima	tristissimus	ADJ
+troops	troops	NOUN
+trouble	trouble	NOUN
+trust	trust	VERB
+trusty	trusty	VERB
+try	tryicus	ADJ
+tr—abis,/.	tr—abis,/.	ADP
+tt		VERB
+tt	ttus	ADJ
+tter,busi	tter,budo	VERB
+ttle	ttle	NOUN
+tu-thou	tu-thous	VERB
+tuapatriateauxilium	tuapatriateauxilium	NOUN
+tuhodie	tuhodie	ADV
+tulit-fromfero	tulit-fromfero	VERB
+tum,adv.-then	tum,adv.-the	NOUN
+tum-I	tum-i	ADV
+tumIuppiter	tupmiuppiter	PART
+tumul	tumulo	NOUN
+tumultuosis	tumultuosus	ADJ
+tumultuosos	tumultuosus	ADJ
+tumultuosus	tumultuosus	ADJ
+tumultuous	tumultuous	ADJ
+tumultus,-us,m.-tumult	tumultus,-us,m.-tumult	NOUN
+tumulus,-i,m.-mound,grave		NOUN
+tunciacetunda	tunciacetundus	ADJ
+tunic		NOUN
+tunoninurbetuamanebis	tunoninurbetuamaneo	NOUN
+tuorumadpacem	tuorumadpax	NOUN
+tuosis	tuosus	DET
+tur	tur	CCONJ
+turbaferenda	turbafero	VERB
+turegereimperiopopulos	turegereimperiopopulus	NOUN
+turmsofhorseandwings		NOUN
+turn		ADJ
+turn		NOUN
+turn		PRON
+turn		VERB
+turn	turne	VERB
+turn,cha	turn,ches	DET
+turn,change	turn,chango	VERB
+turosesse	turossum	VERB
+turus	turus	VERB
+tus	tus	DET
+tutus,-a,-um-safe	tutus,-a,-um-safe	ADJ
+tuus,-a,-um	tuus,-a,-um	NOUN
+tuus,-a,-um-thy,your(sing	tuus,-a,-um-thy,your(sings	NOUN
+tuvinculisliberaberis	tuvinculisliberabo	VERB
+twe	twe	ADV
+twelve	twelv	NOUN
+twins		VERB
+two	twos	ADV
+t—ell		VERB
+t—ine	th—ina	NOUN
+t—is		ADJ
+t—o		VERB
+t—o	t—o	VERB
+t—ree	t—ree	NOUN
+u		INTJ
+u		SCONJ
+u	hu	INTJ
+u	u	ADP
+u	u	ADV
+u	u	CCONJ
+u	u	INTJ
+u	ue	INTJ
+u	uies	ADP
+ubi,adv.-where	ubi,adv.-whor	VERB
+ubicun		ADV
+ubicun	ubicun	ADV
+ubj	ubj	ADV
+ub—le	ub—le	NOUN
+ue	ue	CCONJ
+ueatn'sdarkshadowfell	ueatn'sdarkshadowfells	VERB
+uest,host	uest,host	ADV
+ug	ugms	NOUN
+ui	uis	NOUN
+ul	ul	ADV
+ultimus,-a,-		VERB
+ultimusregum	ultimusrex	ADJ
+um	hum	NOUN
+um	uam	NOUN
+um	um	NOUN
+um,m.pi	um,m.pix	VERB
+um,prep	um,prepn	ADJ
+um-greatest	um-greatsum	VERB
+um-savage,cruel	um-savage,cruel	CCONJ
+umbraautemmisera	umbraautemmisera	NOUN
+umbraeibanttenuessimuldcraquelucecarentum		VERB
+un	un	ADV
+uncivilized		ADV
+uncle	unclesiastes	NOUN
+unculti	uncultus	ADJ
+unda,-ae,/.	unda,-ae,/.s	NOUN
+unde,adv.-whence	unde,adv.-whenco	VERB
+undls	undls	NOUN
+undus	undus	ADJ
+unedu	unedus	NOUN
+unhappy		VERB
+universally		ADJ
+unknown		ADJ
+unle	unle	NOUN
+unquam,adv.-ever		DET
+unquenched	unquenched	ADJ
+until	until	ADJ
+unwedded		INTJ
+up-	up-s	NOUN
+upon	upon	NOUN
+upon,inflict		VERB
+upto	uptus	VERB
+ur	hur	PRON
+ur	ur	ADV
+ur	ur	INTJ
+urbis,f.-city	urbis,f.-city	ADV
+urbs,urbis,/.—city	urbs,urbis,/.—city	ADV
+urg	urgo	ADP
+urney		NOUN
+us		NOUN
+us	hus	DET
+us	hus	INTJ
+us	hus	NOUN
+us	us	INTJ
+us	us	NOUN
+us,aking	us,aking	ADJ
+used	used	VERB
+usedat	usedo	VERB
+usesoftheSubjunctive	usesofthesubjunctiue	ADV
+utiliores	utilior	ADJ
+utiusserat	utiusso	VERB
+utmortuaeanimam		NOUN
+uttermost	uttermost	VERB
+uvae	uua	NOUN
+uvas	uua	NOUN
+uxdrem	uxdr	NOUN
+uxdribus	uxder	NOUN
+uxor,-oris,f.—wife	uxor,-oris,f.—wifis	VERB
+u—it	u—o	VERB
+u—s		NOUN
+v5ces	u5x	NOUN
+v5s	u5s	VERB
+vabdi	uabdus	ADJ
+vacuas	uacuus	ADJ
+vacuus	uacuus	ADJ
+vadis	uadum	VERB
+vado,-ere	uado,-era	VERB
+vae-woe	uae-woe	INTJ
+vaevictis	uaevictus	VERB
+val	ual	ADV
+vale-good-bye	uale-good-bye	NOUN
+valebat	ualeo	VERB
+valemus	ualeo	VERB
+valere	ualeo	VERB
+valeret	ualeo	VERB
+valet	ualeo	VERB
+valete	ualeo	VERB
+valid	ualid	ADJ
+valid	ualid	NOUN
+valida	ualidus	ADJ
+validds	ualidds	NOUN
+validioribus	ualidior	ADJ
+validis	ualidus	ADJ
+validus	ualidus	ADJ
+valle	uallis	NOUN
+vallem	uallis	NOUN
+vallis,-is,/.	uallis,-is,/.	NOUN
+value	valueo	VERB
+valuerat	ualeo	VERB
+valuit	ualeo	VERB
+variis	uarius	ADJ
+various	uarious	ADJ
+various	uarious	VERB
+varius	uarius	ADJ
+varius	uarius	NOUN
+varius,-a	uarius,-a	NOUN
+vasta-	uasta-	ADV
+vastabat	uasto	VERB
+vastata	uasto	VERB
+vastatis	uasto	VERB
+vasto,1—Idevastate,destroy		VERB
+vated		NOUN
+vds	uds	CCONJ
+ve	ue	CCONJ
+vebementer	uebementer	ADV
+vecta	uecto	VERB
+vecti	uectis	VERB
+vectus	ueho	VERB
+vehe	ueho	VERB
+vehementer,adv.—exceedingly	uehementer,adv.—exceedingly	CCONJ
+vehementeriratus		VERB
+vehementerperterritus	uehementerperterritus	VERB
+vehitur	ueho	VERB
+veho,3,vexi,vectum-Icarry	ueho,3,vexi,vectum-icarry	VERB
+vela	uelum	NOUN
+velit	uolo	VERB
+velle	uolo	VERB
+velle-towish,fromvolo	uelle-towish,fromvolo	VERB
+velocibus	uelox	ADJ
+velocibus	uelox	NOUN
+velociori	uelocior	ADJ
+velocissima	uelocissimus	ADJ
+velociter,adv.-swiftly	uelociter,adv.-swiftly	VERB
+velox,-ocis-swift	uelox,-ocis-swift	VERB
+velum,-i	uelum,-i	NOUN
+venabantur	uenor	VERB
+venabatur	uenor	VERB
+venantur	uenor	VERB
+venari	uenor	VERB
+venatores	uenator	NOUN
+vendebant	uendo	VERB
+vendidi	uendo	VERB
+venditum	uenditus	VERB
+venerant	uenio	VERB
+venerat	uenio	VERB
+venerunt	uenio	VERB
+venia,-ae,f.-favour		DET
+veniam	uenia	NOUN
+veniam	uenia	VERB
+veniebat	uenio	VERB
+venient	uenio	VERB
+venies	uenio	VERB
+venietPluto	uenietplutus	VERB
+venietis	uenio	VERB
+venio,4,veni,vent	uenio,4,veni,veo	VERB
+venio,4,veni,ventum-Icome	uenio,4,veni,ventum-icoma	VERB
+venire	uenio	VERB
+venisse	uenio	VERB
+venisse,bisnavibusvectus	uenisse,bisnavibusvectuss	NOUN
+venisset	uenio	VERB
+venit	uenio	VERB
+vent	ueo	VERB
+venti	uentus	NOUN
+ventis	uentus	NOUN
+vento	uentus	NOUN
+ventos	uentus	NOUN
+ventoscustoditetarcet	uentoscustoditetarcet	VERB
+ventum	uentus	NOUN
+ventum-I	uentum-i	NOUN
+ventus,-i	uentus,-i	NOUN
+vera	uerus	ADJ
+veras	uerus	VERB
+verat	uero	VERB
+verb		VERB
+verb	uerb	VERB
+verb-it		VERB
+verba	uerbum	NOUN
+verbdrumreglnaeimmemor,oculosretroadpuellam	uerbdrumreglnaeimmemor,oculosretroadpuellam	NOUN
+verbis	uerbum	NOUN
+verborum	uerbum	NOUN
+veris	uerum	NOUN
+verotanta	uerotanta	ADJ
+versabantur	uersor	VERB
+versatus	uersus	VERB
+versis	uerro	VERB
+versor,1-Iturnmyselfabout	uersor,1-iturnmyselfabout	VERB
+versor-I		VERB
+versum-I	uersum-i	NOUN
+verteret	uerto	VERB
+verto,3,verti,versum-Iturn		VERB
+verunt		VERB
+verunt	uero	VERB
+very	uery	ADV
+very	uery	NOUN
+very	uery	VERB
+verygreat	uerygreo	VERB
+ves	ues	NOUN
+vespere	uesper	VERB
+vesperubiauthibernusagitdemontibusimber	uesperubiauthibernusagitdemontibusimber	NOUN
+vestibus	uestis	NOUN
+vestimentis	uestimentum	NOUN
+vestimentum,-i,n	uestimentum,-i,n	NOUN
+vestrae	uester	DET
+vestras	uester	DET
+vestris	uester	DET
+vestro	uester	DET
+vestroquaerite	uestroquaerita	VERB
+vetabunt	ueto	VERB
+vex	uex	NOUN
+vexabantur	uexo	VERB
+vexabatur	uexo	VERB
+vexant	uexo	VERB
+vexata	uexo	VERB
+vexatious	uexatious	NOUN
+vexatum	uexo	VERB
+vexavi	uexo	VERB
+vi	uis	NOUN
+via-some	uia-soma	VERB
+viae	uia	NOUN
+viam	uia	NOUN
+viarum	uia	NOUN
+vias	uia	NOUN
+viasRbmanasagricolae	uiasrbmanasagricolus	ADJ
+viatbres	uiatbris	NOUN
+viatorem	uiator	NOUN
+viatores	uiator	NOUN
+vic5s		NOUN
+vicerant	uinco	VERB
+vicerunt	uinco	VERB
+vices	uicis	NOUN
+vices,f.pl.-change,exchange	uices,f.pl.-change,exchangus	VERB
+vicibus,pater	uicibus,pater	NOUN
+vicimus	uinco	VERB
+vicit	uinco	VERB
+vicos	uicus	NOUN
+victdres	uictdris	NOUN
+victim	uictim	NOUN
+victima,-ae,f.-victim	uictima,-ae,f.-victim	NOUN
+victimam	uictima	NOUN
+victimas	uictima	NOUN
+victis	uinco	VERB
+victor,-—oris	uictor,-—oris	NOUN
+victorem	uictor	NOUN
+victores	uictor	NOUN
+victoribus	uictor	NOUN
+victorious	uictorious	NOUN
+victum-I	uictum-i	NOUN
+vide	uideo	VERB
+videbant	uideo	VERB
+videbat	uideo	VERB
+videbatur	uideo	VERB
+videbitis	uideo	VERB
+videbitis,namRomani,urbissuaeoriginismemores	uidebitis,namromani,urbissuaeoriginismemores	VERB
+videbo	uideo	VERB
+videbuntetvehementertimebunt		VERB
+videns	uideo	VERB
+vident	uideo	VERB
+videntur	uideo	VERB
+video,2,vidi		VERB
+video,2,vidi,visum	uideo,2,vidi,visum	NOUN
+videor	uideo	VERB
+videor-Iseem		VERB
+videre	uideo	VERB
+videret	uideo	VERB
+viderunt	uideo	VERB
+vides	uideo	VERB
+videt	uideo	VERB
+videtur	uideo	VERB
+vidi	uideo	VERB
+vidimusfidvumTiberimretortis	uidimusfidvumtiberimretortus	VERB
+vidimusundantemruptisfornacibus	vidimusundantemruptisfornacus	VERB
+vidit	uideo	VERB
+vietdres	uietdr	NOUN
+view		NOUN
+vigiies	uigiies	NOUN
+vigiles	uigileo	ADJ
+vigiles	uigilis	ADJ
+viis	uia	NOUN
+villae	uilla	NOUN
+village	uillaga	INTJ
+village	uillage	INTJ
+vincent	uinco	VERB
+vincentur	uinco	VERB
+vincere	uinco	VERB
+vinco,3,vici,victum	uinco,3,vici,vics	NOUN
+vinctum-I	uinctum-i	NOUN
+vincubs	uincubs	NOUN
+vincula	uinculum	NOUN
+vinculis	uinculum	NOUN
+vine	uinus	NOUN
+vineae	uinea	NOUN
+vineas	uinea	NOUN
+vineis	uinea	NOUN
+vineleafoi		NOUN
+vino	uinum	NOUN
+vinumqueiucundum	uinumqueiucundus	ADJ
+vinxi	uincio	VERB
+vinxit	uincio	VERB
+violabo	uiolo	VERB
+violavit	uiolo	VERB
+viole	uiola	NOUN
+violentes	uiolens	ADJ
+violo,1-Iviolate	uiolo,1-iviolas	VERB
+vir,-i,m		NOUN
+vir,-i,m.—man,hero,husband	uir,-i,m.—man,hero,husband	NOUN
+virdrum	uirdr	NOUN
+virds		NOUN
+vires	uis	NOUN
+virgin		NOUN
+virginem	uirgo	NOUN
+virgines	uirgo	NOUN
+virgini	uirgo	NOUN
+virginibus	uirgo	NOUN
+virginibuspuerisquecanto	uirginibuspuerisquecanto	VERB
+virginis	uirgo	NOUN
+virginum	uirgo	NOUN
+viri	uir	NOUN
+viribus	uis	NOUN
+viribus-with	uiribus-withs	NOUN
+viridem	uiridis	ADJ
+virides	uiridis	ADJ
+viridibus	uiridis	NOUN
+virl	uirl	NOUN
+viro	uir	NOUN
+viros	uir	NOUN
+virtus,-utis,/.	uirtus,-utis,/.	NOUN
+virtute	uirtus	NOUN
+virtutem	uirtus	NOUN
+virum	uir	NOUN
+vis,pl.vires,f.-force,strength	uis,pl.vires,f.-force,strength	VERB
+visa	uideo	VERB
+visam	uisus	VERB
+visible	uisibla	NOUN
+visu	uideo	VERB
+visum	uideo	VERB
+visum-I	uisum-i	ADV
+vitabis	uito	VERB
+vitabit	uito	VERB
+vitae	uita	NOUN
+vitaexcessero	uitaexcesserum	NOUN
+vitam	uita	NOUN
+vitamanebat	uitamaneo	VERB
+vitamexcoluereperartis	uitamexcoluereperartum	NOUN
+vitare	uito	VERB
+vite	uitis	NOUN
+vitem	uite	NOUN
+vites	uis	NOUN
+vitis,-i—s,/.	uitis,-i—s,/.	VERB
+vivam	viuus	ADJ
+vivebant	uiuo	VERB
+vivere	uiuo	VERB
+vives	uiuo	VERB
+vivit	uiuo	VERB
+vivo,3,vixi,victum-Ilive,am		VERB
+vivus,-a,-um		NOUN
+vix,adv.-scarcely	uix,adv.-scarcely	ADJ
+vixinundis	uixinundum	NOUN
+vlde-	ulde-	NOUN
+vlnum	ulnum	ADJ
+vlnum	ulnus	NOUN
+vltium	ultium	NOUN
+vo	uo	PRON
+vobis	uos	PRON
+vobis-partofvos	uobis-partofvos	PRON
+voc	uoc	NOUN
+vocabant	uoco	VERB
+vocabantur	uoco	VERB
+vocabatur	uoco	VERB
+vocabulary	uocabulary	NOUN
+vocabunt	uoco	VERB
+vocamus	uoco	VERB
+vocans	uoco	VERB
+vocant	uoco	VERB
+vocare	uoco	VERB
+vocari	uoco	VERB
+vocas	uoco	VERB
+vocat	uoco	VERB
+vocata	uoco	VERB
+vocati	uoco	VERB
+vocatum	uoco	VERB
+vocatus	uoco	VERB
+vocavit	uoco	VERB
+voce	uox	NOUN
+vocibus	uox	NOUN
+vocis,f.—voice	uocis,f.—voicus	ADV
+vocis,—/.	uocis,—/.	PRON
+voice	uoica	NOUN
+voice	uoica	VERB
+vol-	uol-	DET
+vola	uolo	NOUN
+volabant	uolo	VERB
+volabit	uolo	VERB
+volans	uolo	VERB
+volant	uolo	VERB
+volantes	uolo	VERB
+volare	uolo	VERB
+volaverunt	uolo	VERB
+volavit	uolo	VERB
+volebant	uolo	VERB
+volebat	uolo	VERB
+volnera	uolnero	NOUN
+volo{irregvlar	uolo{irregvlar	VERB
+volucres	uolucer	NOUN
+volui-Iwish		NOUN
+voluit-immo	uoluit-immo	ADV
+volvebat	uoluo	VERB
+volvens	uoluo	VERB
+volventem	uoluo	VERB
+volveresaxa	uolveresaxum	VERB
+volvit	uoluo	VERB
+volvo,3,volvi,volutum-Iroll	uolvo,3,volvi,volutum-iroll	VERB
+vota	uotum	NOUN
+vox,vocis,/.		VERB
+vul	uul	NOUN
+vulam	uula	NOUN
+vulner-	uulner-	ADV
+vulnera	uulnerum	NOUN
+vulnera	uulnus	NOUN
+vulnerata	uulnero	VERB
+vulnerati	uulnero	VERB
+vulneraverunt	uulnero	VERB
+vulnere	uulnus	NOUN
+vulneribus	uulnus	NOUN
+vulnus,-eris,n.-wound		VERB
+vultii	uultium	ADJ
+vultu	uultus	NOUN
+vultum	uultus	NOUN
+vultus,-us,TO	uultus,-us,to	VERB
+vum	uum	NOUN
+v—i		NOUN
+w	w	CCONJ
+w	w	INTJ
+waggon	waggo	VERB
+waitfor(ex-specto	waitfor(ex-specto	ADV
+walk	walk	ADJ
+wall		VERB
+walls	walls	NOUN
+wan	wan	NOUN
+wand		ADJ
+want	wo	VERB
+wanting(governs	wanting(governss	VERB
+war	wararchia	NOUN
+wards		NOUN
+warned		ADJ
+was	was	ADV
+wasafamousshrineofApollo	waasafamousshrineofapollo	NOUN
+watch		VERB
+water	wato	NOUN
+wave		VERB
+way	way	ADV
+way	way	NOUN
+way,journey	waay,journey	NOUN
+we	we	NOUN
+weapons	weapons	NOUN
+wear	weo	VERB
+wedded		VERB
+weigh	weigh	NOUN
+wel-	wel-	NOUN
+welcome	welcoma	VERB
+welfare	welfor	VERB
+well	well	NOUN
+well	wells	NOUN
+were	weo	VERB
+wereneighboursofthe	wereneighboursofthus	NOUN
+wereoftencalledPatres	wereoftencalledpatr	VERB
+wereusedintheirworship		ADJ
+west	wsum	VERB
+wh	wh	ADV
+wh	wh	PRON
+what	who	VERB
+whatever		ADJ
+whelm	whelm	VERB
+when	whe	NOUN
+when	when	NOUN
+whenever	whenever	ADJ
+wheno'eralake	wheno'eralake	NOUN
+where	wher	VERB
+where	whero	VERB
+where	wherus	VERB
+where,when	where,whe	NOUN
+whereCicerohad		VERB
+wheretheRomansmet	wheretheromans	VERB
+which		ADJ
+which		NOUN
+which	which	NOUN
+whichflowsintotheTiber	whichflowsintothetiber	NOUN
+whichinventurouspeece	whichinventurouspeex	ADV
+whichledtoBrundusium	whichledtobrundusius	NOUN
+while	whilis	ADJ
+whit	who	VERB
+who	hwhos	NOUN
+who,inreturnforkindhospitality	who,inreturnforkindhospitality	ADV
+whole	whol	NOUN
+whom	whpom	VERB
+whosatintheSenate	whosatintheseno	VERB
+whoserved	whoserveds	VERB
+why	why	ADJ
+wi	wi	INTJ
+wicked	wicked	ADJ
+wide	wides	ADV
+wife	wifis	ADJ
+wifeof	wifeof	NOUN
+wifeofCeyx	wifeofceyx	NOUN
+will	will	ADJ
+willing	willing	NOUN
+willingly,gladly	willingly,gladly	ADJ
+win	win	ADV
+wind	wind	NOUN
+wingedhorse	wingedhorse	ADV
+wintry		VERB
+wise	wise	ADV
+wish		VERB
+wit	wo	VERB
+with		NOUN
+with	with	NOUN
+with	witharchia	NOUN
+with	withula	NOUN
+withaneternalfame	withaneternalfames	NOUN
+withgen.-enough		ADJ
+withgen.-enough		NOUN
+within		NOUN
+withnightshadetwined		VERB
+without	without	ADV
+withscatteredranks	withscatteredranks	NOUN
+withtheSubjunctiveisaconstructionwhich		VERB
+wn	wns	NOUN
+wnsman	wnsmans	NOUN
+woetotheconquered		NOUN
+woman	womans	NOUN
+won	won	PRON
+wonder	wonder	VERB
+wonderful	wonderful	ADJ
+wont(deponentinperf.tenses	wont(deponentinperf.tensis	VERB
+wood	wood	NOUN
+wor		VERB
+wor	wor	VERB
+word		NOUN
+wordoftenused	wordoftenused	ADJ
+words		ADV
+words		NOUN
+work	work	NOUN
+worthy	worthy	ADV
+worthy[governs	worthy[governs	ADJ
+worthy{governs	worthy{governs	VERB
+wound	wound	VERB
+wound	woundus	VERB
+wrestling	wrestling	ADJ
+write	wro	VERB
+writer	writer	ADV
+writingsof	writingsof	VERB
+written	writtes	NOUN
+wrong	wrongs	NOUN
+xi.vn		NOUN
+xum	xus	NOUN
+xxxvn	xxxvn	CCONJ
+yR		NOUN
+year		VERB
+year	yeo	VERB
+years	years	NOUN
+you		ADV
+you—{singular		NOUN
+z	z	CCONJ
+za	za	NOUN
+{r		VERB
+·		ADV
+·		NOUN
+·		PRON
+·	·	PRON
+·	·e	NOUN
+·	·erbium	NOUN
+·	·s	NOUN
+ƒ.—Halcyone	ƒ.—halcyo	NOUN
+ƒ.—seat	ƒ.—seo	VERB
+с	с	INTJ
+—	—	ADJ
+—	—	ADP
+—	—	ADV
+—	—	CCONJ
+—	—	DET
+—	—	NOUN
+—	—	VERB
+—-	—-	ADP
+—-	—-	NOUN
+—-ae,/.		VERB
+—-i,n	—-i,n	VERB
+—-or	—-or	NOUN
+—.	—.	VERB
+—/	—/s	NOUN
+—1	—1	VERB
+—2		VERB
+—A		VERB
+—I		ADJ
+—I.	—i.	NOUN
+—Ienter	—ienter	ADV
+—Irefresh		NOUN
+—a	—a	ADV
+—also	—alsus	NOUN
+—at	—o	VERB
+—chi	—chus	NOUN
+—cold	—cold	NOUN
+—deep	—deep	NOUN
+—e		NOUN
+—f	—f	NOUN
+—fi	—fus	ADJ
+—flower		VERB
+—h	—h	NOUN
+—h	—h	VERB
+—i	—iio	VERB
+—i	—is	VERB
+—knee	—knee	ADJ
+—lazy		ADV
+—life	—lifis	NOUN
+—love		AUX
+—ly	—ly	NOUN
+—n		AUX
+—n.pi		VERB
+—nam	—na	NOUN
+—o		NOUN
+—o	—os	NOUN
+—or	—or	NOUN
+—par	—par	NOUN
+—q		VERB
+—r	—r	ADV
+—s	—s	ADV
+—s	—s	NOUN
+—side	—sis	NOUN
+—soldier	—soldo	VERB
+—t		NOUN
+—t		VERB
+—t	—t	NOUN
+—this	—thus	NOUN
+—tree	—treus	INTJ
+—valley		NOUN
+—young	—young	NOUN
+———N	———ns	ADJ
+――――――――		ADV
+‘Unseen	‘unseen	NOUN
+‘‘hiatus	‘‘hiatus	NOUN
+“AmuHusharumrerumpoenasgravissimasdabit		VERB
+“Deam	“deo	VERB
+“Edmanis	“edmana	NOUN
+“Filia	“filia	NOUN
+“Fromsunriseuntostmset	“fromsunriseuntostmset	DET
+“Hanc	“hanc	DET
+“Iterum	“iteer	DET
+“Nonmortem	“nonmors	NOUN
+“Nunc	“nunc	DET
+“Nunquamne		NOUN
+“O	“os	VERB
+“Puerumparvum	“puerumparuus	ADJ
+“Rdmanis	“rdmanis	NOUN
+“Sine	“sen	NOUN
+“The	“the	NOUN
+“Troia	“troia	ADJ
+“Ubi		NOUN
+“Ubi/	“ubi/	DET
+“Una	“una	DET
+“Unacondicidne	“unacondicidne	NOUN
+“adhuc	“adhuc	ADV
+“alius	“alius	VERB
+“baec		DET
+“bomo	“bom	NOUN
+“chorusiuvenumdomum		ADJ
+“est	“sum	VERB
+“ffliam	“fflia	DET
+“fiba	“fiba	NOUN
+“fibus		NOUN
+“filiam	“filia	NOUN
+“habemus	“habeo	VERB
+“iamfame	“iamfames	NOUN
+“iterum	“iteer	DET
+“nbnne	“nbnnus	ADP
+“nulla	“nullus	DET
+“nullas	“nullus	DET
+“omnibus	“omn	ADJ
+“pulcbra		ADJ
+“qui	“quis	DET
+“rex	“rex	NOUN
+“stultaet		NOUN
+“sum	“se	NOUN
+“superati	“superor	VERB
+“tibiuxdriquetuaehoc	“tibiuxdriquetuaehoc	DET
+“totam	“totus	DET
+“yes	“yes	PRON
+•	•	ADV
+•	•	CCONJ
+…	…	NOUN
+€kmcntarB	€kmcntarb	NOUN
+⠀	⠀	VERB

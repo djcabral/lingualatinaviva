@@ -7,7 +7,7 @@ Script de Migración Fase 2: Vocabulario y Excepciones
 """
 
 from database.connection import get_session
-from database.models import Word, Author
+from database import Word, Author
 from sqlmodel import select
 import sqlite3
 import json

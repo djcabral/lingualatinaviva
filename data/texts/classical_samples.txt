@@ -1,0 +1,37 @@
+# PHAEDRUS - FABULAE (LIBER I)
+
+[phaedrus_1_1] Ad rivum eundem lupus et agnus venerant, siti compulsi.
+[phaedrus_1_1] Superior stabat lupus, longeque inferior agnus.
+[phaedrus_1_1] Tunc fauce improba latro incitatus jurgii causam intulit.
+[phaedrus_1_1] "Cur," inquit, "turbulentam fecisti mihi aquam bibenti?"
+[phaedrus_1_1] Laniger contra timens: "Qui possum, quaeso, facere quod quereris, lupe?"
+[phaedrus_1_1] "A te decurrit ad meos haustus liquor."
+[phaedrus_1_1] Repulsus ille veritatis viribus: "Ante hos sex menses male," ait, "dixisti mihi."
+[phaedrus_1_1] Respondit agnus: "Equidem natus non eram."
+[phaedrus_1_1] "Pater hercle tuus," ille inquit, "male dixit mihi."
+[phaedrus_1_1] Atque ita correptum lacerat injusta nece.
+[phaedrus_1_1] Haec propter illos scripta est homines fabula qui fictis causis innocentes opprimunt.
+
+[phaedrus_1_2] Ranae, vagantes liberis paludibus, clamore magno regem petiere a Jove.
+[phaedrus_1_2] Pater deorum risit atque illis dedit parvum tigillum.
+[phaedrus_1_2] Missum in paludem motu sonoque terruit pavidum genus.
+[phaedrus_1_2] Hoc mersum limo cum jaceret diutius, forte una tacite profert e stagno caput.
+[phaedrus_1_2] Explorat regem atque cunctas evocat.
+[phaedrus_1_2] Illae timore posito certatim adnatant, lignumque supra turba petulans insilit.
+
+# EUTROPIUS - BREVIARIUM (LIBER I)
+
+[eutropius_1_1] Romanum imperium, quo neque ab exordio ullum fere minus, neque incrementis toto orbe amplius humana potest memoria recordari, a Romulo exordium habet.
+[eutropius_1_1] Is, Vestalis virginis filius et, quantum putatus est, Martis, cum Remo fratre uno partu editus est.
+[eutropius_1_1] Is, cum inter pastores latrocinaretur, decem et octo annos natus urbem exiguam in Palatino monte constituit.
+[eutropius_1_2] Condita civitate, quam ex nomine suo Romam vocavit, haec fere egit.
+[eutropius_1_2] Multitudinem finitimorum in civitatem recepit, centum ex senioribus legit, quorum consilio omnia ageret, quos senatores nominavit propter senectutem.
+[eutropius_1_2] Tum, cum uxores ipse et populus suus non haberent, invitavit ad spectaculum ludorum vicinas urbis Romae nationes atque earum virgines rapuit.
+
+# CAESAR - DE BELLO GALLICO (LIBER I)
+
+[caesar_bg_1_1] Gallia est omnis divisa in partes tres, quarum unam incolunt Belgae, aliam Aquitani, tertiam qui ipsorum lingua Celtae, nostra Galli appellantur.
+[caesar_bg_1_1] Hi omnes lingua, institutis, legibus inter se differunt.
+[caesar_bg_1_1] Gallos ab Aquitanis Garumna flumen, a Belgis Matrona et Sequana dividit.
+[caesar_bg_1_1] Horum omnium fortissimi sunt Belgae, propterea quod a cultu atque humanitate provinciae longissime absunt.
+[caesar_bg_1_1] Minimeque ad eos mercatores saepe commeant atque ea quae ad effeminandos animos pertinent important.

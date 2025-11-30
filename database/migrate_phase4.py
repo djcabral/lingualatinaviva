@@ -7,7 +7,7 @@ Script de Migración Fase 4: Adverbios y Expansión de Lectio
 """
 
 from database.connection import get_session
-from database.models import Word, Text, TextWordLink
+from database import Word, Text, TextWordLink
 from sqlmodel import select
 import re
 import unicodedata

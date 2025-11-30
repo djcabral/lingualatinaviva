@@ -2,91 +2,234 @@
 
 **Una aplicación moderna para revivir una lengua eterna.**
 
-**Lingua Latina Viva** es una plataforma interactiva diseñada para el aprendizaje del latín clásico con rigor académico y tecnología moderna. Combina la metodología tradicional con la interactividad de Streamlit y Python.
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+![Python](https://img.shields.io/badge/Python-3.9%2B-blue)
+![Streamlit](https://img.shields.io/badge/Streamlit-1.28%2B-red)
+[![Status](https://img.shields.io/badge/Status-Active-success)]()
 
-![Lingua Latina Viva](https://img.shields.io/badge/Status-Beta-orange) ![Python](https://img.shields.io/badge/Python-3.9%2B-blue) ![Streamlit](https://img.shields.io/badge/Streamlit-1.28%2B-red)
+> *Non scholae, sed vitae discimus* - No aprendemos para la escuela, sino para la vida.
+
+**Lingua Latina Viva** es una plataforma interactiva completa para el aprendizaje del latín clásico que combina rigor académico con tecnología moderna. Más que una simple aplicación, es un ecosistema educativo integral diseñado para llevarte desde los fundamentos hasta la lectura autónoma de textos clásicos auténticos.
+
+## ✨ ¿Por qué Lingua Latina Viva?
+
+### 🆚 Lo Que Nos Hace Únicos
+
+| Característica | Lingua Latina Viva | Apps Tradicionales |
+|----------------|-------------------|-------------------|
+| **Curso Estructurado** | 40 lecciones progresivas con infogramas | Lecciones básicas limitadas |
+| **Práctica Interactiva** | Declinatio, Conjugatio, Aventura, Desafíos | Ejercicios estáticos |
+| **Juegos Didácticos** | Sopa de letras, crucigramas, clasificador | Sin gamificación |
+| **Lectura Asistida** | Textos auténticos con análisis morfológico | Textos sin ayuda contextual |
+| **SRS Inteligente** | Algoritmo SM-2 adaptativo | Repetición básica o inexistente |
+| **Generadores** | Paradigmas completos de cualquier palabra | Tablas estáticas |
+| **Análisis Sintáctico** | Descomposición de oraciones | No disponible |
+| **Código Abierto** | GPL v3 - gratis y modificable | Cerrado y de pago |
 
 ## 🌟 Características Principales
 
-*   🧠 **Vocabulario Inteligente (SRS):** Sistema de repetición espaciada para maximizar la retención de palabras.
-*   ⚔️ **Entrenamiento Gramatical:** Módulos intensivos de **Declinatio** (declinaciones) y **Conjugatio** (verbos) con corrección instantánea.
-*   📖 **Lectura Asistida (Lectio):** Textos clásicos (César, Fedro) con análisis morfológico interactivo y diccionario contextual.
-*   🏛️ **Rigor Histórico:** Base de datos curada con miles de palabras y formas gramaticales auténticas.
-*   🔍 **Análisis Morfológico:** Herramientas para analizar cualquier palabra latina.
+### 📘 Curso Estructurado de 40 Lecciones
 
-## 🚀 Instalación Local
+Progresión pedagógica desde cero hasta textos clásicos:
+- **Lecciones 1-13** (Básico): Declinaciones, conjugaciones, casos fundamentales
+- **Lecciones 14-20** (Intermedio): Sistema verbal completo, sintaxis
+- **Lecciones 21-30** (Avanzado): Construcciones complejas, subordinadas
+- **Lecciones 31-40** (Experto): César, Cicerón, Virgilio, Catulo, y más
 
-1.  **Clonar el repositorio:**
-    ```bash
-    git clone https://github.com/djcabral/lingualatinaviva.git
-    cd lingualatinaviva
-    ```
+Cada lección incluye:
+- ✨ Infogramas educativos con estética romana
+- 📊 Tablas paradigmáticas estilizadas
+- 📐 Diagramas conceptuales interactivos
+- 💡 Ejemplos contextualizados auténticos
 
-2.  **Crear un entorno virtual:**
-    ```bash
-    python -m venv venv
-    source venv/bin/activate  # En Windows: venv\Scripts\activate
-    ```
+### 🧠 Sistema de Vocabulario SRS
 
-3.  **Instalar dependencias:**
-    ```bash
-    pip install -r requirements.txt
-    ```
+Sistema de Repetición Espaciada con algoritmo SM-2:
+- 📚 +8,000 palabras latinas con traducciones completas
+- 🎯 Tarjetas inteligentes que se adaptan a tu ritmo
+- 📈 Estadísticas detalladas de progreso
+- 🔄 Repaso automatizado basado en curva de olvido
 
-4.  **Ejecutar la aplicación:**
-    ```bash
-    streamlit run app.py
-    ```
+### 💪 Práctica Gramatical Intensiva
 
-## ☁️ Despliegue
+Cinco modos de práctica integrados:
+- **Declinatio**: Domina las 5 declinaciones con corrección instantánea
+- **Conjugatio**: Practica las 4 conjugaciones en todos los tiempos y modos
+- **Aventura**: Desafíos progresivos que desbloquean contenido
+- **Desafíos**: Puzzles y acertijos gramaticales
+- **Práctica Libre**: Explora sin restricciones
 
-Esta aplicación está optimizada para **Streamlit Cloud**.
+### 🎮 Ludus - Juegos Didácticos
 
-### Configuración Básica
-1.  Haz un fork de este repositorio.
-2.  Conecta tu cuenta de GitHub en [share.streamlit.io](https://share.streamlit.io).
-3.  Selecciona el repositorio y el archivo principal `app.py`.
+Aprende jugando con tres juegos completamente funcionales:
+- **🏺 Clasificador de Palabras**: Clasifica sustantivos por género, declinación, parisílabas/imparisílabas
+- **🔍 Sopa de Letras**: Encuentra palabras latinas en grids de 8x8 a 12x12
+- **🧩 Crucigramas**: Resuelve crucigramas con vocabulario latino
 
-### Crear Token Personal de GitHub (Opcional)
+Todas con selección inteligente de vocabulario basada en tu progreso.
 
-Si necesitas que Streamlit Cloud acceda a repositorios privados o recursos protegidos, debes crear un **Personal Access Token (PAT)**:
+### 📖 Lectio - Lectura Asistida
 
-1.  **Acceder a configuración de tokens:**
-    - Ve a tu perfil de GitHub → **Settings** (Configuración)
-    - En el menú lateral izquierdo, baja hasta **Developer settings** (Configuración de desarrollador)
-    - Selecciona **Personal access tokens** → **Tokens (classic)**
+Lee textos clásicos auténticos con ayuda contextual:
+- 📜 Obras de César, Fedro, y autores clásicos
+- 🔍 Análisis morfológico palabra por palabra
+- 📖 Diccionario contextual integrado
+- 🎨 Resaltado sintáctico
 
-2.  **Generar nuevo token:**
-    - Haz clic en **Generate new token** → **Generate new token (classic)**
-    - GitHub te pedirá tu contraseña para confirmar
+### 🔧 Generador de Paradigmas
 
-3.  **Configurar el token:**
-    - **Note** (Nombre): Dale un nombre descriptivo, ej: `streamlit-cloud-deployment`
-    - **Expiration** (Expiración): Selecciona la duración deseada (recomendado: 90 días o más)
-    - **Scopes** (Permisos): Marca las siguientes casillas:
-      - ✅ `repo` (acceso completo a repositorios privados)
-      - ✅ `workflow` (si usas GitHub Actions)
-      - ✅ `read:org` (si el repo está en una organización)
+Genera todas las formas de cualquier sustantivo o verbo:
+- 📊 Paradigmas completos de declinación
+- ⚡ Conjugaciones en todos los tiempos, modos y voces
+- 🔄 Particulas, participios, gerundios, gerundivos
+- 🎨 Visualización elegante con tablas profesionales
 
-4.  **Generar y copiar:**
-    - Haz clic en **Generate token** al final de la página
-    - ⚠️ **IMPORTANTE**: Copia el token inmediatamente y guárdalo en un lugar seguro
-    - No podrás volver a verlo después de salir de la página
+### 🔍 Análisis Sintáctico
 
-5.  **Configurar en Streamlit Cloud:**
-    - En el dashboard de Streamlit Cloud, ve a tu aplicación
-    - Accede a **Settings** → **Secrets**
-    - Agrega el token como secret si tu aplicación lo requiere
-    - O úsalo durante el proceso de conexión con GitHub cuando se te solicite
+Herramientas avanzadas de análisis:
+- 🧩 Descomposición de oraciones latinas
+- 📝 Identificación de casos y funciones sintácticas
+- 🔗 Análisis de subordinación
+- 💡 Explicaciones educativas
+
+## 🚀 Inicio Rápido
+
+### ☁️ Opción 1: Usa la App en Línea (Recomendado)
+
+Accede directamente sin instalación:
+
+👉 **[https://lingualatinaviva.streamlit.app](https://lingualatinaviva.streamlit.app)**
+
+### 💻 Opción 2: Instalación Local
+
+```bash
+# Clonar el repositorio
+git clone https://github.com/djcabral/lingualatinaviva.git
+cd lingualatinaviva
+
+# Crear entorno virtual
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+
+# Instalar dependencias
+pip install -r requirements.txt
+
+# Ejecutar la aplicación
+streamlit run app.py
+```
+
+La aplicación se abrirá automáticamente en `http://localhost:8501`
+
+## 📚 Documentación
+
+### Para Usuarios
+- 📖 [**Guía de Inicio Rápido**](docs/user-guide/getting-started.md) - Empieza en 5 minutos
+- 📘 [**Resumen del Curso**](docs/user-guide/course-overview.md) - Las 40 lecciones explicadas
+- 🎮 [**Guía de Juegos**](docs/user-guide/games.md) - Cómo aprovechar Ludus
+- 💡 [**Entrenamiento de Vocabulario**](docs/user-guide/vocabulary-training.md) - Maximiza la retención
+- 📝 [**Práctica Gramatical**](docs/user-guide/grammar-practice.md) - Domina declinaciones y conjugaciones
+- 📖 [**Lectura Asistida**](docs/user-guide/reading-texts.md) - Lee textos clásicos
+
+### Para Administradores
+- 💾 [**Respaldo y Restauración**](docs/admin-guide/backup-restore.md) - Protege tu progreso
+- 📥 [**Importación de Contenido**](docs/admin-guide/importing-content.md) - Vocabulario y textos personalizados
+- 👤 [**Gestión de Usuarios**](docs/admin-guide/user-management.md) - Administra cuentas
+
+### Para Desarrolladores
+- 🏗️ [**Arquitectura**](docs/developer-guide/architecture.md) - Estructura técnica
+- 🗄️ [**Esquema de Base de Datos**](docs/developer-guide/database-schema.md) - Modelos y relaciones
+- 🤝 [**Guía de Contribución**](docs/developer-guide/contributing.md) - Cómo contribuir
+- 📡 [**Referencia API**](docs/developer-guide/api-reference.md) - Funciones principales
+
+### Documentación Técnica
+- 📊 [**Estado del Proyecto**](docs/technical/project-status.md) - Funcionalidades y roadmap
+- 🔍 [**Plan de Análisis Sintáctico**](docs/technical/syntax-parser-plan.md) - Mejoras futuras
+- 🚀 [**Guía de Despliegue**](docs/technical/deployment.md) - Deploy en Streamlit Cloud
+
+📋 **[Índice Completo de Documentación](docs/README.md)**
+
+## 🛠️ Stack Tecnológico
+
+- **Frontend**: Streamlit
+- **Backend**: Python 3.9+
+- **Base de Datos**: SQLite con SQLModel ORM
+- **Morfología**: pycollatinus (adaptado de Collatinus)
+- **Análisis**: Algoritmos personalizados de parsing
+- **Visualización**: Matplotlib, Mermaid
+
+## 📈 Roadmap
+
+### ✅ v1.0 (Actual)
+- [x] 40 lecciones completas con infogramas
+- [x] Sistema SRS de vocabulario
+- [x] Tres juegos didácticos funcionales
+- [x] Generador de paradigmas
+- [x] Lectura asistida de textos clásicos
+- [x] Panel de administración
+
+### 🔮 v1.1 (Próximo)
+- [ ] Sistema de logros expandido
+- [ ] Tabla de líderes
+- [ ] Desafíos diarios automatizados
+- [ ] Exportación de progreso a PDF
+- [ ] Modo offline (PWA)
+
+### 🚀 v2.0 (Futuro)
+- [ ] App móvil nativa
+- [ ] Soporte para latín eclesiástico/medieval
+- [ ] API pública para integraciones
+- [ ] Modo multijugador colaborativo
+- [ ] Integración con corpus externos
+
+## 🤝 Contribuir
+
+¡Las contribuciones son bienvenidas! Este es un proyecto de código abierto.
+
+1. Haz un fork del repositorio
+2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
+
+Lee nuestra [**Guía de Contribución**](docs/developer-guide/contributing.md) para más detalles.
+
+## 🐛 Reportar Problemas
+
+Encontraste un bug o tienes una sugerencia? [Abre un issue](https://github.com/djcabral/lingualatinaviva/issues/new)
 
 ## 📜 Licencia
 
-Este proyecto está licenciado bajo **GNU GPL v3** - consulta el archivo [LICENSE](LICENSE) para más detalles.
+Este proyecto está bajo la licencia **GNU General Public License v3.0**. Consulta el archivo [LICENSE](LICENSE) para más detalles.
 
 ### Atribuciones
-- **Collatinus**: Morfología y formas latinas © Yves Ouvrard & Philippe Verkerk (GPL v3)
+
+- **Collatinus**: Morfología y análisis © Yves Ouvrard & Philippe Verkerk (GPL v3)
 - **Diccionario Valbuena (1819)**: Dominio público
 - **Código original**: © 2025 Diego J. Cabral (GPL v3)
 
+## 💖 Apoya el Proyecto
+
+Si Lingua Latina Viva te ayudó en tu aprendizaje del latín:
+- ⭐ Dale una estrella en GitHub
+- 🐦 Comparte con otros estudiantes
+- 🤝 Contribuye código o documentación
+- 📝 Reporta bugs y sugiere mejoras
+
+## 📞 Contacto
+
+- **GitHub**: [@djcabral](https://github.com/djcabral)
+- **Issues**: [GitHub Issues](https://github.com/djcabral/lingualatinaviva/issues)
+
 ---
-*Non scholae, sed vitae discimus.*
+
+<div align="center">
+
+**Hecho con ❤️ para la comunidad de estudiantes de latín**
+
+*Dum spiro, spero* - Mientras respiro, espero
+
+🏛️ **Lingua Latina Viva** 🏛️
+
+[⬆ Volver arriba](#-lingua-latina-viva)
+
+</div>

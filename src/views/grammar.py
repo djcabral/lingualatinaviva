@@ -1,7 +1,7 @@
 import streamlit as st
 from sqlmodel import select
 from database import get_session
-from database.models import Word
+from database import Word
 from latin_logic import LatinMorphology
 import random
 import pandas as pd

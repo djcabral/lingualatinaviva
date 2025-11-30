@@ -4,7 +4,7 @@ from textual.widgets import Header, Footer, Button, Static, Label, Input, DataTa
 from textual.containers import Container, Vertical, Horizontal, Grid
 from sqlmodel import select
 from ..database import get_session
-from database.models import Word
+from database import Word
 from ..latin_logic import LatinMorphology
 import random
 
