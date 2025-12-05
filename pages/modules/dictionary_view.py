@@ -1,6 +1,5 @@
 import streamlit as st
-from sqlmodel import Session, create_engine, or_
-from database.connection import get_session
+from database.connection import get_session, engine
 from database import Word, InflectedForm
 from sqlmodel import select, func
 from utils.latin_logic import LatinMorphology
@@ -15,12 +14,7 @@ def render_content():
     st.title("📖 Diccionario Latino-Español")
     st.markdown("*Basado en datos de Collatinus © Yves Ouvrard & Philippe Verkerk*")
     
-    # Initialize database
-    @st.cache_resource
-    def get_engine():
-        return create_engine("sqlite:///lingua_latina.db")
     
-    engine = get_engine()
     morphology = LatinMorphology()
     
     # Search interface
@@ -45,7 +39,7 @@ def render_content():
         # Normalize search term
         search_normalized = normalize_latin(search_term.strip().lower())
         
-        with Session(engine) as session:
+        with get_session() as session:
             # Search in database
             if search_mode == "Exacto":
                 results = session.exec(
@@ -53,8 +47,8 @@ def render_content():
                 ).all()
             else:
                 results = session.exec(
-                    select(Word).where(Word.latin.contains(search_normalized))
-                ).limit(50).all()
+                    select(Word).where(Word.latin.contains(search_normalized)).limit(50)
+                ).all()
             
             # Display results
             if results:
@@ -63,10 +57,11 @@ def render_content():
                 for word in results:
                     pos_translated = get_text(word.part_of_speech, st.session_state.get('language', 'es'))
                     with st.expander(f"**{word.latin}** — {pos_translated}", expanded=len(results)==1):
-                        # Spanish definition
+                        # Spanish definition (preferido)
                         if word.definition_es:
                             st.markdown(f"**📖 Definición:** {word.definition_es}")
                         elif word.translation:
+                            # Fallback (puede estar en inglés en datos legacy)
                             st.markdown(f"**Traducción:** {word.translation}")
                         
                         # Admin edit button
@@ -141,7 +136,7 @@ def render_content():
     st.markdown("---")
     st.markdown("### Explorar por categoría")
     
-    with Session(engine) as session:
+    with get_session() as session:
         # Get counts by part of speech
         all_words = session.exec(select(Word)).all()
         pos_counts = {}

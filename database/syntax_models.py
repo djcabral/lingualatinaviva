@@ -2,6 +2,16 @@ from typing import Optional, List
 from sqlmodel import Field, SQLModel, Relationship
 from datetime import datetime
 import json
+import logging
+
+logger = logging.getLogger(__name__)
+
+# CRITICAL: Prevent duplicate model registration
+if '__SYNTAX_MODELS_MODULE_LOADED__' in globals():
+    logger.warning("⚠️  WARNING: database.syntax_models is being reloaded! This may cause 'Multiple classes found' errors.")
+else:
+    globals()['__SYNTAX_MODELS_MODULE_LOADED__'] = True
+    logger.debug("database.syntax_models loaded successfully")
 
 
 class SentenceAnalysis(SQLModel, table=True):
@@ -19,6 +29,9 @@ class SentenceAnalysis(SQLModel, table=True):
     sentence_type: str = Field(default="simple")  # "simple", "compound", "complex"
     source: str = Field(default="")  # "familia_romana_cap1", "caesar_gallia", etc.
     lesson_number: Optional[int] = None
+    
+    # Usage Type (New in Stage 2)
+    usage_type: str = Field(default="analysis")  # "analysis", "translation_exercise", "example"
     
     # Análisis LatinCy (JSON)
     # Árbol de dependencias completo: [{id, text, lemma, pos, dep, head, morph}, ...]

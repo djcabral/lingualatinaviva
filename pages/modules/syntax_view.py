@@ -136,6 +136,14 @@ def render_content():
         
         selected_source = st.multiselect("Fuente", unique_sources, default=unique_sources)
         
+        # Lesson Filter
+        lesson_filter = st.selectbox(
+            "Filtrar por Lección",
+            options=["Todas"] + list(range(1, 41)),
+            format_func=lambda x: f"Lección {x}" if x != "Todas" else "Todas las lecciones",
+            help="Filtra oraciones asociadas a una lección específica del curso"
+        )
+        
         # Construction Filter
         constructions = [
             "ablative_absolute", "accusative_infinitive", "dative_possession"
@@ -171,7 +179,7 @@ def render_content():
     
     # --- Main Content ---
     
-    def get_sentences(min_l, max_l, sources_list, constr_list):
+    def get_sentences(min_l, max_l, sources_list, constr_list, lesson_num):
         with get_session() as session:
             query = select(SentenceAnalysis).options(
                 selectinload(SentenceAnalysis.token_annotations),
@@ -213,8 +221,15 @@ def render_content():
                                 break
                 
                 if src_match and constr_match:
-                    # Convert to dict to avoid DetachedInstanceError
-                    sent_dict = {
+                    # Lesson filter check
+                    lesson_match = True
+                    if lesson_filter != "Todas":
+                        if s.lesson_number != lesson_filter:
+                            lesson_match = False
+                    
+                    if lesson_match:
+                        # Convert to dict to avoid DetachedInstanceError
+                        sent_dict = {
                         'id': s.id,
                         'latin_text': s.latin_text,
                         'spanish_translation': s.spanish_translation,
@@ -269,19 +284,17 @@ def render_content():
             return False
     
     # Apply View Mode Filter
-    raw_sentences = get_sentences(min_level, max_level, selected_source, selected_constructions)
+    raw_sentences = get_sentences(min_level, max_level, selected_source, selected_constructions, lesson_filter)
     sentences = []
     
     if view_mode == "📚 Corpus Verificado":
         sentences = [s for s in raw_sentences if is_sentence_complete(s)]
-    else:
-        # Zona de Espera: Incomplete sentences
-        sentences = [s for s in raw_sentences if not is_sentence_complete(s)]
-    
-    if view_mode == "📚 Corpus Verificado":
         st.success(f"Mostrando {len(sentences)} oraciones verificadas (100% analizadas)")
     else:
-        st.warning(f"Mostrando {len(sentences)} oraciones en zona de espera (análisis incompleto)")
+        # Zona de Espera: Show ALL sentences matching filters, regardless of completeness
+        # but mark them visually later
+        sentences = raw_sentences 
+        st.warning(f"Mostrando {len(sentences)} oraciones en zona de espera (incluye analizadas y pendientes)")
     
     # --- Visualization Helpers ---
     
@@ -470,7 +483,7 @@ def render_content():
         st.write(f"Página {current_page + 1} de {total_pages}")
     
     # Glosario de abreviaturas (global, antes de las oraciones)
-    with st.popover("📖 Glosario de Abreviaturas del Árbol", use_container_width=False):
+    with st.popover("📖 Glosario de Abreviaturas del Árbol", width="content"):
         st.markdown("""
         **Funciones Sintácticas:**
         - **Sujeto** - Quién realiza la acción

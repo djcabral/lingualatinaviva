@@ -1,0 +1,105 @@
+{
+    "lesson": 25,
+    "topic": "Sintaxis I: Coordinación y Cum Histórico",
+    "exercises": [
+        {
+            "type": "vocabulary_match",
+            "pairs": [
+                {
+                    "latin": "et / -que / atque",
+                    "spanish": "y (Copulativas)"
+                },
+                {
+                    "latin": "sed / autem / tamen",
+                    "spanish": "pero / sin embargo (Adversativas)"
+                },
+                {
+                    "latin": "aut / vel",
+                    "spanish": "o (Disyuntivas)"
+                },
+                {
+                    "latin": "ergo / igitur",
+                    "spanish": "por tanto / así pues (Ilativas)"
+                }
+            ]
+        },
+        {
+            "type": "multiple_choice",
+            "question": "¿Qué construcción es 'Cum Caesar veniret...'?",
+            "options": [
+                "Cum Histórico (narrativo)",
+                "Cum Preposición",
+                "Oración de Relativo",
+                "Condicional"
+            ],
+            "correct_answer": "Cum Histórico (narrativo)",
+            "explanation": "Conjunción Cum + Subjuntivo Imperfecto/Pluscuamperfecto tiene valor narrativo (Gerundio)."
+        },
+        {
+            "type": "sentence_completion",
+            "question": "Cogito, _____ (luego/por tanto) sum.",
+            "options": [
+                "ergo",
+                "sed",
+                "nam"
+            ],
+            "correct_answer": "ergo",
+            "explanation": "Ergo es una conjunción ilativa (consecuencia lógica)."
+        },
+        {
+            "type": "sentence_completion",
+            "question": "Vincere _____ (o) mori.",
+            "options": [
+                "aut",
+                "et",
+                "sed"
+            ],
+            "correct_answer": "aut",
+            "explanation": "Aut expresa una disyunción excluyente (uno u otro)."
+        },
+        {
+            "type": "multiple_choice",
+            "question": "Traducción de 'Cum vidisset'",
+            "options": [
+                "Habiendo visto / Al haber visto",
+                "Viendo / Al ver",
+                "Para ver",
+                "Si hubiera visto"
+            ],
+            "correct_answer": "Habiendo visto / Al haber visto",
+            "explanation": "Cum + Pluscuamperfecto Subjuntivo expresa anterioridad: 'Habiendo...'"
+        },
+        {
+            "type": "vocabulary_match",
+            "pairs": [
+                {
+                    "latin": "Cum veniret",
+                    "spanish": "Al venir / Viniendo"
+                },
+                {
+                    "latin": "Cum venisset",
+                    "spanish": "Al haber venido / Habiendo venido"
+                },
+                {
+                    "latin": "Postquam venit",
+                    "spanish": "Después de que vino (Indicativo)"
+                },
+                {
+                    "latin": "Ubi venit",
+                    "spanish": "Cuando vino (Indicativo)"
+                }
+            ]
+        },
+        {
+            "type": "sentence_completion",
+            "question": "Non est vivere _____ (sino) valere vita.",
+            "options": [
+                "sed",
+                "et",
+                "aut"
+            ],
+            "correct_answer": "sed",
+            "explanation": "Sed (pero/sino) introduce una corrección o adversidad."
+        }
+    ]
+}

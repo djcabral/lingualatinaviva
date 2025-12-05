@@ -13,12 +13,15 @@ from utils.i18n import get_text
 from utils.latin_logic import LatinMorphology, get_conjugation_forms
 from utils.gamification import process_xp_gain
 from utils.ui_helpers import load_css
+from utils.ui_components import render_flashcard
 from utils.text_utils import normalize_latin
 from utils.constants import TENSES_INDICATIVE, TENSE_LABELS_INDICATIVE, MOODS, MOOD_LABELS
+import json
+from datetime import datetime
+from database import Lesson, LessonVocabulary, ExerciseAttempt, UserVocabularyProgress
 
 
 def render_content():
-    
     # Load CSS
 
     
@@ -38,7 +41,63 @@ def render_content():
         user = session.exec(select(UserProfile)).first()
         user_level = user.level if user else 1
     
-    st.markdown(f"### 📚 Nivel {user_level} - Verbos")
+    # Init session state for lesson filter
+    if "conjugation_lesson_filter" not in st.session_state:
+        st.session_state.conjugation_lesson_filter = None
+
+    # Check for Active Lesson in Session State (from Sidebar)
+    current_lesson_id = st.session_state.get("current_lesson_id")
+    
+    # Context Banner Logic
+    lesson_mode = False
+    active_lesson = None
+    
+    if current_lesson_id:
+        with get_session() as session:
+            active_lesson = session.get(Lesson, current_lesson_id)
+            if active_lesson:
+                lesson_mode = True
+                # Override filter if we are in a forced context
+                st.session_state.conjugation_lesson_filter = active_lesson.lesson_number
+                
+                st.markdown(f"""
+                <div style="background-color: #f0f2f6; padding: 1rem; border-radius: 0.5rem; border-left: 5px solid #8b4513; margin-bottom: 1rem;">
+                    <h3 style="margin: 0; color: #8b4513;">⚔️ Practicando: Lección {active_lesson.lesson_number}</h3>
+                    <p style="margin: 0;">{active_lesson.title}</p>
+                </div>
+                """, unsafe_allow_html=True)
+    
+    # If not in forced lesson mode, show selector
+    if not lesson_mode:
+        col1, col2 = st.columns([3, 1])
+        with col1:
+             st.markdown(f"### 📚 Nivel {user_level} - Verbos")
+        with col2:
+            # Selector for specific lesson practice
+            with get_session() as session:
+                lessons = session.exec(select(Lesson).order_by(Lesson.lesson_number)).all()
+                lesson_opts = [0] + [l.lesson_number for l in lessons]
+                
+                def fmt_lesson(x):
+                    if x == 0: return "🌍 Modo Libre"
+                    l = next((l for l in lessons if l.lesson_number == x), None)
+                    return f"Lección {x}: {l.title}" if l else f"Lección {x}"
+                
+                selected_filter = st.selectbox(
+                    "Filtrar por Lección:",
+                    options=lesson_opts,
+                    format_func=fmt_lesson,
+                    key="conjugation_lesson_selector",
+                    index=0
+                )
+                
+                if selected_filter != 0:
+                    st.session_state.conjugation_lesson_filter = selected_filter
+                    lesson_mode = True
+                else:
+                    st.session_state.conjugation_lesson_filter = None
+    else:
+        st.markdown(f"### 📚 Nivel {user_level} - Verbos")
     
     # Tense translation map
     TENSE_MAP = {
@@ -110,9 +169,31 @@ def render_content():
                 st.warning("No hay verbos en la base de datos. Usa el panel de Admin para añadirlos.")
                 st.stop()
             
+            # Filter selection logic
+            if lesson_mode and st.session_state.conjugation_lesson_filter:
+                # 1. Lesson specific verbs
+                lesson_num = st.session_state.conjugation_lesson_filter
+                lesson_vocab = session.exec(
+                    select(LessonVocabulary).where(LessonVocabulary.lesson_number == lesson_num)
+                ).all()
+                lesson_word_ids = [lv.word_id for lv in lesson_vocab]
+                
+                potential_verbs = [v for v in verbs if v.id in lesson_word_ids]
+                
+                if potential_verbs:
+                    verbs = potential_verbs
+                    # st.info(f"Filtro activo: {len(verbs)} verbos de Lección {lesson_num}")
+                else:
+                    st.warning(f"La Lección {lesson_num} no tiene verbos asignados. Mostrando todos.")
+            
             # Initialize with a random verb ID
             if 'current_verb_id' not in st.session_state:
                 st.session_state.current_verb_id = random.choice(verbs).id
+
+            # Ensure current verb is valid for the current list (if filter changed)
+            current_id = st.session_state.current_verb_id
+            if not any(v.id == current_id for v in verbs):
+                 st.session_state.current_verb_id = random.choice(verbs).id
             
             # Reload the verb from the database using the stored ID
             verb = session.exec(select(Word).where(Word.id == st.session_state.current_verb_id)).first()
@@ -122,7 +203,12 @@ def render_content():
                 st.session_state.current_verb_id = random.choice(verbs).id
                 verb = session.exec(select(Word).where(Word.id == st.session_state.current_verb_id)).first()
             
-            st.markdown(f"### Conjuga: **{verb.latin}** ({verb.translation})")
+            render_flashcard(
+                latin_text=verb.latin,
+                hint=f"{verb.conjugation}ª conjugación",
+                translation=verb.translation,
+                part_of_speech="Verbo"
+            )
             
             if verb.principal_parts:
                 st.info(f"📋 Partes principales: **{verb.principal_parts}** • Conjugación: {verb.conjugation}ª")
@@ -322,6 +408,9 @@ def render_content():
                     # Award XP: 5 points per correct answer
                     xp_gained = correct_count * 5
                     
+                    # Award XP: 5 points per correct answer
+                    xp_gained = correct_count * 5
+                    
                     if xp_gained > 0:
                         with get_session() as session:
                             user = session.exec(select(UserProfile)).first()
@@ -332,6 +421,60 @@ def render_content():
                                     st.success(f"🎉 ¡FELICIDADES! Has alcanzado el Nivel {new_level}!")
                                 st.session_state.xp_feedback_conjugation = f"🎉 +{xp_gained} XP ({correct_count}/{total_count} correctas)"
                     
+                    # --- TRACKING INTEGRATION ---
+                    if total_count > 0:
+                        with get_session() as session:
+                            # 1. Register Exercise Attempt
+                            attempt = ExerciseAttempt(
+                                user_id=1, # Default user
+                                lesson_number=st.session_state.conjugation_lesson_filter or 0,
+                                exercise_type="conjugation",
+                                exercise_config=json.dumps({
+                                    "word": verb.latin,
+                                    "conjugation": verb.conjugation,
+                                    "tense": tense_selection,
+                                    "voice": voice_selection,
+                                    "mode": mode_selection
+                                }),
+                                user_answer=json.dumps(st.session_state.user_conjugation_answers),
+                                correct_answer="[JSON DATA HIDDEN]",
+                                is_correct=(correct_count == total_count),
+                                time_spent_seconds=0,
+                                hint_used=st.session_state.show_conjugation_answers
+                            )
+                            session.add(attempt)
+                            
+                            # 2. Update Vocabulary Progress
+                            vocab_progress = session.exec(
+                                select(UserVocabularyProgress).where(
+                                    UserVocabularyProgress.word_id == verb.id,
+                                    UserVocabularyProgress.user_id == 1
+                                )
+                            ).first()
+                            
+                            if not vocab_progress:
+                                vocab_progress = UserVocabularyProgress(
+                                    user_id=1, 
+                                    word_id=verb.id,
+                                    first_seen=datetime.utcnow()
+                                )
+                                session.add(vocab_progress)
+                            
+                            vocab_progress.times_seen += 1
+                            if correct_count == total_count:
+                                vocab_progress.times_correct += 1
+                            else:
+                                vocab_progress.times_incorrect += 1
+                                
+                            vocab_progress.last_reviewed = datetime.utcnow()
+                            
+                            # Simple mastery calculation
+                            total_attempts = vocab_progress.times_correct + vocab_progress.times_incorrect
+                            if total_attempts > 0:
+                                vocab_progress.mastery_level = vocab_progress.times_correct / total_attempts
+                            
+                            session.commit()
+
                     st.session_state.show_conjugation_answers = True
                     st.rerun()
             
@@ -345,7 +488,22 @@ def render_content():
                 if st.button("🎲 Nuevo Verbo", width='stretch', key="conj_new_verb_guided"):
                     # Select new verb ID instead of storing object
                     with get_session() as new_session:
+                if st.button("🎲 Nuevo Verbo", width='stretch', key="conj_new_verb_guided"):
+                    # Select new verb ID instead of storing object
+                    with get_session() as new_session:
                         all_verbs = new_session.exec(select(Word).where(Word.part_of_speech == "verb")).all()
+                        
+                        # Apply filter again for new button
+                        if lesson_mode and st.session_state.conjugation_lesson_filter:
+                            lesson_num = st.session_state.conjugation_lesson_filter
+                            lesson_vocab = new_session.exec(
+                                select(LessonVocabulary).where(LessonVocabulary.lesson_number == lesson_num)
+                            ).all()
+                            lesson_word_ids = [lv.word_id for lv in lesson_vocab]
+                            potential_verbs = [v for v in all_verbs if v.id in lesson_word_ids]
+                            if potential_verbs:
+                                all_verbs = potential_verbs
+                        
                         st.session_state.current_verb_id = random.choice(all_verbs).id
                     st.session_state.show_conjugation_answers = False
                     st.session_state.user_conjugation_answers = {}
@@ -459,7 +617,12 @@ def render_content():
                  pass
     
             st.markdown("---")
-            st.markdown(f"### Conjuga: **{verb.latin}** ({verb.translation})")
+            render_flashcard(
+                latin_text=verb.latin,
+                hint=f"{verb.conjugation}ª conjugación",
+                translation=verb.translation,
+                part_of_speech="Verbo"
+            )
             st.info(f"📋 Conjugación: {verb.conjugation}ª • {params['mood']} • {params['voice']} • {TENSE_MAP.get(params['tense'], params['tense'])}")
             
             # Generate forms

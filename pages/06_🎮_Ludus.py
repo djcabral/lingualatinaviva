@@ -12,6 +12,8 @@ st.set_page_config(
 )
 
 load_css()
+from utils.ui_helpers import render_sidebar_config
+render_sidebar_config()
 
 # Custom CSS for premium look
 st.markdown("""
@@ -253,7 +255,7 @@ with tabs[0]:
                     st.markdown(f"**{word}** ({data['translation']})")
             
             # Button to place selected word
-            if st.button(f"Colocar aquí ⬇️", key=f"place_{urn_id}", use_container_width=True):
+            if st.button(f"Colocar aquí ⬇️", key=f"place_{urn_id}", width="stretch"):
                 if st.session_state.ludus_selected:
                     word_data = st.session_state.ludus_words[st.session_state.ludus_selected]
                     
@@ -294,7 +296,7 @@ with tabs[0]:
                     f"{word}",
                     key=f"word_{word}",
                     help=data['translation'],
-                    use_container_width=True
+                    width="stretch"
                 ):
                     st.session_state.ludus_selected = word
                     st.rerun()
@@ -453,7 +455,7 @@ with tabs[1]:
                     if st.button(
                         label,
                         key=f"ws_cell_{i}_{j}",
-                        use_container_width=True,
+                        width="stretch",
                         type=button_type,
                         disabled=is_found
                     ):

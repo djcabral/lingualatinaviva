@@ -1,0 +1,106 @@
+{
+    "lesson": 22,
+    "topic": "Ablativo Absoluto",
+    "exercises": [
+        {
+            "type": "multiple_choice",
+            "question": "¿En qué caso van el sujeto y el predicado del Ablativo Absoluto?",
+            "options": [
+                "Nominativo",
+                "Acusativo",
+                "Ablativo",
+                "Genitivo"
+            ],
+            "correct_answer": "Ablativo",
+            "explanation": "Como su nombre indica, es una construcción en caso Ablativo."
+        },
+        {
+            "type": "multiple_choice",
+            "question": "¿Qué significa que sea 'Absoluto'?",
+            "options": [
+                "Que es muy importante",
+                "Que está gramaticalmente desligado de la oración principal",
+                "Que siempre va al principio",
+                "Que es obligatorio usarlo"
+            ],
+            "correct_answer": "Que está gramaticalmente desligado de la oración principal",
+            "explanation": "'Absolutus' significa suelto o desatado. No comparte sujeto ni objeto con la oración principal."
+        },
+        {
+            "type": "vocabulary_match",
+            "pairs": [
+                {
+                    "latin": "Sole oriente",
+                    "spanish": "Al salir el sol"
+                },
+                {
+                    "latin": "Urbe capta",
+                    "spanish": "Tras capturar la ciudad"
+                },
+                {
+                    "latin": "Me consule",
+                    "spanish": "Siendo yo cónsul"
+                },
+                {
+                    "latin": "Caesare duce",
+                    "spanish": "Bajo el mando de César"
+                }
+            ]
+        },
+        {
+            "type": "sentence_completion",
+            "question": "_____ (Habiendo dicho estas cosas), Caesar discessit.",
+            "options": [
+                "His rebus dictis",
+                "Hae res dictae",
+                "Harum rerum dictarum"
+            ],
+            "correct_answer": "His rebus dictis",
+            "explanation": "Ablativo plural: 'His rebus' (sustantivo) + 'dictis' (participio perfecto)."
+        },
+        {
+            "type": "sentence_completion",
+            "question": "_____ (Reinando Rómulo), Roma condita est.",
+            "options": [
+                "Romulo regnante",
+                "Romulus regnans",
+                "Romulo regnato"
+            ],
+            "correct_answer": "Romulo regnante",
+            "explanation": "Ablativo absoluto con participio presente ('regnante'): 'Mientras Rómulo reinaba'."
+        },
+        {
+            "type": "multiple_choice",
+            "question": "Traducción de: 'Cicerone consule'",
+            "options": [
+                "A Cicerón el cónsul",
+                "Siendo Cicerón cónsul",
+                "Cicerón es cónsul",
+                "El cónsul Cicerón"
+            ],
+            "correct_answer": "Siendo Cicerón cónsul",
+            "explanation": "Ablativo absoluto nominal (sin participio): se sobreentiende el verbo 'ser'."
+        },
+        {
+            "type": "vocabulary_match",
+            "pairs": [
+                {
+                    "latin": "Bello confecto",
+                    "spanish": "Terminada la guerra"
+                },
+                {
+                    "latin": "Navibus paratis",
+                    "spanish": "Preparadas las naves"
+                },
+                {
+                    "latin": "Signo dato",
+                    "spanish": "Dada la señal"
+                },
+                {
+                    "latin": "Hostibus victis",
+                    "spanish": "Vencidos los enemigos"
+                }
+            ]
+        }
+    ]
+}

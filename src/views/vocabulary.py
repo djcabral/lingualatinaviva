@@ -24,7 +24,7 @@ from utils.srs import calculate_next_review
 from datetime import datetime
 import random
 
-from i18n import get_text
+from utils.i18n import get_text
 
 
 def get_user_context():
@@ -35,93 +35,40 @@ def get_user_context():
         ).first()
         
         if not summary:
-            return {"current_lesson": 1, "completed_lessons": []}
+            return {"current_lesson": 1, "completed_lessons": [], "max_unlocked": 1}
         
         import json
         completed = json.loads(summary.lessons_completed) if summary.lessons_completed else []
         
         return {
             "current_lesson": summary.current_lesson,
-            "completed_lessons": completed
+            "completed_lessons": completed,
+            "max_unlocked": summary.current_lesson  # Assuming current is the highest unlocked
         }
 
 
-def get_new_words(session, current_lesson: int, limit=10):
-    """
-    Get new words from the current lesson that haven't been practiced yet.
-    Prioritizes high-frequency words (most used in classical texts).
-    """
-    # Get essential words from current lesson, ordered by frequency
+def get_lesson_words(session, lesson_number: int):
+    """Get all words for a specific lesson"""
     lesson_words = session.exec(
         select(LessonVocabulary)
-        .where(LessonVocabulary.lesson_number == current_lesson)
-        .where(LessonVocabulary.is_essential == True)
-        .order_by(LessonVocabulary.presentation_order)  # Lower = more frequent
+        .where(LessonVocabulary.lesson_number == lesson_number)
+        .order_by(LessonVocabulary.presentation_order)
     ).all()
     
-    if not lesson_words:
-        return []
-    
-    # Filter out words already seen
-    new_words = []
+    words = []
     for lw in lesson_words:
-        progress = session.exec(
-            select(UserVocabularyProgress)
-            .where(UserVocabularyProgress.user_id == 1)
-            .where(UserVocabularyProgress.word_id == lw.word_id)
-        ).first()
-        
-        if not progress or progress.times_seen == 0:
-            word = session.get(Word, lw.word_id)
-            if word:
-                new_words.append(word)
-                if len(new_words) >= limit:
-                    break  # Stop after limit (already ordered by frequency)
-    
-    return new_words
+        word = session.get(Word, lw.word_id)
+        if word:
+            # Attach metadata for display
+            word.is_essential = lw.is_essential
+            words.append(word)
+    return words
 
 
-def get_review_words(session, completed_lessons: list, limit=20):
-    """
-    Get words from completed lessons that are due for review (SRS).
-    """
-    if not completed_lessons:
-        return []
-    
-    # Get all words from completed lessons
-    lesson_words = session.exec(
-        select(LessonVocabulary)
-        .where(LessonVocabulary.lesson_number.in_(completed_lessons))
-    ).all()
-    
-    due_words = []
-    now = datetime.utcnow()
-    
-    for lw in lesson_words:
-        progress = session.exec(
-            select(UserVocabularyProgress)
-            .where(UserVocabularyProgress.user_id == 1)
-            .where(UserVocabularyProgress.word_id == lw.word_id)
-        ).first()
-        
-        if progress and progress.times_seen > 0:
-            # Check if due for review
-            if progress.next_review_date and progress.next_review_date <= now:
-                word = session.get(Word, lw.word_id)
-                if word:
-                    due_words.append(word)
-            # If no next_review_date but seen, include with lower priority
-            elif not progress.next_review_date and progress.times_seen < 3:
-                word = session.get(Word, lw.word_id)
-                if word:
-                    due_words.append(word)
-    
-    return due_words[:limit]
-
-
-def select_next_card():
+def select_next_card(target_lesson=None):
     """
     Smart card selection based on lesson context.
+    If target_lesson is specified, focuses on that lesson.
     Returns a Word object or None.
     """
     context = get_user_context()
@@ -129,6 +76,17 @@ def select_next_card():
     completed = context["completed_lessons"]
     
     with get_session() as session:
+        # If a specific lesson is targeted
+        if target_lesson:
+            # Get all words for this lesson
+            words = get_lesson_words(session, target_lesson)
+            if not words:
+                return None
+                
+            # Simple random choice for now, could be smarter (prioritize unseen)
+            return random.choice(words)
+            
+        # Default "Smart Mode" (mix of new and review)
         new_words = get_new_words(session, current_lesson, limit=10)
         review_words = get_review_words(session, completed, limit=20)
         
@@ -164,28 +122,62 @@ def show_vocabulary():
     
     # Show lesson context
     context = get_user_context()
-    st.caption(f"📘 Practicando desde la Lección {context['current_lesson']}")
+    max_lesson = context.get("max_unlocked", 1)
     
+    # Lesson Selector
+    lesson_options = ["Modo Inteligente (Smart)"] + [f"Lección {i}" for i in range(1, max_lesson + 1)]
+    selected_option = st.selectbox(
+        "Selecciona qué estudiar:",
+        options=lesson_options,
+        index=0
+    )
+    
+    target_lesson = None
+    if selected_option != "Modo Inteligente (Smart)":
+        target_lesson = int(selected_option.split(" ")[1])
+        st.caption(f"📘 Practicando vocabulario específico de la **Lección {target_lesson}**")
+    else:
+        st.caption(f"🧠 Modo Inteligente: Combinando repaso y palabras nuevas de Lección {context['current_lesson']}")
+    
+    # Reset card if lesson changed
+    if "last_lesson_mode" not in st.session_state or st.session_state.last_lesson_mode != selected_option:
+        st.session_state.last_lesson_mode = selected_option
+        load_new_card(target_lesson)
+        st.rerun()
+
     if "current_word_id" not in st.session_state:
-        load_new_card()
+        load_new_card(target_lesson)
 
     if st.session_state.current_word_id is None:
-        st.warning(get_text('no_words', st.session_state.language))
+        st.info("¡No hay palabras disponibles para esta selección! Intenta con otra lección.")
         return
 
     with get_session() as session:
         word = session.get(Word, st.session_state.current_word_id)
         
         if not word:
-            load_new_card()
+            load_new_card(target_lesson)
             st.rerun()
             return
 
+        # Check if essential (need to query LessonVocabulary)
+        is_essential = False
+        if target_lesson:
+            lv = session.exec(
+                select(LessonVocabulary)
+                .where(LessonVocabulary.lesson_number == target_lesson)
+                .where(LessonVocabulary.word_id == word.id)
+            ).first()
+            if lv and lv.is_essential:
+                is_essential = True
+
         # Card Container
+        essential_badge = '<span style="background-color: #FFD700; color: black; padding: 2px 6px; border-radius: 4px; font-size: 0.8em; vertical-align: middle;">⭐ Esencial</span>' if is_essential else ""
+        
         st.markdown(
             f"""
             <div class="vocab-card">
-                <div class="vocab-latin">{word.latin}</div>
+                <div class="vocab-latin">{word.latin} {essential_badge}</div>
             </div>
             """,
             unsafe_allow_html=True
@@ -195,10 +187,12 @@ def show_vocabulary():
             st.session_state.show_answer = True
 
         if st.session_state.get("show_answer", False):
+            # Preferir traducción en español
+            spanish_translation = word.definition_es or word.translation
             st.markdown(
                 f"""
                 <div style="text-align: center; margin-bottom: 20px;">
-                    <div class="vocab-translation">{word.translation}</div>
+                    <div class="vocab-translation">{spanish_translation}</div>
                     <div class="vocab-pos">{get_text(word.part_of_speech, st.session_state.language)}</div>
                 </div>
                 """,
@@ -228,8 +222,8 @@ def show_vocabulary():
                     process_review(word.id, 4)
 
 
-def load_new_card():
-    word = select_next_card()
+def load_new_card(target_lesson=None):
+    word = select_next_card(target_lesson)
     if word:
         st.session_state.current_word_id = word.id
         st.session_state.show_answer = False
@@ -239,6 +233,15 @@ def load_new_card():
 
 def process_review(word_id, quality):
     """Process review and update SRS data"""
+    
+    # Determine current target lesson from session state if available
+    target_lesson = None
+    if "last_lesson_mode" in st.session_state and st.session_state.last_lesson_mode != "Modo Inteligente (Smart)":
+        try:
+            target_lesson = int(st.session_state.last_lesson_mode.split(" ")[1])
+        except:
+            pass
+
     with get_session() as session:
         # Get or create UserVocabularyProgress
         progress = session.exec(
@@ -302,5 +305,5 @@ def process_review(word_id, quality):
         
         session.commit()
     
-    load_new_card()
+    load_new_card(target_lesson)
     st.rerun()

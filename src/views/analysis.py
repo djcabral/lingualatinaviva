@@ -20,11 +20,11 @@ from sqlmodel import select
 from database import (
     get_session, Word, LessonVocabulary, UserProgressSummary
 )
-from latin_logic import LatinMorphology
+from utils.latin_logic import LatinMorphology
 import random
 import json
 
-from i18n import get_text
+from utils.i18n import get_text
 
 
 # Lesson => Allowed grammar constraints

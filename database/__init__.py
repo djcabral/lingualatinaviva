@@ -43,6 +43,8 @@ InflectedForm = models_module.InflectedForm
 Challenge = models_module.Challenge
 UserChallengeProgress = models_module.UserChallengeProgress
 Lesson = models_module.Lesson
+Feedback = models_module.Feedback
+SystemSetting = models_module.SystemSetting
 
 # Integration models (learning progress system)
 LessonProgress = integration_models_module.LessonProgress
@@ -54,6 +56,8 @@ SyntaxAnalysisProgress = integration_models_module.SyntaxAnalysisProgress
 UserProgressSummary = integration_models_module.UserProgressSummary
 UnlockCondition = integration_models_module.UnlockCondition
 Recommendation = integration_models_module.Recommendation
+LessonRequirement = integration_models_module.LessonRequirement
+UserLessonProgress = integration_models_module.UserLessonProgress
 
 # Syntax analysis models
 SentenceAnalysis = syntax_models_module.SentenceAnalysis
@@ -70,7 +74,7 @@ from database.connection import (
 )
 
 # Helper functions
-from database.integration_models import (
+from database.utils import (
     get_json_list,
     set_json_list
 )
@@ -90,6 +94,8 @@ __all__ = [
     'Challenge',
     'UserChallengeProgress',
     'Lesson',
+    'Feedback',
+    'SystemSetting',
     
     # Integration models
     'LessonProgress',
@@ -101,6 +107,8 @@ __all__ = [
     'UserProgressSummary',
     'UnlockCondition',
     'Recommendation',
+    'LessonRequirement',
+    'UserLessonProgress',
     
     # Syntax models
     'SentenceAnalysis',

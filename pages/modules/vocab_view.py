@@ -6,13 +6,13 @@ from datetime import datetime, timedelta
 
 
 from database.connection import get_session
-from database import Word, ReviewLog, UserProfile, Text, TextWordLink
-from database.integration_models import LessonVocabulary, UserProgressSummary
+from database import Word, ReviewLog, UserProfile, Text, TextWordLink, LessonVocabulary, UserProgressSummary
 from sqlmodel import select
 from utils.i18n import get_text
 from utils.srs import calculate_next_review
 from utils.gamification import process_xp_gain
 from utils.ui_helpers import load_css
+from utils.ui_components import render_flashcard
 import json
 
 
@@ -105,9 +105,9 @@ def render_content():
     if st.session_state.study_mode == "lesson":
         col_a, col_b, col_c = st.columns(3)
         with col_a:
-            st.page_link("pages/02_📘_Lecciones.py", label="📘 Volver al Curso", icon="📘")
-            st.page_link("pages/04_⚔️_Práctica.py", label="📜 Practicar Declinaciones", icon="📜")
-            st.page_link("pages/02_📘_Lecciones.py", label="📖 Ir a Lecturas", icon="📖")
+            st.page_link("pages/02_📘_Lecciones.py", label="Volver al Curso", icon="📘")
+            st.page_link("pages/04_⚔️_Práctica.py", label="Practicar Declinaciones", icon="📜")
+            st.page_link("pages/02_📘_Lecciones.py", label="Ir a Lecturas", icon="📖")
         st.markdown("---")
     
     
@@ -331,14 +331,20 @@ def render_content():
                  if word.genitive: # e.g. felix, felicis
                     disambiguation_hint = f"({word.genitive})"
         
-        st.markdown(
-            f"""
-            <div class="vocab-card">
-                <div class="vocab-latin">{display_word}</div>
-                {f'<div style="font-size: 0.6em; color: #888; margin-top: -10px; font-style: italic;">{disambiguation_hint}</div>' if disambiguation_hint else ''}
-            </div>
-            """,
-            unsafe_allow_html=True
+        # Determine if we show translation/details (Answer Side)
+        translation_text = None
+        pos_text = None
+        
+        if st.session_state.show_answer:
+            translation_text = word.definition_es or word.translation
+            pos_text = get_text(word.part_of_speech, st.session_state.language)
+            
+        # Render using standardized component
+        render_flashcard(
+            latin_text=display_word,
+            hint=disambiguation_hint,
+            translation=translation_text,
+            part_of_speech=pos_text
         )
         
         # Show answer button
@@ -349,18 +355,7 @@ def render_content():
                     st.session_state.show_answer = True
                     st.rerun()
         else:
-            # Show translation and details
-            st.markdown(
-                f"""
-                <div style="text-align: center; margin-bottom: 20px;">
-                    <div class="vocab-translation">{word.translation}</div>
-                    <div class="vocab-pos">{get_text(word.part_of_speech, st.session_state.language)}</div>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
-            
-            # Show additional info
+            # Show additional info (Genitive, Principal Parts) - outside the card
             if word.genitive:
                 st.info(f"**Genitivo:** {word.genitive}")
             if word.principal_parts:

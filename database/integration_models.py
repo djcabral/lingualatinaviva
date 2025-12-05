@@ -11,6 +11,16 @@ from typing import Optional, List
 from sqlmodel import Field, SQLModel, Relationship, JSON, Column
 from datetime import datetime
 import json
+import logging
+
+logger = logging.getLogger(__name__)
+
+# CRITICAL: Prevent duplicate model registration
+if '__INTEGRATION_MODELS_MODULE_LOADED__' in globals():
+    logger.warning("⚠️  WARNING: database.integration_models is being reloaded! This may cause 'Multiple classes found' errors.")
+else:
+    globals()['__INTEGRATION_MODELS_MODULE_LOADED__'] = True
+    logger.debug("database.integration_models loaded successfully")
 
 
 class LessonProgress(SQLModel, table=True):
@@ -281,15 +291,73 @@ class Recommendation(SQLModel, table=True):
     acted_on_at: Optional[datetime] = None
 
 
-# Helper functions para trabajar con JSON fields
+class LessonRequirement(SQLModel, table=True):
+    """Requisitos para completar una lección y desbloquear la siguiente"""
+    __tablename__ = "lesson_requirement"
+    __table_args__ = {'extend_existing': True}
+    
+    id: Optional[int] = Field(default=None, primary_key=True)
+    lesson_number: int = Field(index=True)
+    
+    # Tipo de requisito (New - flexible approach)
+    requirement_type: str = Field(default="vocabulary_mastery")  # "vocabulary_mastery", "challenge_completion", "analysis_practice", "reading_completion", "exercise_completion"
+    
+    # Requisitos de Vocabulario (Legacy - mantener compatibilidad)
+    required_vocab_mastery: float = Field(default=0.8)  # 80% de palabras esenciales aprendidas
+    
+    # Requisitos de Traducción (Legacy)
+    required_translations: int = Field(default=5)  # 5 oraciones traducidas correctamente
+    
+    # Requisitos de Análisis (Legacy - opcional para lecciones avanzadas)
+    required_analyses: int = Field(default=0)
+    
+    # Requisitos de Lectura (Legacy - opcional)
+    required_readings: int = Field(default=0)
+    
+    # Criterios flexibles (JSON - New approach)
+    # Ejemplos:
+    # {"min_words": 20, "min_accuracy": 0.8}
+    # {"challenge_ids": [1, 2, 3], "min_stars": 2}
+    # {"min_analyses": 5, "min_accuracy": 0.7}
+    criteria_json: Optional[str] = None
+    
+    # Metadatos
+    is_required: bool = Field(default=True)  # False = opcional (para achievements extra)
+    is_hard_requirement: bool = Field(default=True)  # Alias de is_required para compatibilidad
+    weight: float = Field(default=1.0)  # Peso en el cálculo de % de completitud
+    description: Optional[str] = None  # Descripción legible del requisito
+    
+    # Relación
+    progress: List["UserLessonProgress"] = Relationship(back_populates="requirement")
 
-def get_json_list(json_str: str) -> List:
-    """Convierte un string JSON a lista"""
-    try:
-        return json.loads(json_str) if json_str else []
-    except:
-        return []
 
-def set_json_list(items: List) -> str:
-    """Convierte una lista a string JSON"""
-    return json.dumps(items)
+class UserLessonProgress(SQLModel, table=True):
+    """Progreso del usuario en los requisitos de cada lección"""
+    __tablename__ = "user_lesson_progress"
+    __table_args__ = {'extend_existing': True}
+    
+    id: Optional[int] = Field(default=None, primary_key=True)
+    user_id: int = Field(default=1, index=True)
+    lesson_number: int = Field(index=True)
+    requirement_id: int = Field(foreign_key="lesson_requirement.id", index=True)
+    
+    # Estado
+    is_completed: bool = Field(default=False)
+    completion_percentage: float = Field(default=0.0)  # 0.0 - 1.0
+    
+    # Métricas específicas (JSON)
+    # Depende del requirement_type:
+    # {"words_mastered": 15, "accuracy": 0.85}
+    # {"challenges_completed": 2, "stars_earned": 5}
+    metrics_json: str = Field(default="{}")
+    
+    # Timestamps
+    started_at: Optional[datetime] = None
+    last_updated_at: datetime = Field(default_factory=datetime.utcnow)
+    completed_at: Optional[datetime] = None
+    
+    # Relación
+    requirement: Optional["LessonRequirement"] = Relationship(back_populates="progress")
+
+
+# Helper functions moved to database/utils.py

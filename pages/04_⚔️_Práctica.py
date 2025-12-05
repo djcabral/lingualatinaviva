@@ -13,50 +13,52 @@ st.set_page_config(
 )
 
 load_css()
+from utils.ui_helpers import render_sidebar_config
+render_sidebar_config()
 render_page_header("Práctica", "⚔️")
 
-tabs = st.tabs(["📜 Declinaciones", "⚔️ Conjugaciones", "🗺️ Aventura", "🎯 Desafíos"])
+# Initialize session state for module selection
+if 'practice_module' not in st.session_state:
+    st.session_state.practice_module = "📜 Declinaciones"
 
-# Auto-switch to Challenges tab if flag is set
+# Auto-switch to Challenges if flag is set (from Ludus)
 if 'go_to_challenge' in st.session_state and st.session_state['go_to_challenge']:
     st.session_state['go_to_challenge'] = False
-    # Force switch to tab index 3 (Desafíos)
-    st.session_state['active_tab'] = 3
+    st.session_state.practice_module = "🎯 Desafíos"
 
-with tabs[0]:
-    try:
+# Module selection with radio buttons
+selected_module = st.radio(
+    "Selecciona un módulo de práctica:",
+    ["📜 Declinaciones", "⚔️ Conjugaciones", "🗺️ Aventura", "🎯 Desafíos"],
+    horizontal=True,
+    key='practice_module',
+    label_visibility="collapsed"
+)
+
+st.markdown("---")
+
+# Render the selected module
+try:
+    if selected_module == "📜 Declinaciones":
         import pages.modules.declensions_view as declensions_view
         declensions_view.render_content()
-    except Exception as e:
-        st.error(f"Error al cargar Declinaciones: {str(e)}")
-        import traceback
-        st.code(traceback.format_exc())
-
-with tabs[1]:
-    try:
+    
+    elif selected_module == "⚔️ Conjugaciones":
         import pages.modules.conjugations_view as conjugations_view
         conjugations_view.render_content()
-    except Exception as e:
-        st.error(f"Error al cargar Conjugaciones: {str(e)}")
-        import traceback
-        st.code(traceback.format_exc())
-
-with tabs[2]:
-    try:
+    
+    elif selected_module == "🗺️ Aventura":
         import pages.modules.adventure_view as adventure_view
         adventure_view.render_content()
-    except Exception as e:
-        st.error(f"Error al cargar Aventura: {str(e)}")
-        import traceback
-        st.code(traceback.format_exc())
-
-with tabs[3]:
-    try:
+    
+    elif selected_module == "🎯 Desafíos":
         import pages.modules.challenges_view as challenges_view
         challenges_view.render_content()
-    except Exception as e:
-        st.error(f"Error al cargar Desafíos: {str(e)}")
-        import traceback
+
+except Exception as e:
+    st.error(f"❌ Error al cargar el módulo {selected_module}: {str(e)}")
+    import traceback
+    with st.expander("Ver detalles del error"):
         st.code(traceback.format_exc())
 
 render_sidebar_footer()

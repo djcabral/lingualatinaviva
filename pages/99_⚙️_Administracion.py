@@ -14,6 +14,7 @@ if root_path not in sys.path:
 from database.connection import get_session, init_db
 from database import Word, Text, ReviewLog, UserProfile, TextWordLink, Lesson
 from database import SentenceAnalysis, TokenAnnotation, SentenceStructure
+from database import LessonRequirement, UserLessonProgress
 from utils.csv_handler import import_vocabulary_from_csv, export_vocabulary_to_excel
 
 from utils.i18n import get_text
@@ -23,6 +24,8 @@ from utils.text_utils import normalize_latin
 st.set_page_config(page_title="Admin", page_icon="⚙️", layout="wide")
 
 load_css()
+from utils.ui_helpers import render_sidebar_config
+render_sidebar_config()
 
 st.markdown(
     """
@@ -59,7 +62,7 @@ with st.sidebar:
 # Sidebar Navigation
 section = st.sidebar.radio(
     "Sección",
-    ["Vocabulario", "Textos", "Lecciones", "Sintaxis", "Usuario", "Estadísticas"],
+    ["Vocabulario", "Textos", "Lecciones", "Ejercicios", "Sintaxis", "Usuario", "Estadísticas", "Requisitos de Lección", "Configuración"],
     index=0
 )
 
@@ -1039,7 +1042,7 @@ if section == "Vocabulario":
 elif section == "Textos":
     st.markdown("## 📜 Gestión de Textos")
     
-    text_tabs = st.tabs(["➕ Añadir Texto", "📚 Ver Textos", "🛠️ Herramientas"])
+    text_tabs = st.tabs(["➕ Añadir Texto", "📚 Ver Textos", "📥 Importar", "📤 Exportar", "🛠️ Herramientas"])
     
     with text_tabs[0]:
         st.markdown("### Nuevo Texto")
@@ -1086,6 +1089,7 @@ elif section == "Textos":
                             if normalize_latin(db_word.latin.lower()) == text_word:
                                 link = TextWordLink(text_id=new_text.id, word_id=db_word.id, frequency=freq)
                                 session.add(link)
+                                session.add(link)
                                 linked_count += 1
                                 break
                     session.commit()
@@ -1100,7 +1104,85 @@ elif section == "Textos":
             for t in texts:
                 with st.expander(f"{t.title} (Nivel {t.difficulty})"):
                     st.write(t.content[:200] + "...")
-                    st.caption(f"Autor: {t.author.name if t.author else 'Desconocido'}")
+                    st.caption(f"Autor: {t.author if t.author else 'Desconocido'}")
+
+    # --- Import Tab ---
+    with text_tabs[2]:
+        st.markdown("### 📥 Importar Textos")
+        st.info("Sube archivos CSV o Excel con tus textos. Columnas requeridas: title, content, difficulty.")
+        
+        from utils.content_import_export import ContentImporter, ContentTemplateGenerator
+        
+        # Download Template
+        st.markdown("#### 1. Descargar Plantilla")
+        col_t1, col_t2 = st.columns(2)
+        template_df = ContentTemplateGenerator.generate_text_template()
+        
+        with col_t1:
+            st.download_button(
+                "⬇️ Plantilla CSV",
+                data=template_df.to_csv(index=False).encode('utf-8'),
+                file_name="plantilla_textos.csv",
+                mime="text/csv",
+                width="stretch"
+            )
+        with col_t2:
+            output = io.BytesIO()
+            with pd.ExcelWriter(output, engine='openpyxl') as writer:
+                template_df.to_excel(writer, index=False)
+            st.download_button(
+                "⬇️ Plantilla Excel",
+                data=output.getvalue(),
+                file_name="plantilla_textos.xlsx",
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                width="stretch"
+            )
+            
+        st.markdown("#### 2. Subir Archivo")
+        uploaded_file = st.file_uploader("Seleccionar archivo", type=['csv', 'xlsx', 'xls'], key="text_uploader")
+        
+        if uploaded_file:
+            try:
+                df = ContentImporter.parse_file(uploaded_file.getvalue(), uploaded_file.name)
+                is_valid, errors = ContentImporter.validate_dataframe(df, 'text')
+                
+                if is_valid:
+                    st.success(f"✅ Archivo válido. {len(df)} textos encontrados.")
+                    st.dataframe(df.head())
+                    
+                    if st.button("🚀 Importar Textos", type="primary"):
+                        with get_session() as session:
+                            texts = ContentImporter.dataframe_to_texts(df)
+                            for t in texts:
+                                session.add(t)
+                            session.commit()
+                            st.success(f"✅ Se importaron {len(texts)} textos exitosamente.")
+                else:
+                    st.error("❌ El archivo tiene errores:")
+                    for e in errors:
+                        st.write(f"- {e}")
+            except Exception as e:
+                st.error(f"Error al procesar: {e}")
+
+    # --- Export Tab ---
+    with text_tabs[3]:
+        st.markdown("### 📤 Exportar Textos")
+        from utils.content_import_export import ContentExporter
+        
+        if st.button("🔄 Generar Exportación"):
+            with get_session() as session:
+                texts = session.exec(select(Text)).all()
+                if texts:
+                    df = ContentExporter.texts_to_dataframe(texts)
+                    
+                    st.download_button(
+                        "⬇️ Descargar CSV",
+                        data=ContentExporter.to_csv(df),
+                        file_name="textos_export.csv",
+                        mime="text/csv"
+                    )
+                else:
+                    st.warning("No hay textos para exportar.")
 
     with text_tabs[2]:
         st.markdown("### 🛠️ Herramientas de Análisis")
@@ -1196,7 +1278,7 @@ elif section == "Lecciones":
             
             st.info("💡 **Tip:** Usa Markdown para formato.\nEjemplos:\n- `## Título`\n- `**negrita**`\n- `*cursiva*`")
         
-        if st.button("💾 Guardar Lección", type="primary", use_container_width=True):
+        if st.button("💾 Guardar Lección", type="primary", width="stretch"):
             if not lesson_title or not content_markdown:
                 st.error("⚠️ Título y contenido son obligatorios")
             else:
@@ -1251,7 +1333,7 @@ elif section == "Lecciones":
                     })
                 
                 df = pd.DataFrame(lesson_data)
-                st.dataframe(df, use_container_width=True, hide_index=True)
+                st.dataframe(df, width="stretch", hide_index=True)
                 
                 st.markdown("---")
                 st.markdown("### Editar / Eliminar Lección")
@@ -1319,13 +1401,143 @@ elif section == "Lecciones":
                                 else:
                                     st.error("❌ Número incorrecto. No se eliminó la lección.")
 
+
+# --- SECTION: EXERCISES ---
+elif section == "Ejercicios":
+    st.markdown("## 🏋️ Gestión de Ejercicios Estáticos")
+    
+    st.info("Sube archivos JSON para definir los ejercicios estáticos de cada lección.")
+    
+    st.markdown("### 📤 Cargar Archivo JSON")
+    uploaded_file = st.file_uploader("Seleccionar archivo JSON", type=['json'], key="exercise_uploader")
+    
+    if uploaded_file:
+        try:
+            content = json.load(uploaded_file)
+            
+            # Validation
+            required_keys = ["lesson", "topic", "exercises"]
+            missing = [k for k in required_keys if k not in content]
+            
+            if missing:
+                st.error(f"❌ JSON inválido. Faltan claves: {', '.join(missing)}")
+            else:
+                st.success(f"✅ JSON válido. Lección: {content['lesson']} - Título: {content['topic']}")
+                st.write(f"Contiene {len(content['exercises'])} ejercicios.")
+                
+                if st.button("💾 Guardar en Sistema", type="primary"):
+                    # Save to data/static_exercises/
+                    target_dir = os.path.join(root_path, "data", "static_exercises")
+                    os.makedirs(target_dir, exist_ok=True)
+                    
+                    filename = f"exercises_l{content['lesson']}.json"
+                    target_path = os.path.join(target_dir, filename)
+                    
+                    with open(target_path, "w", encoding="utf-8") as f:
+                        json.dump(content, f, indent=4, ensure_ascii=False)
+                    
+                    st.success(f"✅ Archivo guardado como: {filename}")
+                    st.balloons()
+                    
+    st.markdown("---")
+    st.markdown("### 📂 Archivos Existentes")
+    
+    exercises_dir = os.path.join(root_path, "data", "static_exercises")
+    if os.path.exists(exercises_dir):
+        files = sorted([f for f in os.listdir(exercises_dir) if f.endswith(".json")])
+        if files:
+            for f in files:
+                st.text(f"📄 {f}")
+        else:
+            st.info("No hay archivos de ejercicios.")
+
 elif section == "Sintaxis":
     st.markdown("## 📐 Gestión de Sintaxis")
     
-    syntax_tabs = st.tabs(["➕ Nueva Oración", "📚 Ver Oraciones", "❓ Ayuda"])
+    syntax_tabs = st.tabs(["➕ Nueva Oración", "📚 Ver Oraciones", "📥 Importar", "📤 Exportar", "❓ Ayuda"])
     
-    # --- Tab: New Sentence ---
-    with syntax_tabs[0]:
+    # ... (New Sentence logic remains same) ...
+    # ... (View Sentences logic remains same) ...
+
+    # --- Import Tab (Syntax) ---
+    with syntax_tabs[2]:
+        st.markdown("### 📥 Importar Oraciones")
+        st.info("Importa oraciones masivamente para análisis posterior. Columnas: latin_text, spanish_translation, complexity.")
+        
+        from utils.content_import_export import ContentImporter, ContentTemplateGenerator
+        
+        # Download Template
+        st.markdown("#### 1. Descargar Plantilla")
+        col_t1, col_t2 = st.columns(2)
+        template_df = ContentTemplateGenerator.generate_syntax_template()
+        
+        with col_t1:
+            st.download_button(
+                "⬇️ Plantilla CSV",
+                data=template_df.to_csv(index=False).encode('utf-8'),
+                file_name="plantilla_sintaxis.csv",
+                mime="text/csv",
+                width="stretch",
+                key="syntax_csv_dl"
+            )
+        with col_t2:
+            output = io.BytesIO()
+            with pd.ExcelWriter(output, engine='openpyxl') as writer:
+                template_df.to_excel(writer, index=False)
+            st.download_button(
+                "⬇️ Plantilla Excel",
+                data=output.getvalue(),
+                file_name="plantilla_sintaxis.xlsx",
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                width="stretch",
+                key="syntax_excel_dl"
+            )
+            
+        st.markdown("#### 2. Subir Archivo")
+        uploaded_file = st.file_uploader("Seleccionar archivo", type=['csv', 'xlsx', 'xls'], key="syntax_uploader")
+        
+        if uploaded_file:
+            try:
+                df = ContentImporter.parse_file(uploaded_file.getvalue(), uploaded_file.name)
+                is_valid, errors = ContentImporter.validate_dataframe(df, 'syntax')
+                
+                if is_valid:
+                    st.success(f"✅ Archivo válido. {len(df)} oraciones encontradas.")
+                    st.dataframe(df.head())
+                    
+                    if st.button("🚀 Importar Oraciones", type="primary"):
+                        with get_session() as session:
+                            sentences = ContentImporter.dataframe_to_sentences(df)
+                            for s in sentences:
+                                session.add(s)
+                            session.commit()
+                            st.success(f"✅ Se importaron {len(sentences)} oraciones. Aparecerán en la 'Zona de Espera' análisis.")
+                else:
+                    st.error("❌ El archivo tiene errores:")
+                    for e in errors:
+                        st.write(f"- {e}")
+            except Exception as e:
+                st.error(f"Error al procesar: {e}")
+
+    # --- Export Tab (Syntax) ---
+    with syntax_tabs[3]:
+        st.markdown("### 📤 Exportar Oraciones")
+        from utils.content_import_export import ContentExporter
+        
+        if st.button("🔄 Generar Exportación", key="export_syntax_btn"):
+            with get_session() as session:
+                sentences = session.exec(select(SentenceAnalysis)).all()
+                if sentences:
+                    df = ContentExporter.sentences_to_dataframe(sentences)
+                    
+                    st.download_button(
+                        "⬇️ Descargar CSV",
+                        data=ContentExporter.to_csv(df),
+                        file_name="sintaxis_export.csv",
+                        mime="text/csv"
+                    )
+                else:
+                    st.warning("No hay oraciones para exportar.")
         st.markdown("### Añadir Nueva Oración")
         
         # Session state for analysis workflow
@@ -1425,7 +1637,7 @@ elif section == "Sintaxis":
                 },
                 hide_index=True,
                 num_rows="fixed",
-                use_container_width=True,
+                width="stretch",
                 key="syntax_editor_table"
             )
             
@@ -1855,3 +2067,209 @@ elif section == "Estadísticas":
         
         st.markdown("### Distribución por Tipo")
         st.bar_chart(pos_counts)
+
+
+# --- SECTION: REQUISITOS DE LECCIÓN ---
+if section == "Requisitos de Lección":
+    st.markdown("## 📋 Gestión de Requisitos de Lección")
+    
+    st.info("""
+    **Filosofía de Diseño:** 100% de requisitos obligatorios (strict mode)  
+    _"Mejor frustración al principio que al final cuando se vuelve más difícil"_
+    """)
+    
+    # Selector de lección
+    lesson_number = st.selectbox(
+        "Seleccionar Lección",
+        options=list(range(1, 41)),
+        format_func=lambda x: f"Lección {x}"
+    )
+    
+    with get_session() as session:
+        # Obtener requisitos existentes para esta lección
+        requirements = session.exec(
+            select(LessonRequirement)
+            .where(LessonRequirement.lesson_number == lesson_number)
+            .order_by(LessonRequirement.id)
+        ).all()
+        
+        st.markdown(f"### Requisitos para Lección {lesson_number}")
+        
+        if requirements:
+            # Mostrar requisitos existentes
+            for req in requirements:
+                with st.expander(
+                    f"{'✅ ' if req.is_required else '⭐ '}{req.description or req.requirement_type}",
+                    expanded=False
+                ):
+                    col1, col2 = st.columns(2)
+                    
+                    with col1:
+                        st.markdown(f"**Tipo:** `{req.requirement_type}`")
+                        st.markdown(f"**Obligatorio:** {'Sí' if req.is_required else 'No (Opcional)'}")
+                        st.markdown(f"**Peso:** {req.weight}")
+                    
+                    with col2:
+                        if req.criteria_json:
+                            st.markdown("**Criterios JSON:**")
+                            try:
+                                criteria = json.loads(req.criteria_json)
+                                st.json(criteria)
+                            except:
+                                st.code(req.criteria_json)
+                        
+                        # Legacy fields
+                        if req.required_vocab_mastery > 0:
+                            st.markdown(f"**Dominio vocab:** {req.required_vocab_mastery:.0%}")
+                        if req.required_translations > 0:
+                            st.markdown(f"**Traducciones:** {req.required_translations}")
+                        if req.required_analyses > 0:
+                            st.markdown(f"**Análisis:** {req.required_analyses}")
+                        if req.required_readings > 0:
+                            st.markdown(f"**Lecturas:** {req.required_readings}")
+                    
+                    # Botones de acción
+                    col_edit, col_delete = st.columns(2)
+                    with col_edit:
+                        if st.button("✏️ Editar", key=f"edit_{req.id}"):
+                            st.session_state[f'editing_req_{req.id}'] = True
+                            st.rerun()
+                    
+                    with col_delete:
+                        if st.button("🗑️ Eliminar", key=f"delete_{req.id}", type="secondary"):
+                            session.delete(req)
+                            session.commit()
+                            st.success(f"Requisito eliminado")
+                            st.rerun()
+                    
+                    # Form de edición (si está en modo edición)
+                    if st.session_state.get(f'editing_req_{req.id}', False):
+                        st.markdown("---")
+                        st.markdown("#### Editar Requisito")
+                        
+                        with st.form(f"edit_form_{req.id}"):
+                            new_description = st.text_input("Descripción", value=req.description or "")
+                            new_type = st.selectbox(
+                                "Tipo de Requisito",
+                                options=["vocabulary_mastery", "challenge_completion", "analysis_practice", "reading_completion", "exercise_completion"],
+                                index=["vocabulary_mastery", "challenge_completion", "analysis_practice", "reading_completion", "exercise_completion"].index(req.requirement_type) if req.requirement_type in ["vocabulary_mastery", "challenge_completion", "analysis_practice", "reading_completion", "exercise_completion"] else 0
+                            )
+                            new_is_required = st.checkbox("Obligatorio", value=req.is_required)
+                            new_weight = st.number_input("Peso", min_value=0.1, max_value=5.0, value=req.weight, step=0.1)
+                            new_criteria = st.text_area("Criterios JSON", value=req.criteria_json or "{}")
+                            
+                            col_save, col_cancel = st.columns(2)
+                            with col_save:
+                                if st.form_submit_button("💾 Guardar Cambios", type="primary"):
+                                    req.description = new_description
+                                    req.requirement_type = new_type
+                                    req.is_required = new_is_required
+                                    req.is_hard_requirement = new_is_required  # Mantener sincronizado
+                                    req.weight = new_weight
+                                    req.criteria_json = new_criteria
+                                    
+                                    session.add(req)
+                                    session.commit()
+                                    
+                                    st.session_state[f'editing_req_{req.id}'] = False
+                                    st.success("Requisito actualizado")
+                                    st.rerun()
+                            
+                            with col_cancel:
+                                if st.form_submit_button("❌ Cancelar"):
+                                    st.session_state[f'editing_req_{req.id}'] = False
+                                    st.rerun()
+            
+            # Resumen
+            st.markdown("---")
+            st.markdown("### 📊 Resumen")
+            required_count = sum(1 for r in requirements if r.is_required)
+            optional_count = len(requirements) - required_count
+            total_weight = sum(r.weight for r in requirements if r.is_required)
+            
+            col1, col2, col3 = st.columns(3)
+            col1.metric("Requisitos Obligatorios", required_count)
+            col2.metric("Requisitos Opcionales", optional_count)
+            col3.metric("Peso Total", f"{total_weight:.1f}")
+        
+        else:
+            st.warning(f"No hay requisitos definidos para la Lección {lesson_number}")
+        
+        # Formulario para agregar nuevo requisito
+        st.markdown("---")
+        st.markdown("### ➕ Agregar Nuevo Requisito")
+        
+        with st.form("add_requirement"):
+            new_req_description = st.text_input("Descripción", placeholder="Ej: Dominar 20 palabras con 80% de precisión")
+            
+            new_req_type = st.selectbox(
+                "Tipo de Requisito",
+                options=["vocabulary_mastery", "challenge_completion", "analysis_practice", "reading_completion", "exercise_completion"],
+                format_func=lambda x: {
+                    "vocabulary_mastery": "📚 Dominio de Vocabulario",
+                    "challenge_completion": "🎯 Completar Desafíos",
+                    "analysis_practice": "🔍 Práctica de Análisis",
+                    "reading_completion": "📖 Completar Lecturas",
+                    "exercise_completion": "✍️ Completar Ejercicios"
+                }.get(x, x)
+            )
+            
+            new_req_is_required = st.checkbox("Obligatorio (required para pasar la lección)", value=True)
+            new_req_weight = st.number_input("Peso", min_value=0.1, max_value=5.0, value=1.0, step=0.1, help="Importancia relativa de este requisito")
+            
+            # Criterios JSON
+            st.markdown("**Criterios (JSON):**")
+            
+            # Templates según tipo
+            if new_req_type == "vocabulary_mastery":
+                template = json.dumps({"min_words": 20, "min_accuracy": 0.8}, indent=2)
+            elif new_req_type == "challenge_completion":
+                template = json.dumps({"challenge_ids": [1, 2, 3], "min_stars": 2}, indent=2)
+            elif new_req_type == "analysis_practice":
+                template = json.dumps({"min_analyses": 5, "min_accuracy": 0.7}, indent=2)
+            else:
+                template = json.dumps({}, indent=2)
+            
+            new_req_criteria = st.text_area("Criterios JSON", value=template, height=150)
+            
+            if st.form_submit_button("➕ Agregar Requisito", type="primary"):
+                # Validar JSON
+                try:
+                    json.loads(new_req_criteria)
+                except:
+                    st.error("El JSON de criterios no es válido")
+                    st.stop()
+                
+                # Crear requisito
+                new_requirement = LessonRequirement(
+                    lesson_number=lesson_number,
+                    requirement_type=new_req_type,
+                    description=new_req_description,
+                    is_required=new_req_is_required,
+                    is_hard_requirement=new_req_is_required,
+                    weight=new_req_weight,
+                    criteria_json=new_req_criteria,
+                    required_vocab_mastery=0.0,  # Legacy defaults
+                    required_translations=0,
+                    required_analyses=0,
+                    required_readings=0
+                )
+                
+                session.add(new_requirement)
+                session.commit()
+                
+                st.success(f"✅ Requisito agregado a Lección {lesson_number}")
+                st.rerun()
+        
+        # Configuración Global
+        st.markdown("---")
+        st.markdown("### ⚙️ Configuración Global")
+        
+        st.info("""
+        **Umbral de Desbloqueo Actual:** 100% de requisitos obligatorios  
+        Este umbral está hardcoded según tu preferencia. Para hacerlo configurable, se puede agregar a SystemSetting.
+        """)
+        
+        if st.button("🔄 Aplicar cambios a todos los usuarios"):
+            st.warning("Esta función recalculará el progreso de todos los usuarios basándose en los nuevos requisitos.")
+            st.info("Funcionalidad pendiente de implementación - Stage 3")

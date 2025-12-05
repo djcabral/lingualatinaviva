@@ -105,7 +105,7 @@ def render_content():
                 st.session_state.current_word_analysis = {
                     'id': word_obj.id,
                     'latin': word_obj.latin,
-                    'translation': word_obj.translation,
+                    'translation': word_obj.definition_es if word_obj.definition_es else word_obj.translation,
                     'part_of_speech': word_obj.part_of_speech,
                     'gender': word_obj.gender,
                     'declension': word_obj.declension,
@@ -254,7 +254,7 @@ def render_content():
             elif mood == "Subjuntivo":
                 tense = st.selectbox("Tiempo", ["Presente", "Imperfecto", "Perfecto", "Pluscuamperfecto"])
             else: # Indicativo
-                tense = st.selectbox("Tiempo", ["Presente", "Imperfecto", "Futuro", "Perfecto", "Pluscuamperfecto", "Futuro Perfecto"])
+                tense = st.selectbox("Tiempo", ["Presente", "Imperfecto", "Futuro Imperfecto", "Perfecto", "Pluscuamperfecto", "Futuro Perfecto"])
             
             # Person & Number
             if mood == "Imperativo":
@@ -269,7 +269,7 @@ def render_content():
             tense_map = {
                 "Presente": "pres", 
                 "Imperfecto": "imp", 
-                "Futuro": "fut",
+                "Futuro Imperfecto": "fut",
                 "Perfecto": "perf",
                 "Pluscuamperfecto": "plup",
                 "Futuro Perfecto": "futperf"
@@ -327,7 +327,7 @@ def render_content():
                         tense_rev = {
                             "pres": "Presente", 
                             "imp": "Imperfecto", 
-                            "fut": "Futuro",
+                            "fut": "Futuro Imperfecto",
                             "perf": "Perfecto", 
                             "plup": "Pluscuamperfecto",
                             "futperf": "Futuro Perfecto",

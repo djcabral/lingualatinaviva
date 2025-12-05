@@ -1,0 +1,94 @@
+{
+    "lesson": 23,
+    "topic": "Gerundio y Gerundivo",
+    "exercises": [
+        {
+            "type": "multiple_choice",
+            "question": "¿Cuál es la diferencia fundamental entre Gerundio y Gerundivo?",
+            "options": [
+                "El Gerundio es sustantivo, el Gerundivo es adjetivo",
+                "El Gerundio es adjetivo, el Gerundivo es sustantivo",
+                "El Gerundio es pasado, el Gerundivo es futuro",
+                "No hay diferencia"
+            ],
+            "correct_answer": "El Gerundio es sustantivo, el Gerundivo es adjetivo",
+            "explanation": "Gerundio = Sustantivo verbal (declinación del infinitivo). Gerundivo = Adjetivo verbal (necesidad/obligación)."
+        },
+        {
+            "type": "vocabulary_match",
+            "pairs": [
+                {
+                    "latin": "Ars amandi",
+                    "spanish": "El arte de amar (Gerundio)"
+                },
+                {
+                    "latin": "Cupidus videndi",
+                    "spanish": "Deseoso de ver (Gerundio)"
+                },
+                {
+                    "latin": "Ad pugnandum",
+                    "spanish": "Para luchar (Gerundio)"
+                },
+                {
+                    "latin": "Liber legendus",
+                    "spanish": "Libro que debe ser leído (Gerundivo)"
+                }
+            ]
+        },
+        {
+            "type": "sentence_completion",
+            "question": "Venenum ad _____ (beber) paratum est.",
+            "options": [
+                "bibendum",
+                "bibendi",
+                "bibendo"
+            ],
+            "correct_answer": "bibendum",
+            "explanation": "Preposición 'ad' rige Acusativo: 'ad bibendum' (para beber)."
+        },
+        {
+            "type": "sentence_completion",
+            "question": "Cupidus _____ (de la ciudad que debe ser vista).",
+            "options": [
+                "urbis videndae",
+                "urbem videndi",
+                "urbis videndi"
+            ],
+            "correct_answer": "urbis videndae",
+            "explanation": "Construcción de gerundivo (atracción). 'Urbis' es genitivo, así que 'videndae' concuerda en genitivo."
+        },
+        {
+            "type": "multiple_choice",
+            "question": "¿Qué construcción es 'Virtus colenda est'?",
+            "options": [
+                "Perifrástica Pasiva (Gerundivo)",
+                "Ablativo Absoluto",
+                "Gerundio Genitivo",
+                "Participio Futuro"
+            ],
+            "correct_answer": "Perifrástica Pasiva (Gerundivo)",
+            "explanation": "Gerundivo + Sum = Perifrástica Pasiva. 'La virtud debe ser cultivada'."
+        },
+        {
+            "type": "vocabulary_match",
+            "pairs": [
+                {
+                    "latin": "Discimus legendo",
+                    "spanish": "Aprendemos leyendo (Abl. Gerundio)"
+                },
+                {
+                    "latin": "Tempus ludendi",
+                    "spanish": "Tiempo de jugar (Gen. Gerundio)"
+                },
+                {
+                    "latin": "Puer laudandus",
+                    "spanish": "Niño digno de alabanza (Gerundivo)"
+                },
+                {
+                    "latin": "Causa videndi",
+                    "spanish": "Por causa de ver (Gen. + Causa)"
+                }
+            ]
+        }
+    ]
+}

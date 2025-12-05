@@ -26,6 +26,9 @@ load_css()
 # Initialize database
 init_db()
 
+# Load and apply global font size preference
+# Global font size is now handled by render_sidebar_config in the sidebar
+
 # Initialize session state
 if 'language' not in st.session_state:
     st.session_state.language = 'es'
@@ -84,6 +87,10 @@ else:
     
     st.sidebar.markdown("---")
     
+    # Global Config (Font Size)
+    from utils.ui_helpers import render_sidebar_config
+    render_sidebar_config()
+    
     st.sidebar.info(
         """
         **Navigatio**: Usa el menú de la izquierda para explorar los módulos.
@@ -98,6 +105,8 @@ else:
         - ⚙️ Admin
         """
     )
+    
+    # Global font size control moved to sidebar footer (utils/ui.py)
     
     # Main content
     st.markdown(

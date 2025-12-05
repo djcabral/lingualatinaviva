@@ -2,11 +2,11 @@ import streamlit as st
 from sqlmodel import select
 from database import get_session
 from database import Word
-from latin_logic import LatinMorphology
+from utils.latin_logic import LatinMorphology
 import random
 import pandas as pd
 
-from i18n import get_text
+from utils.i18n import get_text
 
 def show_declension():
     st.markdown(f"## 📜 {get_text('declension', st.session_state.language)}")

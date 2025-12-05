@@ -2,6 +2,18 @@
 
 Este documento contiene prompts y directrices específicas para asistentes de IA que trabajen en el desarrollo de Lingua Latina Viva.
 
+## 🚨 REQUERIMIENTO CRÍTICO #1: USO DEL ENTORNO VIRTUAL
+
+**ESTO DEBE SER LO PRIMERO QUE HAGA LA IA AL COMENZAR CUALQUIER SESIÓN**
+
+- **Ubicación del entorno virtual**: `/home/diego/Projects/latin-python/.venv`
+- **Nunca uses**: `python` o `python3` directamente
+- **Siempre usa**: `.venv/bin/python` para ejecutar scripts
+- **Ejemplo correcto**: `.venv/bin/python -m streamlit run src/main.py`
+- **Ejemplo incorrecto**: `python -m streamlit run src/main.py`
+
+Este requerimiento evita conflictos de dependencias y asegura que todas las bibliotecas necesarias estén disponibles.
+
 ## Prompt de Contexto Inicial
 
 Cuando comiences a trabajar en este proyecto, usa este prompt:

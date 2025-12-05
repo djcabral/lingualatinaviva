@@ -410,75 +410,81 @@ def migrate():
     print("✅ Tablas creadas")
     
     # 2. Obtener sesión
-    session = get_session()
+    with get_session() as session:
     
-    # 3. Crear desafíos
-    print("\n🎯 Creando desafíos...")
-    challenges_data = create_initial_challenges()
-    
-    # Verificar si ya existen desafíos
-    existing_count = session.exec(select(Challenge)).first()
-    
-    if existing_count:
-        print(f"⚠️ Los desafíos ya existen. Saltando creación.")
-        print(f"   (Si quieres recrearlos, borra la tabla challenge primero)")
-    else:
-        for data in challenges_data:
-            challenge = Challenge(**data)
-            session.add(challenge)
+        # 3. Crear desafíos
+        print("\n🎯 Creando desafíos...")
+        challenges_data = create_initial_challenges()
         
-        session.commit()
-        print(f"✅ Creados {len(challenges_data)} desafíos")
-    
-    # 4. Inicializar progreso del usuario
-    print("\n👤 Inicializando progreso del usuario...")
-    
-    # Desbloquear solo el primer desafío
-    first_challenge = session.exec(select(Challenge).where(Challenge.order == 1)).first()
-    
-    if first_challenge:
-        progress = UserChallengeProgress(
-            user_id=1,
-            challenge_id=first_challenge.id,
-            status='unlocked',
-            unlocked_at=datetime.now()
-        )
-        session.add(progress)
-        session.commit()
-        print(f"✅ Desbloqueado desafío 1: {first_challenge.title}")
-    
-    # Bloquear el resto
-    all_challenges = session.exec(select(Challenge).where(Challenge.order > 1)).all()
-    for challenge in all_challenges:
-        progress = UserChallengeProgress(
-            user_id=1,
-            challenge_id=challenge.id,
-            status='locked'
-        )
-        session.add(progress)
-    session.commit()
-    print(f"✅ Bloqueados {len(all_challenges)} desafíos restantes")
-    
-    # 5. Actualizar UserProfile si existe (OPCIONAL - puede fallar si la tabla necesita migración)
-    print("\n📊 Actualizando perfil de usuario...")
-    try:
-        user = session.exec(select(UserProfile)).first()
-        if user:
-            user.current_challenge_id = first_challenge.id
-            session.commit()
-            print("✅ Perfil actualizado")
+        # Verificar si ya existen desafíos
+        existing_count = session.exec(select(Challenge)).first()
+        
+        if existing_count:
+            print(f"⚠️ Los desafíos ya existen. Saltando creación.")
+            print(f"   (Si quieres recrearlos, borra la tabla challenge primero)")
         else:
-            print("⚠️ No se encontró perfil de usuario (se puede crear después)")
-    except Exception as e:
-        print(f"⚠️ No se pudo actualizar perfil (tabla necesita migración): {str(e)[:100]}")
-        print("   → Esto es normal si es la primera vez que ejecutas este script")
+            for data in challenges_data:
+                challenge = Challenge(**data)
+                session.add(challenge)
+            
+            session.commit()
+            print(f"✅ Creados {len(challenges_data)} desafíos")
+        
+        # 4. Inicializar progreso del usuario
+        print("\n👤 Inicializando progreso del usuario...")
+        
+        # Desbloquear solo el primer desafío
+        first_challenge = session.exec(select(Challenge).where(Challenge.order == 1)).first()
+        
+        if first_challenge:
+            # Check if progress already exists
+            existing_progress = session.exec(select(UserChallengeProgress).where(UserChallengeProgress.user_id == 1)).first()
+            if not existing_progress:
+                progress = UserChallengeProgress(
+                    user_id=1,
+                    challenge_id=first_challenge.id,
+                    status='unlocked',
+                    unlocked_at=datetime.now()
+                )
+                session.add(progress)
+                session.commit()
+                print(f"✅ Desbloqueado desafío 1: {first_challenge.title}")
+                
+                # Bloquear el resto
+                all_challenges = session.exec(select(Challenge).where(Challenge.order > 1)).all()
+                for challenge in all_challenges:
+                    progress = UserChallengeProgress(
+                        user_id=1,
+                        challenge_id=challenge.id,
+                        status='locked'
+                    )
+                    session.add(progress)
+                session.commit()
+                print(f"✅ Bloqueados {len(all_challenges)} desafíos restantes")
+            else:
+                print("⚠️ Progreso de usuario ya existe. Saltando inicialización.")
     
-    print("\n" + "=" * 60)
-    print("✅ MIGRACIÓN COMPLETADA")
-    print("=" * 60)
-    print(f"\n🎮 Primeros {len(challenges_data)} desafíos listos para jugar!")
-    print(f"🔓 Desafío 1 desbloqueado: {first_challenge.title}")
-    print("\n💡 Próximo paso: Abre la página 08_🗺️_Mapa.py para ver el mapa")
+        # 5. Actualizar UserProfile si existe (OPCIONAL - puede fallar si la tabla necesita migración)
+        print("\n📊 Actualizando perfil de usuario...")
+        try:
+            user = session.exec(select(UserProfile)).first()
+            if user:
+                user.current_challenge_id = first_challenge.id
+                session.commit()
+                print("✅ Perfil actualizado")
+            else:
+                print("⚠️ No se encontró perfil de usuario (se puede crear después)")
+        except Exception as e:
+            print(f"⚠️ No se pudo actualizar perfil (tabla necesita migración): {str(e)[:100]}")
+            print("   → Esto es normal si es la primera vez que ejecutas este script")
+    
+        print("\n" + "=" * 60)
+        print("✅ MIGRACIÓN COMPLETADA")
+        print("=" * 60)
+        print(f"\n🎮 Primeros {len(challenges_data)} desafíos listos para jugar!")
+        if first_challenge:
+            print(f"🔓 Desafío 1 desbloqueado: {first_challenge.title}")
+        print("\n💡 Próximo paso: Abre la página 08_🗺️_Mapa.py para ver el mapa")
 
 
 if __name__ == "__main__":

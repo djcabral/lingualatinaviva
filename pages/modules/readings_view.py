@@ -18,31 +18,35 @@ from sqlmodel import select
 
 
 # Add custom CSS for interactive text with hover tooltips
-def add_interactive_text_css():
-    st.markdown("""
+def add_interactive_text_css(font_size=1.3):
+    """Add CSS with dynamic font size parameter"""
+    st.markdown(f"""
     <style>
-    .latin-text-container {
+    .latin-text-container {{
         position: relative;
-        font-family: 'Cardo', serif;
-        font-size: 1.3em;
-        line-height: 2.2;
+        font-family: 'Cardo', 'Georgia', serif;
+        font-size: {font_size * 1.5}em;
+        line-height: 2.5;
         text-align: justify;
-    }
-    .interactive-word {
+        padding: 1.5rem;
+        background: rgba(0, 0, 0, 0.03);
+        border-radius: 8px;
+    }}
+    .interactive-word {{
         position: relative;
         cursor: help;
-        padding: 2px 4px;
+        padding: 3px 5px;
         border-radius: 3px;
         transition: all 0.2s;
         display: inline;
         border-bottom: 2px dotted currentColor;
-    }
-    .interactive-word:hover {
-        background-color: rgba(255, 255, 255, 0.15);
-    }
+    }}
+    .interactive-word:hover {{
+        background-color: rgba(100, 100, 255, 0.15);
+    }}
     
     /* Tooltip que aparece al hacer hover */
-    .interactive-word .tooltip {
+    .interactive-word .tooltip {{
         visibility: hidden;
         opacity: 0;
         position: absolute;
@@ -51,7 +55,7 @@ def add_interactive_text_css():
         transform: translateX(-50%);
         z-index: 1000;
         width: 280px;
-        max-width: 90vw;  /* No más ancho que el 90% del viewport */
+        max-width: 90vw;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
         padding: 12px 15px;
@@ -61,17 +65,17 @@ def add_interactive_text_css():
         pointer-events: none;
         white-space: normal;
         word-wrap: break-word;
-    }
+    }}
     
     /* Ajustar tooltip cuando está cerca del borde izquierdo */
     .latin-text-container .interactive-word:first-child .tooltip,
-    .interactive-word:nth-child(-n+3) .tooltip {
+    .interactive-word:nth-child(-n+3) .tooltip {{
         left: 0;
         transform: translateX(0);
-    }
+    }}
     
     /* Flecha del tooltip */
-    .interactive-word .tooltip::after {
+    .interactive-word .tooltip::after {{
         content: "";
         position: absolute;
         top: 100%;
@@ -80,68 +84,68 @@ def add_interactive_text_css():
         border-width: 5px;
         border-style: solid;
         border-color: #764ba2 transparent transparent transparent;
-    }
+    }}
     
     /* Flecha también se ajusta cuando está a la izquierda */
     .latin-text-container .interactive-word:first-child .tooltip::after,
-    .interactive-word:nth-child(-n+3) .tooltip::after {
+    .interactive-word:nth-child(-n+3) .tooltip::after {{
         left: 20px;
-    }
+    }}
     
     /* Mostrar tooltip al hacer hover */
-    .interactive-word:hover .tooltip {
+    .interactive-word:hover .tooltip {{
         visibility: visible;
         opacity: 1;
-    }
+    }}
     
-    .tooltip-lemma {
+    .tooltip-lemma {{
         font-size: 1.2em;
         font-weight: bold;
         display: block;
         margin-bottom: 4px;
         font-family: 'Cinzel', serif;
-    }
+    }}
     
-    .tooltip-translation {
+    .tooltip-translation {{
         font-size: 1em;
         display: block;
         margin-bottom: 6px;
-    }
+    }}
     
-    .tooltip-morphology {
+    .tooltip-morphology {{
         font-size: 0.85em;
         font-style: italic;
         display: block;
         margin-bottom: 4px;
         opacity: 0.9;
-    }
+    }}
     
-    .tooltip-pos {
+    .tooltip-pos {{
         background: rgba(255,255,255,0.25);
         padding: 2px 8px;
         border-radius: 4px;
         font-size: 0.75em;
         display: inline-block;
         margin-top: 4px;
-    }
+    }}
     
-    /* Colores según maestría */
-    .word-known {
-        color: #10b981;
-        border-bottom-color: #10b981;
-    }
-    .word-learning {
-        color: #f59e0b;
-        border-bottom-color: #f59e0b;
-    }
-    .word-unknown {
-        color: #8b5cf6;
-        border-bottom-color: #8b5cf6;
-    }
-    .word-no-review {
-        color: #64748b;
-        border-bottom-color: #64748b;
-    }
+    /* Colores según maestría - MÁS OSCUROS PARA MEJOR LEGIBILIDAD */
+    .word-known {{
+        color: #059669;
+        border-bottom-color: #059669;
+    }}
+    .word-learning {{
+        color: #d97706;
+        border-bottom-color: #d97706;
+    }}
+    .word-unknown {{
+        color: #7c3aed;
+        border-bottom-color: #7c3aed;
+    }}
+    .word-no-review {{
+        color: #1e293b;
+        border-bottom-color: #475569;
+    }}
     </style>
     """, unsafe_allow_html=True)
 
@@ -198,15 +202,26 @@ def render_interactive_text(text_id: int, text_content: str, session):
     if not analyzed_text:
         analyzed_text = LatinTextAnalyzer.analyze_text(text_content, session)
     
-    # Renderizar con tooltips hover
-    html_parts = ['<div class="latin-text-container"><p>']
+    # Renderizar con tooltips hover - ESTILOS INLINE para forzar visualización
+    html_parts = ['<div class="latin-text-container" style="font-size: 24px; line-height: 2.0; color: #1a1a1a; background: #fafafa; border-radius: 8px;"><p>']
+    
+    is_first_word = True
+    prev_was_punctuation = False
     
     for item in analyzed_text:
         form = item["form"]
         
         if item.get("is_punctuation"):
+            # Puntuación: sin espacio antes, pero marcar para espacio después
             html_parts.append(form)
+            prev_was_punctuation = True
         else:
+            # Palabra: añadir espacio ANTES (excepto si es la primera palabra)
+            if not is_first_word:
+                html_parts.append(" ")
+            is_first_word = False
+            prev_was_punctuation = False
+            
             # Para análisis CLTK, item ya tiene todos los campos
             # Para análisis InflectedForm, item["analyses"] contiene las opciones
             
@@ -262,25 +277,13 @@ def render_interactive_text(text_id: int, text_content: str, session):
                 }
                 pos_display = pos_map.get(pos, pos)
                 
-                # HTML para palabra con tooltip hover
-                word_html = f'''<span class="interactive-word {css_class}">
-                    {form}
-                    <span class="tooltip">
-                        <span class="tooltip-lemma">{lemma}</span>
-                        <span class="tooltip-translation">{translation}</span>
-                        <span class="tooltip-morphology">{morph_text}</span>
-                        <span class="tooltip-pos">{pos_display}</span>
-                    </span>
-                </span>'''
+                # HTML para palabra con tooltip hover - SIN ESPACIOS INTERNOS para evitar problemas de espaciado
+                word_html = f'<span class="interactive-word {css_class}" style="color: #1a1a1a !important;">{form}<span class="tooltip"><span class="tooltip-lemma">{lemma}</span><span class="tooltip-translation">{translation}</span><span class="tooltip-morphology">{morph_text}</span><span class="tooltip-pos">{pos_display}</span></span></span>'
                 
                 html_parts.append(word_html)
             else:
                 # Palabra desconocida (no en BD ni CLTK)
-                html_parts.append(f'<span style="color: #94a3b8; font-style: italic;">{form}</span>')
-        
-        # Agregar espacio después de palabras (no después de puntuación)
-        if not item.get("is_punctuation"):
-            html_parts.append(" ")
+                html_parts.append(f'<span style="color: #1a1a1a;">{form}</span>')
     
     html_parts.append("</p></div>")
     
@@ -288,9 +291,24 @@ def render_interactive_text(text_id: int, text_content: str, session):
 
 def render_readings_content():
     # Page config and header handled by parent
+    import json
+    
+    # Load user preferences
+    # Note: Global font size is already loaded in session_state by render_sidebar_config
+    preferences = {}
+    font_size = 1.3  # default
     
     # Add custom CSS for interactive text with hover tooltips
-    add_interactive_text_css()
+    add_interactive_text_css(font_size)
+    
+    # --- SIDEBAR CONFIGURATION ---
+    # Global font size is now handled by render_sidebar_config in the parent page
+    # We just need to use the current font size for the text container
+    
+    font_size = 1.3 # Default fallback
+    if 'global_font_size' in st.session_state:
+        # Scale slightly larger for reading text vs UI text
+        font_size = st.session_state.global_font_size * 1.2
     
     # Initialize session state for selected text
     if 'selected_text_id' not in st.session_state:
@@ -470,44 +488,42 @@ def render_readings_content():
                 """, unsafe_allow_html=True)
             
             else:
-                # Show text list (no analysis here for performance)
-                st.markdown("### 📚 Lecciones Disponibles")
-                st.caption(f"Total: {len(texts)} lecciones • Haz clic para leer con análisis morfológico")
+                # Show text list grouped by level for better organization
+                st.markdown("### 📚 Lecturas Disponibles")
+                st.caption(f"Total: {len(texts)} textos • Haz clic para leer con análisis morfológico")
                 
-                st.markdown("---")
+                # Group texts by difficulty ranges
+                basic = [t for t in texts if t.difficulty <= 10]
+                intermediate = [t for t in texts if 11 <= t.difficulty <= 20]
+                advanced = [t for t in texts if t.difficulty >= 21]
                 
-                for text in texts:
-                    mastery = calculate_mastery(session, text.id)
-                    
-                    # Card for each text
-                    col1, col2, col3, col4 = st.columns([4, 1, 1, 1])
-                    
-                    with col1:
-                        st.markdown(f"**{text.title}**")
-                        if text.author:
-                            st.caption(f"📜 {text.author.name}")
-                    
-                    with col2:
-                        st.metric("Nivel", text.difficulty)
-                    
-                    with col3:
-                        color = "green" if mastery >= 70 else "orange" if mastery >= 40 else "purple"
-                        st.markdown(
-                            f"<div style='text-align: center;'>"
-                            f"<span style='color: {color}; font-size: 1.5em; font-weight: bold;'>{mastery}%</span><br>"
-                            f"<small>Maestría</small></div>",
-                            unsafe_allow_html=True
-                        )
-                    
-                    with col4:
-                        if st.button("📖 Leer", key=f"read_{text.id}"):
-                            st.session_state.selected_text_id = text.id
-                            st.rerun()
-                    
-                    # Progress bar
-                    st.progress(mastery / 100, text=f"Progreso: {mastery}%")
-                    
-                    st.markdown("---")
+                tabs = st.tabs(["🌱 Básico (1-10)", "💎 Intermedio (11-20)", "🏆 Avanzado (21-30)"])
+                
+                for tab_idx, (tab, text_group) in enumerate(zip(tabs, [basic, intermediate, advanced])):
+                    with tab:
+                        if not text_group:
+                            st.info("No hay textos en este nivel.")
+                            continue
+                        
+                        for text in text_group:
+                            mastery = calculate_mastery(session, text.id)
+                            
+                            with st.container():
+                                col1, col2, col3 = st.columns([5, 1, 1])
+                                
+                                with col1:
+                                    st.markdown(f"**L{text.difficulty}: {text.title}**")
+                                
+                                with col2:
+                                    color = "green" if mastery >= 70 else "orange" if mastery >= 40 else "gray"
+                                    st.markdown(f"<span style='color: {color}; font-weight: bold;'>{mastery}%</span>", unsafe_allow_html=True)
+                                
+                                with col3:
+                                    if st.button("📖", key=f"read_{text.id}", help="Leer"):
+                                        st.session_state.selected_text_id = text.id
+                                        st.rerun()
+                            
+                            st.markdown("<hr style='margin: 5px 0; border: none; border-top: 1px solid #333;'>", unsafe_allow_html=True)
                 
                 # Help section at bottom
                 st.markdown("### 💡 Cómo usar Lectio")

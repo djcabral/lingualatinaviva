@@ -1,0 +1,27 @@
+#!/bin/bash
+# Script de inicio rápido para sesiones de IA
+# Ejecutar: cat .ai-session-start
+
+echo "📚 PROYECTO: Lingua Latina Viva"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
+echo "📖 ESTADO DEL PROYECTO (2025-12-04):"
+echo "   ✅ Reestructuración L26-30 completada"
+echo "   🔄 Expansión vocabulario pendiente (25/30 lecciones)"
+echo ""
+echo "🎯 PRÓXIMAS TAREAS:"
+echo "   1. 🔴 Expandir vocabulario L3-L30"
+echo "   2. 🟡 Generar 3 imágenes pendientes"
+echo "   3. 🟢 Crear ejercicios estáticos L20-29"
+echo ""
+echo "📂 DOCUMENTOS CLAVE:"
+echo "   • LEEME_IA.md ⭐ (este directorio)"
+echo "   • /brain/task.md (checklist completo)"
+echo "   • /brain/walkthrough.md (último trabajo)"
+echo ""
+echo "⚡ COMANDOS ÚTILES:"
+echo "   cat LEEME_IA.md              # Info completa"
+echo "   cat /brain/task.md           # Checklist"
+echo "   .venv/bin/python database/utils/auditor_contenido.py  # Auditar"
+echo ""
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"

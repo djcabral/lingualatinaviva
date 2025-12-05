@@ -9,7 +9,7 @@ from utils.srs import calculate_next_review
 import random
 from datetime import datetime
 
-from i18n import get_text
+from utils.i18n import get_text
 
 class VocabularyScreen(Screen):
     def compose(self) -> ComposeResult:

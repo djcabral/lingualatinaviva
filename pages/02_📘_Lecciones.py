@@ -5,7 +5,7 @@ import os
 # Add project root to path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from utils.ui_helpers import load_css, render_page_header, render_sidebar_footer
+from utils.ui_helpers import load_css, render_page_header, render_sidebar_footer, render_sidebar_config
 from database.connection import get_session
 
 # Import modules from original files (we will need to refactor slightly or import functions)
@@ -30,6 +30,7 @@ st.set_page_config(
 )
 
 load_css()
+render_sidebar_config()
 render_page_header("Lecciones", "📘")
 
 # Tabs for the 3 sub-sections

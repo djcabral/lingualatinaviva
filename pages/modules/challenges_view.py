@@ -26,8 +26,6 @@ def render_content(caller="challenges"):
     """
     
     # Configuración
-
-    
     
     # Verificar que hay un desafío seleccionado o auto-cargar uno
     if 'current_challenge_id' not in st.session_state:
@@ -96,7 +94,14 @@ def render_content(caller="challenges"):
         st.markdown("---")
         
         # Parser config
-        full_config = json.loads(challenge.config_json)
+        try:
+            full_config = json.loads(challenge.config_json)
+        except json.JSONDecodeError:
+            st.error(f"Error de configuración en desafío #{challenge.id}: JSON inválido")
+            st.stop()
+        except Exception as e:
+            st.error(f"Error inesperado al cargar configuración: {str(e)}")
+            st.stop()
         
         # Determinar etapa actual (0, 1, 2)
         if 'challenge_stage' not in st.session_state:
@@ -400,7 +405,7 @@ def render_content(caller="challenges"):
                     if item in state['matches']:
                         type_ = "primary" # Ya emparejado (aunque disabled)
                     
-                    if st.button(item, key=f"left_{item}_{match_key}", disabled=disabled, type=type_, use_container_width=True):
+                    if st.button(item, key=f"left_{item}_{match_key}", disabled=disabled, type=type_, width="stretch"):
                         state['selected_left'] = item
                         st.rerun()
                         
@@ -418,7 +423,7 @@ def render_content(caller="challenges"):
                     
                     disabled = is_matched
                     
-                    if st.button(item, key=f"right_{item}_{match_key}", disabled=disabled, use_container_width=True):
+                    if st.button(item, key=f"right_{item}_{match_key}", disabled=disabled, width="stretch"):
                         if state['selected_left']:
                             # Registrar intento de match
                             state['matches'][state['selected_left']] = item
@@ -435,13 +440,13 @@ def render_content(caller="challenges"):
         col1, col2 = st.columns([3, 1])
         
         with col1:
-            if st.button("🔄 Reiniciar Desafío", use_container_width=True):
+            if st.button("🔄 Reiniciar Desafío", width="stretch"):
                 st.session_state.pop('user_answers', None)
                 st.session_state.pop('challenge_stage', None)
                 st.rerun()
         
         with col2:
-            submit = st.button("✅ Verificar", type="primary", use_container_width=True)
+            submit = st.button("✅ Verificar", type="primary", width="stretch")
         
         # Verificar respuestas
         if submit:

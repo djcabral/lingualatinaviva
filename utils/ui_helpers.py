@@ -175,3 +175,108 @@ def render_styled_table(headers: list, rows: list):
     
     st.markdown(html, unsafe_allow_html=True)
 
+def render_sidebar_config():
+    """
+    Renderiza la configuración global en el sidebar (parte superior).
+    Debe ser llamada al inicio de cada página.
+    """
+    st.sidebar.markdown("### ⚙️ Configuración")
+    
+    # Get current font size from session state or DB
+    from database.connection import get_session
+    from database import UserProfile
+    from sqlmodel import select
+    import json
+    
+    current_size = 1.0
+    
+    # Try to get from session state first (faster)
+    if 'global_font_size' in st.session_state:
+        current_size = st.session_state.global_font_size
+    else:
+        # Fallback to DB
+        try:
+            with get_session() as session:
+                user = session.exec(select(UserProfile)).first()
+                if user and user.preferences_json:
+                    prefs = json.loads(user.preferences_json)
+                    current_size = prefs.get('global_font_size', 1.0)
+                    st.session_state.global_font_size = current_size
+        except:
+            pass
+    
+    new_font_size = st.sidebar.slider(
+        "Tamaño de letra",
+        min_value=0.8,
+        max_value=1.5,
+        value=float(current_size),
+        step=0.1,
+        help="Ajusta el tamaño de toda la letra en la aplicación",
+        key="global_font_size_slider_top"
+    )
+    
+    # Save if changed
+    if new_font_size != current_size:
+        st.session_state.global_font_size = new_font_size
+        try:
+            with get_session() as save_session:
+                user = save_session.exec(select(UserProfile)).first()
+                if user:
+                    prefs = {}
+                    if user.preferences_json:
+                        try:
+                            prefs = json.loads(user.preferences_json)
+                        except:
+                            pass
+                    prefs['global_font_size'] = new_font_size
+                    user.preferences_json = json.dumps(prefs)
+                    save_session.add(user)
+                    save_session.commit()
+        except:
+            pass
+        st.rerun()
+    
+    # Apply global font size CSS
+    st.markdown(f"""
+    <style>
+        /* Global font size control */
+        html, body, [class*="css"] {{
+            font-size: {new_font_size}rem !important;
+        }}
+        
+        /* Preserve original vocabulary card sizes - do NOT scale with global font */
+        .vocab-latin {{
+            font-size: 3.5em !important;
+        }}
+        .vocab-translation {{
+            font-size: 1.8em !important;
+        }}
+        .vocab-pos {{
+            font-size: 1.1em !important;
+        }}
+        
+        /* Ensure headers scale proportionally but less aggressively */
+        h1 {{ font-size: {max(1.8, new_font_size * 1.8)}rem !important; }}
+        h2 {{ font-size: {max(1.5, new_font_size * 1.5)}rem !important; }}
+        h3 {{ font-size: {max(1.3, new_font_size * 1.3)}rem !important; }}
+        h4 {{ font-size: {max(1.2, new_font_size * 1.2)}rem !important; }}
+        h5 {{ font-size: {max(1.1, new_font_size * 1.1)}rem !important; }}
+        h6 {{ font-size: {max(1.0, new_font_size * 1.0)}rem !important; }}
+        
+        /* Sidebar specific adjustments to prevent overflow */
+        [data-testid="stSidebar"] h1 {{ font-size: {max(1.5, new_font_size * 1.5)}rem !important; }}
+        [data-testid="stSidebar"] h2 {{ font-size: {max(1.3, new_font_size * 1.3)}rem !important; }}
+        [data-testid="stSidebar"] h3 {{ font-size: {max(1.2, new_font_size * 1.2)}rem !important; }}
+        
+        /* Streamlit specific elements */
+        .stMarkdown, .stText, p, div:not(.vocab-latin):not(.vocab-translation):not(.vocab-pos), span {{
+            font-size: inherit !important;
+        }}
+        
+        /* Fix for specific components that might break */
+        .stButton button {{
+            font-size: {new_font_size}rem !important;
+        }}
+    </style>
+    """, unsafe_allow_html=True)
+    st.sidebar.markdown("---")

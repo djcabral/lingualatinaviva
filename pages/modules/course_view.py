@@ -10,6 +10,8 @@ from utils.mermaid_helper import render_mermaid
 from database.connection import get_session
 from utils.unlock_service import check_unlock_conditions
 from utils.progress_tracker import update_lesson_progress
+from utils.exercise_generator import ExerciseGenerator
+from utils.reading_service import ReadingService
 
 def get_lesson_context(lesson_number: int):
     """Returns the practice context for a specific lesson"""
@@ -98,28 +100,72 @@ def render_practice_section(lesson_number: int, lesson_title: str):
     st.markdown("### 📜 Ejercicios de Práctica")
     if exercises_unlocked:
         st.markdown("Practica declinaciones, conjugaciones y análisis de esta lección.")
-        col1, col2, col3 = st.columns(3)
         
-        # Prepare context
-        context = get_lesson_context(lesson_number)
+        # Integración de Ejercicios Dinámicos
+        from utils.exercise_generator import ExerciseGenerator
+        from utils.learning_hub_widgets import (
+            render_vocabulary_match_exercise,
+            render_multiple_choice_exercise,
+            render_sentence_completion_exercise
+        )
         
-        with col1:
-            if st.button("📜 Declinaciones", key=f"decl_l{lesson_number}"):
-                st.session_state.practice_context = context
-                st.session_state.active_tab = 0 # Tab index for Declensions
-                st.switch_page("pages/04_⚔️_Práctica.py")
-        with col2:
-            if st.button("⚔️ Conjugaciones", key=f"conj_l{lesson_number}"):
-                st.session_state.practice_context = context
-                st.session_state.active_tab = 1 # Tab index for Conjugations
-                st.switch_page("pages/04_⚔️_Práctica.py")
-        with col3:
-            if st.button("🔍 Análisis", key=f"anal_l{lesson_number}"):
-                st.session_state.practice_context = context
-                st.switch_page("pages/05_🔍_Análisis.py")
+        with get_session() as session:
+            generator = ExerciseGenerator(session)
+            
+            # Selector de tipo de ejercicio
+            ex_type = st.selectbox(
+                "Tipo de Ejercicio:",
+                ["Emparejar Vocabulario", "Opción Múltiple (Morfología)", "Completar Oraciones"],
+                key=f"ex_type_practice_l{lesson_number}"
+            )
+            
+            if st.button("Generar Nuevos Ejercicios", key=f"gen_ex_practice_l{lesson_number}"):
+                if ex_type == "Emparejar Vocabulario":
+                    exercises = generator.generate_vocabulary_match(lesson_number)
+                    st.session_state[f"practice_exercises_l{lesson_number}"] = ("vocab", exercises)
+                elif ex_type == "Opción Múltiple (Morfología)":
+                    exercises = generator.generate_declension_choice(lesson_number)
+                    st.session_state[f"practice_exercises_l{lesson_number}"] = ("mc", exercises)
+                elif ex_type == "Completar Oraciones":
+                    exercises = generator.generate_sentence_completion(lesson_number)
+                    st.session_state[f"practice_exercises_l{lesson_number}"] = ("fill", exercises)
+            
+            # Renderizar ejercicios almacenados
+            if f"practice_exercises_l{lesson_number}" in st.session_state:
+                ex_type_stored, exercises = st.session_state[f"practice_exercises_l{lesson_number}"]
+                if ex_type_stored == "vocab":
+                    render_vocabulary_match_exercise(exercises, lesson_number, key_suffix="dyn")
+                elif ex_type_stored == "mc":
+                    render_multiple_choice_exercise(exercises, lesson_number)
+                elif ex_type_stored == "fill":
+                    render_sentence_completion_exercise(exercises, lesson_number)
+            
+    else:
+        st.info("🔒 Completa el vocabulario para desbloquear los ejercicios")
+    
+    st.markdown("")
+    
+    # Lectura
+    st.markdown("### 📖 Lectura Graduada")
+    if reading_unlocked:
+        from utils.reading_service import ReadingService
+        with get_session() as session:
+            reader = ReadingService(session)
+            text = reader.get_reading_for_lesson(lesson_number)
+            
+            if text:
+                st.markdown(f"#### {text.title}")
+                enriched_html = reader.enrich_reading_with_tooltips(text.id)
+                st.markdown(enriched_html, unsafe_allow_html=True)
+                
+                if st.button("Marcar como Leída", key=f"read_l{lesson_number}"):
+                    reader.mark_reading_as_completed(1, text.id)
+                    st.success("¡Lectura completada!")
+            else:
+                st.info("No hay lectura asignada para esta lección aún.")
                 
     else:
-        st.warning("🔒 Se desbloqueará cuando domines el 50% del vocabulario")
+        st.info("🔒 Completa los ejercicios para desbloquear la lectura")
     
     st.markdown("")
     
@@ -163,7 +209,7 @@ def render_course_content():
         "l7": "7. Tercera Declinación y Dativo",
         "l8": "8. Cuarta Declinación y Pasado",
         "l9": "9. Quinta Declinación y Futuro",
-        "l10": "10. Adjetivos de 2ª Clase",
+        "l10": "10. Adjetivos de 2a Clase",
         "l11": "11. Comparación",
         "l12": "12. Pronombres",
         "l13": "13. Voz Pasiva y Ablativo",
@@ -182,25 +228,26 @@ def render_course_content():
         "l23": "23. Gerundio y Gerundivo",
         "l24": "24. Perifrásticas",
         "l25": "25. Sintaxis I: Coordinación y Causales",
-        "l26": "26. Sintaxis II: Completivas y Finales",
-        "l27": "27. Subordinadas III: Condicionales",
-        "l28": "28. Subordinadas IV: Relativas",
-        "l29": "29. Estilo Indirecto",
-        "l30": "30. Métrica y Poesía",
+        "l26": "26. Subordinadas Sustantivas",
+        "l27": "27. Sub. Adverbiales II (Cond/Fin/Cons)",
+        "l28": "28. Subordinadas Adjetivas (Relativas)",
+        "l29": "29. Estilo Indirecto (Oratio Obliqua)",
+        "l30": "30. Verbos Irregulares y Síntesis",
     }
     
-    experto = {
-        "l31": "31. César y Prosa Militar",
-        "l32": "32. Cicerón y Retórica",
-        "l33": "33. Salustio y Historiografía",
-        "l34": "34. Catulo y Lírica",
-        "l35": "35. Virgilio y Épica",
-        "l36": "36. Horacio y Odas",
-        "l37": "37. Ovidio y Metamorfosis",
-        "l38": "38. Latín Medieval",
-        "l39": "39. Latín Eclesiástico",
-        "l40": "40. Latín Renacentista"
-    }
+    # EXPERTO (L31-40) - Temporalmente oculto hasta completar contenido
+    # experto = {
+    #     "l31": "31. César y Prosa Militar",
+    #     "l32": "32. Cicerón y Retórica",
+    #     "l33": "33. Salustio y Historiografía",
+    #     "l34": "34. Catulo y Lírica",
+    #     "l35": "35. Virgilio y Épica",
+    #     "l36": "36. Horacio y Odas",
+    #     "l37": "37. Ovidio y Metamorfosis",
+    #     "l38": "38. Latín Medieval",
+    #     "l39": "39. Latín Eclesiástico",
+    #     "l40": "40. Latín Renacentista"
+    # }
     
     # Session state for current lesson
     if 'current_lesson' not in st.session_state:
@@ -212,8 +259,9 @@ def render_course_content():
         current_level = "basico"
     elif st.session_state.current_lesson in avanzado:
         current_level = "avanzado"
-    elif st.session_state.current_lesson in experto:
-        current_level = "experto"
+    # experto temporarily hidden
+    # elif st.session_state.current_lesson in experto:
+    #     current_level = "experto"
     
     # Render level sections with expanders
     with st.sidebar:
@@ -224,7 +272,7 @@ def render_course_content():
                 if st.button(
                     lesson_name,
                     key=f"btn_{lesson_id}",
-                    use_container_width=True,
+                    width="stretch",
                     type="primary" if st.session_state.current_lesson == lesson_id else "secondary"
                 ):
                     st.session_state.current_lesson = lesson_id
@@ -237,24 +285,24 @@ def render_course_content():
                 if st.button(
                     lesson_name,
                     key=f"btn_{lesson_id}",
-                    use_container_width=True,
+                    width="stretch",
                     type="primary" if st.session_state.current_lesson == lesson_id else "secondary"
                 ):
                     st.session_state.current_lesson = lesson_id
                     st.rerun()
         
-        # EXPERTO
-        exp_label = "📕 EXPERTO (Lec. 31-40)" + (" " if current_level == "experto" else "")
-        with st.expander(exp_label, expanded=(current_level == "experto")):
-            for lesson_id, lesson_name in experto.items():
-                if st.button(
-                    lesson_name,
-                    key=f"btn_{lesson_id}",
-                    use_container_width=True,
-                    type="primary" if st.session_state.current_lesson == lesson_id else "secondary"
-                ):
-                    st.session_state.current_lesson = lesson_id
-                    st.rerun()
+        # # EXPERTO (Temporalmente oculto)
+        # exp_label = "📕 EXPERTO (Lec. 31-40)" + (" " if current_level == "experto" else "")
+        # with st.expander(exp_label, expanded=(current_level == "experto")):
+        #     for lesson_id, lesson_name in experto.items():
+        #         if st.button(
+        #             lesson_name,
+        #             key=f"btn_{lesson_id}",
+        #             width="stretch",
+        #             type="primary" if st.session_state.current_lesson == lesson_id else "secondary"
+        #         ):
+        #             st.session_state.current_lesson = lesson_id
+        #             st.rerun()
     
     # Render Content
     render_lesson_content(st.session_state.current_lesson)
@@ -262,19 +310,234 @@ def render_course_content():
     # Footer handled by parent page
 
 
+def render_lesson_with_tabs(lesson_number, theory_content_func):
+    """
+    Helper function to wrap lesson content with Tabs layout.
+    
+    Args:
+        lesson_number: The lesson number
+        theory_content_func: A callable that renders the theory content
+    """
+    # Create Tabs
+    tab_theory, tab_vocab, tab_practice, tab_reading = st.tabs(["📖 Teoría", "🧠 Vocabulario", "⚔️ Práctica", "📜 Lectura"])
+    
+    # --- TAB 1: THEORY ---
+    with tab_theory:
+        theory_content_func()
+        
+    # --- TAB 2: VOCABULARY ---
+    with tab_vocab:
+        from utils.learning_hub_widgets import render_vocabulary_widget
+        render_vocabulary_widget(lesson_number)
+    
+    # --- TAB 3: PRACTICE ---
+    with tab_practice:
+        st.markdown("### ⚔️ Taller de Traducción")
+        from utils.learning_hub_widgets import render_translation_workshop
+        render_translation_workshop(lesson_number)
+        
+        st.divider()
+        
+        # --- EJERCICIOS ESTÁTICOS CURADOS (L20-29) ---
+        from utils.static_exercise_loader import get_all_exercise_types
+        static_ex = get_all_exercise_types(lesson_number)
+        
+        if static_ex and any(static_ex.values()):
+            st.markdown("### 📝 Ejercicios de la Lección")
+            st.caption("Ejercicios curados específicos para el contenido de esta lección.")
+            
+            from utils.learning_hub_widgets import (
+                render_vocabulary_match_exercise,
+                render_multiple_choice_exercise,
+                render_sentence_completion_exercise
+            )
+            
+            # Opción múltiple
+            if static_ex.get("multiple_choice"):
+                with st.expander("📋 Opción Múltiple", expanded=True):
+                    render_multiple_choice_exercise(static_ex["multiple_choice"], lesson_number, key_suffix="static")
+            
+            # Completar oraciones
+            if static_ex.get("sentence_completion"):
+                with st.expander("✏️ Completar Oraciones", expanded=False):
+                    render_sentence_completion_exercise(static_ex["sentence_completion"], lesson_number, key_suffix="static")
+            
+            # Emparejamiento de vocabulario
+            if static_ex.get("vocabulary_match"):
+                with st.expander("🔗 Emparejamiento de Vocabulario", expanded=False):
+                    # Cada vocabulary_match tiene "pairs", hay que adaptarlo
+                    for vm_idx, vm_ex in enumerate(static_ex["vocabulary_match"]):
+                        if "pairs" in vm_ex:
+                            render_vocabulary_match_exercise(vm_ex["pairs"], lesson_number, exercise_index=vm_idx, key_suffix="static")
+            
+            st.divider()
+        
+        # --- EJERCICIOS DINÁMICOS (generados) ---
+        st.markdown("### 🎲 Ejercicios Generados")
+        st.caption("Genera ejercicios aleatorios basados en el vocabulario de la lección.")
+        
+        with get_session() as session:
+            generator = ExerciseGenerator(session)
+            ex_type = st.selectbox(
+                "Tipo de Ejercicio:",
+                ["Emparejar Vocabulario", "Opción Múltiple (Morfología)", "Completar Oraciones"],
+                key=f"ex_type_l{lesson_number}"
+            )
+            
+            # Importar funciones de UI
+            from utils.learning_hub_widgets import (
+                render_vocabulary_match_exercise,
+                render_multiple_choice_exercise,
+                render_sentence_completion_exercise
+            )
+            
+            if st.button("Generar Nuevos Ejercicios", key=f"gen_ex_l{lesson_number}"):
+                if ex_type == "Emparejar Vocabulario":
+                    exercises = generator.generate_vocabulary_match(lesson_number)
+                    st.session_state[f"exercises_l{lesson_number}"] = ("vocab", exercises)
+                elif ex_type == "Opción Múltiple (Morfología)":
+                    exercises = generator.generate_declension_choice(lesson_number)
+                    st.session_state[f"exercises_l{lesson_number}"] = ("mc", exercises)
+                elif ex_type == "Completar Oraciones":
+                    exercises = generator.generate_sentence_completion(lesson_number)
+                    st.session_state[f"exercises_l{lesson_number}"] = ("fill", exercises)
+            
+            # Renderizar ejercicios almacenados
+            if f"exercises_l{lesson_number}" in st.session_state:
+                ex_type_stored, exercises = st.session_state[f"exercises_l{lesson_number}"]
+                if ex_type_stored == "vocab":
+                    render_vocabulary_match_exercise(exercises, lesson_number, key_suffix="dyn")
+                elif ex_type_stored == "mc":
+                    render_multiple_choice_exercise(exercises, lesson_number, key_suffix="dyn")
+                elif ex_type_stored == "fill":
+                    render_sentence_completion_exercise(exercises, lesson_number, key_suffix="dyn")
+    
+    # --- TAB 4: READING ---
+    with tab_reading:
+        with get_session() as session:
+            reader = ReadingService(session)
+            text = reader.get_reading_for_lesson(lesson_number)
+            
+            if text:
+                st.markdown(f"### {text.title}")
+                enriched_html = reader.enrich_reading_with_tooltips(text.id)
+                st.markdown(enriched_html, unsafe_allow_html=True)
+                
+                if st.button("Marcar como Leída", key=f"read_l{lesson_number}"):
+                    reader.mark_reading_as_completed(1, text.id)
+                    st.success("¡Lectura completada!")
+            else:
+                st.info("No hay lectura asignada para esta lección aún.")
+
+    st.divider()
+    from utils.learning_hub_widgets import render_lesson_progress_summary
+    render_lesson_progress_summary(lesson_number)
+
+
+
 def render_database_lesson(lesson):
     """Render a lesson loaded from the database"""
-    # Display image if available
-    if lesson.image_path and os.path.exists(lesson.image_path):
-        st.image(lesson.image_path, use_container_width=True)
     
-    # Render markdown content
-    st.markdown(lesson.content_markdown)
+    # Check unlocks
+    try:
+        with get_session() as session:
+            vocab_unlocked = check_unlock_conditions(session, 1, f"vocab_l{lesson.lesson_number}")
+            exercises_unlocked = check_unlock_conditions(session, 1, f"exercises_l{lesson.lesson_number}")
+            reading_unlocked = check_unlock_conditions(session, 1, f"reading_l{lesson.lesson_number}")
+    except Exception:
+        vocab_unlocked = True
+        exercises_unlocked = False
+        reading_unlocked = False
+
+    # Create Tabs
+    tab_theory, tab_vocab, tab_practice, tab_reading = st.tabs(["📖 Teoría", "🧠 Vocabulario", "⚔️ Práctica", "📜 Lectura"])
     
-    # Add practice section for basic lessons (1-13)
-    if lesson.level == "basico" and lesson.lesson_number <= 13:
-        st.markdown("---")
-        render_practice_section(lesson.lesson_number, lesson.title)
+    # --- TAB 1: THEORY ---
+    with tab_theory:
+        # Display image if available
+        if lesson.image_path and os.path.exists(lesson.image_path):
+            st.image(lesson.image_path, width="stretch")
+        
+        # Render markdown content
+        st.markdown(lesson.content_markdown)
+        
+        # Mark as in progress
+        try:
+            with get_session() as session:
+                update_lesson_progress(session, user_id=1, lesson_number=lesson.lesson_number, status="in_progress")
+        except:
+            pass
+
+    # --- TAB 2: VOCABULARY ---
+    with tab_vocab:
+        if vocab_unlocked:
+            from utils.learning_hub_widgets import render_vocabulary_widget
+            render_vocabulary_widget(lesson.lesson_number)
+        else:
+            st.info("🔒 Completa la teoría para desbloquear el vocabulario.")
+
+    # --- TAB 3: PRACTICE ---
+    with tab_practice:
+        if exercises_unlocked:
+            st.markdown("### ⚔️ Práctica Interactiva")
+            
+            from utils.learning_hub_widgets import (
+                render_vocabulary_match_exercise,
+                render_multiple_choice_exercise,
+                render_sentence_completion_exercise
+            )
+            
+            with get_session() as session:
+                generator = ExerciseGenerator(session)
+                
+                ex_type = st.selectbox(
+                    "Tipo de Ejercicio:",
+                    ["Emparejar Vocabulario", "Opción Múltiple (Morfología)", "Completar Oraciones"],
+                    key=f"ex_type_db_l{lesson.lesson_number}"
+                )
+                
+                if st.button("Generar Nuevos Ejercicios", key=f"gen_ex_db_l{lesson.lesson_number}"):
+                    if ex_type == "Emparejar Vocabulario":
+                        exercises = generator.generate_vocabulary_match(lesson.lesson_number)
+                        st.session_state[f"db_exercises_l{lesson.lesson_number}"] = ("vocab", exercises)
+                    elif ex_type == "Opción Múltiple (Morfología)":
+                        exercises = generator.generate_declension_choice(lesson.lesson_number)
+                        st.session_state[f"db_exercises_l{lesson.lesson_number}"] = ("mc", exercises)
+                    elif ex_type == "Completar Oraciones":
+                        exercises = generator.generate_sentence_completion(lesson.lesson_number)
+                        st.session_state[f"db_exercises_l{lesson.lesson_number}"] = ("fill", exercises)
+                
+                # Renderizar ejercicios almacenados
+                if f"db_exercises_l{lesson.lesson_number}" in st.session_state:
+                    ex_type_stored, exercises = st.session_state[f"db_exercises_l{lesson.lesson_number}"]
+                    if ex_type_stored == "vocab":
+                        render_vocabulary_match_exercise(exercises, lesson.lesson_number, key_suffix="dyn")
+                    elif ex_type_stored == "mc":
+                        render_multiple_choice_exercise(exercises, lesson.lesson_number)
+                    elif ex_type_stored == "fill":
+                        render_sentence_completion_exercise(exercises, lesson.lesson_number)
+        else:
+            st.info("🔒 Completa el vocabulario para desbloquear los ejercicios.")
+
+    # --- TAB 4: READING ---
+    with tab_reading:
+        if reading_unlocked:
+            with get_session() as session:
+                reader = ReadingService(session)
+                text = reader.get_reading_for_lesson(lesson.lesson_number)
+                
+                if text:
+                    st.markdown(f"### {text.title}")
+                    enriched_html = reader.enrich_reading_with_tooltips(text.id)
+                    st.markdown(enriched_html, unsafe_allow_html=True)
+                    
+                    if st.button("Marcar como Leída", key=f"read_db_l{lesson.lesson_number}"):
+                        reader.mark_reading_as_completed(1, text.id)
+                        st.success("¡Lectura completada!")
+                else:
+                    st.info("No hay lectura asignada para esta lección aún.")
+        else:
+            st.info("🔒 Completa los ejercicios para desbloquear la lectura.")
 
 
 def render_lesson_content(lesson_id):
@@ -303,6 +566,14 @@ def render_lesson_content(lesson_id):
             # If database fails, continue to hardcoded fallback
             pass
     
+    from utils.progress_service import record_lesson_view
+    
+    # Registrar visualización de la lección (solo para lecciones numeradas)
+    if lesson_id.startswith("l") and lesson_id[1:].isdigit():
+        with get_session() as session:
+            # Asumimos user_id=1 por ahora
+            record_lesson_view(session, 1, int(lesson_id[1:]))
+
     # Fallback to hardcoded functions
     if lesson_id == "intro":
         render_intro()
@@ -394,168 +665,344 @@ def render_lesson_content(lesson_id):
         st.info(f"Contenido de la lección {lesson_id} en construcción.")
 
 def render_intro():
-    st.image("static/images/intro_course_summary.png", caption="Los Cuatro Pilares del Aprendizaje: Lección, Memorización, Práctica y Análisis", use_container_width=True)
+    st.image("static/images/intro_course_summary.png", caption="Los Cuatro Pilares del Aprendizaje: Leccion, Memorizacion, Practica y Analisis", width="stretch")
 
     st.markdown("""
-    ## Aprende Latín: Un Enfoque Progresivo
+    ## Aprende Latin: Un Enfoque Progresivo
     
-    Bienvenido al curso de gramática latina. Este curso está diseñado para guiarte paso a paso 
-    desde los conceptos más básicos hasta las estructuras complejas, siguiendo el enfoque pedagógico 
+    Bienvenido al curso de gramatica latina. Este curso esta disenado para guiarte paso a paso 
+    desde los conceptos mas basicos hasta las estructuras complejas, siguiendo el enfoque pedagogico 
     del profesor **Fernando Nieto Mesa**.
     
-    ### ¿Por qué estudiar Latín?
+    ### \u00bfPor que estudiar Latin?
     
-    *   **Origen**: Es la madre del español y de las lenguas romances (francés, italiano, portugués, etc.).
-    *   **Cultura**: Nos conecta con el origen de nuestra civilización, leyes y costumbres.
-    *   **Etimología**: Más del 60% del vocabulario español proviene del latín.
+    *   **Origen**: Es la madre del espanol y de las lenguas romances (frances, italiano, portugues, etc.).
+    *   **Cultura**: Nos conecta con el origen de nuestra civilizacion, leyes y costumbres.
+    *   **Etimologia**: Mas del 60% del vocabulario espanol proviene del latin.
     
     ### Estructura del Curso
     
-    El curso consta de **13 lecciones** que combinan gramática y sintaxis de forma gradual.
-    En lugar de memorizar tablas interminables de golpe, aprenderás cada declinación y conjugación 
-    en su contexto de uso.
+    El curso consta de **40 lecciones progresivas** organizadas en tres niveles:
     
-    ¡Comencemos! Selecciona la **Lección 1** en el menú lateral.
+    ---
+    
+    ## 📗 NIVEL BASICO (Lecciones 1-13)
+    **Objetivo**: Fundamentos de morfologia nominal y verbal
+    
+    """)
+    
+    render_styled_table(
+        ["Leccion", "Titulo", "Contenido Principal", "Objetivo"],
+        [
+            ["**1**", "Primeros Pasos", "Alfabeto, pronunciacion, primeras palabras", "Familiarizarse con el latin"],
+            ["**2**", "El Sujeto", "Nominativo, verbo SUM (presente)", "Estructura de oracion basica"],
+            ["**3**", "Primera Declinacion", "Sustantivos femeninos -a, -ae", "Declinar sustantivos 1a"],
+            ["**4**", "Segunda Declinacion", "Masculinos -us, neutros -um", "Declinar sustantivos 2a"],
+            ["**5**", "El Neutro", "Reglas especiales neutros", "Dominar genero neutro"],
+            ["**6**", "Consolidacion", "Adjetivos 1a clase", "Concordancia adj-sustantivo"],
+            ["**7**", "Tercera Declinacion", "Temas consonanticos, Dativo", "Declinar sustantivos 3a"],
+            ["**8**", "Cuarta Declinacion", "Temas en -u, Preterito Perfecto", "Declinar 4a y tiempo pasado"],
+            ["**9**", "Quinta Declinacion", "Temas en -e, Futuro", "Completar 5 declinaciones"],
+            ["**10**", "Adjetivos 2a Clase", "Adjetivos 3a declinacion", "Adjetivos de tres tipos"],
+            ["**11**", "Comparacion", "Comparativo, superlativo, numerales", "Grados del adjetivo"],
+            ["**12**", "Pronombres", "Personales, demostrativos, relativos", "Sistema pronominal completo"],
+            ["**13**", "Voz Pasiva y Ablativo", "Pasiva, complementos de lugar", "Voz pasiva e introduccion ablativo"]
+        ]
+    )
+    
+    st.markdown("""
+    
+    ---
+    
+    ## 📘 NIVEL AVANZADO (Lecciones 14-30)
+    **Objetivo**: Sistema verbal completo y sintaxis compleja
+    
+    """)
+    
+    render_styled_table(
+        ["Leccion", "Titulo", "Contenido Principal", "Objetivo"],
+        [
+            ["**14**", "Pluscuamperf. y Fut. Perf.", "Tiempos compuestos de indicativo", "Completar indicativo"],
+            ["**15**", "Voz Pasiva - Infectum", "Pasiva presente, imperfecto, futuro", "Dominar pasiva infectum"],
+            ["**16**", "Voz Pasiva - Perfectum", "Pasiva perfecta con sum + participio", "Dominar pasiva perfectum"],
+            ["**17**", "Verbos Deponentes", "Forma pasiva, significado activo", "Identificar deponentes"],
+            ["**18**", "Subjuntivo I", "Presente y perfecto subjuntivo", "Formar subjuntivo"],
+            ["**19**", "Subjuntivo II", "Imperfecto y plusc. subj., consecutio", "Concordancia de tiempos"],
+            ["**20**", "Infinitivos y AcI", "Infinitivos, acusativo con infinitivo", "Oraciones infinitivas"],
+            ["**21**", "Participios", "Presente, perfecto, futuro", "Sistema de participios"],
+            ["**22**", "Ablativo Absoluto", "Construccion absoluta", "Usar ablativo absoluto"],
+            ["**23**", "Gerundio y Gerundivo", "Formas verbales -nd-", "Distinguir gerundio/gerundivo"],
+            ["**24**", "Perifrasticas", "Activa (-urus sum) y pasiva (-ndus sum)", "Intencion y obligacion"],
+            ["**25**", "Sintaxis I", "Coordinacion, causales, temporales", "Oraciones coordinadas y subordinadas basicas"],
+            ["**26**", "Sintaxis II", "Completivas, finales, consecutivas", "Subordinadas con ut/ne"],
+            ["**27**", "Condicionales", "Real, posible, irreal", "Tipos de condicion"],
+            ["**28**", "Relativas", "Oraciones de relativo, qui quae quod", "Subordinadas adjetivas"],
+            ["**29**", "Estilo Indirecto", "Oratio obliqua", "Discurso indirecto Latino"],
+            ["**30**", "Metrica y Poesia", "Hexametro, distica elegiaco", "Leer poesia latina"]
+        ]
+    )
+    
+    st.markdown("""
+    
+    ---
+    
+    ## 📕 NIVEL EXPERTO (Lecciones 31-40)
+    **Objetivo**: Autores, estilistica y evolucion del latin
+    
+    """)
+    
+    render_styled_table(
+        ["Leccion", "Titulo", "Contenido Principal", "Objetivo"],
+        [
+            ["**31**", "Cesar y Prosa Militar", "De Bello Gallico, estilo militar", "Leer prosa narrativa"],
+            ["**32**", "Ciceron y Retorica", "Catilinarias, estilo oratorio", "Leer discursos"],
+            ["**33**", "Salustio e Historiografia", "Conjuracion de Catilina", "Leer historia"],
+            ["**34**", "Catulo y Lirica", "Carmina, poesia amorosa", "Leer lirica"],
+            ["**35**", "Virgilio y Epica", "Eneida, hexametro epico", "Leer epica"],
+            ["**36**", "Horacio y Odas", "Odas, metros variados", "Leer poesia lirica"],
+            ["**37**", "Ovidio y Metamorfosis", "Transformaciones, hexametro", "Leer poesia narrativa"],
+            ["**38**", "Latin Medieval", "Textos medievales", "Reconocer caracteristicas medievales"],
+            ["**39**", "Latin Eclesiastico", "Vulgata, liturgia", "Leer textos religiosos"],
+            ["**40**", "Latin Renacentista", "Humanismo, neolatin", "Latin moderno y cientifico"]
+        ]
+    )
+    
+    st.markdown("""
+    
+    ---
+    
+    ### Como usar este curso
+    
+    1.  **Sigue el orden**: Las lecciones estan cuidadosamente secuenciadas
+    2.  **Practica activamente**: Usa las secciones de Memorizacion y Practica
+    3.  **Analiza textos**: Usa la herramienta de Analisis para consolidar
+    4.  **Estudia con los infogramas**: Recursos visuales para memorizar estructuras clave
+    
+    \u00a1Comencemos! Selecciona la **Leccion 1** en el menu lateral.
     """)
 
 def render_lesson_1():
-    st.image("static/images/curso_gramatica/leccion1_mapa_imperio.png", 
-             caption="El Imperio Romano en su máxima extensión, con el Lacio (Latium) y Roma destacados",
-             use_container_width=True)
-    
-    st.markdown("""
-    ## Lección 1: Primeros Pasos
-    
-    ### 1. El Alfabeto Latino
-    
-    El alfabeto latino constaba originalmente de 23 letras. Persiste en el español, pero sin la **ñ**. 
-    Algunas letras tenían pronunciación distinta a la nuestra.
-    
-    > **Importante**: En latín clásico no existían los acentos escritos ni signos de cantidad. 
-    > Los gramáticos modernos los añaden para facilitar el aprendizaje.
-    
-    ### 2. Reglas de Pronunciación Clásica
-    
-    Vamos a aprender la **pronunciación restituta** (restituida), que intenta reconstruir cómo 
-    hablaban los romanos cultos en el siglo I a.C.
-    """)
-    
-    st.image("static/images/curso_gramatica/leccion1_alfabeto.png",
-             caption="Guía de pronunciación del alfabeto latino clásico",
-             use_container_width=True)
-    
-    st.markdown("""
-    
-    **Consonantes especiales:**
-    """)
-    
-    render_styled_table(
-        ["Letra(s)", "Pronunciación", "Ejemplo", "Se dice"],
-        [
-            ["**c**", "Siempre /k/ (como 'casa')", "*Cicero*", "/Kíkero/"],
-            ["**ch**", "/k/ (no /ch/)", "*chorus*", "/kórus/"],
-            ["**g**", "Siempre /g/ suave (como 'gato')", "*genus*", "/guénus/"],
-            ["**ge, gi**", "/gue/, /gui/", "*genui*, *gigno*", "/guénui/, /guígno/"],
-            ["**j**", "Como /i/ consonántica (inglés 'y')", "*janua*", "/iánua/"],
-            ["**ph**", "Como /f/", "*philosophia*", "/filosofía/"],
-            ["**que, qui**", "/kue/, /kui/", "*atque*, *quidem*", "/átkue/, /kúidem/"],
-            ["**v**", "Como /u/ semiconsonántica (inglés 'w')", "*vivere*", "/wíwere/"]
-        ]
-    )
+    # Unlocks (L1 is always unlocked for now)
+    vocab_unlocked = True
+    exercises_unlocked = True
+    reading_unlocked = True
 
-    st.markdown("""
-    
-    **Diptongos:**
-    *   **ae** = /ai/: *rosae* se dice /rósai/
-    *   **oe** = /oi/: *poena* se dice /póina/
-    *   **au** = /au/ (como en español): *aurum* se dice /áurum/
-    
-    > **Nota sobre la doble L**: En latín no existía el sonido /ll/ español. 
-    > Se pronuncian las dos eles separadas: *ille* = /il-le/, *puella* = /puel-la/, *ancilla* = /an-kil-la/.
-    
-    ### 3. Acentuación
-    
-    En latín **no hay palabras agudas**, solo llanas (graves) o esdrújulas.
-    
-    **Reglas:**
-    1.  Todas las palabras de **dos sílabas** son llanas: *ro-sa*, *do-mus*, *pa-ter*.
-    2.  Las palabras de **tres o más sílabas**:
-        *   Si la penúltima sílaba es **larga**: acento en la penúltima -> *musá-rum*, *candó-ris*.
-        *   Si la penúltima sílaba es **breve**: acento en la antepenúltima -> *cón-sules*, *fí-li-o-lus*.
-    
-    **¿Cómo saber si una sílaba es larga o breve?**
-    *   Es **larga** si forma diptongo, o si la vocal va seguida de **x, z, o dos consonantes**.
-    *   Es **breve** si la vocal va seguida de otra vocal.
-    
-    ### 4. Conceptos Fundamentales: Flexión
-    
-    El latín es una lengua **flexiva**. Esto significa que las palabras cambian su terminación (desinencia) 
-    para indicar su función en la oración, no el orden de las palabras.
-    
-    **Comparación con el español:**
-    """)
-    
-    render_styled_table(
-        ["Español", "Latín"],
-        [
-            ["El agricultor llama a la criada.", "*Agricola ancillam vocat.*"],
-            ["La criada llama al agricultor.", "*Agricolam ancilla vocat.*"]
-        ]
-    )
+    # Create Tabs
+    tab_theory, tab_vocab, tab_practice, tab_reading = st.tabs(["📖 Teoría", "🧠 Vocabulario", "⚔️ Práctica", "📜 Lectura"])
 
-    st.markdown("""
-    
-    > Observa que *agricola* y *ancilla* cambian de forma (*-a* / *-am*) para indicar quién es el sujeto 
-    > y quién el objeto, sin importar el orden.
-    
-    **Características de la flexión:**
-    *   **Declinación**: Cambios que experimentan sustantivos, adjetivos y pronombres.
-    *   **Conjugación**: Cambios que experimentan los verbos.
-    
-    ### 5. Categorías Gramaticales
-    
-    Las palabras latinas tienen:
-    *   **Género**: Masculino, Femenino, **Neutro** (ni uno ni otro).
-    *   **Número**: Singular, Plural.
-    *   **Caso**: Indica la función sintáctica (Sujeto, Objeto, Posesión, etc.).
-    
-    > **Sobre los artículos**: El latín **no tiene artículos** (el, la, un, una). 
-    > Al traducir, debemos añadirlos según el contexto. *Puella* puede ser "la niña", "una niña" o simplemente "niña".
-    
-    ### 6. Partes de la Oración
-    
-    En latín hay ocho clases de palabras:
-    """)
-    
-    render_styled_table(
-        ["Palabra", "Ejemplo", "Traducción"],
-        [
-            ["Nombre (sustantivo)", "*ancilla*", "criada"],
-            ["Adjetivo", "*sedula*", "activa"],
-            ["Pronombre", "*ego*", "yo"],
-            ["Verbo", "*voco*", "llamo"],
-            ["Adverbio", "*bene*", "bien"],
-            ["Preposición", "*cum*", "con"],
-            ["Conjunción", "*et*", "y"],
-            ["Interjección", "*o!*", "¡oh!"]
-        ]
-    )
+    # --- TAB 1: THEORY ---
+    with tab_theory:
+        st.image("static/images/curso_gramatica/leccion1_mapa_imperio.png", 
+                 caption="El Imperio Romano en su máxima extensión, con el Lacio (Latium) y Roma destacados",
+                 width="stretch")
+        
+        st.markdown("""
+        ## Lección 1: Primeros Pasos
+        
+        ### 1. El Alfabeto Latino
+        
+        El alfabeto latino constaba originalmente de 23 letras. Persiste en el español, pero sin la **ñ**. 
+        Algunas letras tenían pronunciación distinta a la nuestra.
+        
+        > **Importante**: En latín clásico no existían los acentos escritos ni signos de cantidad. 
+        > Los gramáticos modernos los añaden para facilitar el aprendizaje.
+        
+        ### 2. Reglas de Pronunciación Clásica
+        
+        Vamos a aprender la **pronunciación restituta** (restituida), que intenta reconstruir cómo 
+        hablaban los romanos cultos en el siglo I a.C.
+        """)
+        
+        st.image("static/images/curso_gramatica/leccion1_alfabeto.png",
+                 caption="Guía de pronunciación del alfabeto latino clásico",
+                 width="stretch")
+        
+        st.markdown("""
+        
+        **Consonantes especiales:**
+        """)
+        
+        render_styled_table(
+            ["Letra(s)", "Pronunciación", "Ejemplo", "Se dice"],
+            [
+                ["**c**", "Siempre /k/ (como 'casa')", "*Cicero*", "/Kíkero/"],
+                ["**ch**", "/k/ (no /ch/)", "*chorus*", "/kórus/"],
+                ["**g**", "Siempre /g/ suave (como 'gato')", "*genus*", "/guénus/"],
+                ["**ge, gi**", "/gue/, /gui/", "*genui*, *gigno*", "/guénui/, /guígno/"],
+                ["**j**", "Como /i/ consonántica (inglés 'y')", "*janua*", "/iánua/"],
+                ["**ph**", "Como /f/", "*philosophia*", "/filosofía/"],
+                ["**que, qui**", "/kue/, /kui/", "*atque*, *quidem*", "/átkue/, /kúidem/"],
+                ["**v**", "Como /u/ semiconsonántica (inglés 'w')", "*vivere*", "/wíwere/"]
+            ]
+        )
 
-    st.markdown("""
-    
-    ### Ejercicio de Pronunciación
-    
-    Intenta leer en voz alta estas palabras aplicando las reglas:
-    *   *Cicero philosophus* (Cicerón el filósofo) -> /Kíkero filósofus/
-    *   *Julius Caesar* (Julio César) -> /Iúlius Káisar/
-    *   *Via longa* (El camino largo) -> /Wía lónga/
-    *   *Aqua vitae* (Agua de vida) -> /Ákua wítai/
-    """)
+        st.markdown("""
+        
+        **Diptongos:**
+        *   **ae** = /ai/: *rosae* se dice /rósai/
+        *   **oe** = /oi/: *poena* se dice /póina/
+        *   **au** = /au/ (como en español): *aurum* se dice /áurum/
+        
+        > **Nota sobre la doble L**: En latín no existía el sonido /ll/ español. 
+        > Se pronuncian las dos eles separadas: *ille* = /il-le/, *puella* = /puel-la/, *ancilla* = /an-kil-la/.
+        
+        ### 3. Acentuación
+        
+        En latín **no hay palabras agudas**, solo llanas (graves) o esdrújulas.
+        
+        **Reglas:**
+        1.  Todas las palabras de **dos sílabas** son llanas: *ro-sa*, *do-mus*, *pa-ter*.
+        2.  Las palabras de **tres o más sílabas**:
+            *   Si la penúltima sílaba es **larga**: acento en la penúltima -> *musá-rum*, *candó-ris*.
+            *   Si la penúltima sílaba es **breve**: acento en la antepenúltima -> *cón-sules*, *fí-li-o-lus*.
+        
+        **¿Cómo saber si una sílaba es larga o breve?**
+        *   Es **larga** si forma diptongo, o si la vocal va seguida de **x, z, o dos consonantes**.
+        *   Es **breve** si la vocal va seguida de otra vocal.
+        
+        ### 4. Conceptos Fundamentales: Flexión
+        
+        El latín es una lengua **flexiva**. Esto significa que las palabras cambian su terminación (desinencia) 
+        para indicar su función en la oración, no el orden de las palabras.
+        
+        **Comparación con el español:**
+        """)
+        
+        render_styled_table(
+            ["Español", "Latín"],
+            [
+                ["El agricultor llama a la criada.", "*Agricola ancillam vocat.*"],
+                ["La criada llama al agricultor.", "*Agricolam ancilla vocat.*"]
+            ]
+        )
+
+        st.markdown("""
+        
+        > Observa que *agricola* y *ancilla* cambian de forma (*-a* / *-am*) para indicar quién es el sujeto 
+        > y quién el objeto, sin importar el orden.
+        
+        **Características de la flexión:**
+        *   **Declinación**: Cambios que experimentan sustantivos, adjetivos y pronombres.
+        *   **Conjugación**: Cambios que experimentan los verbos.
+        
+        ### 5. Categorías Gramaticales
+        
+        Las palabras latinas tienen:
+        *   **Género**: Masculino, Femenino, **Neutro** (ni uno ni otro).
+        *   **Número**: Singular, Plural.
+        *   **Caso**: Indica la función sintáctica (Sujeto, Objeto, Posesión, etc.).
+        
+        > **Sobre los artículos**: El latín **no tiene artículos** (el, la, un, una). 
+        > Al traducir, debemos añadirlos según el contexto. *Puella* puede ser "la niña", "una niña" o simplemente "niña".
+        
+        ### 6. Partes de la Oración
+        
+        En latín hay ocho clases de palabras:
+        """)
+        
+        render_styled_table(
+            ["Palabra", "Ejemplo", "Traducción"],
+            [
+                ["Nombre (sustantivo)", "*ancilla*", "criada"],
+                ["Adjetivo", "*sedula*", "activa"],
+                ["Pronombre", "*ego*", "yo"],
+                ["Verbo", "*voco*", "llamo"],
+                ["Adverbio", "*bene*", "bien"],
+                ["Preposición", "*cum*", "con"],
+                ["Conjunción", "*et*", "y"],
+                ["Interjección", "*o!*", "¡oh!"]
+            ]
+        )
+
+        st.markdown("""
+        
+        ### Ejercicio de Pronunciación
+        
+        Intenta leer en voz alta estas palabras aplicando las reglas:
+        *   *Cicero philosophus* (Cicerón el filósofo) -> /Kíkero filósofus/
+        *   *Julius Caesar* (Julio César) -> /Iúlius Káisar/
+        *   *Via longa* (El camino largo) -> /Wía lónga/
+        *   *Aqua vitae* (Agua de vida) -> /Ákua wítai/
+        """)
+        
+
+
+    # --- TAB 2: VOCABULARY ---
+    with tab_vocab:
+        from utils.learning_hub_widgets import render_vocabulary_widget
+        render_vocabulary_widget(lesson_number=1)
+
+    # --- TAB 3: PRACTICE ---
+    with tab_practice:
+        st.markdown("### ⚔️ Taller de Traducción")
+        from utils.learning_hub_widgets import render_translation_workshop
+        render_translation_workshop(lesson_number=1)
+        
+        st.divider()
+        st.markdown("### 🎲 Ejercicios Generados")
+        
+        # Importar funciones de UI
+        from utils.learning_hub_widgets import (
+            render_vocabulary_match_exercise,
+            render_multiple_choice_exercise,
+            render_sentence_completion_exercise
+        )
+        
+        with get_session() as session:
+            generator = ExerciseGenerator(session)
+            ex_type = st.selectbox(
+                "Tipo de Ejercicio:",
+                ["Emparejar Vocabulario", "Opción Múltiple (Morfología)", "Completar Oraciones"],
+                key="ex_type_l1"
+            )
+            
+            if st.button("Generar Nuevos Ejercicios", key="gen_ex_l1"):
+                if ex_type == "Emparejar Vocabulario":
+                    exercises = generator.generate_vocabulary_match(1)
+                    st.session_state["exercises_l1"] = ("vocab", exercises)
+                elif ex_type == "Opción Múltiple (Morfología)":
+                    exercises = generator.generate_declension_choice(1)
+                    st.session_state["exercises_l1"] = ("mc", exercises)
+                elif ex_type == "Completar Oraciones":
+                    exercises = generator.generate_sentence_completion(1)
+                    st.session_state["exercises_l1"] = ("fill", exercises)
+            
+            # Renderizar ejercicios almacenados
+            if "exercises_l1" in st.session_state:
+                ex_type_stored, exercises = st.session_state["exercises_l1"]
+                if ex_type_stored == "vocab":
+                    render_vocabulary_match_exercise(exercises, 1, key_suffix="dyn")
+                elif ex_type_stored == "mc":
+                    render_multiple_choice_exercise(exercises, 1)
+                elif ex_type_stored == "fill":
+                    render_sentence_completion_exercise(exercises, 1)
+
+    # --- TAB 4: READING ---
+    with tab_reading:
+        with get_session() as session:
+            reader = ReadingService(session)
+            text = reader.get_reading_for_lesson(1)
+            
+            if text:
+                st.markdown(f"### {text.title}")
+                enriched_html = reader.enrich_reading_with_tooltips(text.id)
+                st.markdown(enriched_html, unsafe_allow_html=True)
+                
+                if st.button("Marcar como Leída", key="read_l1"):
+                    reader.mark_reading_as_completed(1, text.id)
+                    st.success("¡Lectura completada!")
+            else:
+                st.info("No hay lectura asignada para esta lección aún.")
+
+    # Learning Hub Integration
+    from utils.learning_hub_widgets import render_lesson_progress_summary
+    render_lesson_progress_summary(lesson_number=1)
+
 
 def render_lesson_2():
     st.image("static/images/curso_gramatica/leccion2_foro_romano.png",
              caption="El Foro Romano, centro de la vida pública en la antigua Roma",
-             use_container_width=True)
+             width="stretch")
     
     st.markdown("""
     ## Lección 2: Los Casos y el Nominativo
@@ -589,7 +1036,7 @@ def render_lesson_2():
     
     st.image("static/images/curso_gramatica/casos_latinos_diagram.png",
              caption="Rueda de los 6 Casos Latinos y sus funciones",
-             use_container_width=True)
+             width="stretch")
              
     st.markdown("""
     
@@ -632,12 +1079,14 @@ def render_lesson_2():
 
     st.markdown("""
     """)
+    
+    # Learning Hub Integration
+    from utils.learning_hub_widgets import render_lesson_progress_summary, render_vocabulary_widget, render_translation_workshop
+    render_vocabulary_widget(lesson_number=2)
+    render_translation_workshop(lesson_number=2)
+    render_lesson_progress_summary(lesson_number=2)
 
 def render_lesson_3():
-    st.image("static/images/curso_gramatica/leccion3_declinaciones.png",
-             caption="Diagrama visual del sistema de declinaciones latinas",
-             width=750)
-    
     st.markdown("""
     ## Lección 3: Primera Declinación y Verbos Fundamentales
     
@@ -646,30 +1095,18 @@ def render_lesson_3():
     La Primera Declinación agrupa sustantivos mayoritariamente **femeninos** que terminan en **-a** en Nominativo Singular.
     
     **Enunciado**: Los sustantivos se enuncian con el Nominativo y el Genitivo Singular:
-    *   *Rosa, rosae* (la rosa, de la rosa) -> indica que es 1ª Declinación
-    
-    **Paradigma completo: Rosa, -ae (La rosa)**
-    
-    **Paradigma completo: Rosa, -ae (La rosa)**
+    *   *Rosa, rosae* (la rosa, de la rosa) -> indica que es 1a Declinación
     """)
     
-    render_styled_table(
-        ["Caso", "Singular", "Terminación", "Plural", "Terminación", "Función"],
-        [
-            ["**Nominativo**", "ros-**a**", "**-a**", "ros-**ae**", "**-ae**", "Sujeto / Atributo"],
-            ["**Vocativo**", "ros-**a**", "**-a**", "ros-**ae**", "**-ae**", "¡Oh rosa!"],
-            ["**Acusativo**", "ros-**am**", "**-am**", "ros-**as**", "**-as**", "Objeto Directo"],
-            ["**Genitivo**", "ros-**ae**", "**-ae**", "ros-**arum**", "**-arum**", "De la rosa (posesión)"],
-            ["**Dativo**", "ros-**ae**", "**-ae**", "ros-**is**", "**-is**", "A/Para la rosa"],
-            ["**Ablativo**", "ros-**ā**", "**-ā**", "ros-**is**", "**-is**", "Con/Por la rosa"]
-        ]
-    )
+    st.image("static/images/curso_gramatica/leccion3_primera_declinacion.png",
+             caption="Primera Declinación completa con ejemplos situacionales de uso de cada caso",
+             width="stretch")
 
     st.markdown("""
     
     > **Nota sobre el Ablativo Sg**: La terminación **-ā** es larga (aunque se escribe igual que el Nominativo).
     
-    **Otros ejemplos de 1ª Declinación:**
+    **Otros ejemplos de 1a Declinación:**
     *   *Puella, puellae* (niña)
     *   *Femina, feminae* (mujer)
     *   *Via, viae* (camino)
@@ -689,12 +1126,12 @@ def render_lesson_3():
     render_styled_table(
         ["Persona", "Forma", "Traducción 1", "Traducción 2"],
         [
-            ["1ª Sg", "**sum**", "yo soy", "yo estoy"],
-            ["2ª Sg", "**es**", "tú eres", "tú estás"],
-            ["3ª Sg", "**est**", "él/ella es", "él/ella está"],
-            ["1ª Pl", "**sumus**", "nosotros somos", "nosotros estamos"],
-            ["2ª Pl", "**estis**", "vosotros sois", "vosotros estáis"],
-            ["3ª Pl", "**sunt**", "ellos/ellas son", "ellos/ellas están"]
+            ["1a Sg", "**sum**", "yo soy", "yo estoy"],
+            ["2a Sg", "**es**", "tú eres", "tú estás"],
+            ["3a Sg", "**est**", "él/ella es", "él/ella está"],
+            ["1a Pl", "**sumus**", "nosotros somos", "nosotros estamos"],
+            ["2a Pl", "**estis**", "vosotros sois", "vosotros estáis"],
+            ["3a Pl", "**sunt**", "ellos/ellas son", "ellos/ellas están"]
         ]
     )
 
@@ -708,7 +1145,7 @@ def render_lesson_3():
     
     ### 3. Primera Conjugación (verbos en -ARE): AMARE (Amar)
     
-    Los verbos cuyo infinitivo termina en **-are** pertenecen a la 1ª Conjugación.
+    Los verbos cuyo infinitivo termina en **-are** pertenecen a la 1a Conjugación.
     Son los más regulares y numerosos.
     
     **Presente de Indicativo - Voz Activa:**
@@ -717,18 +1154,18 @@ def render_lesson_3():
     render_styled_table(
         ["Persona", "Raíz", "Desinencia", "Forma completa", "Español"],
         [
-            ["1ª Sg", "am-", "**-o**", "am-**o**", "yo amo"],
-            ["2ª Sg", "am-", "**-as**", "am-**as**", "tú amas"],
-            ["3ª Sg", "am-", "**-at**", "am-**at**", "él/ella ama"],
-            ["1ª Pl", "am-", "**-amus**", "am-**amus**", "nosotros amamos"],
-            ["2ª Pl", "am-", "**-atis**", "am-**atis**", "vosotros amáis"],
-            ["3ª Pl", "am-", "**-ant**", "am-**ant**", "ellos/ellas aman"]
+            ["1a Sg", "am-", "**-o**", "am-**o**", "yo amo"],
+            ["2a Sg", "am-", "**-as**", "am-**as**", "tú amas"],
+            ["3a Sg", "am-", "**-at**", "am-**at**", "él/ella ama"],
+            ["1a Pl", "am-", "**-amus**", "am-**amus**", "nosotros amamos"],
+            ["2a Pl", "am-", "**-atis**", "am-**atis**", "vosotros amáis"],
+            ["3a Pl", "am-", "**-ant**", "am-**ant**", "ellos/ellas aman"]
         ]
     )
 
     st.markdown("""
     
-    **Otros verbos de 1ª Conjugación:**
+    **Otros verbos de 1a Conjugación:**
     *   *Laudo, laudare* (alabar)
     *   *Voco, vocare* (llamar)
     *   *Narro, narrare* (narrar, contar)
@@ -766,14 +1203,16 @@ def render_lesson_3():
     *   **Voco, vocare**: llamar
     """) # Closing parenthesis for st.markdown
     
-    # SECCIÓN DE PRÁCTICA INTEGRADA
-    st.markdown("---")
-    render_practice_section(lesson_number=3, lesson_title="Primera Declinación y Sum")
+    # Learning Hub Integration
+    from utils.learning_hub_widgets import render_lesson_progress_summary, render_vocabulary_widget, render_translation_workshop
+    render_vocabulary_widget(lesson_number=3)
+    render_translation_workshop(lesson_number=3)
+    render_lesson_progress_summary(lesson_number=3)
 
 def render_lesson_4():
     st.image("static/images/curso_gramatica/leccion4_vida_cotidiana.png",
              caption="La vida cotidiana en una domus romana",
-             use_container_width=True)
+             width="stretch")
     
     st.markdown("""
     ## Lección 4: Segunda Declinación (Masculinos) y el Acusativo
@@ -787,6 +1226,11 @@ def render_lesson_4():
     
     **Paradigma completo: Dominus, -i (El señor)**
     """)
+
+    st.markdown("### 🧠 Mnemotecnia: Segunda Declinación")
+    st.image("static/images/curso_gramatica/leccion4_segunda_declinacion_completa.png",
+             caption="Resumen Visual de la Segunda Declinación (Masculinos y Neutros)",
+             width="stretch")
     
     render_styled_table(
         ["Caso", "Singular", "Terminación", "Plural", "Terminación", "Función"],
@@ -806,11 +1250,11 @@ def render_lesson_4():
     > Es la única diferencia con el Nominativo. *Domine!* = ¡Señor!
     
     **Sustantivos en -ER (menos frecuentes):**
-    Algunos masculinos de 2ª Declinación terminan en **-er** en Nominativo:
+    Algunos masculinos de 2a Declinación terminan en **-er** en Nominativo:
     *   *Puer, pueri* (niño) - Mantiene la **e**
     *   *Ager, agri* (campo) - Pierde la **e** en los demás casos
     
-    **Otros ejemplos de 2ª Declinación Masculina:**
+    **Otros ejemplos de 2a Declinación Masculina:**
     *   *Servus, -i*: esclavo, siervo
     *   *Amicus, -i*: amigo
     *   *Filius, -i*: hijo (Vocativo: *fili*, no *filie*)
@@ -840,7 +1284,7 @@ def render_lesson_4():
     - Era continua o habitual: "amaba", "solía amar"
     - No tiene un final definido en el tiempo
     
-    **Formación**: Se añade el sufijo temporal **-ba-** (1ª/2ª conj.) a la raíz del presente.
+    **Formación**: Se añade el sufijo temporal **-ba-** (1a/2a conj.) a la raíz del presente.
     
     **Verbo SUM (Irregular):**
     """)
@@ -848,12 +1292,12 @@ def render_lesson_4():
     render_styled_table(
         ["Persona", "Forma", "Traducción"],
         [
-            ["1ª Sg", "**eram**", "yo era / estaba"],
-            ["2ª Sg", "**eras**", "tú eras / estabas"],
-            ["3ª Sg", "**erat**", "él/ella era / estaba"],
-            ["1ª Pl", "**eramus**", "nosotros éramos / estábamos"],
-            ["2ª Pl", "**eratis**", "vosotros erais / estabais"],
-            ["3ª Pl", "**erant**", "ellos eran / estaban"]
+            ["1a Sg", "**eram**", "yo era / estaba"],
+            ["2a Sg", "**eras**", "tú eras / estabas"],
+            ["3a Sg", "**erat**", "él/ella era / estaba"],
+            ["1a Pl", "**eramus**", "nosotros éramos / estábamos"],
+            ["2a Pl", "**eratis**", "vosotros erais / estabais"],
+            ["3a Pl", "**erant**", "ellos eran / estaban"]
         ]
     )
 
@@ -865,12 +1309,12 @@ def render_lesson_4():
     render_styled_table(
         ["Persona", "Raíz + Sufijo", "Forma", "Traducción"],
         [
-            ["1ª Sg", "ama + ba + m", "**amabam**", "yo amaba"],
-            ["2ª Sg", "ama + ba + s", "**amabas**", "tú amabas"],
-            ["3ª Sg", "ama + ba + t", "**amabat**", "él/ella amaba"],
-            ["1ª Pl", "ama + ba + mus", "**amabamus**", "nosotros amábamos"],
-            ["2ª Pl", "ama + ba + tis", "**amabatis**", "vosotros amabais"],
-            ["3ª Pl", "ama + ba + nt", "**amabant**", "ellos/ellas amaban"]
+            ["1a Sg", "ama + ba + m", "**amabam**", "yo amaba"],
+            ["2a Sg", "ama + ba + s", "**amabas**", "tú amabas"],
+            ["3a Sg", "ama + ba + t", "**amabat**", "él/ella amaba"],
+            ["1a Pl", "ama + ba + mus", "**amabamus**", "nosotros amábamos"],
+            ["2a Pl", "ama + ba + tis", "**amabatis**", "vosotros amabais"],
+            ["3a Pl", "ama + ba + nt", "**amabant**", "ellos/ellas amaban"]
         ]
     )
 
@@ -892,6 +1336,12 @@ def render_lesson_4():
     *   **Voco, vocare**: llamar
     *   **Porto, portare**: llevar
     """)
+    
+    # Learning Hub Integration
+    from utils.learning_hub_widgets import render_lesson_progress_summary, render_vocabulary_widget, render_translation_workshop
+    render_vocabulary_widget(lesson_number=4)
+    render_translation_workshop(lesson_number=4)
+    render_lesson_progress_summary(lesson_number=4)
 
 def render_lesson_5():
     st.markdown("""
@@ -900,7 +1350,7 @@ def render_lesson_5():
     
     st.image("static/images/curso_gramatica/leccion5_neutro_diagram.png",
              caption="Diagrama del Género Neutro y sus reglas fundamentales",
-             use_container_width=True)
+             width="stretch")
              
     st.markdown("""
     
@@ -928,7 +1378,7 @@ def render_lesson_5():
 
     st.markdown("""
     
-    > **Observación**: Los casos Genitivo, Dativo y Ablativo son idénticos a los masculinos de 2ª Declinación.
+    > **Observación**: Los casos Genitivo, Dativo y Ablativo son idénticos a los masculinos de 2a Declinación.
     > La única diferencia está en Nom/Voc/Ac.
     
     **Otros ejemplos de Neutros en -UM:**
@@ -940,15 +1390,15 @@ def render_lesson_5():
     *   *Auxilium, -i*: ayuda, auxilio
     *   *Forum, -i*: foro, plaza pública
     
-    **¡Importante sobre concordancia!**
-    Cuando el sujeto es neutro plural (*templa*, *bella*), el verbo va en **singular**:
-    *   *Templa sunt pulchra.* ❌ (Incorrecto)
-    *   *Templa est pulchrum.* ❌ (Incorrecto)
-    *   *Templa pulchra sunt.* ✓ (Correcto) - Los templos son hermosos
+    **¡Nota sobre concordancia!**
+    En latín, cuando el sujeto es neutro plural (*templa*, *bella*), el verbo va en **plural**, igual que con los masculinos y femeninos.
+    
+    *   *Templa **sunt** pulchra.* ✓ (Correcto) - Los templos son hermosos.
+    *   *Templa est pulchra.* ❌ (Incorrecto en latín) - El verbo debe concordar en número.
     
     ### 2. Segunda Conjugación: Verbos en -ĒRE
     
-    Los verbos cuyo infinitivo termina en **-ēre** (con **e larga**) pertenecen a la 2ª Conjugación.
+    Los verbos cuyo infinitivo termina en **-ēre** (con **e larga**) pertenecen a la 2a Conjugación.
     
     **Modelo: Monere (Aconsejar, Advertir)**
     
@@ -958,36 +1408,36 @@ def render_lesson_5():
     render_styled_table(
         ["Persona", "Raíz", "Desinencia", "Forma", "Español"],
         [
-            ["1ª Sg", "mone-", "**-o**", "**moneo**", "yo aconsejo"],
-            ["2ª Sg", "mone-", "**-s**", "**mones**", "tú aconsejas"],
-            ["3ª Sg", "mone-", "**-t**", "**monet**", "él/ella aconseja"],
-            ["1ª Pl", "mone-", "**-mus**", "**monemus**", "nosotros aconsejamos"],
-            ["2ª Pl", "mone-", "**-tis**", "**monetis**", "vosotros aconsejáis"],
-            ["3ª Pl", "mone-", "**-nt**", "**monent**", "ellos/ellas aconsejan"]
+            ["1a Sg", "mone-", "**-o**", "**moneo**", "yo aconsejo"],
+            ["2a Sg", "mone-", "**-s**", "**mones**", "tú aconsejas"],
+            ["3a Sg", "mone-", "**-t**", "**monet**", "él/ella aconseja"],
+            ["1a Pl", "mone-", "**-mus**", "**monemus**", "nosotros aconsejamos"],
+            ["2a Pl", "mone-", "**-tis**", "**monetis**", "vosotros aconsejáis"],
+            ["3a Pl", "mone-", "**-nt**", "**monent**", "ellos/ellas aconsejan"]
         ]
     )
 
     st.markdown("""
     
     **Pretérito Imperfecto:**
-    Sufijo temporal: **-eba-** (no -ba- como en la 1ª)
+    Sufijo temporal: **-eba-** (no -ba- como en la 1a)
     """)
     
     render_styled_table(
         ["Persona", "Forma", "Traducción"],
         [
-            ["1ª Sg", "**monebam**", "yo aconsejaba"],
-            ["2ª Sg", "**monebas**", "tú aconsejabas"],
-            ["3ª Sg", "**monebat**", "él/ella aconsejaba"],
-            ["1ª Pl", "**monebamus**", "nosotros aconsejábamos"],
-            ["2ª Pl", "**monebatis**", "vosotros aconsejabais"],
-            ["3ª Pl", "**monebant**", "ellos/ellas aconsejaban"]
+            ["1a Sg", "**monebam**", "yo aconsejaba"],
+            ["2a Sg", "**monebas**", "tú aconsejabas"],
+            ["3a Sg", "**monebat**", "él/ella aconsejaba"],
+            ["1a Pl", "**monebamus**", "nosotros aconsejábamos"],
+            ["2a Pl", "**monebatis**", "vosotros aconsejabais"],
+            ["3a Pl", "**monebant**", "ellos/ellas aconsejaban"]
         ]
     )
 
     st.markdown("""
     
-    **Otros verbos de 2ª Conjugación:**
+    **Otros verbos de 2a Conjugación:**
     *   *Habeo, habere*: tener, poseer
     *   *Video, videre*: ver
     *   *Timeo, timere*: temer
@@ -1005,7 +1455,7 @@ def render_lesson_5():
             ["*Templum pulchrum est.*", "Templum (Nom, Suj) + pulchrum (Nom, Atrib) + est", "El templo es hermoso."],
             ["*Templa pulchra sunt.*", "Templa (Nom Pl Neut, Suj) + pulchra (Nom Pl Neut, Atrib) + sunt", "Los templos son hermosos."],
             ["*Magister pueros monet.*", "Magister (Nom, Suj) + pueros (Ac, OD) + monet (verbo)", "El maestro aconseja a los niños."],
-            ["*Bellum timebamus.*", "Bellum (Ac, OD) + timebamus (verbo 1ª Pl)", "Temíamos la guerra."]
+            ["*Bellum timebamus.*", "Bellum (Ac, OD) + timebamus (verbo 1a Pl)", "Temíamos la guerra."]
         ]
     )
 
@@ -1021,27 +1471,33 @@ def render_lesson_5():
     *   **Video, videre**: ver
     *   **Timeo, timere**: temer
     """)
+    
+    # Learning Hub Integration
+    from utils.learning_hub_widgets import render_lesson_progress_summary, render_vocabulary_widget, render_translation_workshop
+    render_vocabulary_widget(lesson_number=5)
+    render_translation_workshop(lesson_number=5)
+    render_lesson_progress_summary(lesson_number=5)
 
 def render_lesson_6():
     st.image("static/images/curso_gramatica/leccion6_arquitectura.png",
              caption="Arquitectura romana icónica: Coliseo, Panteón, acueductos y columnas",
-             use_container_width=True)
+             width="stretch")
     
     st.markdown("""
-    ## Lección 6: Consolidación, 3ª/4ª Conjugación y Adjetivos
+    ## Lección 6: Consolidación, 3a/4a Conjugación y Adjetivos
     """)
     
     st.image("static/images/curso_gramatica/conjugaciones_overview.png",
              caption="Resumen visual de las 4 conjugaciones latinas",
-             use_container_width=True)
+             width="stretch")
              
     st.markdown("""
     
     ### Revisión: Lo que hemos aprendido hasta ahora
     
     **Declinaciones:**
-    *   1ª Declinación: Femeninos en **-a** (*rosa, puella*)
-    *   2ª Declinación: Masculinos en **-us/-er** (*dominus, puer*) y Neutros en **-um** (*templum*)
+    *   1a Declinación: Femeninos en **-a** (*rosa, puella*)
+    *   2a Declinación: Masculinos en **-us/-er** (*dominus, puer*) y Neutros en **-um** (*templum*)
     
     **Casos dominados:**
     *   **Nominativo**: Sujeto
@@ -1049,13 +1505,13 @@ def render_lesson_6():
     
     **Verbos:**
     *   *Sum* (irregular): Presente e Imperfecto
-    *   1ª Conjugación (*amare*): Presente e Imperfecto
-    *   2ª Conjugación (*monere*): Presente e Imperfecto
+    *   1a Conjugación (*amare*): Presente e Imperfecto
+    *   2a Conjugación (*monere*): Presente e Imperfecto
     
     ### 1. Tercera Conjugación: Verbos en -ERE (e breve)
     
-    Los verbos cuyo infinitivo termina en **-ere** (con **e breve**, no larga) pertenecen a la 3ª Conjugación.
-    Son más irregulares que la 1ª y 2ª.
+    Los verbos cuyo infinitivo termina en **-ere** (con **e breve**, no larga) pertenecen a la 3a Conjugación.
+    Son más irregulares que la 1a y 2a.
     
     **Modelo: Legere (Leer)**
     
@@ -1065,22 +1521,22 @@ def render_lesson_6():
     render_styled_table(
         ["Persona", "Forma", "Español"],
         [
-            ["1ª Sg", "**lego**", "yo leo"],
-            ["2ª Sg", "**legis**", "tú lees"],
-            ["3ª Sg", "**legit**", "él/ella lee"],
-            ["1ª Pl", "**legimus**", "nosotros leemos"],
-            ["2ª Pl", "**legitis**", "vosotros leéis"],
-            ["3ª Pl", "**legunt**", "ellos/ellas leen"]
+            ["1a Sg", "**lego**", "yo leo"],
+            ["2a Sg", "**legis**", "tú lees"],
+            ["3a Sg", "**legit**", "él/ella lee"],
+            ["1a Pl", "**legimus**", "nosotros leemos"],
+            ["2a Pl", "**legitis**", "vosotros leéis"],
+            ["3a Pl", "**legunt**", "ellos/ellas leen"]
         ]
     )
 
     st.markdown("""
     
     **Pretérito Imperfecto:**
-    Sufijo: **-eba-** (igual que la 2ª)
+    Sufijo: **-eba-** (igual que la 2a)
     *   *legebam, legebas, legebat, legebamus, legebatis, legebant*
     
-    **Otros verbos de 3ª Conjugación:**
+    **Otros verbos de 3a Conjugación:**
     *   *Dico, dicere*: decir
     *   *Duco, ducere*: conducir, guiar
     *   *Scribo, scribere*: escribir
@@ -1089,7 +1545,7 @@ def render_lesson_6():
     
     ### 2. Cuarta Conjugación: Verbos en -IRE
     
-    Los verbos cuyo infinitivo termina en **-ire** pertenecen a la 4ª Conjugación.
+    Los verbos cuyo infinitivo termina en **-ire** pertenecen a la 4a Conjugación.
     
     **Modelo: Audire (Oír, Escuchar)**
     
@@ -1099,12 +1555,12 @@ def render_lesson_6():
     render_styled_table(
         ["Persona", "Forma", "Español"],
         [
-            ["1ª Sg", "**audio**", "yo oigo"],
-            ["2ª Sg", "**audis**", "tú oyes"],
-            ["3ª Sg", "**audit**", "él/ella oye"],
-            ["1ª Pl", "**audimus**", "nosotros oímos"],
-            ["2ª Pl", "**auditis**", "vosotros oís"],
-            ["3ª Pl", "**audiunt**", "ellos/ellas oyen"]
+            ["1a Sg", "**audio**", "yo oigo"],
+            ["2a Sg", "**audis**", "tú oyes"],
+            ["3a Sg", "**audit**", "él/ella oye"],
+            ["1a Pl", "**audimus**", "nosotros oímos"],
+            ["2a Pl", "**auditis**", "vosotros oís"],
+            ["3a Pl", "**audiunt**", "ellos/ellas oyen"]
         ]
     )
 
@@ -1114,14 +1570,35 @@ def render_lesson_6():
     Sufijo: **-ieba-**
     *   *audiebam, audiebas, audiebat, audiebamus, audiebatis, audiebant*
     
-    **Otros verbos de 4ª Conjugación:**
+    **Otros verbos de 4a Conjugación:**
     *   *Venio, venire*: venir
     *   *Dormio, dormire*: dormir
     *   *Sentio, sentire*: sentir
+    """)
     
+    st.markdown("### 🧠 Mnemotecnia: Primera Declinación")
+    
+    st.image("static/images/curso_gramatica/leccion3_rosa_diagram.png",
+             caption="Diagrama Clásico de ROSA (Estructura)",
+             width="stretch")
+
+    st.image("static/images/curso_gramatica/leccion3_rosa_paradigma_mnemotecnia.png",
+             caption="Mnemotecnia: Paradigma y Trucos de Memoria",
+             width="stretch")
+
+    st.image("static/images/curso_gramatica/leccion3_verbo_sum_mnemotecnia.png",
+             caption="Conjugación del Verbo SUM y Regla Mnemotécnica",
+             width="stretch")
+
+    if os.path.exists("static/images/curso_gramatica/leccion6_sum_possum_tree.png"):
+        st.image("static/images/curso_gramatica/leccion6_sum_possum_tree.png",
+                 caption="El Árbol de SUM y POSSUM: Raíces y Ramas",
+                 width="stretch")
+    
+    st.markdown("""
     ### 3. Adjetivos de Primera Clase (Sistema 2-1-2)
     
-    Los adjetivos de 1ª Clase se declinan como los sustantivos de **1ª y 2ª Declinación**.
+    Los adjetivos de 1a Clase se declinan como los sustantivos de **1a y 2a Declinación**.
     
     **Modelo: Bonus, -a, -um (Bueno)**
     
@@ -1139,7 +1616,7 @@ def render_lesson_6():
     *   *Puellam bonam* (A la niña buena) - Femenino, Singular, Acusativo
     *   *Templa bona* (Los templos buenos) - Neutro, Plural, Nom/Ac
     
-    **Otros adjetivos de 1ª Clase:**
+    **Otros adjetivos de 1a Clase:**
     *   *Magnus, -a, -um*: grande
     *   *Parvus, -a, -um*: pequeño
     *   *Pulcher, pulchra, pulchrum*: hermoso
@@ -1151,9 +1628,9 @@ def render_lesson_6():
     El **Vocativo** se usa para **invocar, llamar o dirigirse** a alguien.
     
     **Reglas:**
-    *   En 1ª Declinación: **igual al Nominativo**
-    *   En 2ª Declinación (-us): termina en **-e**
-    *   En 2ª Declinación (-um): **igual al Nominativo**
+    *   En 1a Declinación: **igual al Nominativo**
+    *   En 2a Declinación (-us): termina en **-e**
+    *   En 2a Declinación (-um): **igual al Nominativo**
     
     **Ejemplos:**
     *   *Domine!* (¡Señor!)
@@ -1161,6 +1638,12 @@ def render_lesson_6():
     *   *Fili!* (¡Hijo!) - Excepción: *filius* hace *fili*, no *filie*
     *   *Mi amice!* (¡Amigo mío!)
     """)
+    
+    # Learning Hub Integration
+    from utils.learning_hub_widgets import render_lesson_progress_summary, render_vocabulary_widget, render_translation_workshop
+    render_vocabulary_widget(lesson_number=6)
+    render_translation_workshop(lesson_number=6)
+    render_lesson_progress_summary(lesson_number=6)
 
 def render_lesson_7():
     st.markdown("""
@@ -1169,13 +1652,13 @@ def render_lesson_7():
     
     st.image("static/images/curso_gramatica/leccion7_third_declension.png",
              caption="Esquema de la Tercera Declinación: Imparísílabos y Parisísílabos",
-             use_container_width=True)
+             width="stretch")
              
     st.markdown("""
     
     ### 1. Tercera Declinación: La Más Compleja
     
-    La 3ª Declinación es la más amplia y compleja. Agrupa sustantivos de **los tres géneros**.
+    La 3a Declinación es la más amplia y compleja. Agrupa sustantivos de **los tres géneros**.
     
     **Característica identificadora**: Genitivo Singular en **-is**.
     
@@ -1244,14 +1727,28 @@ def render_lesson_7():
     *   *Fons, fontis* (m): fuente
     *   *Navis, navis* (f): nave
     
-    **Neutros de 3ª Declinación:**
+    **Neutros de 3a Declinación:**
     Siguen la **regla de oro del neutro** (Nom/Voc/Ac iguales, plural en -a).
     
     *   *Corpus, corporis* (n): cuerpo
     *   *Opus, operis* (n): obra
     *   *Nomen, nominis* (n): nombre
     
-    ### 2. El Caso Dativo: Objeto Indirecto
+    ### 3. Excepciones de la Tercera Declinación (Refuerzo)
+    """)
+
+    if os.path.exists("static/images/curso_gramatica/leccion7_rarezas_3a.png"):
+        st.image("static/images/curso_gramatica/leccion7_rarezas_3a.png",
+                 caption="Museo de Rarezas: Vis, Bos, Sus, Iuppiter",
+                 width="stretch")
+
+    if os.path.exists("static/images/curso_gramatica/leccion7_torre_i.png"):
+        st.image("static/images/curso_gramatica/leccion7_torre_i.png",
+                 caption="La Torre de la -i: Turris, Puppis, Securis, Mare, Animal",
+                 width="stretch")
+
+    st.markdown("""
+    ### 4. El Caso Dativo: Objeto Indirecto
     
     El **Dativo** marca el **Objeto Indirecto** o el **Destinatario** de la acción.
     Responde a **¿A quién?** o **¿Para quién?**
@@ -1267,10 +1764,16 @@ def render_lesson_7():
     *   *Do tibi donum.* (Te doy un regalo)
     
     **Terminaciones de Dativo:**
-    *   1ª Declinación: Sg **-ae**, Pl **-is**
-    *   2ª Declinación: Sg **-o**, Pl **-is**
-    *   3ª Declinación: Sg **-i**, Pl **-ibus**
+    *   1a Declinación: Sg **-ae**, Pl **-is**
+    *   2a Declinación: Sg **-o**, Pl **-is**
+    *   3a Declinación: Sg **-i**, Pl **-ibus**
     """)
+    
+    # Learning Hub Integration
+    from utils.learning_hub_widgets import render_lesson_progress_summary, render_vocabulary_widget, render_translation_workshop
+    render_vocabulary_widget(lesson_number=7)
+    render_translation_workshop(lesson_number=7)
+    render_lesson_progress_summary(lesson_number=7)
 
 def render_lesson_8():
     st.markdown("""
@@ -1279,14 +1782,14 @@ def render_lesson_8():
     
     st.image("static/images/curso_gramatica/leccion8_perfect_tense.png",
              caption="El Pretérito Perfecto: Formación y Uso",
-             use_container_width=True)
+             width="stretch")
              
     st.markdown("""
     
     ### 1. Cuarta Declinación: Temas en -U
     
     Sustantivos mayoritariamente **masculinos** (aunque hay algunos femeninos y neutros).
-    Terminan en **-us** en Nominativo y **-us** en Genitivo (no confundir con la 2ª).
+    Terminan en **-us** en Nominativo y **-us** en Genitivo (no confundir con la 2a).
     
     **Modelo: Manus, -us (La mano) - FEMENINO (Excepción)**
     
@@ -1304,31 +1807,38 @@ def render_lesson_8():
             ["**Ablativo**", "man-**u**", "man-**ibus**"]
         ]
     )
+    
+    # Infografía de la 4ª Declinación
+    if os.path.exists("static/images/curso_gramatica/leccion8_cuarta_declinacion.png"):
+        st.image("static/images/curso_gramatica/leccion8_cuarta_declinacion.png",
+                 caption="Cuarta Declinación: Paradigma y Características",
+                 width="stretch")
 
     st.markdown("""
     
-    **Otros ejemplos de 4ª Declinación:**
+    **Otros ejemplos de 4a Declinación:**
     *   *Exercitus, -us* (m): ejército
     *   *Fructus, -us* (m): fruto
     *   *Senatus, -us* (m): senado
     *   *Portus, -us* (m): puerto
-    *   *Domus, -us* (f): casa (irregular, mezcla 2ª y 4ª)
+    *   *Domus, -us* (f): casa (irregular, mezcla 2a y 4a)
     
-    **Neutros de 4ª Declinación** (muy raros):
+    **Neutros de 4a Declinación** (muy raros):
     *   *Cornu, -us* (n): cuerno
     *   *Genu, -us* (n): rodilla
+    
     
     ### 2. Pretérito Perfecto (Perfectum): El Pasado Acabado
     
     El **Pretérito Perfecto** expresa una acción **completada en el pasado**.
     Equivale a "amé", "he amado" en español.
     
-    **Formación**: Se construye sobre el **tema de perfecto** (3ª forma del enunciado del verbo).
+    **Formación**: Se construye sobre el **tema de perfecto** (3a forma del enunciado del verbo).
     
     **Enunciado completo de un verbo**: Siempre se dan 4 formas:
-    1.  Presente 1ª Sg: *amo*
+    1.  Presente 1a Sg: *amo*
     2.  Infinitivo: *amare*
-    3.  **Perfecto 1ª Sg**: *amavi*
+    3.  **Perfecto 1a Sg**: *amavi*
     4.  Supino: *amatum*
     
     **Terminaciones del Perfecto** (IGUALES para todas las conjugaciones):
@@ -1339,12 +1849,12 @@ def render_lesson_8():
     render_styled_table(
         ["Persona", "Desinencia", "Ejemplo (AMARE)", "Traducción"],
         [
-            ["1ª Sg", "**-i**", "amav-**i**", "yo amé / he amado"],
-            ["2ª Sg", "**-isti**", "amav-**isti**", "tú amaste"],
-            ["3ª Sg", "**-it**", "amav-**it**", "él/ella amó"],
-            ["1ª Pl", "**-imus**", "amav-**imus**", "nosotros amamos"],
-            ["2ª Pl", "**-istis**", "amav-**istis**", "vosotros amasteis"],
-            ["3ª Pl", "**-erunt/-ere**", "amav-**erunt**", "ellos/ellas amaron"]
+            ["1a Sg", "**-i**", "amav-**i**", "yo amé / he amado"],
+            ["2a Sg", "**-isti**", "amav-**isti**", "tú amaste"],
+            ["3a Sg", "**-it**", "amav-**it**", "él/ella amó"],
+            ["1a Pl", "**-imus**", "amav-**imus**", "nosotros amamos"],
+            ["2a Pl", "**-istis**", "amav-**istis**", "vosotros amasteis"],
+            ["3a Pl", "**-erunt/-ere**", "amav-**erunt**", "ellos/ellas amaron"]
         ]
     )
 
@@ -1372,11 +1882,31 @@ def render_lesson_8():
     *   *Corona rosarum* (Una corona de rosas)
     
     **Terminaciones de Genitivo:**
-    *   1ª Declinación: Sg **-ae**, Pl **-arum**
-    *   2ª Declinación: Sg **-i**, Pl **-orum**
-    *   3ª Declinación: Sg **-is**, Pl **-um/-ium**
-    *   4ª Declinación: Sg **-us**, Pl **-uum**
+    *   1a Declinación: Sg **-ae**, Pl **-arum**
+    *   2a Declinación: Sg **-i**, Pl **-orum**
+    *   3a Declinación: Sg **-is**, Pl **-um/-ium**
+    *   4a Declinación: Sg **-us**, Pl **-uum**
+
+    ### 4. El Genitivo Partitivo (El Todo y la Parte)
+    
+    Un uso muy común del genitivo es expresar **el todo del cual se toma una parte**.
+    
+    *   *Pars militum* (Una parte **de los soldados**)
+    *   *Nihil boni* (Nada **de bueno**)
+    *   *Plus pecuniae* (Más **de dinero** -> Más dinero)
+    
     """)
+    
+    if os.path.exists("static/images/curso_gramatica/genitivo_partitivo.png"):
+        st.image("static/images/curso_gramatica/genitivo_partitivo.png",
+                 caption="Genitivo Partitivo: La Parte del Todo (Pars militum, Nihil boni, Plus pecuniae)",
+                 width="stretch")
+    
+    # Learning Hub Integration
+    from utils.learning_hub_widgets import render_lesson_progress_summary, render_vocabulary_widget, render_translation_workshop
+    render_vocabulary_widget(lesson_number=8)
+    render_translation_workshop(lesson_number=8)
+    render_lesson_progress_summary(lesson_number=8)
 
 def render_lesson_9():
     st.markdown("""
@@ -1385,7 +1915,7 @@ def render_lesson_9():
     
     st.image("static/images/curso_gramatica/leccion9_fifth_declension.png",
              caption="La Quinta Declinación: Temas en -E",
-             use_container_width=True)
+             width="stretch")
              
     st.markdown("""
     
@@ -1413,11 +1943,11 @@ def render_lesson_9():
 
     st.markdown("""
     
-    **Palabra más importante de 5ª Declinación:**
+    **Palabra más importante de 5a Declinación:**
     *   **Res, rei** (f): cosa, asunto, hecho
         - *Res publica* = La cosa pública = La república
     
-    **Otras palabras de 5ª Declinación:**
+    **Otras palabras de 5a Declinación:**
     *   *Spes, spei* (f): esperanza
     *   *Fides, fidei* (f): fe, confianza
     *   *Species, speciei* (f): aspecto, especie
@@ -1426,7 +1956,7 @@ def render_lesson_9():
     
     El **Futuro Imperfecto** expresa una acción que **ocurrirá en el futuro**.
     
-    **¡Atención!** La formación es **diferente** en 1ª/2ª conj. y 3ª/4ª conj.
+    **¡Atención!** La formación es **diferente** en 1a/2a conj. y 3a/4a conj.
     
     #### A. Primera y Segunda Conjugación: Sufijo -BO-
     
@@ -1438,12 +1968,12 @@ def render_lesson_9():
     render_styled_table(
         ["Persona", "Forma", "Traducción"],
         [
-            ["1ª Sg", "ama-**bo**", "yo amaré"],
-            ["2ª Sg", "ama-**bis**", "tú amarás"],
-            ["3ª Sg", "ama-**bit**", "él/ella amará"],
-            ["1ª Pl", "ama-**bimus**", "nosotros amaremos"],
-            ["2ª Pl", "ama-**bitis**", "vosotros amaréis"],
-            ["3ª Pl", "ama-**bunt**", "ellos/ellas amarán"]
+            ["1a Sg", "ama-**bo**", "yo amaré"],
+            ["2a Sg", "ama-**bis**", "tú amarás"],
+            ["3a Sg", "ama-**bit**", "él/ella amará"],
+            ["1a Pl", "ama-**bimus**", "nosotros amaremos"],
+            ["2a Pl", "ama-**bitis**", "vosotros amaréis"],
+            ["3a Pl", "ama-**bunt**", "ellos/ellas amarán"]
         ]
     )
 
@@ -1462,12 +1992,12 @@ def render_lesson_9():
     render_styled_table(
         ["Persona", "Forma", "Traducción"],
         [
-            ["1ª Sg", "leg-**am**", "yo leeré"],
-            ["2ª Sg", "leg-**es**", "tú leerás"],
-            ["3ª Sg", "leg-**et**", "él/ella leerá"],
-            ["1ª Pl", "leg-**emus**", "nosotros leeremos"],
-            ["2ª Pl", "leg-**etis**", "vosotros leeréis"],
-            ["3ª Pl", "leg-**ent**", "ellos/ellas leerán"]
+            ["1a Sg", "leg-**am**", "yo leeré"],
+            ["2a Sg", "leg-**es**", "tú leerás"],
+            ["3a Sg", "leg-**et**", "él/ella leerá"],
+            ["1a Pl", "leg-**emus**", "nosotros leeremos"],
+            ["2a Pl", "leg-**etis**", "vosotros leeréis"],
+            ["3a Pl", "leg-**ent**", "ellos/ellas leerán"]
         ]
     )
 
@@ -1485,7 +2015,7 @@ def render_lesson_9():
     )
 
     render_styled_table(
-        ["Tiempo", "Significado", "1ª/2ª Conj", "3ª/4ª Conj"],
+        ["Tiempo", "Significado", "1a/2a Conj", "3a/4a Conj"],
         [
             ["**Presente**", "amo", "-o, -as, -at", "-o, -is, -it"],
             ["**Imperfecto**", "amaba", "-**ba**m, -**ba**s", "-**eba**m, -**eba**s"],
@@ -1497,6 +2027,25 @@ def render_lesson_9():
     st.markdown("""
     """)
 
+    st.markdown("### 🧠 Mnemotecnia: Las 5 Declinaciones")
+    st.image("static/images/curso_gramatica/leccion9_5declinaciones_completas.png",
+             caption="Resumen Visual de las 5 Declinaciones Latinas",
+             width="stretch")
+    
+    # Cultural content: Roman Seasons
+    st.markdown("### 🏛️ Cultura Romana: Las Cuatro Estaciones")
+    st.info("La palabra **dies** (día) nos conecta con el calendario romano. Veamos cómo los romanos nombraban las estaciones:")
+    if os.path.exists("static/images/curso_gramatica/cultura_estaciones.png"):
+        st.image("static/images/curso_gramatica/cultura_estaciones.png",
+                 caption="Las Cuatro Estaciones en Roma: Ver, Aestas, Autumnus, Hiems",
+                 width="stretch")
+    
+    # Learning Hub Integration
+    from utils.learning_hub_widgets import render_lesson_progress_summary, render_vocabulary_widget, render_translation_workshop
+    render_vocabulary_widget(lesson_number=9)
+    render_translation_workshop(lesson_number=9)
+    render_lesson_progress_summary(lesson_number=9)
+
 def render_lesson_10():
     st.markdown("""
     ## Lección 10: Adjetivos de Segunda Clase y Sintaxis
@@ -1504,32 +2053,32 @@ def render_lesson_10():
     
     if os.path.exists("static/images/curso_gramatica/leccion10_adjetivos_2clase.png"):
         st.image("static/images/curso_gramatica/leccion10_adjetivos_2clase.png",
-                 caption="Clasificación de Adjetivos de 3ª Declinación (2ª Clase)",
-                 use_container_width=True)
+                 caption="Clasificación de Adjetivos de 3a Declinación (2a Clase)",
+                 width="stretch")
                  
     st.markdown("""
     
     ### Revisión: Las Cinco Declinaciones y los Casos
     
     Ya hemos cubierto **todas las declinaciones del latín**:
-    *   1ª: Femeninos en -a (*rosa, puella*)
-    *   2ª: Masculinos en -us/er (*dominus, puer*) y Neutros en -um (*templum*)
-    *   3ª: Los tres géneros (*rex, urbs, corpus*)
-    *   4ª: Masculinos/Femeninos en -us (*manus, senatus*)
-    *   5ª: Femeninos en -es (*res, dies*)
+    *   1a: Femeninos en -a (*rosa, puella*)
+    *   2a: Masculinos en -us/er (*dominus, puer*) y Neutros en -um (*templum*)
+    *   3a: Los tres géneros (*rex, urbs, corpus*)
+    *   4a: Masculinos/Femeninos en -us (*manus, senatus*)
+    *   5a: Femeninos en -es (*res, dies*)
     
     Y **todos los seis casos**: Nominativo, Vocativo, Acusativo, Genitivo, Dativo, Ablativo.
     
-    ### 1. Adjetivos de Segunda Clase (3ª Declinación)
+    ### 1. Adjetivos de Segunda Clase (3a Declinación)
     
-    Los adjetivos de 2ª Clase se declinan como sustantivos de **3ª Declinación** (temas en -i).
+    Los adjetivos de 2a Clase se declinan como sustantivos de **3a Declinación** (temas en -i).
     
     **Tres tipos según el número de terminaciones:**
     
     #### A. Tres Terminaciones (M / F / N)
     
     **Modelo: Acer, acris, acre (Agudo, penetrante)**
-    *   Masc: *acer* (como *puer* pero con casos de 3ª)
+    *   Masc: *acer* (como *puer* pero con casos de 3a)
     *   Fem: *acris*
     *   Neut: *acre*
     
@@ -1590,6 +2139,12 @@ def render_lesson_10():
     *   *Roma, urbs magna, est.* (Roma, la gran ciudad, existe)
     *   *Homerus, poeta Graecus, carmina scripsit.* (Homero, el poeta griego, escribió poemas)
     """)
+    
+    # Learning Hub Integration
+    from utils.learning_hub_widgets import render_lesson_progress_summary, render_vocabulary_widget, render_translation_workshop
+    render_vocabulary_widget(lesson_number=10)
+    render_translation_workshop(lesson_number=10)
+    render_lesson_progress_summary(lesson_number=10)
 
 def render_lesson_11():
     st.markdown("""
@@ -1599,7 +2154,7 @@ def render_lesson_11():
     if os.path.exists("static/images/curso_gramatica/leccion11_comparison_degrees.png"):
         st.image("static/images/curso_gramatica/leccion11_comparison_degrees.png",
                  caption="Los Grados del Adjetivo: Positivo, Comparativo y Superlativo",
-                 use_container_width=True)
+                 width="stretch")
                  
     st.markdown("""
     
@@ -1615,7 +2170,7 @@ def render_lesson_11():
     **Formación**: Raíz + **-ior** (m/f) / **-ius** (n)
     
     **Modelo: Altior, altius (Más alto)**
-    Se declina como 3ª Declinación.
+    Se declina como 3a Declinación.
     
     """
     )
@@ -1641,7 +2196,7 @@ def render_lesson_11():
     **Formación regular**: Raíz + **-issimus, -a, -um**
     
     **Modelo: Altissimus, -a, -um**
-    Se declina como adjetivo de 1ª Clase (2-1-2).
+    Se declina como adjetivo de 1a Clase (2-1-2).
     
     *   *altissimus* = el más alto / altísimo / muy alto
     *   *fortissimus* = el más fuerte / fortísimo
@@ -1699,6 +2254,19 @@ def render_lesson_11():
     > **Nota**: Los cardinales del 4 al 100 son **indeclinables**.
     > *Unus, duo, tres* sí se declinan.
     """)
+    
+    # Infografía Cultural: Numerales Romanos en la Vida Cotidiana
+    if os.path.exists("static/images/curso_gramatica/leccion11_numerales_monumentos.png"):
+        st.image("static/images/curso_gramatica/leccion11_numerales_monumentos.png",
+                 caption="Numerales Romanos en Monumentos y la Vida Cotidiana",
+                 width="stretch")
+    
+    # Learning Hub Integration
+    from utils.learning_hub_widgets import render_lesson_progress_summary, render_vocabulary_widget, render_translation_workshop, render_sentence_analysis_widget
+    render_vocabulary_widget(lesson_number=11)
+    render_translation_workshop(lesson_number=11)
+    render_sentence_analysis_widget(lesson_number=11)
+    render_lesson_progress_summary(lesson_number=11)
 
 def render_lesson_12():
     st.markdown("""
@@ -1708,7 +2276,7 @@ def render_lesson_12():
     if os.path.exists("static/images/curso_gramatica/leccion12_pronouns_demonstratives.png"):
         st.image("static/images/curso_gramatica/leccion12_pronouns_demonstratives.png",
                  caption="Pronombres Demostrativos: Hic, Ille, Is",
-                 use_container_width=True)
+                 width="stretch")
                  
     st.markdown("""
     
@@ -1722,7 +2290,7 @@ def render_lesson_12():
     )
 
     render_styled_table(
-        ["Caso", "1ª Sg (Yo)", "2ª Sg (Tú)", "1ª Pl (Nosotros)", "2ª Pl (Vosotros)"],
+        ["Caso", "1a Sg (Yo)", "2a Sg (Tú)", "1a Pl (Nosotros)", "2a Pl (Vosotros)"],
         [
             ["**Nom**", "ego", "tu", "nos", "vos"],
             ["**Ac**", "me", "te", "nos", "vos"],
@@ -1742,7 +2310,7 @@ def render_lesson_12():
     ### 2. Pronombre Reflexivo (SE)
     
     El pronombre reflexivo **se refiere al sujeto de la oración**.
-    Solo existe para 3ª persona (no hay formas de 1ª y 2ª, se usan *me, te*).
+    Solo existe para 3a persona (no hay formas de 1a y 2a, se usan *me, te*).
     
     """
     )
@@ -1764,7 +2332,7 @@ def render_lesson_12():
     
     ### 3. Pronombres-Adjetivos Posesivos
     
-    Indican posesión. Se declinan como adjetivos de 1ª Clase.
+    Indican posesión. Se declinan como adjetivos de 1a Clase.
     
     """
     )
@@ -1790,6 +2358,16 @@ def render_lesson_12():
     
     Señalan personas o cosas en el espacio o en el discurso.
     
+    """
+    )
+    
+    if os.path.exists("static/images/curso_gramatica/leccion12_pronombres_heatmap.png"):
+        st.image("static/images/curso_gramatica/leccion12_pronombres_heatmap.png",
+                 caption="Mapa de Calor de Pronombres: Distancias Relativas (Hic, Iste, Ille)",
+                 width="stretch")
+                 
+    st.markdown("""
+    
     #### A. Hic, haec, hoc (Este, esta, esto)
     Indica **cercanía** al hablante.
     
@@ -1804,7 +2382,7 @@ def render_lesson_12():
     *   *Illa regina* (Aquella reina)
     
     #### C. Is, ea, id (Él, ella, ello / Ese, esa, eso)
-    Es el demostrativo **neutro** y también se usa como pronombre personal de 3ª persona.
+    Es el demostrativo **neutro** y también se usa como pronombre personal de 3a persona.
     
     *   *Is vir* (Este/Ese hombre / Él, el hombre)
     *   *Ea femina* (Ésa mujer / Ella, la mujer)
@@ -1832,6 +2410,19 @@ def render_lesson_12():
     **Concordancia**: El relativo concuerda en **género y número** con su antecedente,
     pero su **caso** depende de su función en la oración subordinada.
     """)
+    
+    # Infografía Cultural: Estructura de la Familia Romana
+    if os.path.exists("static/images/curso_gramatica/leccion12_familia_romana.png"):
+        st.image("static/images/curso_gramatica/leccion12_familia_romana.png",
+                 caption="La Familia Romana: Estructura Social y Jerarquía",
+                 width="stretch")
+    
+    # Learning Hub Integration
+    from utils.learning_hub_widgets import render_lesson_progress_summary, render_vocabulary_widget, render_translation_workshop, render_sentence_analysis_widget
+    render_vocabulary_widget(lesson_number=12)
+    render_translation_workshop(lesson_number=12)
+    render_sentence_analysis_widget(lesson_number=12)
+    render_lesson_progress_summary(lesson_number=12)
 
 def render_lesson_13():
     st.markdown("""
@@ -1840,7 +2431,7 @@ def render_lesson_13():
     
     st.image("static/images/curso_gramatica/passive_voice_diagram.png",
              caption="La Voz Pasiva: Estructura y Formación",
-             use_container_width=True)
+             width="stretch")
              
     st.markdown("""
     
@@ -1859,12 +2450,12 @@ def render_lesson_13():
     render_styled_table(
         ["Persona", "Activa", "Pasiva"],
         [
-            ["1ª Sg", "-o/-m", "**-r**"],
-            ["2ª Sg", "-s", "**-ris**"],
-            ["3ª Sg", "-t", "**-tur**"],
-            ["1ª Pl", "-mus", "**-mur**"],
-            ["2ª Pl", "-tis", "**-mini**"],
-            ["3ª Pl", "-nt", "**-ntur**"]
+            ["1a Sg", "-o/-m", "**-r**"],
+            ["2a Sg", "-s", "**-ris**"],
+            ["3a Sg", "-t", "**-tur**"],
+            ["1a Pl", "-mus", "**-mur**"],
+            ["2a Pl", "-tis", "**-mini**"],
+            ["3a Pl", "-nt", "**-ntur**"]
         ]
     )
 
@@ -1878,12 +2469,12 @@ def render_lesson_13():
     render_styled_table(
         ["Persona", "Activa", "Pasiva", "Traducción"],
         [
-            ["1ª Sg", "amo", "amo**r**", "yo soy amado"],
-            ["2ª Sg", "amas", "ama**ris**", "tú eres amado"],
-            ["3ª Sg", "amat", "ama**tur**", "él/ella es amado/a"],
-            ["1ª Pl", "amamus", "ama**mur**", "nosotros somos amados"],
-            ["2ª Pl", "amatis", "ama**mini**", "vosotros sois amados"],
-            ["3ª Pl", "amant", "ama**ntur**", "ellos/ellas son amados/as"]
+            ["1a Sg", "amo", "amo**r**", "yo soy amado"],
+            ["2a Sg", "amas", "ama**ris** / ama**re**", "tú eres amado"],
+            ["3a Sg", "amat", "ama**tur**", "él/ella es amado/a"],
+            ["1a Pl", "amamus", "ama**mur**", "nosotros somos amados"],
+            ["2a Sg", "amatis", "ama**mini**", "vosotros sois amados"],
+            ["3a Pl", "amant", "ama**ntur**", "ellos/ellas son amados/as"]
         ]
     )
 
@@ -1892,7 +2483,7 @@ def render_lesson_13():
     #### Imperfecto Pasivo
     *   *Amabar, amabaris, amabatur...* (Yo era amado, tú eras amado...)
     
-    #### Futuro Pasívo (1ª/2ª Conj)
+    #### Futuro Pasívo (1a/2a Conj)
     *   *Amabor, amaberis, amabitur...* (Yo seré amado...)
     
     ### 2. Verbos Deponentes: Pasivos en Forma, Activos en Significado
@@ -1923,7 +2514,7 @@ def render_lesson_13():
     
     st.image("static/images/curso_gramatica/leccion13_complementos_lugar.png",
              caption="Esquema de los Complementos de Lugar en Latín",
-             use_container_width=True)
+             width="stretch")
     
     st.markdown("""
     
@@ -2020,13 +2611,18 @@ def render_lesson_13():
     
     """)
     
+    st.markdown("### 🧠 Mnemotecnia: Preposiciones")
+    st.image("static/images/curso_gramatica/leccion13_preposiciones_completas.png",
+             caption="Guía Visual de Preposiciones (Acusativo vs Ablativo)",
+             width="stretch")
+
     st.image("static/images/curso_gramatica/leccion13_preposiciones_casos.png",
              caption="Preposiciones de Lugar con sus Casos Gramaticales",
-             use_container_width=True)
+             width="stretch")
     
     st.image("static/images/curso_gramatica/leccion13_decision_preposiciones.png",
              caption="Diagrama de Decisión: ¿Qué Preposición Usar?",
-             use_container_width=True)
+             width="stretch")
     
     st.markdown("""
     
@@ -2041,7 +2637,7 @@ def render_lesson_13():
     
     st.image("static/images/curso_gramatica/leccion13_locativo.png",
              caption="El Locativo: Nombres de Ciudades e Islas Pequeñas",
-             use_container_width=True)
+             width="stretch")
     
     st.markdown("""
     
@@ -2052,9 +2648,9 @@ def render_lesson_13():
     render_styled_table(
         ["Declinación", "Singular", "Plural", "Ejemplos"],
         [
-            ["**1ª Decl**", "-ae", "-is", "*Romae* (en Roma), *Athenis* (en Atenas)"],
-            ["**2ª Decl**", "-i", "-is", "*Corinthi* (en Corinto), *Delphi* (en Delfos)"],
-            ["**3ª Decl**", "-i / -e", "-ibus", "*Carthagine* (en Cartago)"]
+            ["**1a Decl**", "-ae", "-is", "*Romae* (en Roma), *Athenis* (en Atenas)"],
+            ["**2a Decl**", "-i", "-is", "*Corinthi* (en Corinto), *Delphi* (en Delfos)"],
+            ["**3a Decl**", "-i / -e", "-ibus", "*Carthagine* (en Cartago)"]
         ]
     )
     
@@ -2072,6 +2668,14 @@ def render_lesson_13():
     
     > **Nota**: Las ciudades grandes a veces usan *in + Ablativo* en lugar del locativo.
     
+    """)
+    
+    if os.path.exists("static/images/curso_gramatica/leccion13_geografia_militar.png"):
+        st.image("static/images/curso_gramatica/leccion13_geografia_militar.png",
+                 caption="Geografía Militar: Términos Estratégicos y Movimiento",
+                 width="stretch")
+    
+    st.markdown("""
     ---
     
     ## COMPLEMENTOS CIRCUNSTANCIALES DE TIEMPO
@@ -2079,7 +2683,7 @@ def render_lesson_13():
     
     st.image("static/images/curso_gramatica/leccion13_complementos_tiempo.png",
              caption="Esquema de los Complementos de Tiempo en Latín",
-             use_container_width=True)
+             width="stretch")
     
     st.markdown("""
     
@@ -2155,7 +2759,7 @@ def render_lesson_13():
     
     st.image("static/images/curso_gramatica/leccion13_otros_complementos.png",
              caption="Otros Complementos Circunstanciales: Modo, Causa, Instrumento, etc.",
-             use_container_width=True)
+             width="stretch")
     
     st.markdown("""
     
@@ -2217,8 +2821,9 @@ def render_lesson_13():
     
     El Ablativo es el caso más versátil. Resumen de sus principales funciones:
     
-    """)
-    
+    """
+    )
+
     render_styled_table(
         ["Uso", "Construcción", "Ejemplo", "Traducción"],
         [
@@ -2271,6 +2876,13 @@ def render_lesson_13():
     
     ¡Ahora estás listo para leer textos latinos originales!
     """)
+    
+    # Learning Hub Integration
+    from utils.learning_hub_widgets import render_lesson_progress_summary, render_vocabulary_widget, render_translation_workshop, render_sentence_analysis_widget
+    render_vocabulary_widget(lesson_number=13)
+    render_translation_workshop(lesson_number=13)
+    render_sentence_analysis_widget(lesson_number=13)
+    render_lesson_progress_summary(lesson_number=13)
 
 def render_lesson_14():
     st.markdown("""
@@ -2280,7 +2892,7 @@ def render_lesson_14():
     if os.path.exists("static/images/curso_gramatica/leccion14_pluperfect_futureperfect.png"):
         st.image("static/images/curso_gramatica/leccion14_pluperfect_futureperfect.png",
                  caption="Línea de tiempo del Sistema de Perfectum",
-                 use_container_width=True)
+                 width="stretch")
                  
     st.markdown("""
     
@@ -2306,12 +2918,12 @@ def render_lesson_14():
     render_styled_table(
         ["Persona", "Forma", "Traducción"],
         [
-            ["1ª Sg", "amav-**eram**", "yo había amado"],
-            ["2ª Sg", "amav-**eras**", "tú habías amado"],
-            ["3ª Sg", "amav-**erat**", "él/ella había amado"],
-            ["1ª Pl", "amav-**eramus**", "nosotros habíamos amado"],
-            ["2ª Pl", "amav-**eratis**", "vosotros habíais amado"],
-            ["3ª Pl", "amav-**erant**", "ellos/ellas habían amado"]
+            ["1a Sg", "amav-**eram**", "yo había amado"],
+            ["2a Sg", "amav-**eras**", "tú habías amado"],
+            ["3a Sg", "amav-**erat**", "él/ella había amado"],
+            ["1a Pl", "amav-**eramus**", "nosotros habíamos amado"],
+            ["2a Pl", "amav-**eratis**", "vosotros habíais amado"],
+            ["3a Pl", "amav-**erant**", "ellos/ellas habían amado"]
         ]
     )
 
@@ -2323,7 +2935,7 @@ def render_lesson_14():
     )
 
     render_styled_table(
-        ["Verbo", "Perfecto (3ª Sg)", "Pluscuamperfecto (3ª Sg)", "Traducción"],
+        ["Verbo", "Perfecto (3a Sg)", "Pluscuamperfecto (3a Sg)", "Traducción"],
         [
             ["*Habeo*", "*habuit*", "*habu**erat***", "había tenido"],
             ["*Dico*", "*dixit*", "*dix**erat***", "había dicho"],
@@ -2351,7 +2963,7 @@ def render_lesson_14():
     **Formación**: Tema de Perfecto + **-ero, -eris, -erit, -erimus, -eritis, -erint**
     
     > ¡Atención! Las terminaciones son casi idénticas al **Futuro de SUM** (ero, eris, erit...)
-    > excepto en la 3ª persona plural: -erint (no -erunt)
+    > excepto en la 3a persona plural: -erint (no -erunt)
     
     #### Paradigma: AMARE
     
@@ -2361,12 +2973,12 @@ def render_lesson_14():
     render_styled_table(
         ["Persona", "Forma", "Traducción"],
         [
-            ["1ª Sg", "amav-**ero**", "yo habré amado"],
-            ["2ª Sg", "amav-**eris**", "tú habrás amado"],
-            ["3ª Sg", "amav-**erit**", "él/ella habrá amado"],
-            ["1ª Pl", "amav-**erimus**", "nosotros habremos amado"],
-            ["2ª Pl", "amav-**eritis**", "vosotros habréis amado"],
-            ["3ª Pl", "amav-**erint**", "ellos/ellas habrán amado"]
+            ["1a Sg", "amav-**ero**", "yo habré amado"],
+            ["2a Sg", "amav-**eris**", "tú habrás amado"],
+            ["3a Sg", "amav-**erit**", "él/ella habrá amado"],
+            ["1a Pl", "amav-**erimus**", "nosotros habremos amado"],
+            ["2a Pl", "amav-**eritis**", "vosotros habréis amado"],
+            ["3a Pl", "amav-**erint**", "ellos/ellas habrán amado"]
         ]
     )
 
@@ -2402,7 +3014,7 @@ def render_lesson_14():
     
     ### 4. Ejercicio de Conjugación
     
-    Conjuga en los tres tiempos los siguientes verbos (3ª persona singular):
+    Conjuga en los tres tiempos los siguientes verbos (3a persona singular):
     
     """
     )
@@ -2427,6 +3039,27 @@ def render_lesson_14():
     *   **priusquam**: antes de que
     *   **cum primum**: apenas, en cuanto
     """)
+    
+    # Infografía Cultural: El Calendario Romano
+    if os.path.exists("static/images/curso_gramatica/leccion14_calendario_romano.png"):
+        st.image("static/images/curso_gramatica/leccion14_calendario_romano.png",
+                 caption="El Calendario Romano: Nombres de los Meses y Días",
+                 width="stretch")
+    
+    # Infografía Cultural: Fiestas Religiosas Romanas
+    st.markdown("### 🏛️ Cultura Romana: Las Grandes Fiestas Religiosas")
+    st.info("El calendario romano estaba marcado por numerosas **fiestas religiosas** (*feriae*) en honor a los dioses.")
+    if os.path.exists("static/images/curso_gramatica/cultura_fiestas_religiosas.png"):
+        st.image("static/images/curso_gramatica/cultura_fiestas_religiosas.png",
+                 caption="Las Principales Fiestas Religiosas Romanas: Saturnalia, Lupercalia, Floralia...",
+                 width="stretch")
+    
+    # Learning Hub Integration
+    from utils.learning_hub_widgets import render_lesson_progress_summary, render_vocabulary_widget, render_translation_workshop, render_sentence_analysis_widget
+    render_vocabulary_widget(lesson_number=14)
+    render_translation_workshop(lesson_number=14)
+    render_sentence_analysis_widget(lesson_number=14)
+    render_lesson_progress_summary(lesson_number=14)
 
 def render_lesson_15():
     st.markdown("""
@@ -2436,7 +3069,7 @@ def render_lesson_15():
     if os.path.exists("static/images/curso_gramatica/leccion15_passive_conjugation_chart.png"):
         st.image("static/images/curso_gramatica/leccion15_passive_conjugation_chart.png",
                  caption="Tabla completa de la Voz Pasiva (Infectum)",
-                 use_container_width=True)
+                 width="stretch")
                  
     st.markdown("""
     
@@ -2463,12 +3096,12 @@ def render_lesson_15():
     render_styled_table(
         ["Persona", "Activa", "Pasiva"],
         [
-            ["1ª Sg", "-o / -m", "**-r** / **-or**"],
-            ["2ª Sg", "-s", "**-ris** / **-re**"],
-            ["3ª Sg", "-t", "**-tur**"],
-            ["1ª Pl", "-mus", "**-mur**"],
-            ["2ª Pl", "-tis", "**-mini**"],
-            ["3ª Pl", "-nt", "**-ntur**"]
+            ["1a Sg", "-o / -m", "**-r** / **-or**"],
+            ["2a Sg", "-s", "**-ris** / **-re**"],
+            ["3a Sg", "-t", "**-tur**"],
+            ["1a Pl", "-mus", "**-mur**"],
+            ["2a Pl", "-tis", "**-mini**"],
+            ["3a Pl", "-nt", "**-ntur**"]
         ]
     )
 
@@ -2484,12 +3117,12 @@ def render_lesson_15():
     render_styled_table(
         ["Persona", "Activa", "Pasiva", "Traducción"],
         [
-            ["1ª Sg", "amo", "am**or**", "yo soy amado/a"],
-            ["2ª Sg", "amas", "ama**ris** / ama**re**", "tú eres amado/a"],
-            ["3ª Sg", "amat", "ama**tur**", "él/ella es amado/a"],
-            ["1ª Pl", "amamus", "ama**mur**", "nosotros somos amados/as"],
-            ["2ª Pl", "amatis", "ama**mini**", "vosotros sois amados/as"],
-            ["3ª Pl", "amant", "ama**ntur**", "ellos/ellas son amados/as"]
+            ["1a Sg", "amo", "am**or**", "yo soy amado/a"],
+            ["2a Sg", "amas", "ama**ris** / ama**re**", "tú eres amado/a"],
+            ["3a Sg", "amat", "ama**tur**", "él/ella es amado/a"],
+            ["1a Pl", "amamus", "ama**mur**", "nosotros somos amados/as"],
+            ["2a Sg", "amatis", "ama**mini**", "vosotros sois amados/as"],
+            ["3a Pl", "amant", "ama**ntur**", "ellos/ellas son amados/as"]
         ]
     )
 
@@ -2503,12 +3136,12 @@ def render_lesson_15():
     render_styled_table(
         ["Persona", "Pasiva", "Traducción"],
         [
-            ["1ª Sg", "mone**or**", "yo soy aconsejado/a"],
-            ["2ª Sg", "mone**ris**", "tú eres aconsejado/a"],
-            ["3ª Sg", "mone**tur**", "él/ella es aconsejado/a"],
-            ["1ª Pl", "mone**mur**", "nosotros somos aconsejados/as"],
-            ["2ª Pl", "mone**mini**", "vosotros sois aconsejados/as"],
-            ["3ª Pl", "mone**ntur**", "ellos/ellas son aconsejados/as"]
+            ["1a Sg", "mone**or**", "yo soy aconsejado/a"],
+            ["2a Sg", "mone**ris**", "tú eres aconsejado/a"],
+            ["3a Sg", "mone**tur**", "él/ella es aconsejado/a"],
+            ["1a Pl", "mone**mur**", "nosotros somos aconsejados/as"],
+            ["2a Sg", "mone**mini**", "vosotros sois aconsejados/as"],
+            ["3a Pl", "mone**ntur**", "ellos/ellas son aconsejados/as"]
         ]
     )
 
@@ -2522,12 +3155,12 @@ def render_lesson_15():
     render_styled_table(
         ["Persona", "Pasiva", "Traducción"],
         [
-            ["1ª Sg", "leg**or**", "yo soy leído/a"],
-            ["2ª Sg", "lege**ris**", "tú eres leído/a"],
-            ["3ª Sg", "legi**tur**", "él/ella es leído/a"],
-            ["1ª Pl", "legi**mur**", "nosotros somos leídos/as"],
-            ["2ª Pl", "legi**mini**", "vosotros sois leídos/as"],
-            ["3ª Pl", "leg**untur**", "ellos/ellas son leídos/as"]
+            ["1a Sg", "leg**or**", "yo soy leído/a"],
+            ["2a Sg", "lege**ris**", "tú eres leído/a"],
+            ["3a Sg", "legi**tur**", "él/ella es leído/a"],
+            ["1a Pl", "legi**mur**", "nosotros somos leídos/as"],
+            ["2a Sg", "legi**mini**", "vosotros sois leídos/as"],
+            ["3a Pl", "leg**untur**", "ellos/ellas son leídos/as"]
         ]
     )
 
@@ -2541,12 +3174,12 @@ def render_lesson_15():
     render_styled_table(
         ["Persona", "Pasiva", "Traducción"],
         [
-            ["1ª Sg", "audi**or**", "yo soy oído/a"],
-            ["2ª Sg", "audi**ris**", "tú eres oído/a"],
-            ["3ª Sg", "audi**tur**", "él/ella es oído/a"],
-            ["1ª Pl", "audi**mur**", "nosotros somos oídos/as"],
-            ["2ª Pl", "audi**mini**", "vosotros sois oídos/as"],
-            ["3ª Pl", "audi**untur**", "ellos/ellas son oídos/as"]
+            ["1a Sg", "audi**or**", "yo soy oído/a"],
+            ["2a Sg", "audi**ris**", "tú eres oído/a"],
+            ["3a Sg", "audi**tur**", "él/ella es oído/a"],
+            ["1a Pl", "audi**mur**", "nosotros somos oídos/as"],
+            ["2a Sg", "audi**mini**", "vosotros sois oídos/as"],
+            ["3a Pl", "audi**untur**", "ellos/ellas son oídos/as"]
         ]
     )
 
@@ -2562,12 +3195,12 @@ def render_lesson_15():
     )
 
     render_styled_table(
-        ["Conjugación", "1ª Sg", "2ª Sg", "3ª Sg", "Ejemplo"],
+        ["Conjugación", "1a Sg", "2a Sg", "3a Sg", "Ejemplo"],
         [
-            ["**1ª**", "ama**bar**", "ama**baris**", "ama**batur**", "yo era amado"],
-            ["**2ª**", "mone**bar**", "mone**baris**", "mone**batur**", "yo era aconsejado"],
-            ["**3ª**", "lege**bar**", "lege**baris**", "lege**batur**", "yo era leído"],
-            ["**4ª**", "audie**bar**", "audie**baris**", "audie**batur**", "yo era oído"]
+            ["**1a**", "ama**bar**", "ama**baris**", "ama**batur**", "yo era amado"],
+            ["**2a**", "mone**bar**", "mone**baris**", "mone**batur**", "yo era aconsejado"],
+            ["**3a**", "lege**bar**", "lege**baris**", "lege**batur**", "yo era leído"],
+            ["**4a**", "audie**bar**", "audie**baris**", "audie**batur**", "yo era oído"]
         ]
     )
 
@@ -2585,10 +3218,10 @@ def render_lesson_15():
     )
 
     render_styled_table(
-        ["Conjugación", "1ª Sg", "2ª Sg", "3ª Sg"],
+        ["Conjugación", "1a Sg", "2a Sg", "3a Sg"],
         [
-            ["**1ª**", "ama**bor**", "ama**beris**", "ama**bitur**"],
-            ["**2ª**", "mone**bor**", "mone**beris**", "mone**bitur**"]
+            ["**1a**", "ama**bor**", "ama**beris**", "ama**bitur**"],
+            ["**2a**", "mone**bor**", "mone**beris**", "mone**bitur**"]
         ]
     )
 
@@ -2600,10 +3233,10 @@ def render_lesson_15():
     )
 
     render_styled_table(
-        ["Conjugación", "1ª Sg", "2ª Sg", "3ª Sg"],
+        ["Conjugación", "1a Sg", "2a Sg", "3a Sg"],
         [
-            ["**3ª**", "leg**ar**", "leg**eris**", "leg**etur**"],
-            ["**4ª**", "audi**ar**", "audi**eris**", "audi**etur**"]
+            ["**3a**", "leg**ar**", "leg**eris**", "leg**etur**"],
+            ["**4a**", "audi**ar**", "audi**eris**", "audi**etur**"]
         ]
     )
 
@@ -2633,6 +3266,13 @@ def render_lesson_15():
     *   **Oppugno, oppugnare**: atacar
     *   **Deligo, deligere, delegi, delectum**: elegir
     """)
+    
+    # Learning Hub Integration
+    from utils.learning_hub_widgets import render_lesson_progress_summary, render_vocabulary_widget, render_translation_workshop, render_sentence_analysis_widget
+    render_vocabulary_widget(lesson_number=15)
+    render_translation_workshop(lesson_number=15)
+    render_sentence_analysis_widget(lesson_number=15)
+    render_lesson_progress_summary(lesson_number=15)
 
 def render_lesson_16():
     st.markdown("""
@@ -2642,7 +3282,7 @@ def render_lesson_16():
     if os.path.exists("static/images/curso_gramatica/leccion16_passive_perfect_system.png"):
         st.image("static/images/curso_gramatica/leccion16_passive_perfect_system.png",
                  caption="Formación del Sistema de Perfectum Pasivo",
-                 use_container_width=True)
+                 width="stretch")
                  
     st.markdown("""
     
@@ -2655,9 +3295,9 @@ def render_lesson_16():
     ### 1. El Participio Perfecto Pasivo (PPP)
     
     El **Participio Perfecto Pasivo** es un **adjetivo verbal** que se declina como 
-    los adjetivos de 1ª clase (*bonus, -a, -um*).
+    los adjetivos de 1a clase (*bonus, -a, -um*).
     
-    **Formación**: Se forma sobre el **tema de supino** (4ª forma del enunciado del verbo).
+    **Formación**: Se forma sobre el **tema de supino** (4a forma del enunciado del verbo).
     
     #### Ejemplos:
     
@@ -2692,12 +3332,12 @@ def render_lesson_16():
     render_styled_table(
         ["Persona", "Forma", "Traducción"],
         [
-            ["1ª Sg", "amat**us sum**", "yo fui amado / he sido amado"],
-            ["2ª Sg", "amat**us es**", "tú fuiste amado"],
-            ["3ª Sg", "amat**us est**", "él fue amado"],
-            ["1ª Pl", "amat**i sumus**", "nosotros fuimos amados"],
-            ["2ª Pl", "amat**i estis**", "vosotros fuisteis amados"],
-            ["3ª Pl", "amat**i sunt**", "ellos fueron amados"]
+            ["1a Sg", "amat**us sum**", "yo fui amado / he sido amado"],
+            ["2a Sg", "amat**us es**", "tú fuiste amado"],
+            ["3a Sg", "amat**us est**", "él fue amado"],
+            ["1a Pl", "amat**i sumus**", "nosotros fuimos amados"],
+            ["2a Sg", "amat**i estis**", "vosotros fuisteis amados"],
+            ["3a Pl", "amat**i sunt**", "ellos fueron amados"]
         ]
     )
 
@@ -2705,7 +3345,7 @@ def render_lesson_16():
     
     #### Femenino y Neutro:
     *   Femenino Sg: *amata sum, amata es, amata est*
-    *   Neutro Sg: *amatum est* (solo 3ª persona, cosas)
+    *   Neutro Sg: *amatum est* (solo 3a persona, cosas)
     *   Femenino Pl: *amatae sumus, amatae estis, amatae sunt*
     *   Neutro Pl: *amata sunt*
     
@@ -2726,12 +3366,12 @@ def render_lesson_16():
     render_styled_table(
         ["Persona", "Forma", "Traducción"],
         [
-            ["1ª Sg", "amat**us eram**", "yo había sido amado"],
-            ["2ª Sg", "amat**us eras**", "tú habías sido amado"],
-            ["3ª Sg", "amat**us erat**", "él había sido amado"],
-            ["1ª Pl", "amat**i eramus**", "nosotros habíamos sido amados"],
-            ["2ª Pl", "amat**i eratis**", "vosotros habíais sido amados"],
-            ["3ª Pl", "amat**i erant**", "ellos habían sido amados"]
+            ["1a Sg", "amat**us eram**", "yo había sido amado"],
+            ["2a Sg", "amat**us eras**", "tú habías sido amado"],
+            ["3a Sg", "amat**us erat**", "él había sido amado"],
+            ["1a Pl", "amat**i eramus**", "nosotros habíamos sido amados"],
+            ["2a Sg", "amat**i eratis**", "vosotros habíais sido amados"],
+            ["3a Pl", "amat**i erant**", "ellos habían sido amados"]
         ]
     )
 
@@ -2755,12 +3395,12 @@ def render_lesson_16():
     render_styled_table(
         ["Persona", "Forma", "Traducción"],
         [
-            ["1ª Sg", "amat**us ero**", "yo habré sido amado"],
-            ["2ª Sg", "amat**us eris**", "tú habrás sido amado"],
-            ["3ª Sg", "amat**us erit**", "él habrá sido amado"],
-            ["1ª Pl", "amat**i erimus**", "nosotros habremos sido amados"],
-            ["2ª Pl", "amat**i eritis**", "vosotros habréis sido amados"],
-            ["3ª Pl", "amat**i erunt**", "ellos habrán sido amados"]
+            ["1a Sg", "amat**us ero**", "yo habré sido amado"],
+            ["2a Sg", "amat**us eris**", "tú habrás sido amado"],
+            ["3a Sg", "amat**us erit**", "él habrá sido amado"],
+            ["1a Pl", "amat**i erimus**", "nosotros habremos sido amados"],
+            ["2a Sg", "amat**i eritis**", "vosotros habréis sido amados"],
+            ["3a Pl", "amat**i erunt**", "ellos habrán sido amados"]
         ]
     )
 
@@ -2831,8 +3471,25 @@ def render_lesson_16():
     *   **Scribo, scribere, scripsi, scriptum**: escribir
     *   **Mitto, mittere, misi, missum**: enviar
     *   **Capio, capere, cepi, captum**: tomar
+    """
+    )
+    
+    # Infografía Cultural: Organización de las Legiones Romanas
+    if os.path.exists("static/images/curso_gramatica/leccion16_legion_estructura.png"):
+        st.image("static/images/curso_gramatica/leccion16_legion_estructura.png",
+                 caption="La Legión Romana: Organización Militar del Imperio",
+                 width="stretch")
+    
+    st.markdown("""
     *   **Video, videre, vidi, visum**: ver
     """)
+    
+    # Learning Hub Integration
+    from utils.learning_hub_widgets import render_lesson_progress_summary, render_vocabulary_widget, render_translation_workshop, render_sentence_analysis_widget
+    render_vocabulary_widget(lesson_number=16)
+    render_translation_workshop(lesson_number=16)
+    render_sentence_analysis_widget(lesson_number=16)
+    render_lesson_progress_summary(lesson_number=16)
 
 def render_lesson_17():
     st.markdown("""
@@ -2842,7 +3499,7 @@ def render_lesson_17():
     if os.path.exists("static/images/curso_gramatica/leccion17_deponent_verbs.png"):
         st.image("static/images/curso_gramatica/leccion17_deponent_verbs.png",
                  caption="Verbos Deponentes: Forma Pasiva, Significado Activo",
-                 use_container_width=True)
+                 width="stretch")
                  
     st.markdown("""
     
@@ -2870,9 +3527,9 @@ def render_lesson_17():
     #### Primera Conjugación: HORTOR, HORTARI, HORTATUS SUM (exhortar, animar)
     
     **Enunciado**: *Hortor, hortari, hortatus sum*
-    - 1ª forma: Presente Indicativo (1ª persona singular)
-    - 2ª forma: Infinitivo Presente
-    - 3ª forma: Perfecto (PPP + sum)
+    - 1a forma: Presente Indicativo (1a persona singular)
+    - 2a forma: Infinitivo Presente
+    - 3a forma: Perfecto (PPP + sum)
     
     **Presente Indicativo**:
     
@@ -2882,12 +3539,12 @@ def render_lesson_17():
     render_styled_table(
         ["Persona", "Forma", "Traducción"],
         [
-            ["1ª Sg", "hort**or**", "yo exhorto"],
-            ["2ª Sg", "hort**āris** / hort**āre**", "tú exhortas"],
-            ["3ª Sg", "hort**ātur**", "él/ella exhorta"],
-            ["1ª Pl", "hort**āmur**", "nosotros exhortamos"],
-            ["2ª Pl", "hort**āmini**", "vosotros exhortáis"],
-            ["3ª Pl", "hort**antur**", "ellos/ellas exhortan"]
+            ["1a Sg", "hort**or**", "yo exhorto"],
+            ["2a Sg", "hort**āris** / hort**āre**", "tú exhortas"],
+            ["3a Sg", "hort**ātur**", "él/ella exhorta"],
+            ["1a Pl", "hort**āmur**", "nosotros exhortamos"],
+            ["2a Sg", "hort**āmini**", "vosotros exhortáis"],
+            ["3a Pl", "hort**antur**", "ellos/ellas exhortan"]
         ]
     )
 
@@ -2901,9 +3558,9 @@ def render_lesson_17():
     render_styled_table(
         ["Persona", "Presente", "Imperfecto", "Futuro"],
         [
-            ["1ª Sg", "vere**or**", "verē**bar**", "verē**bor**"],
-            ["2ª Sg", "verē**ris**", "verē**bāris**", "verē**beris**"],
-            ["3ª Sg", "verē**tur**", "verē**bātur**", "verē**bitur**"]
+            ["1a Sg", "vere**or**", "verē**bar**", "verē**bor**"],
+            ["2a Sg", "verē**ris**", "verē**bāris**", "verē**beris**"],
+            ["3a Sg", "verē**tur**", "verē**bātur**", "verē**bitur**"]
         ]
     )
 
@@ -2917,9 +3574,9 @@ def render_lesson_17():
     render_styled_table(
         ["Persona", "Presente", "Imperfecto", "Futuro"],
         [
-            ["1ª Sg", "sequ**or**", "sequē**bar**", "sequ**ar**"],
-            ["2ª Sg", "seque**ris**", "sequē**bāris**", "sequē**ris**"],
-            ["3ª Sg", "sequi**tur**", "sequē**bātur**", "sequē**tur**"]
+            ["1a Sg", "sequ**or**", "sequē**bar**", "sequ**ar**"],
+            ["2a Sg", "seque**ris**", "sequē**bāris**", "sequē**ris**"],
+            ["3a Sg", "sequi**tur**", "sequē**bātur**", "sequē**tur**"]
         ]
     )
 
@@ -2933,9 +3590,9 @@ def render_lesson_17():
     render_styled_table(
         ["Persona", "Presente", "Imperfecto", "Futuro"],
         [
-            ["1ª Sg", "largi**or**", "largiē**bar**", "largi**ar**"],
-            ["2ª Sg", "largī**ris**", "largiē**bāris**", "largiē**ris**"],
-            ["3ª Sg", "largī**tur**", "largiē**bātur**", "largiē**tur**"]
+            ["1a Sg", "largi**or**", "largiē**bar**", "largi**ar**"],
+            ["2a Sg", "largī**ris**", "largiē**bāris**", "largiē**ris**"],
+            ["3a Sg", "largī**tur**", "largiē**bātur**", "largiē**tur**"]
         ]
     )
 
@@ -2946,16 +3603,16 @@ def render_lesson_17():
     #### Sistema de Infectum (igual que pasiva regular):
     - **Presente**: Terminaciones pasivas
     - **Imperfecto**: -bar (pasivo)
-    - **Futuro**: -bor (1ª/2ª conj) o -ar (3ª/4ª conj)
+    - **Futuro**: -bor (1a/2a conj) o -ar (3a/4a conj)
     
     #### Sistema de Perfectum (PPP + sum, como pasiva):
-    - **Perfecto**: PPP + sum → *secutus sum* (he seguido)
-    - **Pluscuamperfecto**: PPP + eram → *secutus eram* (había seguido)
-    - **Futuro Perfecto**: PPP + ero → *secutus ero* (habré seguido)
+    - **Perfecto**: PPP + sum -> *secutus sum* (he seguido)
+    - **Pluscuamperfecto**: PPP + eram -> *secutus eram* (había seguido)
+    - **Futuro Perfecto**: PPP + ero -> *secutus ero* (habré seguido)
     
     ### 4. Deponentes Frecuentes e Importantes
     
-    #### 1ª Conjugación (-or, -ari, -atus sum):
+    #### 1a Conjugación (-or, -ari, -atus sum):
     """
     )
 
@@ -2970,7 +3627,7 @@ def render_lesson_17():
 
     st.markdown("""
     
-    #### 2ª Conjugación (-eor, -eri, -itus sum):
+    #### 2a Conjugación (-eor, -eri, -itus sum):
     """
     )
 
@@ -2985,7 +3642,7 @@ def render_lesson_17():
 
     st.markdown("""
     
-    #### 3ª Conjugación (-or, -i, -us sum):
+    #### 3a Conjugación (-or, -i, -us sum):
     """
     )
 
@@ -3006,7 +3663,7 @@ def render_lesson_17():
 
     st.markdown("""
     
-    #### 4ª Conjugación (-ior, -iri, -itus sum):
+    #### 4a Conjugación (-ior, -iri, -itus sum):
     """
     )
 
@@ -3077,33 +3734,47 @@ def render_lesson_17():
     Traduce al español (fíjate en la forma pasiva pero significado activo):
     
     1. *Milites ducem **sequuntur**.* 
-       → Los soldados **siguen** al jefe.
+       -> Los soldados **siguen** al jefe.
     
     2. *Cives de pace **loquebantur**.*
-       → Los ciudadanos **hablaban** sobre la paz.
+       -> Los ciudadanos **hablaban** sobre la paz.
     
     3. *Multi in bello **passi sunt**.*
-       → Muchos **sufrieron** en la guerra.
+       -> Muchos **sufrieron** en la guerra.
     
     4. *Philosophus sapienter **loquitur**.*
-       → El filósofo **habla** sabiamente.
+       -> El filósofo **habla** sabiamente.
     
     5. *Populus libertate **utitur**.*
-       → El pueblo **usa** la libertad.
+       -> El pueblo **usa** la libertad.
     
     ### Vocabulario Esencial de Deponentes
     *   **sequor, sequi, secutus sum**: seguir
     *   **loquor, loqui, locutus sum**: hablar
     *   **patior, pati, passus sum**: sufrir
-    *   **morior, mori, mortuus sum**: morir
     *   **nascor, nasci, natus sum**: nacer
-    *   **utor, uti, usus sum** (+ abl): usar
+    *   **proficiscor, proficisci, profectus sum**: partir
+    *   **utor, uti, usus sum**: usar (+ ablativo)
     *   **audeo, audere, ausus sum**: atreverse
     *   **gaudeo, gaudere, gavisus sum**: alegrarse
-    """)
+    """
+    )
+    
+    # Infografía Cultural: Cursus Honorum - Magistraturas Romanas
+    if os.path.exists("static/images/curso_gramatica/leccion17_cursus_honorum.png"):
+        st.image("static/images/curso_gramatica/leccion17_cursus_honorum.png",
+                 caption="El Cursus Honorum: La Carrera Política en la República Romana",
+                 width="stretch")
+    
+    # Learning Hub Integration
+    from utils.learning_hub_widgets import render_lesson_progress_summary, render_vocabulary_widget, render_translation_workshop, render_sentence_analysis_widget
+    render_vocabulary_widget(lesson_number=17)
+    render_translation_workshop(lesson_number=17)
+    render_sentence_analysis_widget(lesson_number=17)
+    render_lesson_progress_summary(lesson_number=17)
 
 def render_lesson_18():
-    st.image("static/images/lesson_18_subjunctive.png", caption="El Orador: Expresando deseos y posibilidades con el Subjuntivo", use_container_width=True)
+    st.image("static/images/lesson_18_subjunctive.png", caption="El Orador: Expresando deseos y posibilidades con el Subjuntivo", width="stretch")
 
     st.markdown("""
     ## Lección 18: Modo Subjuntivo - Presente e Imperfecto
@@ -3119,14 +3790,14 @@ def render_lesson_18():
     
     """)
 
-    st.image("static/images/lesson_18_vowels.png", caption="Cambios Vocálicos en el Subjuntivo", use_container_width=True)
+    st.image("static/images/lesson_18_vowels.png", caption="Cambios Vocálicos en el Subjuntivo", width="stretch")
 
     st.markdown("""
     ### 1. Formación del Subjuntivo Presente
 
     **Regla general**: Cambiar la vocal temática
     
-    #### 1ª Conjugación: A → E
+    #### 1a Conjugación: A -> E
     - Indicativo: am**a**-o, am**a**-s
     - Subjuntivo: am**e**-m, am**e**-s
     
@@ -3136,18 +3807,18 @@ def render_lesson_18():
     render_styled_table(
         ["Persona", "Indicativo", "Subjuntivo", "Traducción"],
         [
-            ["1ª Sg", "am**o**", "am**em**", "(que) yo ame"],
-            ["2ª Sg", "am**as**", "am**es**", "(que) tú ames"],
-            ["3ª Sg", "am**at**", "am**et**", "(que) él/ella ame"],
-            ["1ª Pl", "am**amus**", "am**emus**", "(que) nosotros amemos"],
-            ["2ª Pl", "am**atis**", "am**etis**", "(que) vosotros améis"],
-            ["3ª Pl", "am**ant**", "am**ent**", "(que) ellos/ellas amen"]
+            ["1a Sg", "am**o**", "am**em**", "(que) yo ame"],
+            ["2a Sg", "am**as**", "am**es**", "(que) tú ames"],
+            ["3a Sg", "am**at**", "am**et**", "(que) él/ella ame"],
+            ["1a Pl", "am**amus**", "am**emus**", "(que) nosotros amemos"],
+            ["2a Sg", "am**atis**", "am**etis**", "(que) vosotros améis"],
+            ["3a Pl", "am**ant**", "am**ent**", "(que) ellos/ellas amen"]
         ]
     )
 
     st.markdown("""
     
-    #### 2ª Conjugación: E → EA
+    #### 2a Conjugación: E -> EA
     - Indicativo: mon**e**-o, mon**e**-s
     - Subjuntivo: mon**ea**-m, mon**ea**-s
     
@@ -3157,15 +3828,15 @@ def render_lesson_18():
     render_styled_table(
         ["Persona", "Indicativo", "Subjuntivo"],
         [
-            ["1ª Sg", "mone**o**", "mone**am**"],
-            ["2ª Sg", "mone**s**", "mone**as**"],
-            ["3ª Sg", "mone**t**", "mone**at**"]
+            ["1a Sg", "mone**o**", "mone**am**"],
+            ["2a Sg", "mone**s**", "mone**as**"],
+            ["3a Sg", "mone**t**", "mone**at**"]
         ]
     )
 
     st.markdown("""
     
-    #### 3ª Conjugación: Consonante/E → A
+    #### 3a Conjugación: Consonante/E -> A
     - Indicativo: leg-**o**, leg-i**s**
     - Subjuntivo: leg-**a**-m, leg-**a**-s
     
@@ -3175,15 +3846,15 @@ def render_lesson_18():
     render_styled_table(
         ["Persona", "Indicativo", "Subjuntivo"],
         [
-            ["1ª Sg", "leg**o**", "leg**am**"],
-            ["2ª Sg", "leg**is**", "leg**as**"],
-            ["3ª Sg", "leg**it**", "leg**at**"]
+            ["1a Sg", "leg**o**", "leg**am**"],
+            ["2a Sg", "leg**is**", "leg**as**"],
+            ["3a Sg", "leg**it**", "leg**at**"]
         ]
     )
 
     st.markdown("""
     
-    #### 4ª Conjugación: I → IA
+    #### 4a Conjugación: I -> IA
     - Indicativo: aud**i**-o, aud**i**-s
     - Subjuntivo: aud**ia**-m, aud**ia**-s
     
@@ -3193,11 +3864,16 @@ def render_lesson_18():
     render_styled_table(
         ["Persona", "Indicativo", "Subjuntivo"],
         [
-            ["1ª Sg", "audi**o**", "audi**am**"],
-            ["2ª Sg", "audi**s**", "audi**as**"],
-            ["3ª Sg", "audi**t**", "audi**at**"]
+            ["1a Sg", "audi**o**", "audi**am**"],
+            ["2a Sg", "audi**s**", "audi**as**"],
+            ["3a Sg", "audi**t**", "audi**at**"]
         ]
     )
+
+    st.markdown("### 🧠 Mnemotecnia: Vocales del Subjuntivo")
+    st.image("static/images/curso_gramatica/leccion18_subjuntivo_vocales_regla.png",
+             caption="Regla de Cambio Vocálico en el Subjuntivo",
+             width="stretch")
 
     st.markdown("""
     
@@ -3211,12 +3887,12 @@ def render_lesson_18():
     render_styled_table(
         ["Persona", "Indicativo", "Subjuntivo Presente"],
         [
-            ["1ª Sg", "sum", "**sim**"],
-            ["2ª Sg", "es", "**sis**"],
-            ["3ª Sg", "est", "**sit**"],
-            ["1ª Pl", "sumus", "**simus**"],
-            ["2ª Pl", "estis", "**sitis**"],
-            ["3ª Pl", "sunt", "**sint**"]
+            ["1a Sg", "sum", "**sim**"],
+            ["2a Sg", "es", "**sis**"],
+            ["3a Sg", "est", "**sit**"],
+            ["1a Pl", "sumus", "**simus**"],
+            ["2a Sg", "estis", "**sitis**"],
+            ["3a Pl", "sunt", "**sint**"]
         ]
     )
 
@@ -3232,12 +3908,12 @@ def render_lesson_18():
     )
 
     render_styled_table(
-        ["Conjugación", "Infinitivo", "1ª Sg", "2ª Sg", "3ª Sg"],
+        ["Conjugación", "Infinitivo", "1a Sg", "2a Sg", "3a Sg"],
         [
-            ["**1ª**", "am**āre**", "amāre**m**", "amāre**s**", "amāre**t**"],
-            ["**2ª**", "mon**ēre**", "monēre**m**", "monēre**s**", "monēre**t**"],
-            ["**3ª**", "leg**ĕre**", "legĕre**m**", "legĕre**s**", "legĕre**t**"],
-            ["**4ª**", "aud**īre**", "audīre**m**", "audīre**s**", "audīre**t**"]
+            ["**1a**", "am**āre**", "amāre**m**", "amāre**s**", "amāre**t**"],
+            ["**2a**", "mon**ēre**", "monēre**m**", "monēre**s**", "monēre**t**"],
+            ["**3a**", "leg**ĕre**", "legĕre**m**", "legĕre**s**", "legĕre**t**"],
+            ["**4a**", "aud**īre**", "audīre**m**", "audīre**s**", "audīre**t**"]
         ]
     )
 
@@ -3251,12 +3927,12 @@ def render_lesson_18():
     render_styled_table(
         ["Persona", "Subjuntivo Imperfecto", "Traducción"],
         [
-            ["1ª Sg", "amāre**m**", "(si) yo amara/amase"],
-            ["2ª Sg", "amāre**s**", "(si) tú amaras"],
-            ["3ª Sg", "amāre**t**", "(si) él amara"],
-            ["1ª Pl", "amārē**mus**", "(si) nosotros amáramos"],
-            ["2ª Pl", "amārē**tis**", "(si) vosotros amarais"],
-            ["3ª Pl", "amāre**nt**", "(si) ellos amaran"]
+            ["1a Sg", "amāre**m**", "(si) yo amara/amase"],
+            ["2a Sg", "amāre**s**", "(si) tú amaras"],
+            ["3a Sg", "amāre**t**", "(si) él amara"],
+            ["1a Pl", "amārē**mus**", "(si) nosotros amáramos"],
+            ["2a Sg", "amārē**tis**", "(si) vosotros amarais"],
+            ["3a Pl", "amāre**nt**", "(si) ellos amaran"]
         ]
     )
 
@@ -3272,12 +3948,12 @@ def render_lesson_18():
     render_styled_table(
         ["Persona", "Forma", "Traducción"],
         [
-            ["1ª Sg", "**essem**", "(si) yo fuera/fuese"],
-            ["2ª Sg", "**esses**", "(si) tú fueras"],
-            ["3ª Sg", "**esset**", "(si) él fuera"],
-            ["1ª Pl", "**essemus**", "(si) nosotros fuéramos"],
-            ["2ª Pl", "**essetis**", "(si) vosotros fuerais"],
-            ["3ª Pl", "**essent**", "(si) ellos fueran"]
+            ["1a Sg", "**essem**", "(si) yo fuera/fuese"],
+            ["2a Sg", "**esses**", "(si) tú fueras"],
+            ["3a Sg", "**esset**", "(si) él fuera"],
+            ["1a Pl", "**essemus**", "(si) nosotros fuéramos"],
+            ["2a Sg", "**essetis**", "(si) vosotros fuerais"],
+            ["3a Pl", "**essent**", "(si) ellos fueran"]
         ]
     )
 
@@ -3295,9 +3971,16 @@ def render_lesson_18():
     *   ***Di te servent!*** (¡Que los dioses te guarden!)
     
     **Negación**: *ne*
-    
+    """)
+
+    if os.path.exists("static/images/curso_gramatica/leccion18_subjuntivo_augur.png"):
+        st.image("static/images/curso_gramatica/leccion18_subjuntivo_augur.png",
+                 caption="El Augur: Interpretando la voluntad de los dioses (Subjuntivo Optativo)",
+                 width="stretch")
+
+    st.markdown("""
     #### B. Subjuntivo Yusivo / Exhortativo
-    Expresa una **orden o exhortación** en 1ª o 3ª persona.
+    Expresa una **orden o exhortación** en 1a o 3a persona.
     
     *   ***Gaudeamus igitur!*** (¡Alegrémonos, pues!)
     *   ***Veniat!*** (¡Que venga!)
@@ -3313,7 +3996,7 @@ def render_lesson_18():
     
     """)
 
-    st.image("static/images/lesson_18_potential.png", caption="El Subjuntivo Potencial: Imaginando posibilidades", use_container_width=True)
+    st.image("static/images/lesson_18_potential.png", caption="El Subjuntivo Potencial: Imaginando posibilidades", width="stretch")
 
     st.markdown("""
     #### D. Subjuntivo Potencial
@@ -3349,7 +4032,7 @@ def render_lesson_18():
     )
 
     render_styled_table(
-        ["Verbo", "Presente (3ª Sg)", "Imperfecto (3ª Sg)"],
+        ["Verbo", "Presente (3a Sg)", "Imperfecto (3a Sg)"],
         [
             ["*amo*", "am**et**", "amāre**t**"],
             ["*moneo*", "mone**at**", "monēre**t**"],
@@ -3364,19 +4047,19 @@ def render_lesson_18():
     ### 8. Traducción de Expresiones
     
     1. *Utinam viveres!*
-       → ¡Ojalá vivieras!
+       -> ¡Ojalá vivieras!
     
     2. *Gaudeamus omnes!*
-       → ¡Alegrémonos todos!
+       -> ¡Alegrémonos todos!
     
     3. *Veniat Caesar.*
-       → Que venga César.
+       -> Que venga César.
     
     4. *Quid agam?*
-       → ¿Qué debo hacer?
+       -> ¿Qué debo hacer?
     
     5. *Ne timeas.*
-       → No temas.
+       -> No temas.
     
     ### Vocabulario Esencial
     *   **utinam**: ojalá
@@ -3386,8 +4069,17 @@ def render_lesson_18():
     *   **cur**: por qué
     *   **ut**: que (afirmativo)
     """)
+    
+    # Learning Hub Integration
+    from utils.learning_hub_widgets import render_lesson_progress_summary, render_vocabulary_widget, render_translation_workshop, render_sentence_analysis_widget
+    render_vocabulary_widget(lesson_number=18)
+    render_translation_workshop(lesson_number=18)
+    render_sentence_analysis_widget(lesson_number=18)
+    render_lesson_progress_summary(lesson_number=18)
 
 def render_lesson_19():
+    from utils.learning_hub_widgets import render_lesson_progress_summary, render_vocabulary_widget, render_translation_workshop, render_sentence_analysis_widget
+
     st.markdown("""
     ## Lección 19: Subjuntivo Perfecto/Pluscuamperfecto y Consecutio Temporum
     
@@ -3408,22 +4100,22 @@ def render_lesson_19():
     render_styled_table(
         ["Persona", "Subjuntivo Perfecto", "Traducción"],
         [
-            ["1ª Sg", "amav**erim**", "(que) yo haya amado"],
-            ["2ª Sg", "amav**eris**", "(que) tú hayas amado"],
-            ["3ª Sg", "amav**erit**", "(que) él haya amado"],
-            ["1ª Pl", "amav**erimus**", "(que) nosotros hayamos amado"],
-            ["2ª Pl", "amav**eritis**", "(que) vosotros hayáis amado"],
-            ["3ª Pl", "amav**erint**", "(que) ellos hayan amado"]
+            ["1a Sg", "amav**erim**", "(que) yo haya amado"],
+            ["2a Sg", "amav**eris**", "(que) tú hayas amado"],
+            ["3a Sg", "amav**erit**", "(que) él haya amado"],
+            ["1a Pl", "amav**erimus**", "(que) nosotros hayamos amado"],
+            ["2a Pl", "amav**eritis**", "(que) vosotros hayáis amado"],
+            ["3a Pl", "amav**erint**", "(que) ellos hayan amado"]
         ]
     )
 
     st.markdown("""
     
-    > **Nota**: Es casi idéntico al Futuro Perfecto Indicativo, excepto en 1ª Sg: 
+    > **Nota**: Es casi idéntico al Futuro Perfecto Indicativo, excepto en 1a Sg: 
     > - Fut. Perfecto: amav**ero**
     > - Subj. Perfecto: amav**erim**
     
-    #### Otras Conjugaciones (3ª persona singular):
+    #### Otras Conjugaciones (3a persona singular):
     
     """
     )
@@ -3454,18 +4146,18 @@ def render_lesson_19():
     render_styled_table(
         ["Persona", "Subjuntivo Pluscuamperfecto", "Traducción"],
         [
-            ["1ª Sg", "amavisse**m**", "(si) yo hubiera/hubiese amado"],
-            ["2ª Sg", "amavisse**s**", "(si) tú hubieras amado"],
-            ["3ª Sg", "amavisse**t**", "(si) él hubiera amado"],
-            ["1ª Pl", "amavisē**mus**", "(si) nosotros hubiéramos amado"],
-            ["2ª Pl", "amavisē**tis**", "(si) vosotros hubierais amado"],
-            ["3ª Pl", "amavisse**nt**", "(si) ellos hubieran amado"]
+            ["1a Sg", "amavisse**m**", "(si) yo hubiera/hubiese amado"],
+            ["2a Sg", "amavisse**s**", "(si) tú hubieras amado"],
+            ["3a Sg", "amavisse**t**", "(si) él hubiera amado"],
+            ["1a Pl", "amavisē**mus**", "(si) nosotros hubiéramos amado"],
+            ["2a Sg", "amavisē**tis**", "(si) vosotros hubierais amado"],
+            ["3a Pl", "amavisse**nt**", "(si) ellos hubieran amado"]
         ]
     )
 
     st.markdown("""
     
-    #### Otras Conjugaciones (3ª Sg):
+    #### Otras Conjugaciones (3a Sg):
     
     """
     )
@@ -3487,7 +4179,7 @@ def render_lesson_19():
     )
 
     render_styled_table(
-        ["Tiempo", "Formación", "Ejemplo (1ª Sg)", "Traducción"],
+        ["Tiempo", "Formación", "Ejemplo (1a Sg)", "Traducción"],
         [
             ["**Presente**", "Vocal temática cambiada", "am**em**", "(que) yo ame"],
             ["**Imperfecto**", "Infinitivo presente + -m", "amāre**m**", "(si) yo amara"],
@@ -3500,7 +4192,7 @@ def render_lesson_19():
     
     """)
 
-    st.image("static/images/lesson_19_timeline.png", caption="Línea Temporal: La relación entre tiempos verbales", use_container_width=True)
+    st.image("static/images/lesson_19_timeline.png", caption="Línea Temporal: La relación entre tiempos verbales", width="stretch")
 
     st.markdown("""
     ### 4. Consecutio Temporum (Concordancia de Tiempos)
@@ -3543,12 +4235,12 @@ def render_lesson_19():
     #### Ejemplo 1: Subordinada Completiva con UT
     
     **Principal Primaria**:
-    *   *Rogo **ut venias**.* (Te pido que vengas) - Simultaneidad → Pres. Subj.
-    *   *Rogo **ut veneris**.* (Te pido que hayas venido) - Anterioridad → Perf. Subj.
+    *   *Rogo **ut venias**.* (Te pido que vengas) - Simultaneidad -> Pres. Subj.
+    *   *Rogo **ut veneris**.* (Te pido que hayas venido) - Anterioridad -> Perf. Subj.
     
     **Principal Histórica**:
-    *   *Rogavi **ut venīres**.* (Te pedí que vinieras) - Simultaneidad → Imp. Subj.
-    *   *Rogavi **ut venisses**.* (Te pedí que hubieras venido) - Anterioridad → Plusc. Subj.
+    *   *Rogavi **ut venīres**.* (Te pedí que vinieras) - Simultaneidad -> Imp. Subj.
+    *   *Rogavi **ut venisses**.* (Te pedí que hubieras venido) - Anterioridad -> Plusc. Subj.
     
     #### Ejemplo 2: Subordinada Final
     
@@ -3586,12 +4278,19 @@ def render_lesson_19():
     
     """)
 
-    st.image("static/images/lesson_19_structure.png", caption="Estructura de la Consecutio Temporum", use_container_width=True)
+    st.image("static/images/lesson_19_structure.png", caption="Estructura de la Consecutio Temporum", width="stretch")
 
     st.markdown("""
     """)
 
-    st.info("📊 **Pendiente**: Esta sección debe incluir un infograma visual interactivo que muestre la **Tabla Maestra de Consecutio Temporum** con los tiempos primarios e históricos y sus relaciones de concordancia temporal.")
+    if os.path.exists("static/images/curso_gramatica/leccion19_consecutio_temporum_diagram.png"):
+        st.image("static/images/curso_gramatica/leccion19_consecutio_temporum_diagram.png",
+                 caption="Tabla Maestra de Consecutio Temporum",
+                 width="stretch")
+    elif os.path.exists("static/images/curso_gramatica/leccion19_consecutio_temporum.png"):
+        st.image("static/images/curso_gramatica/leccion19_consecutio_temporum.png",
+                 caption="Esquema de la Consecutio Temporum",
+                 width="stretch")
 
     st.markdown("""
     ### 8. Ejercicios de Aplicación
@@ -3599,19 +4298,19 @@ def render_lesson_19():
     Completa con el tiempo correcto del subjuntivo:
     
     1. *Rogo ut ______ (venire).*
-       → **venias** (Principal presente → Pres. Subj.)
+       -> **venias** (Principal presente -> Pres. Subj.)
     
     2. *Rogavi ut ______ (venire).*
-       → **venīres** (Principal perfecto → Imp. Subj.)
+       -> **venīres** (Principal perfecto -> Imp. Subj.)
     
     3. *Timeo ne hoc ______ (facere) iam.*
-       → **fecerit** (Anterioridad + Principal pres. → Perf. Subj.)
+       -> **fecerit** (Anterioridad + Principal pres. -> Perf. Subj.)
     
     4. *Si hoc ______ (facere), felix ______ (esse).*
-       → **faceres**, **esses** (Condicional irreal presente)
+       -> **faceres**, **esses** (Condicional irreal presente)
     
     5. *Tam sapienter loquitur ut omnes eum ______ (audire).*
-       → **audiant** (Consecutiva + Principal pres. → Pres. Subj.)
+       -> **audiant** (Consecutiva + Principal pres. -> Pres. Subj.)
     
     ### 9. Resumen Final: Dominio del Subjuntivo
     
@@ -3630,11 +4329,31 @@ def render_lesson_19():
     *   **cum**: cuando, como quiera que
     *   **si**: si
     *   **nisi**: si no, a menos que
-    *   **quamquam**: aunque (+ indicativo)
     *   **quamvis**: aunque (+ subjuntivo)
     """)
+    
+    # Infografía Cultural: El Senado Romano
+    if os.path.exists("static/images/curso_gramatica/leccion19_senado_discurso.png"):
+        st.image("static/images/curso_gramatica/leccion19_senado_discurso.png",
+                 caption="El Senado Romano: Oratoria y Debate Político",
+                 width="stretch")
+    
+    render_vocabulary_widget(lesson_number=19)
+    render_translation_workshop(lesson_number=19)
+    render_sentence_analysis_widget(lesson_number=19)
+    render_lesson_progress_summary(lesson_number=19)
 
 def render_lesson_20():
+    from utils.learning_hub_widgets import (
+        render_lesson_progress_summary, 
+        render_vocabulary_widget, 
+        render_translation_workshop, 
+        render_sentence_analysis_widget,
+        render_vocabulary_match_exercise,
+        render_multiple_choice_exercise,
+        render_sentence_completion_exercise
+    )
+
     st.markdown("""
     ## Lección 20: Infinitivos y Oraciones de Infinitivo (AcI)
     
@@ -3649,7 +4368,7 @@ def render_lesson_20():
     if os.path.exists("static/images/curso_gramatica/leccion20_infinitivos.png"):
         st.image("static/images/curso_gramatica/leccion20_infinitivos.png",
                  caption="Tabla de Infinitivos Latinos",
-                 use_container_width=True)
+                 width="stretch")
 
     st.markdown("""
     El latín tiene infinitivos para **tres tiempos** (Presente, Perfecto, Futuro) y **dos voces** (Activa, Pasiva).
@@ -3660,17 +4379,17 @@ def render_lesson_20():
     render_styled_table(
         ["Conjugación", "Activa", "Pasiva", "Traducción (Act/Pas)"],
         [
-            ["**1ª (amare)**", "amā**re**", "amā**ri**", "amar / ser amado"],
-            ["**2ª (monere)**", "monē**re**", "monē**ri**", "aconsejar / ser aconsejado"],
-            ["**3ª (legere)**", "leg**ĕre**", "leg**i**", "leer / ser leído"],
-            ["**4ª (audire)**", "audī**re**", "audī**ri**", "oír / ser oído"],
+            ["**1a (amare)**", "amā**re**", "amā**ri**", "amar / ser amado"],
+            ["**2a (monere)**", "monē**re**", "monē**ri**", "aconsejar / ser aconsejado"],
+            ["**3a (legere)**", "leg**ĕre**", "leg**i**", "leer / ser leído"],
+            ["**4a (audire)**", "audī**re**", "audī**ri**", "oír / ser oído"],
             ["**Mixta (capere)**", "cap**ĕre**", "cap**i**", "tomar / ser tomado"]
         ]
     )
 
     st.markdown("""
     
-    > **¡Ojo a la 3ª conjugación pasiva!** Termina en **-i** (no -eri). *Legi*, *duci*, *mitti*.
+    > **¡Ojo a la 3a conjugación pasiva!** Termina en **-i** (no -eri). *Legi*, *duci*, *mitti*.
     
     #### B. Infinitivo Perfecto (Anterioridad)
     """)
@@ -3768,13 +4487,13 @@ def render_lesson_20():
         *   **initium** (Ac, Atrib): el principio
         *   **omnium rerum** (Gen Pl): de todas las cosas
         *   **esse** (Inf Pres): era (simultaneidad con 'dijo')
-        *   → **Tales dijo que el agua era el principio de todas las cosas.**
+        *   -> **Tales dijo que el agua era el principio de todas las cosas.**
     
     2.  *Sentio vos laetos esse.*
-        *   → Siento que vosotros estáis contentos.
+        *   -> Siento que vosotros estáis contentos.
     
     3.  *Credimus Romam aeternam fore (= futuram esse).*
-        *   → Creemos que Roma será eterna.
+        *   -> Creemos que Roma será eterna.
     
     ### Vocabulario Esencial
     *   **Dico, dicere, dixi, dictum**: decir
@@ -3787,951 +4506,1209 @@ def render_lesson_20():
     *   **Spero, sperare**: esperar (que algo suceda)
     *   **Nego, negare**: negar (decir que no)
     """)
+    
+    # Infografía Cultural: Filosofía Romana
+    if os.path.exists("static/images/curso_gramatica/leccion20_filosofia_romana.png"):
+        st.image("static/images/curso_gramatica/leccion20_filosofia_romana.png",
+                 caption="Escuelas Filosóficas Romanas: Estoicismo, Epicureísmo y Eclecticismo",
+                 width="stretch")
+    
+    # Infografía Cultural: Teatro Romano
+    st.markdown("### 🎭 Cultura Romana: El Teatro")
+    st.info("Los géneros teatrales romanos se expresaban con infinitivos y oraciones de AcI en las obras.")
+    if os.path.exists("static/images/curso_gramatica/cultura_teatro_romano.png"):
+        st.image("static/images/curso_gramatica/cultura_teatro_romano.png",
+                 caption="El Teatro Romano: Tragoedia, Comoedia, géneros y dramaturgos",
+                 width="stretch")
+
+    # --- EJERCICIOS ESTÁTICOS CURADOS ---
+    st.divider()
+    from utils.static_exercise_loader import get_all_exercise_types
+    static_ex = get_all_exercise_types(20)
+    
+    if static_ex and any(static_ex.values()):
+        st.markdown("### 📝 Ejercicios de la Lección")
+        st.caption("Ejercicios curados específicos para el contenido de esta lección.")
+        
+        from utils.learning_hub_widgets import (
+            render_vocabulary_match_exercise,
+            render_multiple_choice_exercise,
+            render_sentence_completion_exercise
+        )
+        
+        # Opción múltiple
+        if static_ex.get("multiple_choice"):
+            with st.expander("📋 Opción Múltiple", expanded=True):
+                render_multiple_choice_exercise(static_ex["multiple_choice"], 20)
+        
+        # Completar oraciones
+        if static_ex.get("sentence_completion"):
+            with st.expander("✏️ Completar Oraciones", expanded=False):
+                render_sentence_completion_exercise(static_ex["sentence_completion"], 20)
+        
+        # Emparejamiento de vocabulario
+        if static_ex.get("vocabulary_match"):
+            with st.expander("🔗 Emparejamiento de Vocabulario", expanded=False):
+                for vm_idx, vm_ex in enumerate(static_ex["vocabulary_match"]):
+                    if "pairs" in vm_ex:
+                        render_vocabulary_match_exercise(vm_ex["pairs"], 20, exercise_index=vm_idx, key_suffix="static")
+
+        # Opción Múltiple
+        if static_ex.get("multiple_choice"):
+            with st.expander("🧠 Selección Múltiple", expanded=False):
+                render_multiple_choice_exercise(static_ex["multiple_choice"], 20, key_suffix="static")
+
+        # Completar Frases
+        if static_ex.get("sentence_completion"):
+             with st.expander("✍️ Completar Frases", expanded=False):
+                render_sentence_completion_exercise(static_ex["sentence_completion"], 20, key_suffix="static")
+
+    render_vocabulary_widget(lesson_number=20)
+    render_translation_workshop(lesson_number=20)
+    render_sentence_analysis_widget(lesson_number=20)
+    render_lesson_progress_summary(lesson_number=20)
+
 
 def render_lesson_21():
-    st.markdown("""
-    ## Lección 21: Los Participios
+    def theory_content():
+        st.markdown("""
+        ## Leccion 21: Los Participios
+        
+        ### 1. ¿Que es un Participio?
+        
+        El participio es un **adjetivo verbal**: una forma hibrida que combina caracteristicas de verbo y adjetivo.
+        *   Como **adjetivo**: concuerda en Genero, Numero y Caso con un sustantivo.
+        *   Como **verbo**: tiene Tiempo y Voz, y puede regir complementos (OD, circunstanciales, etc.).
+        
+        > En espanol tenemos "amado" (pasivo) y "amante" (activo), pero el latin tiene un sistema mucho mas completo.
+        
+        ### 2. El Sistema de Participios Latino
+        
+        El latin tiene **TRES participios** que cubren todas las combinaciones de tiempo y voz:
+        
+        """)
+        
+        render_styled_table(
+            ["Participio", "Tiempo", "Voz", "Formacion", "Ejemplo (AMARE)"],
+            [
+                ["**Presente**", "Presente", "Activa", "Tema + **-ns, -ntis**", "*ama-**ns**, ama-**ntis***"],
+                ["**Perfecto**", "Pasado", "Pasiva", "Tema Supino + **-us, -a, -um**", "*ama-**tus, -a, -um***"],
+                ["**Futuro**", "Futuro", "Activa", "Tema Supino + **-urus, -a, -um**", "*ama-**turus, -a, -um***"]
+            ]
+        )
+        
+        st.markdown("""
+        
+        ### 3. Participio Presente Activo (-ns, -ntis)
+        
+        Indica una accion **simultanea** con la accion principal.
+        Se declina como adjetivo de 3a declinacion (una terminacion).
+        
+        **Formacion**:
+        *   1a/2a Conjugacion: Tema + **-ns** -> *amans, monens*
+        *   3a Conjugacion: Tema + **-ens** -> *legens*
+        *   4a Conjugacion: Tema + **-iens** -> *audiens*
+        
+        **Declinacion** (Modelo: *amans, amantis* - que ama / amante):
+        
+        """)
+        
+        render_styled_table(
+            ["Caso", "Masc/Fem Sg", "Neutro Sg", "Masc/Fem Pl", "N Pl"],
+            [
+                ["**Nom**", "ama**ns**", "ama**ns**", "ama**ntes**", "ama**ntia**"],
+                ["**Ac**", "ama**ntem**", "ama**ns**", "ama**ntes**", "ama**ntia**"],
+                ["**Gen**", "ama**ntis**", "ama**ntis**", "ama**ntium**", "ama**ntium**"],
+                ["**Dat**", "ama**nti**", "ama**nti**", "ama**ntibus**", "ama**ntibus**"],
+                ["**Abl**", "ama**nte/-i**", "ama**nte/-i**", "ama**ntibus**", "ama**ntibus**"]
+            ]
+        )
+        
+        st.markdown("""
+        
+        **Ejemplos**:
+        *   *Puer **currens** cadit.* (El nino, **corriendo**, cae / El nino **que corre** cae).
+        *   *Milites **pugnantes** vicerunt.* (Los soldados **que luchaban** vencieron).
+        *   *Video puellam **canentem**.* (Veo a la nina **que canta**).
+        
+        ### 4. Participio Perfecto Pasivo (-tus, -a, -um)
+        
+        Indica una accion **anterior** a la accion principal, con sentido **pasivo**.
+        Se declina como adjetivo de 1a Clase (2-1-2: *bonus, -a, -um*).
+        
+        **Formacion**: Se forma del **tema de supino** (4a forma del enunciado):
+        *   *Amare, amavi, **amatum*** -> *ama**tus**, -a, -um* (amado/a)
+        *   *Legere, legi, **lectum*** -> *lec**tus**, -a, -um* (leido/a)
+        *   *Capere, cepi, **captum*** -> *cap**tus**, -a, -um* (capturado/a)
+        
+        **Ejemplos**:
+        *   *Urbs, ab hostibus **capta**, incensa est.*
+            *   La ciudad, **capturada** por los enemigos, fue incendiada.
+            *   (Primero fue capturada, luego incendiada)
+        *   *Poeta, a rege **laudatus**, felix erat.*
+            *   El poeta, **alabado** por el rey, era feliz.
+        *   *Liber **lectus** bonus est.*
+            *   El libro **leido** es bueno.
+        
+        ### 5. Participio Futuro Activo (-urus, -a, -um)
+        
+        Indica **intencion** o **accion futura** respecto a la principal.
+        Se declina como adjetivo de 1a Clase.
+        
+        **Formacion**: Tema de supino + **-urus, -a, -um**:
+        *   *Amare* -> *ama**turus**, -a, -um* (que va a amar / a punto de amar)
+        *   *Legere* -> *lec**turus**, -a, -um* (que va a leer)
+        *   *Mori* -> *mori**turus**, -a, -um* (que va a morir)
+        
+        **Ejemplos**:
+        *   ***Ave, Caesar, morituri te salutant.***
+            *   Salve, Cesar, **los que van a morir** te saludan.
+            *   (Frase famosa de los gladiadores)
+        *   *Nuntii **venturi** sunt.*
+            *   Los mensajeros **estan a punto de llegar**.
+        
+        ### 6. Traduccion de Participios al Espanol
+        
+        Los participios latinos se pueden traducir de varias formas:
+        
+        1.  **Como participio** (cuando existe): "amado", "corriendo"
+        2.  **Como oracion de relativo**: "que ama", "que fue amado"
+        3.  **Como oracion adverbial**:
+            *   Temporal: "cuando ama", "despues de ser amado"
+            *   Causal: "porque ama", "como fue amado"
+            *   Concesiva: "aunque ama"
+        
+        **Ejemplo de multiples traducciones**:
+        *Consul, **urbem videns**, laetus erat.*
+        
+        *   El consul, **viendo la ciudad**, estaba contento. (Gerundio)
+        *   El consul, **que veia la ciudad**, estaba contento. (Relativo)
+        *   El consul, **cuando vio la ciudad**, estaba contento. (Temporal)
+        *   El consul, **porque veia la ciudad**, estaba contento. (Causal)
+        
+        ### Vocabulario Esencial
+        *   **Curro, currere**: correr
+        *   **Pugno, pugnare**: luchar
+        *   **Cano, canere**: cantar
+        *   **Incendo, incendere**: incendiar, quemar
+        *   **Laudo, laudare**: alabar
+        *   **Saluto, salutare**: saludar
+        
+        """)
+        
+        if os.path.exists("static/images/curso_gramatica/leccion21_participios.png"):
+            st.image("static/images/curso_gramatica/leccion21_participios.png",
+                     caption="Sistema de Participios Latinos: Presente, Perfecto y Futuro",
+                     width="stretch")
     
-    ### 1. ¿Qué es un Participio?
-    
-    El participio es un **adjetivo verbal**.
-    *   Como **adjetivo**: concuerda en Género, Número y Caso con un sustantivo.
-    *   Como **verbo**: tiene Tiempo y Voz, y puede regir complementos (OD, etc.).
-    
-    ### 2. El Sistema de Participios Latino
-    """)
+    render_lesson_with_tabs(21, theory_content)
 
-    if os.path.exists("static/images/curso_gramatica/leccion21_participios.png"):
-        st.image("static/images/curso_gramatica/leccion21_participios.png",
-                 caption="Sistema de Participios",
-                 use_container_width=True)
-
-    st.markdown("""
-    A diferencia del español (que solo tiene "amado" y "amante"), el latín tiene un sistema más completo:
-    
-    """
-    )
-
-    render_styled_table(
-        ["Tiempo", "Voz Activa", "Voz Pasiva"],
-        [
-            ["**Presente**", "**Amans, amantis** (que ama / amante)", "*(No existe)*"],
-            ["**Pasado**", "*(No existe)*", "**Amatus, -a, -um** (amado / habiendo sido amado)"],
-            ["**Futuro**", "**Amaturus, -a, -um** (que amará / que va a amar)", "*Amandus, -a, -um* (Gerundivo - ver Lección 23)"]
-        ]
-    )
-
-    st.markdown("""
-    
-    ### 3. Visualización Temporal
-    
-    El tiempo del participio es **relativo** al verbo principal de la oración.
-    """)
-    
-    # Diagrama Mermaid para explicar la relatividad temporal
-    render_mermaid(r"""
-    timeline
-        title Relatividad Temporal de los Participios
-        section Verbo Principal
-            Acción Principal : El momento de referencia
-        section Participios
-            Anterioridad : Participio PERFECTO (Pasivo)
-            Simultaneidad : Participio PRESENTE (Activo)
-            Posterioridad : Participio FUTURO (Activo)
-    """)
-    
-    st.markdown("""
-    ### 4. Formación y Declinación
-    
-    #### A. Participio de Presente Activo
-    **Formación**: Tema de presente + **-ns** (Nom), **-ntis** (Gen).
-    **Declinación**: Como un adjetivo de la 3ª declinación (tema en -i).
-    
-    *   *Amare* -> **Amans, amantis**
-    *   *Monere* -> **Monens, monentis**
-    *   *Legere* -> **Legens, legentis**
-    *   *Audire* -> **Audiens, audientis**
-    
-    > **Traducción**: "el que ama", "amando", "al amar", "mientras ama".
-    
-    #### B. Participio de Perfecto Pasivo (PPP)
-    **Formación**: Es la 4ª forma del enunciado del verbo (Supino) declinada como *bonus, -a, -um*.
-    
-    *   *Amo, amare, amavi, **amatum*** -> **Amatus, -a, -um**
-    *   *Video, videre, vidi, **visum*** -> **Visus, -a, -um**
-    *   *Capio, capere, cepi, **captum*** -> **Captus, -a, -um**
-    
-    > **Traducción**: "amado", "habiendo sido amado", "una vez amado".
-    
-    #### C. Participio de Futuro Activo (PFA)
-    **Formación**: Tema de supino + **-urus, -ura, -urum**.
-    
-    *   *Amatum* -> **Amaturus, -a, -um**
-    *   *Visum* -> **Visurus, -a, -um**
-    
-    > **Traducción**: "que va a amar", "dispuesto a amar", "a punto de amar".
-    
-    ### 5. Uso Sintáctico: El Participio Concertado
-    
-    El participio concuerda con un sustantivo de la oración (Sujeto, OD, etc.).
-    
-    #### Ejemplos:
-    
-    **1. Participio Presente (Simultaneidad)**
-    *   *Puer **currens** cadit.*
-        *   El niño, **corriendo**, cae. / El niño, **que corre**, cae.
-    *   *Vocem **cantantis** audio.*
-        *   Oigo la voz **del que canta**.
-    
-    **2. Participio Perfecto (Anterioridad)**
-    *   *Urbs, ab hostibus **capta**, incensa est.*
-        *   La ciudad, **capturada** por los enemigos, fue incendiada.
-        *   (= La ciudad, **después de ser capturada**...)
-    
-    **3. Participio Futuro (Posterioridad / Intención)**
-    *   *Ave, Caesar, **morituri** te salutant.*
-        *   Ave, César, **los que van a morir** te saludan.
-    
-    ### 6. Ejercicio de Análisis
-    
-    Analiza los participios en estas frases:
-    
-    1.  *Video canem **dormientem**.*
-        *   *Dormientem*: Part. Pres. Activo, Acusativo Singular. Concuerda con *canem*.
-        *   → Veo al perro **durmiendo** (o "que duerme").
-    
-    2.  *Milites, a duce **laudati**, gaudebant.*
-        *   *Laudati*: Part. Perf. Pasivo, Nom. Plural. Concuerda con *milites*.
-        *   → Los soldados, **alabados** por el líder, se alegraban.
-    
-    3.  *Scripturus sum.*
-        *   *Scripturus*: Part. Fut. Activo + sum (Perifrástica activa).
-        *   → **Voy a escribir** / Tengo intención de escribir.
-    
-    ### Vocabulario Esencial
-    *   **Curro, currere**: correr
-    *   **Cado, cadere**: caer
-    *   **Capio, capere, cepi, captum**: capturar, tomar
-    *   **Incendo, incendere, incendi, incensum**: incendiar
-    *   **Morior, mori, mortuus sum**: morir
-    """)
 
 def render_lesson_22():
-    st.markdown("""
-    ## Lección 22: El Ablativo Absoluto
+    def theory_content():
+        st.markdown("""
+        ## Leccion 22: El Ablativo Absoluto
+        
+        ### 1. La Construccion Reina del Latin
+        
+        El **Ablativo Absoluto** es una construccion sintactica fundamental y muy frecuente en latin clasico.
+        Equivale a una **oracion subordinada circunstancial** (temporal, causal, concesiva, condicional).
+        
+        Se llama "absoluto" (*absolutus* = desatado, suelto) porque gramaticalmente esta **desligado** de la oracion principal:
+        *   Su sujeto NO es el sujeto de la principal.
+        *   Su sujeto NO es el objeto de la principal.
+        *   Funciona como un complemento circunstancial independiente.
+        
+        ### 2. Estructura Basica
+        
+        Se compone de **DOS elementos en caso ABLATIVO**:
+        
+        1.  **Sujeto** (Sustantivo o Pronombre en Ablativo)
+        2.  **Predicado** (Participio, Adjetivo o Sustantivo en Ablativo)
+        
+        **Formula**: **[Sust. Ablativo] + [Participio/Adj/Sust Ablativo]**
+        
+        ### 3. Tipos de Ablativo Absoluto
+        
+        """)
+        
+        render_styled_table(
+            ["Tipo", "Estructura", "Significado", "Ejemplo"],
+            [
+                ["**Con Part. Presente**", "Abl + Part. Pres", "Simultaneidad", "*Sole **oriente*** (Saliendo el sol)"],
+                ["**Con Part. Perfecto**", "Abl + Part. Perf", "Anterioridad", "*Urbe **capta*** (Capturada la ciudad)"],
+                ["**Nominal**", "Abl + Sust/Adj", "Estado/Circunstancia", "*Me **consule*** (Siendo yo consul)"]
+            ]
+        )
+        
+        st.markdown("""
+        
+        ### 4. Ablativo Absoluto con Participio Presente
+        
+        Expresa una **accion simultanea** a la principal.
+        
+        **Ejemplos**:
+        *   *Sole **oriente**, aves canunt.*
+            *   **Saliendo el sol** / **Al salir el sol**, las aves cantan.
+            *   (= Cuando sale el sol)
+        
+        *   *Caesare **duce**, Romani vincebant.*
+            *   **Siendo Cesar el jefe** / **Bajo el mando de Cesar**, los romanos vencian.
+        
+        *   *Me **tacente**, tu loquebaris.*
+            * **Callando yo** / **Mientras yo callaba**, tu hablabas.
+        
+        ### 5. Ablativo Absoluto con Participio Perfecto
+        
+        Expresa una **accion anterior** a la principal (la mas comun).
+        
+        **Ejemplos**:
+        *   *Urbe **capta**, hostes redierunt.*
+            *   **Capturada la ciudad** / **Despues de capturar la ciudad**, los enemigos regresaron.
+            *   (Primero capturaron, luego regresaron)
+        
+        *   *His rebus **cognitis**, Caesar exercitum movit.*
+            *   **Conocidas estas cosas** / **Cuando supo esto**, Cesar movio el ejercito.
+        
+        *   *Romulo **regnante**, urbs condita est.*
+            *   **Reinando Romulo** / **En el reinado de Romulo**, la ciudad fue fundada.
+        
+        ### 6. Ablativo Absoluto Nominal (sin Participio)
+        
+        Cuando NO hay participio, se sobreentiende el verbo **SUM** ("ser/estar").
+        
+        **Estructura**: Sustantivo/Pronombre + Sustantivo/Adjetivo (ambos en Ablativo)
+        
+        **Ejemplos**:
+        *   *Me **consule**, pax erat.*
+            *   **Siendo yo consul** / **Durante mi consulado**, habia paz.
+            *   (= Cum ego consul essem)
+        
+        *   *Cicerone **oratore**, Romani eloquentes erant.*
+            *   **Siendo Ciceron orador** / **Con Ciceron como orador**, los romanos eran elocuentes.
+        
+        *   ***Vivo** patre, felix sum.*
+            *   **Viviendo el padre** / **Estando vivo el padre**, soy feliz.
+        
+        ### 7. Como Traducir el Ablativo Absoluto
+        
+        El Ablativo Absoluto puede tener diversos matices y traducirse de varias formas:
+        
+        """)
+        
+        render_styled_table(
+            ["Matiz", "Conjuncion Espanola", "Ejemplo Traduccion"],
+            [
+                ["**Temporal**", "Cuando, Al, Mientras", "**Cuando** el sol salia..."],
+                ["**Causal**", "Como, Porque, Ya que", "**Como** la ciudad fue capturada..."],
+                ["**Concesivo**", "Aunque", "**Aunque** el padre vivia..."],
+                ["**Condicional**", "Si", "**Si** el consul hubiera muerto..."]
+            ]
+        )
+        
+        st.markdown("""
+        
+        ### 8. Diferencia con el Participio Concertado
+        
+        Es crucial NO confundir:
+        
+        **Participio Concertado**: El participio concuerda con un elemento de la oracion principal (Sujeto, OD, etc.)
+        *   *Consul, **urbem videns**, laetus erat.*
+        *   El consul, **viendo la ciudad**, estaba contento.
+        *   (*videns* concuerda con *consul*, que es el sujeto)
+        
+        **Ablativo Absoluto**: El participio esta en Ablativo con su propio sujeto, separado de la principal.
+        *   ***Sole oriente**, consul laetus erat.*
+        *   **Al salir el sol**, el consul estaba contento.
+        *   (*oriente* esta con *sole*, en Ablativo, independiente de *consul*)
+        
+        ### 9. Ejercicios de Analisis
+        
+        Identifica y traduce:
+        
+        1.  *Romanis **pugnan tibus**, hostes fugerunt.*
+            *   Ablativo Absoluto con Participio Presente.
+            *   **Luchando los romanos** / **Mientras los romanos luchaban**, los enemigos huyeron.
+        
+        2.  *Caesare **mortuo**, Marcus consul factus est.*
+            *   Ablativo Absoluto con Participio Perfecto.
+            *   **Muerto Cesar** / **Despues de morir Cesar**, Marco fue hecho consul.
+        
+        3.  *Te **duce**, vincere possumus.*
+            *   Ablativo Absoluto Nominal (sin participio, se sobreentiende *sum*).
+            *   **Siendo tu el jefe** / **Contigo como jefe**, podemos vencer.
+        
+        4.  *Omnibus **audientibus**, orator dixit.*
+            *   Ablativo Absoluto con Participio Presente.
+            *   **Escuchando todos** / **Mientras todos escuchaban**, el orador hablo.
+        
+        ### Vocabulario Esencial
+        *   **Orior, oriri, ortus sum**: salir, levantarse (el sol)
+        *   **Dux, ducis** (m): jefe, general
+        *   **Taceo, tacere**: callar
+        *   **Loquor, loqui**: hablar (deponente)
+        *   **Cognosco, cognoscere, cognovi**: conocer, enterarse
+        *   **Moveo, movere**: mover
+        *   **Exercitus, -us** (m): ejercito
+        *   **Eloquens, -entis**: elocuente
+        
+        """)
+        
+        if os.path.exists("static/images/curso_gramatica/leccion22_ablativo_absoluto.png"):
+            st.image("static/images/curso_gramatica/leccion22_ablativo_absoluto.png",
+                     caption="El Ablativo Absoluto: Estructura y Tipos",
+                     width="stretch")
     
-    ### 1. La Construcción Reina del Latín
-    
-    El **Ablativo Absoluto** es una construcción sintáctica fundamental y muy frecuente en latín.
-    Equivale a una **oración subordinada circunstancial** (temporal, causal, concesiva, etc.).
-    
-    Se llama "absoluto" (*absolutus* = desatado, suelto) porque gramaticalmente está **desligado** de la oración principal:
-    *   Su sujeto no es el sujeto de la principal.
-    *   Su sujeto no es el objeto de la principal.
-    
-    ### 2. Estructura
-    
-    Se compone de dos elementos básicos en caso **ABLATIVO**:
-    
-    1.  **Sujeto** (Sustantivo o Pronombre)
-    2.  **Predicado** (Participio, Adjetivo o Sustantivo)
-    
-    """)
-    
-    if os.path.exists("static/images/curso_gramatica/leccion22_ablativo_absoluto.png"):
-        st.image("static/images/curso_gramatica/leccion22_ablativo_absoluto.png",
-                 caption="Estructura y Tipos de Ablativo Absoluto",
-                 use_container_width=True)
-    else:
-        render_mermaid(r"""
-    timeline
-        title Relatividad Temporal de los Participios
-        section Verbo Principal
-            Acción Principal : El momento de referencia
-        section Participios
-            Anterioridad : Participio PERFECTO (Pasivo)
-            Simultaneidad : Participio PRESENTE (Activo)
-            Posterioridad : Participio FUTURO (Activo)
-    """)
-    
-    st.markdown("""
-    ### 3. Tipos de Ablativo Absoluto
-    
-    #### A. Con Participio de Presente (Simultaneidad)
-    *   **Estructura**: Sustantivo (Abl) + Part. Presente (Abl)
-    *   **Traducción**: "Haciendo...", "Mientras hace...", "Al hacer..."
-    
-    *   *Sole **oriente**, fugiunt tenebrae.*
-        *   *Sole* (Sol, Abl) + *oriente* (saliendo, Abl)
-        *   → **Saliendo el sol**, huyen las tinieblas.
-        *   → **Al salir el sol**, huyen las tinieblas.
-        *   → **Mientras sale el sol**, huyen las tinieblas.
-    
-    #### B. Con Participio de Perfecto (Anterioridad)
-    *   **Estructura**: Sustantivo (Abl) + Part. Perfecto (Abl)
-    *   **Traducción**: "Hecho...", "Una vez hecho...", "Después de hacer..."
-    
-    *   *Urbe **capta**, hostes redierunt.*
-        *   *Urbe* (Ciudad, Abl) + *capta* (capturada, Abl)
-        *   → **Capturada la ciudad**, los enemigos regresaron.
-        *   → **Una vez capturada la ciudad**, los enemigos regresaron.
-        *   → **Después de capturar la ciudad**, los enemigos regresaron.
-    
-    #### C. Tipo Nominal (Sin Participio)
-    Como el verbo *sum* no tiene participio de presente, a veces se omite.
-    Se entiende "siendo..." o "estando...".
-    
-    *   *Cicerone **consule**...*
-        *   *Cicerone* (Cicerón, Abl) + *consule* (cónsul, Abl)
-        *   → **Siendo cónsul Cicerón**... / **Bajo el consulado de Cicerón**...
-    
-    *   *Hannibale **duce**...*
-        *   → **Siendo líder Aníbal**... / **Bajo el mando de Aníbal**...
-    
-    *   *Me **invito**...*
-        *   → **Estando yo reacio**... / **Contra mi voluntad**...
-    
-    ### 4. Cómo Traducir el Ablativo Absoluto
-    
-    No te limites a traducir literalmente. Busca la traducción más natural en español:
-    
-    1.  **Literal**: *Urbe capta* → Capturada la ciudad.
-    2.  **Temporal**: *Urbe capta* → Cuando la ciudad fue capturada.
-    3.  **Causal**: *Urbe capta* → Porque la ciudad fue capturada.
-    4.  **Concesiva**: *Urbe capta* → Aunque la ciudad fue capturada.
-    
-    ### 5. Ejercicios de Análisis
-    
-    Analiza y traduce:
-    
-    1.  *Pythagoras, **Tarquinio Superbo regnante**, in Italiam venit.*
-        *   *Tarquinio Superbo* (Abl) + *regnante* (Part. Pres. Abl)
-        *   → Pitágoras llegó a Italia **reinando Tarquinio el Soberbio** (durante el reinado de...).
-    
-    2.  *His rebus **auditis**, omnes timuerunt.*
-        *   *His rebus* (Estas cosas, Abl Pl) + *auditis* (oídas, Part. Perf. Abl Pl)
-        *   → **Oídas estas cosas** (Al oír esto), todos temieron.
-    
-    3.  *Romani, **Hannibale vivo**, numquam securi erant.*
-        *   *Hannibale* (Abl) + *vivo* (Adj. Abl) [Tipo Nominal]
-        *   → Los romanos, **estando vivo Aníbal** (mientras Aníbal vivía), nunca estaban seguros.
+    render_lesson_with_tabs(22, theory_content)
 
-    4.  ***Nullo hoste prohibente**, legionem duxit.*
-        *   *Nullo hoste* (Ningún enemigo) + *prohibente* (impidiéndolo)
-        *   → **Sin que ningún enemigo lo impidiera**, condujo la legión. (Matiz circunstancial/concesivo)
 
-    5.  ***Caesare duce**, nihil timebimus.*
-        *   *Caesare* (César) + *duce* (líder) [Tipo Nominal]
-        *   → **Siendo César nuestro líder** (Bajo el mando de César), nada temeremos. (Matiz Causal/Condicional)
-    
-    ### Vocabulario Esencial
-    *   **Oriens, -entis**: naciente, que sale (Sol)
-    *   **Occidens, -entis**: poniente, que se pone
-    *   **Regno, regnare**: reinar
-    *   **Audio, audire, audivi, auditum**: oír
-    *   **Securus, -a, -um**: seguro, sin preocupaciones
-    *   **Vivus, -a, -um**: vivo
-    *   **Prohibeo, prohibere**: impedir, prohibir
-    *   **Dux, ducis**: líder, general
-    """)
 
 def render_lesson_23():
-    st.markdown("""
-    ## Lección 23: Gerundio y Gerundivo
-    
-    ### 1. Dos Caras de la Misma Moneda
-    
-    El latín tiene dos formas verbales que a menudo se confunden pero tienen funciones distintas:
-    
-    1.  **Gerundio**: Es un **Sustantivo Verbal** Activo. (Equivale a "el acto de amar").
-    2.  **Gerundivo**: Es un **Adjetivo Verbal** Pasivo. (Equivale a "que debe ser amado").
-    
-    """)
-    
-    if os.path.exists("static/images/curso_gramatica/leccion23_gerundio_gerundivo.png"):
-        st.image("static/images/curso_gramatica/leccion23_gerundio_gerundivo.png",
-                 caption="Diferencias clave: Gerundio vs Gerundivo",
-                 use_container_width=True)
-    
-    st.markdown("""
-    ### 2. El Gerundio (Sustantivo Verbal)
-    
-    El Gerundio sirve para **declinar el infinitivo**.
-    El infinitivo (*amare*) se usa como Nominativo. Para los demás casos, usamos el Gerundio.
-    
-    **Formación**: Tema de presente + **-nd-** + terminaciones de 2ª declinación neutra singular.
-    
-    """
-    )
+    def theory_content():
+        st.markdown("""
+        ## Lección 23: Gerundio y Gerundivo
+        
+        ### 1. Dos Caras de la Misma Moneda
+        
+        El latín tiene dos formas verbales que a menudo se confunden pero tienen funciones distintas:
+        
+        1.  **Gerundio**: Es un **Sustantivo Verbal** Activo. (Equivale a "el acto de amar").
+        2.  **Gerundivo**: Es un **Adjetivo Verbal** Pasivo. (Equivale a "que debe ser amado").
+        
+        """)
+        
+        if os.path.exists("static/images/curso_gramatica/leccion23_gerundio_gerundivo.png"):
+            st.image("static/images/curso_gramatica/leccion23_gerundio_gerundivo.png",
+                     caption="Diferencias clave: Gerundio vs Gerundivo",
+                     width="stretch")
+        
+        st.markdown("""
+        ### 2. El Gerundio (Sustantivo Verbal)
+        
+        El Gerundio sirve para **declinar el infinitivo**.
+        El infinitivo (*amare*) se usa como Nominativo. Para los demás casos, usamos el Gerundio.
+        
+        **Formación**: Tema de presente + **-nd-** + terminaciones de segunda declinación neutra singular.
+        
+        """
+        )
 
-    render_styled_table(
-        ["Caso", "Forma", "Traducción", "Uso"],
-        [
-            ["**Nom**", "*(Amare)*", "El amar", "Sujeto"],
-            ["**Gen**", "Ama**ndi**", "De amar / Del amar", "Complemento de nombre/adjetivo"],
-            ["**Dat**", "Ama**ndo**", "Para amar", "Finalidad (poco usado)"],
-            ["**Ac**", "*(Amare)* / ad ama**ndum**", "A amar / Para amar", "Objeto / Finalidad (con *ad*)"],
-            ["**Abl**", "Ama**ndo**", "Amando / Por amar", "Modo / Instrumento"]
-        ]
-    )
+        render_styled_table(
+            ["Caso", "Forma", "Traducción", "Uso"],
+            [
+                ["**Nom**", "*(Amare)*", "El amar", "Sujeto"],
+                ["**Gen**", "Ama**ndi**", "De amar / Del amar", "Complemento de nombre/adjetivo"],
+                ["**Dat**", "Ama**ndo**", "Para amar", "Finalidad (poco usado)"],
+                ["**Ac**", "*(Amare)* / ad ama**ndum**", "A amar / Para amar", "Objeto / Finalidad (con *ad*)"],
+                ["**Abl**", "Ama**ndo**", "Amando / Por amar", "Modo / Instrumento"]
+            ]
+        )
 
-    st.markdown("""
-    
-    **Ejemplos**:
-    *   *Ars **amandi*** (El arte **de amar**).
-    *   *Paratus ad **pugnandum*** (Preparado **para luchar**).
-    *   *Discimus **legendo*** (Aprendemos **leyendo**).
-    
-    ### 3. El Gerundivo (Adjetivo Verbal)
-    
-    El Gerundivo es un **adjetivo de la 1ª clase** (*-ndus, -nda, -ndum*).
-    Indica **necesidad u obligación pasiva**.
-    
-    **Concordancia**: Como adjetivo, **concuerda** con un sustantivo en género, número y caso.
-    
-    **Ejemplos**:
-    *   *Liber **legendus*** (Un libro **que debe ser leído** / Un libro **para leer**).
-    *   *Virtus **laudanda*** (Una virtud **que debe ser alabada** / digna de alabanza).
-    
-    ### 4. La Construcción de Gerundivo (Sustitución)
-    
-    En latín clásico, se prefiere usar el **Gerundivo** en lugar del Gerundio cuando hay un Objeto Directo.
-    
-    **Transformación**:
-    1.  **Gerundio + OD**: *Cupidus **videndi** (Gen) **urbem** (Ac)* -> "Deseoso de ver la ciudad".
-    2.  **Gerundivo (Concertado)**: *Cupidus **urbis** (Gen) **videndae** (Gen)* -> "Deseoso de la ciudad que debe ser vista".
-    
-    > **Regla**: El sustantivo toma el caso del gerundio, y el gerundivo concuerda con el sustantivo.
-    
-    ### 5. Ejercicios de Análisis
-    
-    Distingue si es Gerundio o Gerundivo:
-    
-    1.  *Tempus **legendī**.*
-        *   **Gerundio** (Genitivo). No concuerda con nada.
-        *   → Tiempo **de leer**.
-    
-    2.  *Ad **pacem petendam** venerunt.*
-        *   **Gerundivo**. *Petendam* concuerda con *pacem* (Acusativo Fem. Sing).
-        *   → Vinieron **para pedir la paz**.
-    
-    3.  *In **libro legendo**.*
-        *   **Gerundivo**. *Legendo* concuerda con *libro* (Ablativo Masc. Sing).
-        *   → **Al leer el libro** (En el libro que debe ser leído).
-    
-    ### Vocabulario Esencial
-    *   **Cupidus, -a, -um**: deseoso (+ Gen)
-    *   **Peritus, -a, -um**: experto (+ Gen)
-    *   **Ad**: para (+ Acusativo)
-    *   **Causa / Gratia**: por causa de, para (+ Genitivo)
-    """)
+        st.markdown("""
+        
+        **Ejemplos**:
+        *   *Ars **amandi*** (El arte **de amar**).
+        *   *Paratus ad **pugnandum*** (Preparado **para luchar**).
+        *   *Discimus **legendo*** (Aprendemos **leyendo**).
+        
+        ### 3. El Gerundivo (Adjetivo Verbal)
+        
+        El Gerundivo es un **adjetivo de la primera clase** (*-ndus, -nda, -ndum*).
+        Indica **necesidad u obligación pasiva**.
+        
+        **Concordancia**: Como adjetivo, **concuerda** con un sustantivo en género, número y caso.
+        
+        **Ejemplos**:
+        *   *Liber **legendus*** (Un libro **que debe ser leído** / Un libro **para leer**).
+        *   *Virtus **laudanda*** (Una virtud **que debe ser alabada** / digna de alabanza).
+        
+        ### 4. La Construcción de Gerundivo (Sustitución)
+        
+        En latín clásico, se prefiere usar el **Gerundivo** en lugar del Gerundio cuando hay un Objeto Directo.
+        
+        **Transformación**:
+        1.  **Gerundio + OD**: *Cupidus **videndi** (Gen) **urbem** (Ac)* -> "Deseoso de ver la ciudad".
+        2.  **Gerundivo (Concertado)**: *Cupidus **urbis** (Gen) **videndae** (Gen)* -> "Deseoso de la ciudad que debe ser vista".
+        
+        > **Regla**: El sustantivo toma el caso del gerundio, y el gerundivo concuerda con el sustantivo.
+        
+        ### 5. Ejercicios de Análisis
+        
+        Distingue si es Gerundio o Gerundivo:
+        
+        1.  *Tempus **legendī**.*
+            *   **Gerundio** (Genitivo). No concuerda con nada.
+            *   -> Tiempo **de leer**.
+        
+        2.  *Ad **pacem petendam** venerunt.*
+            *   **Gerundivo**. *Petendam* concuerda con *pacem* (Acusativo Fem. Sing).
+            *   -> Vinieron **para pedir la paz**.
+        
+        3.  *In **libro legendo**.*
+            *   **Gerundivo**. *Legendo* concuerda con *libro* (Ablativo Masc. Sing).
+            *   -> **Al leer el libro** (En el libro que debe ser leído).
+        
+        ### Vocabulario Esencial
+        *   **Cupidus, -a, -um**: deseoso (+ Gen)
+        *   **Peritus, -a, -um**: experto (+ Gen)
+        *   **Ad**: para (+ Acusativo)
+        *   **Causa / Gratia**: por causa de, para (+ Genitivo)
+        """)
+    render_lesson_with_tabs(23, theory_content)
 
 def render_lesson_24():
-    st.markdown("""
-    ## Lección 24: Conjugaciones Perifrásticas
-    
-    ### 1. ¿Qué es una Perifrástica?
-    
-    Una conjugación perifrástica es un rodeo ("perífrasis") para expresar matices que los tiempos normales no tienen, como **intención** o **obligación**.
-    
-    Se forman con un **Participio** + el verbo **SUM**.
-    
-    """)
-    
-    if os.path.exists("static/images/curso_gramatica/leccion24_perifrastica.png"):
-        st.image("static/images/curso_gramatica/leccion24_perifrastica.png",
-                 caption="Conjugaciones Perifrásticas: Activa vs Pasiva",
-                 use_container_width=True)
-    
-    st.markdown("""
-    ### 2. Perifrástica Activa (Intención)
-    
-    Expresa **intención** de hacer algo o un **futuro inminente**.
-    
-    **Fórmula**: Participio de Futuro Activo (*-urus, -a, -um*) + *SUM*.
-    
-    *   **Presente**: *Amaturus sum* -> **Voy a amar** / Tengo intención de amar.
-    *   **Imperfecto**: *Amaturus eram* -> **Iba a amar** / Tenía intención de amar.
-    *   **Futuro**: *Amaturus ero* -> **Estaré a punto de amar**.
-    *   **Subjuntivo**: *Amaturus sim* -> (Que) vaya a amar.
-    
-    > **Ejemplo clásico**: *Ave, Caesar, **morituri sumus**.* (Los que vamos a morir...).
-    
-    ### 3. Perifrástica Pasiva (Obligación)
-    
-    Expresa **obligación** o **necesidad**. Es muy común y potente.
-    
-    **Fórmula**: Gerundivo (*-ndus, -a, -um*) + *SUM*.
-    
-    #### A. Construcción Personal (con Sujeto)
-    El sujeto "debe ser" algo.
-    
-    *   *Hic liber **legendus est**.*
-        *   Este libro **debe ser leído** (por alguien).
-        *   → **Hay que leer** este libro.
-    *   *Virtus **colenda est**.*
-        *   La virtud **debe ser cultivada**.
-    
-    #### B. Construcción Impersonal (sin Sujeto, verbos intransitivos)
-    Se usa el neutro singular (*-ndum est*).
-    
-    *   ***Nunc est bibendum**.* (Horacio)
-        *   Ahora **se debe beber** / Ahora **hay que beber**.
-    *   ***Pugnandum est**.*
-        *   **Hay que luchar**.
-    
-    ### 4. El Dativo Agente
-    
-    En la Perifrástica Pasiva, la persona QUE tiene la obligación no va en Ablativo (con *a/ab*), sino en **DATIVO**.
-    
-    *   *Liber **mihi** legendus est.*
-        *   Literal: El libro debe ser leído **para mí**.
-        *   Traducción: **Yo debo leer** el libro. / **Tengo que leer** el libro.
-    
-    *   *Carthago **nobis** delenda est.*
-        *   Cartago debe ser destruida **por nosotros**.
-        *   → **Debemos destruir** Cartago.
-    
-    ### 5. Ejercicios de Traducción
-    
-    Traduce estas oraciones con matiz de obligación o intención:
-    
-    1.  *Bellum **gesturi sumus**.*
-        *   Perifrástica Activa (Part. Futuro).
-        *   → **Vamos a hacer** la guerra / Tenemos intención de hacer la guerra.
-    
-    2.  *Pacta **servanda sunt**.*
-        *   Perifrástica Pasiva (Gerundivo).
-        *   → Los pactos **deben ser cumplidos** (o conservados).
-    
-    3.  *Hoc **tibi faciendum est**.*
-        *   Perifrástica Pasiva + Dativo Agente (*tibi*).
-        *   → Esto debe ser hecho **por ti**.
-        *   → **Tú tienes que hacer** esto.
+    def theory_content():
+        st.markdown("""
+        ## Lección 24: Conjugaciones Perifrásticas
+        
+        ### 1. ¿Qué es una Perifrástica?
+        
+        Una conjugación perifrástica es un rodeo ("perífrasis") para expresar matices que los tiempos normales no tienen, como **intención** o **obligación**.
+        
+        Se forman con un **Participio** + el verbo **SUM**.
+        
+        """)
+        
+        if os.path.exists("static/images/curso_gramatica/leccion24_perifrastica.png"):
+            st.image("static/images/curso_gramatica/leccion24_perifrastica.png",
+                     caption="Conjugaciones Perifrásticas: Activa vs Pasiva",
+                     width="stretch")
+        
+        st.markdown("""
+        ### 2. Perifrástica Activa (Intención)
+        
+        Expresa **intención** de hacer algo o un **futuro inminente**.
+        
+        **Fórmula**: Participio de Futuro Activo (*-urus, -a, -um*) + *SUM*.
+        
+        *   **Presente**: *Amaturus sum* -> **Voy a amar** / Tengo intención de amar.
+        *   **Imperfecto**: *Amaturus eram* -> **Iba a amar** / Tenía intención de amar.
+        *   **Futuro**: *Amaturus ero* -> **Estaré a punto de amar**.
+        *   **Subjuntivo**: *Amaturus sim* -> (Que) vaya a amar.
+        
+        > **Ejemplo clásico**: *Ave, Caesar, **morituri sumus**.* (Los que vamos a morir...).
+        
+        ### 3. Perifrástica Pasiva (Obligación)
+        
+        Expresa **obligación** o **necesidad**. Es muy común y potente.
+        
+        **Fórmula**: Gerundivo (*-ndus, -a, -um*) + *SUM*.
+        
+        #### A. Construcción Personal (con Sujeto)
+        El sujeto "debe ser" algo.
+        
+        *   *Hic liber **legendus est**.*
+            *   Este libro **debe ser leído** (por alguien).
+            *   -> **Hay que leer** este libro.
+        *   *Virtus **colenda est**.*
+            *   La virtud **debe ser cultivada**.
+        
+        #### B. Construcción Impersonal (sin Sujeto, verbos intransitivos)
+        Se usa el neutro singular (*-ndum est*).
+        
+        *   ***Nunc est bibendum**.* (Horacio)
+            *   Ahora **se debe beber** / Ahora **hay que beber**.
+        *   ***Pugnandum est**.*
+            *   **Hay que luchar**.
+        
+        ### 4. El Dativo Agente
+        
+        En la Perifrástica Pasiva, la persona QUE tiene la obligación no va en Ablativo (con *a/ab*), sino en **DATIVO**.
+        
+        *   *Liber **mihi** legendus est.*
+            *   Literal: El libro debe ser leído **para mí**.
+            *   Traducción: **Yo debo leer** el libro. / **Tengo que leer** el libro.
+        
+        *   *Carthago **nobis** delenda est.*
+            *   Cartago debe ser destruida **por nosotros**.
+            *   -> **Debemos destruir** Cartago.
+        
+        ### 5. Ejercicios de Traducción
+        
+        Traduce estas oraciones con matiz de obligación o intención:
+        
+        1.  *Bellum **gesturi sumus**.*
+            *   Perifrástica Activa (Part. Futuro).
+            *   -> **Vamos a hacer** la guerra / Tenemos intención de hacer la guerra.
+        
+        2.  *Pacta **servanda sunt**.*
+            *   Perifrástica Pasiva (Gerundivo).
+            *   -> Los pactos **deben ser cumplidos** (o conservados).
+        
+        3.  *Hoc **tibi faciendum est**.*
+            *   Perifrástica Pasiva + Dativo Agente (*tibi*).
+            *   -> Esto debe ser hecho **por ti**.
+            *   -> **Tú tienes que hacer** esto.
 
-    4.  ***Scripturus sum** epistulam.*
-        *   Perifrástica Activa.
-        *   → **Voy a escribir** una carta / Estoy a punto de escribir una carta.
+        4.  ***Scripturus sum** epistulam.*
+            *   Perifrástica Activa.
+            *   -> **Voy a escribir** una carta / Estoy a punto de escribir una carta.
 
-    5.  ***Delenda est Carthago**.* (Catón el Viejo)
-        *   Perifrástica Pasiva.
-        *   → Cartago **debe ser destruida**.
+        5.  ***Delenda est Carthago**.* (Catón el Viejo)
+            *   Perifrástica Pasiva.
+            *   -> Cartago **debe ser destruida**.
 
-    6.  ***Nunc est bibendum**.* (Horacio)
-        *   Perifrástica Pasiva Impersonal.
-        *   → Ahora **hay que beber** (es momento de celebrar).
-    
-    ### Vocabulario Esencial
-    *   **Gero, gerere**: llevar a cabo, hacer (guerra)
-    *   **Servo, servare**: guardar, cumplir, conservar
-    *   **Colo, colere**: cultivar, honrar
-    *   **Deleo, delere**: destruir
-    """)
+        6.  ***Nunc est bibendum**.* (Horacio)
+            *   Perifrástica Pasiva Impersonal.
+            *   -> Ahora **hay que beber** (es momento de celebrar).
+        
+        ### Vocabulario Esencial
+        *   **Gero, gerere**: llevar a cabo, hacer (guerra)
+        *   **Servo, servare**: guardar, cumplir, conservar
+        *   **Colo, colere**: cultivar, honrar
+        *   **Deleo, delere**: destruir
+        """)
+    render_lesson_with_tabs(24, theory_content)
 
 def render_lesson_25():
-    st.markdown("""
-    ## Lección 25: Sintaxis I - Coordinación y Subordinadas (Causales/Temp)
-    
-    ### 1. La Oración Compuesta y la Coordinación
-    
-    Antes de entrar en las subordinadas, es vital dominar las **conjunciones coordinantes** que unen oraciones del mismo nivel.
-    
-    #### A. Copulativas (Suman)
-    *   **et**: y (la más común).
-    *   **-que**: y (enclítica, se une a la segunda palabra). *Senatus Populus**que** Romanus* (El Senado **y** el Pueblo Romano).
-    *   **atque / ac**: y además, y también (más fuerte).
-    *   **etiam**: también, incluso.
-    *   **neque / nec**: y no, ni. *Nec possum nec volo* (Ni puedo ni quiero).
-    
-    #### B. Disyuntivas (Eligen)
-    *   **aut**: o (una cosa o la otra, excluyente). *Vincere **aut** mori* (Vencer **o** morir).
-    *   **vel**: o (puedes elegir, incluyente).
-    *   **-ve**: o (enclítica). *Bis ter**ve*** (Dos **o** tres veces).
-    
-    #### C. Adversativas (Oponen)
-    *   **sed**: pero, sino. *Non est vivere **sed** valere vita* (La vida no es vivir, **sino** estar sano).
-    *   **autem**: pero, en cambio (suele ir en 2ª posición).
-    *   **tamen**: sin embargo.
-    *   **at**: pero (objeción fuerte).
-    
-    #### D. Ilativas (Deducen)
-    *   **ergo**: por tanto, luego. *Cogito, **ergo** sum* (Pienso, **luego** existo).
-    *   **igitur**: así pues (suele ir en 2ª posición).
-    *   **itaque**: así que, por consiguiente.
-    
-    #### E. Causales Coordinadas (Explican)
-    *   **nam**: pues, porque (al principio de frase). *Nam tua res agitur* (Pues se trata de tu asunto).
-    *   **enim**: pues, en efecto (en 2ª posición).
-    *   **etenim**: y en efecto.
+    def theory_content():
+        st.markdown("""
+        ## Lección 25: Sintaxis I - Coordinación y Subordinadas (Causales/Temp)
+        
+        ### 1. La Oración Compuesta y la Coordinación
+        
+        Antes de entrar en las subordinadas, es vital dominar las **conjunciones coordinantes** que unen oraciones del mismo nivel.
 
-    ---
+        #### A. Copulativas (Suman)
+        *   **et**: y (la más común).
+        *   **-que**: y (enclítica, se une a la segunda palabra). *Senatus Populus**que** Romanus* (El Senado **y** el Pueblo Romano).
+        *   **atque / ac**: y además, y también (más fuerte).
+        *   **etiam**: también, incluso.
+        *   **neque / nec**: y no, ni. *Nec possum nec volo* (Ni puedo ni quiero).
+        
+        #### B. Disyuntivas (Eligen)
+        *   **aut**: o (una cosa o la otra, excluyente). *Vincere **aut** mori* (Vencer **o** morir).
+        *   **vel**: o (puedes elegir, incluyente).
+        *   **-ve**: o (enclítica). *Bis ter**ve*** (Dos **o** tres veces).
+        
+        #### C. Adversativas (Oponen)
+        *   **sed**: pero, sino. *Non est vivere **sed** valere vita* (La vida no es vivir, **sino** estar sano).
+        *   **autem**: pero, en cambio (suele ir en segunda posición).
+        *   **tamen**: sin embargo.
+        *   **at**: pero (objeción fuerte).
+        
+        #### D. Ilativas (Deducen)
+        *   **ergo**: por tanto, luego. *Cogito, **ergo** sum* (Pienso, **luego** existo).
+        *   **igitur**: así pues (suele ir en segunda posición).
+        *   **itaque**: así que, por consiguiente.
+        
+        #### E. Causales Coordinadas (Explican)
+        *   **nam**: pues, porque (al principio de frase). *Nam tua res agitur* (Pues se trata de tu asunto).
+        *   **enim**: pues, en efecto (en segunda posición).
+        *   **etenim**: y en efecto.
+        """)
+        
+        # Infografía de Coordinación
+        if os.path.exists("static/images/curso_gramatica/leccion25_coordinacion.png"):
+            st.image("static/images/curso_gramatica/leccion25_coordinacion.png",
+                     caption="Mapa Mental de las Conjunciones Coordinantes",
+                     width="stretch")
+        elif os.path.exists("static/images/curso_gramatica/leccion25_coordinadas.png"):
+            st.image("static/images/curso_gramatica/leccion25_coordinadas.png",
+                     caption="Las Conjunciones Coordinantes en Latín",
+                     width="stretch")
 
-    ### 2. La Lógica de la Subordinación
+        st.markdown("### 🧠 Mnemotecnia: Palabras Invariables Frecuentes")
+        if os.path.exists("static/images/curso_gramatica/palabras_invariables_50_frecuentes.png"):
+            st.image("static/images/curso_gramatica/palabras_invariables_50_frecuentes.png",
+                     caption="Las 50 Palabras Invariables Más Frecuentes (Adverbios, Conjunciones, Preposiciones)",
+                     width="stretch")
+
+        st.markdown("""
+        ---
+
+        ### 2. La Lógica de la Subordinación
+        
+        Las oraciones subordinadas adverbiales funcionan como un adverbio: indican **cuándo** (tiempo), **por qué** (causa), **para qué** (fin), etc.
+        
+        En latín, el uso del **Indicativo** o **Subjuntivo** depende del matiz:
+        *   **Indicativo**: Hecho real, objetivo temporal.
+        *   **Subjuntivo**: Causa subjetiva, circunstancia histórica, matiz lógico.
+        
+        ### 2. El "Cum" Histórico (Narrativo)
+        """)
+
+        st.markdown("""
+        Es una de las construcciones más frecuentes en la narración histórica (César, Tito Livio).
+        
+        **Estructura**: **CUM + Subjuntivo** (Imperfecto o Pluscuamperfecto).
+        
+        **Traducción**:
+        *   **Gerundio simple**: *Cum videret* -> "Viendo..."
+        *   **Gerundio compuesto**: *Cum vidisset* -> "Habiendo visto..."
+        *   **Al + Infinitivo**: "Al ver..."
+        *   **Como + Subjuntivo**: "Como viera..."
+        
+        """)
+        
+        if os.path.exists("static/images/curso_gramatica/leccion25_causales_temporales.png"):
+            st.image("static/images/curso_gramatica/leccion25_causales_temporales.png",
+                     caption="Línea Temporal: Cum Histórico y Oraciones Causales",
+                     width="stretch")
+        else:
+            render_mermaid(r"""
+        graph LR
+            A[CUM + Subjuntivo] --> B{Tiempo}
+            B -->|Imperfecto| C["Simultaneidad en el pasado<br/>'Cum veniret' = Al venir / Viniendo"]
+            B -->|Pluscuamperfecto| D["Anterioridad en el pasado<br/>'Cum venisset' = Al haber venido / Habiendo venido"]
+        """)
+        
+        st.markdown("""
+        ### 3. Otras Oraciones Temporales (con Indicativo)
+        
+        Indican el momento exacto (tiempo puro) y suelen llevar **Indicativo**.
+        
+        #### Tabla de Conjunciones Temporales:
+        """)
+        
+        render_styled_table(
+            ["Conjunción", "Significado", "Ejemplo", "Traducción"],
+            [
+                ["**Cum** (+ Ind)", "Cuando", "*Cum eum videbis...*", "**Cuando** lo veas..."],
+                ["**Ubi**", "Cuando / Donde", "*Ubi Caesar venit...*", "**Cuando** César llegó..."],
+                ["**Postquam**", "Después de que", "*Postquam hostes fugerunt...*", "**Después de que** los enemigos huyeron..."],
+                ["**Dum** (+ Pres)", "Mientras", "*Dum haec geruntur...*", "**Mientras** esto sucedía..."]
+            ]
+        )
+
+        st.markdown("""
+        
+        > **Ojo con DUM!** Suele llevar Presente de Indicativo aunque narre el pasado ("Presente Histórico").
+        
+        ### 4. Oraciones Causales
+        
+        Explican el motivo de la acción principal.
+        
+        *   **Quod, Quia, Quoniam** + **Indicativo**: Causa real / objetiva.
+            *   *Gaudeo **quod vales**.* (Me alegro **porque estás bien** - es un hecho).
+        
+        *   **Cum, Quod** + **Subjuntivo**: Causa subjetiva / supuesta.
+            *   *Laudatur **quod fuerit** fortis.* (Es alabado **porque [dicen que] fue** valiente).
+            *   ***Cum** sis bonus, te amo.* (**Puesto que / Como** eres bueno, te amo).
+        
+        ### 5. Ejercicios de Análisis
+        
+        Analiza y traduce:
+        
+        1.  *Cum Caesar in Galliam venisset, Romani laeti erant.*
+            *   *Cum ... venisset* (Cum Histórico, Plusc. Subj).
+            *   -> **Habiendo llegado César a la Galia**, los romanos estaban contentos.
+            *   -> **Al llegar César a la Galia**...
+        
+        2.  *Dum Romae sum, multos libros lego.*
+            *   *Dum* + Presente.
+            *   -> **Mientras estoy en Roma**, leo muchos libros.
+        
+        3.  *Postquam urbs capta est, milites redierunt.*
+            *   *Postquam* + Perfecto Indicativo.
+            *   -> **Después de que la ciudad fue tomada**, los soldados regresaron.
+
+        4.  *Quod vales, gaudeo.*
+            *   *Quod* + Indicativo (Causa real).
+            *   -> **Porque estás bien**, me alegro.
+
+        5.  *Socrates accusatus est quod corrumperet juventutem.*
+            *   *Quod* + Subjuntivo (Causa alegada/subjetiva).
+            *   -> Sócrates fue acusado **porque (supuestamente) corrompía** a la juventud.
+        
+        ### Vocabulario Esencial
+        *   **Cum**: cuando, como, aunque (depende del contexto)
+        *   **Ubi**: cuando, donde
+        *   **Postquam**: después de que
+        *   **Dum**: mientras
+        *   **Quod / Quia**: porque
+        """)
     
-    Las oraciones subordinadas adverbiales funcionan como un adverbio: indican **cuándo** (tiempo), **por qué** (causa), **para qué** (fin), etc.
-    
-    En latín, el uso del **Indicativo** o **Subjuntivo** depende del matiz:
-    *   **Indicativo**: Hecho real, objetivo temporal.
-    *   **Subjuntivo**: Causa subjetiva, circunstancia histórica, matiz lógico.
-    
-    ### 2. El "Cum" Histórico (Narrativo)
-    """)
+    render_lesson_with_tabs(25, theory_content)
 
 
-
-    st.markdown("""
-    Es una de las construcciones más frecuentes en la narración histórica (César, Tito Livio).
-    
-    **Estructura**: **CUM + Subjuntivo** (Imperfecto o Pluscuamperfecto).
-    
-    **Traducción**:
-    *   **Gerundio simple**: *Cum videret* -> "Viendo..."
-    *   **Gerundio compuesto**: *Cum vidisset* -> "Habiendo visto..."
-    *   **Al + Infinitivo**: "Al ver..."
-    *   **Como + Subjuntivo**: "Como viera..."
-    
-    """)
-    
-    if os.path.exists("static/images/curso_gramatica/leccion25_causales_temporales.png"):
-        st.image("static/images/curso_gramatica/leccion25_causales_temporales.png",
-                 caption="Línea Temporal: Cum Histórico y Oraciones Causales",
-                 use_container_width=True)
-    else:
-        render_mermaid(r"""
-    graph LR
-        A[CUM + Subjuntivo] --> B{Tiempo}
-        B -->|Imperfecto| C["Simultaneidad en el pasado<br/>'Cum veniret' = Al venir / Viniendo"]
-        B -->|Pluscuamperfecto| D["Anterioridad en el pasado<br/>'Cum venisset' = Al haber venido / Habiendo venido"]
-    """)
-    
-    st.markdown("""
-    ### 3. Otras Oraciones Temporales (con Indicativo)
-    
-    Indican el momento exacto (tiempo puro) y suelen llevar **Indicativo**.
-    
-    #### Tabla de Conjunciones Temporales:
-    """)
-    
-    render_styled_table(
-        ["Conjunción", "Significado", "Ejemplo", "Traducción"],
-        [
-            ["**Cum** (+ Ind)", "Cuando", "*Cum eum videbis...*", "**Cuando** lo veas..."],
-            ["**Ubi**", "Cuando / Donde", "*Ubi Caesar venit...*", "**Cuando** César llegó..."],
-            ["**Postquam**", "Después de que", "*Postquam hostes fugerunt...*", "**Después de que** los enemigos huyeron..."],
-            ["**Dum** (+ Pres)", "Mientras", "*Dum haec geruntur...*", "**Mientras** esto sucedía..."]
-        ]
-    )
-
-    st.markdown("""
-    
-    > **¡Ojo con DUM!** Suele llevar Presente de Indicativo aunque narre el pasado ("Presente Histórico").
-    
-    ### 4. Oraciones Causales
-    
-    Explican el motivo de la acción principal.
-    
-    *   **Quod, Quia, Quoniam** + **Indicativo**: Causa real / objetiva.
-        *   *Gaudeo **quod vales**.* (Me alegro **porque estás bien** - es un hecho).
-    
-    *   **Cum, Quod** + **Subjuntivo**: Causa subjetiva / supuesta.
-        *   *Laudatur **quod fuerit** fortis.* (Es alabado **porque [dicen que] fue** valiente).
-        *   ***Cum** sis bonus, te amo.* (**Puesto que / Como** eres bueno, te amo).
-    
-    ### 5. Ejercicios de Análisis
-    
-    Analiza y traduce:
-    
-    1.  *Cum Caesar in Galliam venisset, Romani laeti erant.*
-        *   *Cum ... venisset* (Cum Histórico, Plusc. Subj).
-        *   → **Habiendo llegado César a la Galia**, los romanos estaban contentos.
-        *   → **Al llegar César a la Galia**...
-    
-    2.  *Dum Romae sum, multos libros lego.*
-        *   *Dum* + Presente.
-        *   → **Mientras estoy en Roma**, leo muchos libros.
-    
-    3.  *Postquam urbs capta est, milites redierunt.*
-        *   *Postquam* + Perfecto Indicativo.
-        *   → **Después de que la ciudad fue tomada**, los soldados regresaron.
-
-    4.  *Quod vales, gaudeo.*
-        *   *Quod* + Indicativo (Causa real).
-        *   → **Porque estás bien**, me alegro.
-
-    5.  *Socrates accusatus est quod corrumperet juventutem.*
-        *   *Quod* + Subjuntivo (Causa alegada/subjetiva).
-        *   → Sócrates fue acusado **porque (supuestamente) corrompía** a la juventud.
-    
-    ### Vocabulario Esencial
-    *   **Cum**: cuando, como, aunque (depende del contexto)
-    *   **Ubi**: cuando, donde
-    *   **Postquam**: después de que
-    *   **Dum**: mientras
-    *   **Quod / Quia**: porque
-    """)
 
 def render_lesson_26():
-    st.markdown("""
-    ## Lección 26: Sintaxis II - Completivas y Finales
-    
-    ### 1. Oraciones Completivas (Sustantivas)
-    
-    Las oraciones completivas **funcionan como un sustantivo**: son el **Sujeto** o el **Objeto Directo** del verbo principal.
-    
-    #### A. Completivas con UT / NE (Verbos de Voluntad)
-    Dependen de verbos como *volo* (querer), *nolo* (no querer), *malo* (preferir), *oro* (rogar), *impero* (mandar).
-    
-    *   **Estructura**: Verbo de voluntad + **UT** (que) / **NE** (que no) + **Subjuntivo**.
-    *   *Impero tibi **ut venias**.* (Te mando **que vengas**).
-    *   *Oro te **ne eas**.* (Te ruego **que no vayas**).
-    
-    #### B. Verbos de Temor (*Verba Timendi*)
-    ¡Cuidado! Aquí el uso es contraintuitivo:
-    *   **Timeo NE...** = Temo **QUE** ocurra (algo que NO quiero).
-    *   **Timeo UT...** = Temo **QUE NO** ocurra (algo que SÍ quiero).
-    
-    *   *Timeo **ne** pluat.* (Temo **que** llueva). [No quiero que llueva]
-    *   *Timeo **ut** veniat.* (Temo **que no** venga). [Quiero que venga]
-    
-    ---
+    def theory_content():
+        st.markdown("""
+        ## Lección 26: Subordinadas Sustantivas (Completivas)
+        
+        ### 1. ¿Qué son las Oraciones Completivas?
+        
+        Las oraciones completivas **funcionan como un sustantivo**: son el **Sujeto** o el **Objeto Directo** del verbo principal.
+        
+        Por ejemplo:
+        - "**Quiero** que vengas" → "Que vengas" es el objeto de "quiero"
+        - "**Es necesario** que estudies" → "Que estudies" es el sujeto de "es necesario"
+        
+        En latín, estas oraciones se construyen de formas diferentes según el tipo de verbo principal.
+        
+        ---
+        
+        ### 2. Completivas con UT / NE (Verbos de Voluntad y Mandato)
+        
+        Dependen de verbos que expresan **voluntad, deseo, mandato, ruego**:
+        - *Volo* (querer), *Nolo* (no querer), *Malo* (preferir)
+        - *Oro* (rogar), *Peto* (pedir)
+        - *Impero* (mandar), *Hortor* (exhortar)
+        
+        """
+        )
 
-    ### 2. El Doble Juego de "UT" en Adverbiales
-    
-    La conjunción **UT** (y su negación **NE** o **UT NON**) es una de las más versátiles.
-    Dos de sus usos principales con **Subjuntivo** son:
-    
-    1.  **Finales**: Indican el **propósito** (Para qué).
-    2.  **Consecutivas**: Indican la **consecuencia** (De modo que).
-    
-    """)
-    
-    if os.path.exists("static/images/curso_gramatica/leccion26_finales_consecutivas.png"):
-        st.image("static/images/curso_gramatica/leccion26_finales_consecutivas.png",
-                 caption="Oraciones Finales vs Consecutivas",
-                 use_container_width=True)
-    
-    st.markdown("""
-    ### 2. Oraciones Finales (Propósito)
-    
-    Responden a: **¿Para qué?**
-    
-    *   **Afirmativa**: **UT** + Subjuntivo.
-    *   **Negativa**: **NE** + Subjuntivo.
-    
-    **Ejemplos**:
-    *   *Edo **ut vivam**.* (Como **para vivir** / para que viva).
-    *   *Hoc facio **ne** puniar.* (Hago esto **para no** ser castigado).
-    *   *Legatos misit **ut** pacem **peterent**.* (Envió embajadores **para pedir** la paz).
-    
-    > **Nota**: En español solemos traducir con "para" + Infinitivo si el sujeto es el mismo, o "para que" + Subjuntivo si cambia.
-    
-    ### 3. Oraciones Consecutivas (Consecuencia)
-    
-    Responden a: **¿Con qué consecuencia?**
-    Suelen ir anunciadas en la principal por un adverbio o adjetivo de intensidad (**Tam, Ita, Sic, Tantus, Talis**).
-    
-    *   **Afirmativa**: **UT** + Subjuntivo.
-    *   **Negativa**: **UT NON** + Subjuntivo (¡No se usa NE!).
-    
-    **Ejemplos**:
-    *   ***Tam** stultus est **ut** nihil **intelligat**.* (Es **tan** tonto **que no entiende** nada).
-    *   ***Ita** locutus est **ut** omnes **flerent**.* (Habló **de tal modo que** todos lloraban).
-    *   ***Tantus** erat timor **ut** nemo **exiret**.* (**Tanto** era el miedo **que** nadie salía).
-    
-    ### 4. Cómo Distinguirlas
-    
-    #### Diferencias Clave:
-    """)
-    
-    render_styled_table(
-        ["Característica", "Finales", "Consecutivas"],
-        [
-            ["**Significado**", "Intención / Propósito", "Resultado / Efecto"],
-            ["**Negación**", "**NE**", "**UT NON**"],
-            ["**Pistas**", "Verbos de movimiento, voluntad", "*Tam, Ita, Sic, Tantus, Adeo* en la principal"]
-        ]
-    )
+        if os.path.exists("static/images/curso_gramatica/leccion26_volo_nolo_malo.png"):
+            st.image("static/images/curso_gramatica/leccion26_volo_nolo_malo.png",
+                     caption="Los Tres Deseos: Volo, Nolo, Malo",
+                     width="stretch")
 
-    st.markdown("""
+        st.markdown("""
+        **Estructura**: Verbo principal + **UT** (que) / **NE** (que no) + **Subjuntivo**
+        
+        **Ejemplos**:
+        *   *Impero tibi **ut venias**.*
+            - Te mando **que vengas**.
+        *   *Oro te **ne eas**.*
+            - Te ruego **que no vayas**.
+        *   *Volo **ut discas**.*
+            - Quiero **que aprendas**.
+        
+        ---
+        
+        ### 3. Verbos de Temor (*Verba Timendi*)
+        
+        ⚠️ **¡Atención!** Los verbos de temor usan UT/NE de forma **contraintuitiva**:
+        
+        - **Timeo NE...** = Temo **QUE** ocurra (algo que NO quiero)
+        - **Timeo UT...** = Temo **QUE NO** ocurra (algo que SÍ quiero)
+        
+        **Ejemplos**:
+        *   *Timeo **ne** pluat.*
+            - Temo **que** llueva. [No quiero que llueva]
+        *   *Timeo **ut** veniat.*
+            - Temo **que no** venga. [Quiero que venga]
+        *   *Vereor **ne** hostes urbem capiant.*
+            - Temo **que** los enemigos tomen la ciudad.
+        
+        **Verbos de temor comunes**: *Timeo, vereor, metuo* (temer)
+        
+        ---
+        
+        ### 4. Interrogativas Indirectas
+        
+        Las **preguntas indirectas** también son completivas. Usan:
+        - Partículas interrogativas (*quis, quid, cur, quando, ubi, quo, unde*)
+        - **Subjuntivo** (aunque en español usamos indicativo)
+        
+        **Ejemplos**:
+        *   *Nescio **quid** **facias**.*
+            - No sé **qué** haces. (Lit: "qué hagas")
+        *   *Rogat **cur** **veneris**.*
+            - Pregunta **por qué** has venido.
+        *   *Ignoro **ubi** **sit**.*
+            - Ignoro **dónde** está. (Lit: "dónde esté")
+        
+        ---
+        
+        ### 5. Cuadro Resumen
+        
+        """)
+        
+        render_styled_table(
+            ["Tipo", "Conjunción", "Modo", "Ejemplo", "Traducción"],
+            [
+                ["**Voluntad**", "UT", "Subjuntivo", "*Volo ut venias*", "Quiero que vengas"],
+                ["**Voluntad (Neg)**", "NE", "Subjuntivo", "*Nolo ne eas*", "No quiero que vayas"],
+                ["**Temor**", "NE", "Subjuntivo", "*Timeo ne pluat*", "Temo que llueva"],
+                ["**Temor (Neg)**", "UT", "Subjuntivo", "*Timeo ut veniat*", "Temo que NO venga"],
+                ["**Interrog. Ind.**", "Quis/Quid/Cur/etc", "Subjuntivo", "*Nescio quid faciam*", "No sé qué hacer"]
+            ]
+        )
+        
+        st.markdown("""
+        
+        ---
+        
+        ### 6. Ejercicios de Análisis
+        
+        Identifica el tipo de completiva y traduce:
+        
+        1.  *Imperavit militibus **ut** oppugnarent.*
+            - Verbo de mando + *ut* → **Completiva de Voluntad**
+            - **Traducción**: Mandó a los soldados **que** atacaran.
+        
+        2.  *Timeo **ne** hostes veniant.*
+            - Verbo de temor + *ne* → **Completiva de Temor**
+            - **Traducción**: Temo **que** los enemigos vengan.
+        
+        3.  *Peto **ne** me relinquas.*
+            - Verbo de ruego + *ne* → **Completiva de Voluntad (negativa)**
+            - **Traducción**: Pido **que no** me abandones.
+        
+        4.  *Nescio **quo** fugerint.*
+            - Verbo de ignorancia + *quo* → **Interrogativa Indirecta**
+            - **Traducción**: No sé **a dónde** huyeron.
+        
+        5.  *Vereor **ut** id facere possit.*
+            - Verbo de temor + *ut* → **Completiva de Temor (negativa)**
+            - **Traducción**: Temo **que no** pueda hacerlo.
+        
+        ---
+        
+        ### Vocabulario Esencial
+        
+        **Verbos de Voluntad**:
+        *   **Volo, velle, volui**: querer
+        *   **Nolo, nolle, nolui**: no querer
+        *   **Malo, malle, malui**: preferir
+        *   **Cupio, cupere**: desear
+        *   **Hortor, hortari**: exhortar
+        
+        **Verbos de Mandato**:
+        *   **Impero, imperare**: mandar
+        *   **Iubeo, iubere**: ordenar
+        *   **Rogo, rogare**: rogar, pedir
+        *   **Peto, petere**: pedir, solicitar
+        
+        **Verbos de Temor**:
+        *   **Timeo, timere**: temer
+        *   **Vereor, vereri**: temer (deponente)
+        *   **Metuo, metuere**: temer
+        
+        **Conjunciones**:
+        *   **Ut**: que (afirmativo)
+        *   **Ne**: que no (negativo)
+        
+        """)
+        
+        # Imagen de Completivas si existe
+        if os.path.exists("static/images/curso_gramatica/completivas_sustantivas.png"):
+            st.image("static/images/curso_gramatica/completivas_sustantivas.png",
+                     caption="Oraciones Subordinadas Sustantivas (Completivas)",
+                     width="stretch")
+        elif os.path.exists("static/images/curso_gramatica/leccion26_sustantivas.png"):
+            st.image("static/images/curso_gramatica/leccion26_sustantivas.png",
+                     caption="Oraciones Subordinadas Sustantivas (Completivas)",
+                     width="stretch")
     
-    ### 5. Ejercicios de Análisis
-    
-    Identifica si es Final o Consecutiva y traduce:
-    
-    1.  *Milites pugnant **ut** urbem **defendant**.*
-        *   ¿Hay pista de intensidad? No. ¿Es propósito? Sí.
-        *   → **Final**: Los soldados luchan **para defender** la ciudad.
-    
-    2.  *Solis ardor **tam** magnus est **ut** herba **arescat**.*
-        *   Pista: *Tam* (tan).
-        *   → **Consecutiva**: El calor del sol es **tan** grande **que** la hierba se seca.
-    
-    3.  *Portas clausit **ne** hostes **intrarent**.*
-        *   Negación *Ne*.
-        *   → **Final**: Cerró las puertas **para que** los enemigos **no entraran**.
-
-    4.  *Timeo **ne** hostes veniant.*
-        *   Verbo de temor + *ne*.
-        *   → **Completiva (Sustantiva)**: Temo **que** los enemigos vengan.
-
-    5.  *Imperavit militibus **ut** oppugnarent.*
-        *   Verbo de mando + *ut*.
-        *   → **Completiva (Sustantiva)**: Mandó a los soldados **que** atacaran.
-    
-    ### Vocabulario Esencial
-    *   **Ut**: que, para que, de modo que
-    *   **Ne**: para que no
-    *   **Tam**: tan
-    *   **Ita / Sic**: así, de tal modo
-    *   **Tantus, -a, -um**: tanto, tan grande
-    *   **Talis, -e**: tal, de tal clase
-    """)
+    render_lesson_with_tabs(26, theory_content)
 
 def render_lesson_27():
-    st.markdown("""
-    ## Lección 27: Subordinadas III - Condicionales
-    
-    ### 1. La Estructura Condicional
-    
-    Una oración condicional se compone de:
-    1.  **Prótasis**: La condición (Si...).
-    2.  **Apódosis**: La consecuencia (...entonces...).
-    
-    En latín, hay tres tipos principales según el grado de realidad.
-    """)
-
-    
-    st.markdown("""
-    """)
-    
-    if os.path.exists("static/images/curso_gramatica/leccion27_condicionales.png"):
-        st.image("static/images/curso_gramatica/leccion27_condicionales.png",
-                 caption="Tipos de Oraciones Condicionales",
-                 use_container_width=True)
-    else:
-        render_mermaid(r"""
-    graph TD
-        C{Tipo de Condición}
-        C --> Real["REAL (Tipo I)<br/>Hecho objetivo"]
-        C --> Posible["POSIBLE (Tipo II)<br/>Podría ocurrir"]
-        C --> Irreal["IRREAL (Tipo III)<br/>No ocurrió / No ocurre"]
+    def theory_content():
+        st.markdown("""
+        ## Lección 27: Subordinadas Adverbiales II (Finales, Consecutivas y Condicionales)
         
-        Real --> R_Modo[INDICATIVO]
-        Posible --> P_Modo["SUBJUNTIVO Presente/Perf"]
-        Irreal --> I_Modo["SUBJUNTIVO Imperf/Plusc"]
-    """)
+        En esta lección completamos las subordinadas adverbiales, añadiendo tres tipos esenciales:
+        **Finales** (para qué), **Consecutivas** (con qué resultado), y **Condicionales** (si...).
+        
+        ---
+        
+        ### 1. Oraciones Finales (Propósito)
+        
+        Responden a: **¿Para qué?** / **¿Con qué fin?**
+        
+        **Estructura**:
+        *   **Afirmativa**: **UT** + Subjuntivo
+        *   **Negativa**: **NE** + Subjuntivo
+        
+        **Ejemplos**:
+        *   *Edo **ut vivam**.*
+            *   Como **para vivir**.
+        *   *Portas clausit **ne** hostes **intrarent**.*
+            *   Cerró las puertas **para que** los enemigos **no entraran**.
+        *   *Legatos misit **ut** pacem **peterent**.*
+            *   Envió embajadores **para pedir** la paz.
+        
+        ---
+        
+        ### 2. Oraciones Consecutivas (Consecuencia)
+        
+        Responden a: **¿Con qué consecuencia?** / **¿Con qué resultado?**
+        
+        Suelen estar **anunciadas** en la principal por un adverbio de intensidad:
+        **Tam, Ita, Sic, Adeo, Tantus, Talis**
+        
+        **Estructura**:
+        *   **Afirmativa**: **UT** + Subjuntivo
+        *   **Negativa**: **UT NON** + Subjuntivo (¡No *NE*!)
+        
+        **Ejemplos**:
+        *   ***Tam** stultus est **ut** nihil **intelligat**.*
+            *   Es **tan** tonto **que no entiende** nada.
+        *   ***Ita** locutus est **ut** omnes **flerent**.*
+            *   Habló **de tal modo que** todos lloraban.
+        *   ***Tantus** erat timor **ut** nemo **exiret**.*
+            *   **Tanto** era el miedo **que** nadie salía.
+        
+        ---
+        
+        ### 3. Diferencia entre Finales y Consecutivas
+        
+        Ambas usan **UT**, pero tienen significados muy distintos:
+        
+        """)
+        
+        render_styled_table(
+            ["Característica", "Finales", "Consecutivas"],
+            [
+                ["**Significado**", "Intención / Propósito", "Resultado / Efecto"],
+                ["**Negación**", "**NE**", "**UT NON**"],
+                ["**Pistas**", "Verbos de movimiento, voluntad", "*Tam, Ita, Sic, Tantus, Adeo* en la principal"],
+                ["**Ejemplo**", "*Venit ut me videat*", "*Tam fortis est ut vincat*"]
+            ]
+        )
+        
+        st.markdown("""
+        
+        ---
+        
+        ### 4. Oraciones Condicionales
+        
+        Expresan una **condición** (prótasis: "Si...") y su **consecuencia** (apódosis: "...entonces").
+        
+        Hay **tres tipos** según el grado de realidad:
+        
+        #### A. Tipo I: Real (Indicativo)
+        
+        Expresa un hecho real o lógico. *Si pasa A, pasa B.*
+        
+        *   **Modo**: **Indicativo** en ambas partes
+        *   *Si hoc **facis**, **erras**.*
+            *   Si haces esto, te equivocas.
+        
+        #### B. Tipo II: Posible (Subjuntivo Presente/Perfecto)
+        
+        Expresa algo que **podría** ocurrir en el futuro.
+        
+        *   **Modo**: **Subjuntivo Presente**
+        *   *Si hoc **facias**, **erres**.*
+            *   Si hicieras esto (en el futuro), te equivocarías.
+        
+        #### C. Tipo III: Irreal (Subjuntivo Imperfecto/Pluscuamperfecto)
+        
+        Expresa algo que **no ocurre** (presente) o **no ocurrió** (pasado).
+        
+        *   **Irreal de Presente**: Subjuntivo Imperfecto
+            *   *Si hoc **faceres**, **errares**.*
+                *   Si hicieras esto (ahora, pero no lo haces), te equivocarías.
+        
+        *   **Irreal de Pasado**: Subjuntivo Pluscuamperfecto
+            *   *Si hoc **fecisses**, **erravisses**.*
+                *   Si hubieras hecho esto, te habrías equivocado.
+        
+        ---
+        
+        ### 5. Cuadro Resumen Completo
+        
+        """)
+        
+        render_styled_table(
+            ["Tipo", "Conjunción", "Modo", "Ejemplo", "Traducción"],
+            [
+                ["**Final**", "UT / NE", "Subjuntivo", "*Venit ut me videat*", "Viene para verme"],
+                ["**Consecutiva**", "UT / UT NON", "Subjuntivo", "*Tam fortis est ut vincat*", "Es tan fuerte que vence"],
+                ["**Cond. Real**", "SI", "Indicativo", "*Si facis, erras*", "Si haces, te equivocas"],
+                ["**Cond. Posible**", "SI", "Subj. Pres.", "*Si facias, erres*", "Si hicieras, te equivocarías"],
+                ["**Cond. Irreal Pres.**", "SI", "Subj. Imperf.", "*Si faceres, errares*", "Si hicieras (ahora), te equivocarías"],
+                ["**Cond. Irreal Pas.**", "SI", "Subj. Plusc.", "*Si fecisses, erravisses*", "Si hubieras hecho, te habrías equivocado"]
+            ]
+        )
+        
+        # Infografías de Condicionales y Finales/Consecutivas
+        col1, col2 = st.columns(2)
+        with col1:
+            if os.path.exists("static/images/curso_gramatica/leccion27_condicionales.png"):
+                st.image("static/images/curso_gramatica/leccion27_condicionales.png",
+                         caption="Los Tres Tipos de Oraciones Condicionales",
+                         width="stretch")
+        with col2:
+            if os.path.exists("static/images/curso_gramatica/leccion26_finales_consecutivas.png"):
+                st.image("static/images/curso_gramatica/leccion26_finales_consecutivas.png",
+                         caption="Finales vs Consecutivas",
+                         width="stretch")
+        
+        st.markdown("""
+        
+        ---
+        
+        ### 6. Ejercicios de Análisis
+        
+        Identifica el tipo de subordinada y traduce:
+        
+        1.  *Milites pugnant **ut** urbem **defendant**.*
+            *   ¿Pista de intensidad? No. ¿Es propósito? Sí.
+            *   → **Final**: Los soldados luchan **para defender** la ciudad.
+        
+        2.  *Solis ardor **tam** magnus est **ut** herba **arescat**.*
+            *   Pista: *Tam* (tan).
+            *   → **Consecutiva**: El calor del sol es **tan** grande **que** la hierba se seca.
+        
+        3.  *Si venisses, laetus fuissem.*
+            *   Subjuntivo Pluscuamperfecto.
+            *   → **Condicional Irreal de Pasado**: **Si hubieras venido**, habría estado contento.
+        
+        4.  *Portas clausit **ne** hostes **intrarent**.*
+            *   Negación *NE*.
+            *   → **Final**: Cerró las puertas **para que** los enemigos **no entraran**.
+        
+        5.  *Si dives sim, orbem peragrem.*
+            *   Subjuntivo Presente.
+            *   → **Condicional Posible**: **Si fuera rico**, recorrería el mundo.
+        
+        ---
+        
+        ### Vocabulario Esencial
+        
+        **Conjunciones Finales**:
+        *   **Ut**: para que (afirmativa)
+        *   **Ne**: para que no (negativa)
+        
+        **Adverbios de Intensidad** (anuncian Consecutivas):
+        *   **Tam**: tan
+        *   **Ita / Sic**: así, de tal modo
+        *   **Adeo**: tanto, hasta tal punto
+        *   **Tantus, -a, -um**: tanto, tan grande
+        *   **Talis, -e**: tal, de tal clase
+        
+        **Conjunciones Condicionales**:
+        *   **Si**: si
+        *   **Nisi**: si no, a menos que
+        *   **Sin**: pero si, si por el contrario
+        """)
     
-    st.markdown("""
-    ### 2. Tipo I: Realidad (Indicativo)
-    
-    Expresa un hecho real o lógico. Si pasa A, pasa B.
-    
-    *   **Modo**: **Indicativo** en ambas partes.
-    *   *Si hoc **facis**, **erras**.*
-        *   Si haces esto, te equivocas.
-    *   *Si **venies**, **videbis**.*
-        *   Si vienes (futuro), verás.
-    
-    ### 3. Tipo II: Posibilidad (Subjuntivo Presente/Perfecto)
-    
-    Expresa algo que **podría** ocurrir en el futuro, pero no es seguro. ("Si hicieras...").
-    
-    *   **Modo**: **Subjuntivo Presente** (o Perfecto).
-    *   *Si hoc **facias**, **erres**.*
-        *   Si hicieras esto (en el futuro), te equivocarías.
-        *   (Traducción alternativa: "Si llegaras a hacer esto...")
-    
-    ### 4. Tipo III: Irrealidad (Subjuntivo Imperfecto/Pluscuamperfecto)
-    
-    Expresa algo que **no ocurre** (presente) o **no ocurrió** (pasado).
-    
-    *   **Irreal de Presente**: **Subjuntivo Imperfecto**.
-        *   *Si hoc **faceres**, **errares**.*
-            *   Si hicieras esto (ahora mismo, pero no lo haces), te equivocarías.
-    
-    *   **Irreal de Pasado**: **Subjuntivo Pluscuamperfecto**.
-        *   *Si hoc **fecisses**, **erravisses**.*
-            *   Si hubieras hecho esto (en el pasado), te habrías equivocado.
-    
-    ### 5. Tabla Resumen
-    
-    #### Resumen de Condicionales:
-    """)
-    
-    render_styled_table(
-        ["Tipo", "Tiempo Latino", "Traducción Prótasis (Si...)", "Traducción Apódosis"],
-        [
-            ["**Real**", "Indicativo", "Si haces...", "Haces / Harás"],
-            ["**Posible**", "Subj. Presente", "Si hicieras...", "Harías / Te equivocarías"],
-            ["**Irreal Pres.**", "Subj. Imperfecto", "Si hicieras (ahora)...", "Harías"],
-            ["**Irreal Pas.**", "Subj. Pluscuamp.", "Si hubieras hecho...", "Habrías hecho"]
-        ]
-    )
-
-    st.markdown("""
-    
-    ### 6. Ejercicios de Análisis
-    
-    Clasifica y traduce:
-    
-    1.  *Si venisses, laetus fuissem.*
-        *   Tiempos: Pluscuamperfecto Subjuntivo.
-        *   Tipo: **Irreal de Pasado**.
-        *   → **Si hubieras venido, habría estado contento.**
-    
-    2.  *Si id credis, erras.*
-        *   Tiempos: Presente Indicativo.
-        *   Tipo: **Real**.
-        *   → **Si crees eso, te equivocas.**
-    
-    3.  *Si dives sim, orbem peragrem.*
-        *   Tiempos: Presente Subjuntivo.
-        *   Tipo: **Posible**.
-        *   → **Si fuera rico** (llegara a serlo), **recorrería el mundo.**
-
-    4.  *Si tacuisses, philosophus mansisses.* (Boecio)
-        *   Tiempos: Pluscuamperfecto Subjuntivo.
-        *   Tipo: **Irreal de Pasado**.
-        *   → **Si te hubieras callado, habrías permanecido (como un) filósofo.**
-
-    5.  *Si vis pacem, para bellum.* (Vegecio)
-        *   Tiempos: Presente Indicativo / Imperativo.
-        *   Tipo: **Real**.
-        *   → **Si quieres la paz, prepara la guerra.**
-    
-    ### Vocabulario Esencial
-    *   **Si**: si
-    *   **Nisi**: si no, a menos que
-    *   **Sin**: pero si, si por el contrario
-    """)
+    render_lesson_with_tabs(27, theory_content)
 
 def render_lesson_28():
-    st.markdown("""
-    ## Lección 28: Subordinadas IV - Relativas
-    
-    ### 1. El Pronombre Relativo (Qui, Quae, Quod)
-    
-    Las oraciones de relativo adjetivan a un sustantivo anterior llamado **antecedente**.
-    
-    *   "El libro **que** lees es bueno."
-        *   Antecedente: *Libro*.
-        *   Relativo: *Que*.
-    
-    ### 2. La Regla de Oro de la Concordancia
-    
-    El pronombre relativo concuerda con su antecedente en **GÉNERO y NÚMERO**.
-    Pero su **CASO** depende de su función **dentro de la oración subordinada**.
-    """)
-
-
-    
-    
-    if os.path.exists("static/images/curso_gramatica/leccion28_oraciones_relativas.png"):
-        st.image("static/images/curso_gramatica/leccion28_oraciones_relativas.png",
-                 caption="Árbol de Concordancia del Relativo",
-                 use_container_width=True)
-    else:
-        render_mermaid(r"""
+    def theory_content():
+        st.markdown("""
+        ## Lección 28: Subordinadas Adjetivas (Relativas)
+        
+        ### 1. El Pronombre Relativo (Qui, Quae, Quod)
+        
+        Las oraciones de relativo adjetivan a un sustantivo anterior llamado **antecedente**.
+        
+        *   "El libro **que** lees es bueno."
+            *   Antecedente: *Libro*.
+            *   Relativo: *Que*.
+        
+        ### 2. La Regla de Oro de la Concordancia
+        
+        El pronombre relativo concuerda con su antecedente en **GÉNERO y NÚMERO**.
+        Pero su **CASO** depende de su función **dentro de la oración subordinada**.
+        
+        """)
+        
+        if os.path.exists("static/images/curso_gramatica/leccion28_oraciones_relativas.png"):
+            st.image("static/images/curso_gramatica/leccion28_oraciones_relativas.png",
+                     caption="Árbol de Concordancia del Relativo",
+                     width="stretch")
+        elif os.path.exists("static/images/curso_gramatica/leccion_subordinadas_adjetivas.png"):
+            st.image("static/images/curso_gramatica/leccion_subordinadas_adjetivas.png",
+                     caption="Oraciones Subordinadas Adjetivas (Relativas)",
+                     width="stretch")
+        else:
+            render_mermaid(r"""
     graph LR
         Ant[Antecedente] -- "Género y Número" --> Rel["Relativo (Qui/Quae/Quod)"]
         Sub["Oración Subordinada"] -- "Función Sintáctica" --> Caso["Caso del Relativo"]
         
         Rel --> Caso
     """)
-    
-    st.markdown("""
-    ### 3. Declinación de Qui, Quae, Quod
-    
-    #### Declinación del Relativo:
-    """)
-    
-    render_styled_table(
-        ["Caso", "Masc. Sg", "Fem. Sg", "Neut. Sg", "Masc. Pl", "Fem. Pl", "Neut. Pl"],
-        [
-            ["**Nom**", "**qui**", "**quae**", "**quod**", "**qui**", "**quae**", "**quae**"],
-            ["**Ac**", "**quem**", "**quam**", "**quod**", "**quos**", "**quas**", "**quae**"],
-            ["**Gen**", "**cuius**", "**cuius**", "**cuius**", "**quorum**", "**quarum**", "**quorum**"],
-            ["**Dat**", "**cui**", "**cui**", "**cui**", "**quibus**", "**quibus**", "**quibus**"],
-            ["**Abl**", "**quo**", "**qua**", "**quo**", "**quibus**", "**quibus**", "**quibus**"]
-        ]
-    )
+        
+        st.markdown("""
+        ### 3. Declinación de Qui, Quae, Quod
+        
+        #### Declinación del Relativo:
+        """)
+        
+        render_styled_table(
+            ["Caso", "Masc. Sg", "Fem. Sg", "Neut. Sg", "Masc. Pl", "Fem. Pl", "Neut. Pl"],
+            [
+                ["**Nom**", "**qui**", "**quae**", "**quod**", "**qui**", "**quae**", "**quae**"],
+                ["**Ac**", "**quem**", "**quam**", "**quod**", "**quos**", "**quas**", "**quae**"],
+                ["**Gen**", "**cuius**", "**cuius**", "**cuius**", "**quorum**", "**quarum**", "**quorum**"],
+                ["**Dat**", "**cui**", "**cui**", "**cui**", "**quibus**", "**quibus**", "**quibus**"],
+                ["**Abl**", "**quo**", "**qua**", "**quo**", "**quibus**", "**quibus**", "**quibus**"]
+            ]
+        )
 
-    st.markdown("""
-    
-    ### 4. Ejemplos de Análisis de Caso
-    
-    1.  *Puer, **quem** vides, amicus meus est.*
-        *   Antecedente: *Puer* (Masc, Sg).
-        *   Función en sub.: Objeto Directo de *vides* (tú ves al niño).
-        *   → Relativo: Masc, Sg, **Acusativo** = **QUEM**.
-        *   "El niño, **al cual** ves, es mi amigo."
-    
-    2.  *Puella, **cui** librum dedi, laeta est.*
-        *   Antecedente: *Puella* (Fem, Sg).
-        *   Función en sub.: Objeto Indirecto de *dedi* (di el libro a la niña).
-        *   → Relativo: Fem, Sg, **Dativo** = **CUI**.
-        *   "La niña, **a la cual** di el libro, está contenta."
-    
-    3.  *Urbs, **in qua** habito, magna est.*
-        *   Antecedente: *Urbs* (Fem, Sg).
-        *   Función en sub.: CC Lugar (*in* + Abl).
-        *   → Relativo: Fem, Sg, **Ablativo** = **QUA**.
-        *   "La ciudad **en la que** vivo es grande."
-    
-    ### 5. Relativas con Subjuntivo
-    
-    Normalmente llevan Indicativo. Si llevan **Subjuntivo**, añaden un matiz circunstancial (Final, Consecutivo o Causal).
-    
-    *   **Final**: *Milites misit **qui** (= ut ii) nuntiarent.*
-        *   Envió soldados **para que** anunciaran (literal: "que anunciaran").
-    
-    *   **Consecutiva**: *Nemo est tam stultus **qui** (= ut is) hoc credat.*
-        *   Nadie es tan tonto **que** crea esto.
+        st.markdown("""
+        
+        ### 4. Ejemplos de Análisis de Caso
+        
+        1.  *Puer, **quem** vides, amicus meus est.*
+            *   Antecedente: *Puer* (Masc, Sg).
+            *   Función en sub.: Objeto Directo de *vides* (tú ves al niño).
+            *   → Relativo: Masc, Sg, **Acusativo** = **QUEM**.
+            *   "El niño, **al cual** ves, es mi amigo."
+        
+        2.  *Puella, **cui** librum dedi, laeta est.*
+            *   Antecedente: *Puella* (Fem, Sg).
+            *   Función en sub.: Objeto Indirecto de *dedi* (di el libro a la niña).
+            *   → Relativo: Fem, Sg, **Dativo** = **CUI**.
+            *   "La niña, **a la cual** di el libro, está contenta."
+        
+        3.  *Urbs, **in qua** habito, magna est.*
+            *   Antecedente: *Urbs* (Fem, Sg).
+            *   Función en sub.: CC Lugar (*in* + Abl).
+            *   → Relativo: Fem, Sg, **Ablativo** = **QUA**.
+            *   "La ciudad **en la que** vivo es grande."
+        
+        ### 5. Relativas con Subjuntivo
+        
+        Normalmente llevan Indicativo. Si llevan **Subjuntivo**, añaden un matiz circunstancial (Final, Consecut o Causal).
+        
+        *   **Final**: *Milites misit **qui** (= ut ii) nuntiarent.*
+            *   Envió soldados **para que** anunciaran (literal: "que anunciaran").
+        
+        *   **Consecutiva**: *Nemo est tam stultus **qui** (= ut is) hoc credat.*
+            *   Nadie es tan tonto **que** crea esto.
 
-    ### 6. El Relativo de Unión (Nexo Relativo)
+        ### 6. El Relativo de Unión (Nexo Relativo)
+        
+        En latín, a veces se usa un relativo al **principio de una oración** (después de punto) para referirse a algo dicho anteriormente.
+        Se traduce como un demostrativo: "Y este...", "Este...", "El cual...".
+        
+        *   ***Quae** cum ita sint...*
+            *   Literal: Las cuales cosas como sean así...
+            *   Traducción: **Y como esto es así...** / **Puesto que esto es así...**
+        
+        *   ***Quod** cum audivisset...*
+            *   Literal: Lo cual como hubiese oído...
+            *   Traducción: **Cuando oyó esto...** / **Al oír esto...**
+        
+        ### Vocabulario Esencial
+        *   **Qui, quae, quod**: el cual, la cual, lo cual / que / quien
+        *   **Ubi** (adv. relativo): donde (= in quo)
+        *   **Unde** (adv. relativo): de donde (= ex quo)
+        *   **Quo** (adv. relativo): a donde (= ad quem)
+        """)
     
-    En latín, a veces se usa un relativo al **principio de una oración** (después de punto) para referirse a algo dicho anteriormente.
-    Se traduce como un demostrativo: "Y este...", "Este...", "El cual...".
-    
-    *   ***Quae** cum ita sint...*
-        *   Literal: Las cuales cosas como sean así...
-        *   Traducción: **Y como esto es así...** / **Puesto que esto es así...**
-    
-    *   ***Quod** cum audivisset...*
-        *   Literal: Lo cual como hubiese oído...
-        *   Traducción: **Cuando oyó esto...** / **Al oír esto...**
-    
-    ### Vocabulario Esencial
-    *   **Qui, quae, quod**: el cual, la cual, lo cual / que / quien
-    *   **Ubi** (adv. relativo): donde (= in quo)
-    *   **Unde** (adv. relativo): de donde (= ex quo)
-    *   **Quo** (adv. relativo): a donde (= ad quem)
-    """)
+    render_lesson_with_tabs(28, theory_content)
+
 
 def render_lesson_29():
-    st.markdown("""
-    ## Lección 29: Estilo Indirecto (Oratio Obliqua)
-    
-    ### 1. ¿Qué es la Oratio Obliqua?
-    
-    Es referir las palabras de otro sin citarlas textualmente.
-    *   **Directo**: César dijo: "Voy a Roma".
-    *   **Indirecto**: César dijo **que él iba a Roma**.
-    
-    En latín, esto provoca una transformación gramatical masiva en toda la oración.
-    
-    ### 2. Reglas de Transformación
-    """)
-
-
-    
-
-    if os.path.exists("static/images/curso_gramatica/leccion29_estilo_indirecto.png"):
-        st.image("static/images/curso_gramatica/leccion29_estilo_indirecto.png",
-                 caption="Transformación a Estilo Indirecto",
-                 use_container_width=True)
-    else:
-        render_mermaid(r"""
+    def theory_content():
+        st.markdown("""
+        ## Lección 29: Estilo Indirecto (Oratio Obliqua)
+        
+        ### 1. ¿Qué es la Oratio Obliqua?
+        
+        Es referir las palabras de otro **sin citarlas textualmente**.
+        *   **Directo**: César dijo: "Voy a Roma".
+        *   **Indirecto**: César dijo **que él iba a Roma**.
+        
+        En latín, esto provoca una **transformación gramatical masiva** en toda la oración.
+        
+        ---
+        
+        ### 2. Reglas de Transformación
+        
+        """)
+        
+        if os.path.exists("static/images/curso_gramatica/leccion29_estilo_indirecto.png"):
+            st.image("static/images/curso_gramatica/leccion29_estilo_indirecto.png",
+                     caption="Transformación a Estilo Indirecto",
+                     width="stretch")
+        elif os.path.exists("static/images/curso_gramatica/leccion30_estilo_indirecto.png"):
+            st.image("static/images/curso_gramatica/leccion30_estilo_indirecto.png",
+                     caption="Transformación a Estilo Indirecto",
+                     width="stretch")
+        else:
+            render_mermaid(r"""
     graph TD
         Directo[ESTILO DIRECTO] --> Indirecto[ESTILO INDIRECTO]
         
@@ -4744,154 +5721,561 @@ def render_lesson_29():
         D_Sub[Cualquier Verbo Subordinado] -->|Subjuntivo| I_Sub[Subjuntivo]
         end
     """)
+        
+        st.markdown("""
+        
+        ### 3. Transformación Detallada
+        
+        #### A. Oraciones Principales (Aseverativas)
+        Pasan a la construcción de **Acusativo con Infinitivo (AcI)**.
+        
+        *   Directo: *"Romani fortes **sunt**."*
+        *   Indirecto: *Dicit **Romanos** fortes **esse**.*
+        
+        #### B. Oraciones Principales (Imperativas / Desiderativas)
+        Pasan a **Subjuntivo**.
+        
+        *   Directo: *"**Veni**, Caesar!"*
+        *   Indirecto: *Orat Caesarem **ut veniat**.* (Le ruega que venga).
+        
+        #### C. Oraciones Subordinadas
+        Todos los verbos de las oraciones subordinadas pasan a **SUBJUNTIVO**.
+        
+        *   Directo: *"Romani, **qui** fortes **sunt**, vincunt."*
+        *   Indirecto: *Dicit Romanos, **qui** fortes **sint**, vincere.*
+        
+        ---
+        
+        ### 4. Ejemplo Completo de Transformación
+        
+        **Texto Original (Directo):**
+        > *"Ariovistus respondit: Ego in Galliam non veni, sed Galli ad me venerunt. Si quid vultis, pugnate!"*
+        
+        **Texto Indirecto (César, De Bello Gallico):**
+        > *Ariovistus respondit:*
+        > 1.  **se** in Galliam non **venisse** (AcI - Inf. Perf),
+        > 2.  sed **Gallos** ad **se** **venisse** (AcI - Inf. Perf).
+        > 3.  **Si** quid **vellent** (Subj. Imp - Subordinada), **pugnarent** (Subj. Imp - Imperativo transformado).
+        
+        ---
+        
+        ### 5. La Consecutio Temporum en Estilo Indirecto
+        
+        Como todo pasa a Subjuntivo o Infinitivo, la referencia temporal depende del verbo introductor (*Dicit* vs *Dixit*).
+        
+        *   *Dicit se id facere **quod vellet**.* (Dice que hace lo que quiere).
+        
+        ---
+        
+        ### 6. Ejercicios de Práctica
+        
+        Pasa a Estilo Indirecto dependiendo de *Dicit* (Dice):
+        
+        1.  *"Puer currit."*
+            *   → *Dicit **puerum currere**.*
+        
+        2.  *"Ego laetus sum."*
+            *   → *Dicit **se** laetum **esse**.*
+        
+        3.  *"Milites, qui pugnant, vincunt."*
+            *   → *Dicit **milites**, qui **pugnent**, **vincere**.*
+        
+        ---
+        
+        ### 7. Ejemplo Completo de Análisis
+        
+        **Texto**: *Caesar dixit se, postquam hostes vicisset, Romam venturum esse.*
+        
+        *   **Verbo introductor**: *Dixit* (Dijo) → Tiempo histórico.
+        *   **Oración Principal Indirecta**: *se ... Romam venturum esse*.
+            *   *se*: Sujeto (César) en Acusativo.
+            *   *venturum esse*: Infinitivo Futuro (Posterioridad).
+            *   → "Que él vendría a Roma".
+        *   **Oración Subordinada**: *postquam hostes vicisset*.
+            *   *vicisset*: Pluscuamperfecto Subjuntivo.
+            *   ¿Por qué Pluscuamperfecto?
+                *   1. Subjuntivo por Estilo Indirecto.
+                *   2. Pluscuamperfecto por **Anterioridad** respecto a un tiempo histórico (*Dixit*).
+            *   → "Después de que hubiera vencido a los enemigos".
+        
+        **Traducción final**: César dijo que él, después de haber vencido a los enemigos, vendría a Roma.
+        
+        ---
+        
+        ### Vocabulario Esencial
+        *   **Aio / Inquam**: decir (defectivos, usados en directo)
+        *   **Dico, dicere**: decir
+        *   **Nego**: decir que no, negar
+        *   **Respondeo**: responder
+        *   **Nuntio**: anunciar
+        *   **Polliceor**: prometer (+ AcI Futuro)
+        """)
     
-    st.markdown("""
-    ### 3. Transformación Detallada
-    
-    #### A. Oraciones Principales (Aseverativas)
-    Pasan a la construcción de **Acusativo con Infinitivo (AcI)**.
-    
-    *   Directo: *"Romani fortes **sunt**."*
-    *   Indirecto: *Dicit **Romanos** fortes **esse**.*
-    
-    #### B. Oraciones Principales (Imperativas / Desiderativas)
-    Pasan a **Subjuntivo**.
-    
-    *   Directo: *"**Veni**, Caesar!"*
-    *   Indirecto: *Orat Caesarem **ut veniat**.* (Le ruega que venga).
-    
-    #### C. Oraciones Subordinadas
-    Todos los verbos de las oraciones subordinadas pasan a **SUBJUNTIVO**.
-    
-    *   Directo: *"Romani, **qui** fortes **sunt**, vincunt."*
-    *   Indirecto: *Dicit Romanos, **qui** fortes **sint**, vincere.*
-    
-    ### 4. Ejemplo Completo de Transformación
-    
-    **Texto Original (Directo):**
-    > *"Ariovistus respondit: Ego in Galliam non veni, sed Galli ad me venerunt. Si quid vultis, pugnate!"*
-    
-    **Texto Indirecto (César, De Bello Gallico):**
-    > *Ariovistus respondit:*
-    > 1.  **se** in Galliam non **venisse** (AcI - Inf. Perf),
-    > 2.  sed **Gallos** ad **se** **venisse** (AcI - Inf. Perf).
-    > 3.  **Si** quid **vellent** (Subj. Imp - Subordinada), **pugnarent** (Subj. Imp - Imperativo transformado).
-    
-    ### 5. La Consecutio Temporum en Estilo Indirecto
-    
-    Como todo pasa a Subjuntivo o Infinitivo, la referencia temporal depende del verbo introductor (*Dicit* vs *Dixit*).
-    
-    *   *Dicit se id facere **quod vellet**.* (Dice que hace lo que quiere).
-    
-    ### 6. Ejercicios de Práctica
-    
-    Pasa a Estilo Indirecto dependiendo de *Dicit* (Dice):
-    
-    1.  *"Puer currit."*
-        *   → *Dicit **puerum currere**.*
-    
-    2.  *"Ego laetus sum."*
-        *   → *Dicit **se** laetum **esse**.*
-    
-    3.  *"Milites, qui pugnant, vincunt."*
-        *   → *Dicit **milites**, qui **pugnent**, **vincere**.*
+    render_lesson_with_tabs(29, theory_content)
 
-    ### 7. Ejemplo Completo de Análisis
-    
-    **Texto**: *Caesar dixit se, postquam hostes vicisset, Romam venturum esse.*
-    
-    *   **Verbo introductor**: *Dixit* (Dijo) -> Tiempo histórico.
-    *   **Oración Principal Indirecta**: *se ... Romam venturum esse*.
-        *   *se*: Sujeto (César) en Acusativo.
-        *   *venturum esse*: Infinitivo Futuro (Posterioridad).
-        *   → "Que él vendría a Roma".
-    *   **Oración Subordinada**: *postquam hostes vicisset*.
-        *   *vicisset*: Pluscuamperfecto Subjuntivo.
-        *   ¿Por qué Pluscuamperfecto?
-            *   1. Subjuntivo por Estilo Indirecto.
-            *   2. Pluscuamperfecto por **Anterioridad** respecto a un tiempo histórico (*Dixit*).
-        *   → "Después de que hubiera vencido a los enemigos".
-    
-    **Traducción final**: César dijo que él, después de haber vencido a los enemigos, vendría a Roma.
-    
-    ### Vocabulario Esencial
-    *   **Aio / Inquam**: decir (defectivos, usados en directo)
-    *   **Nego**: decir que no
-    *   **Respondeo**: responder
-    *   **Nuntio**: anunciar
-    *   **Polliceor**: prometer (+ AcI Futuro)
-    """)
 
 def render_lesson_30():
-    st.markdown("## Lección 30: Métrica y Poesía")
-    
-    if os.path.exists("static/images/curso_gramatica/leccion30_metrica.png"):
-        st.image("static/images/curso_gramatica/leccion30_metrica.png",
-                 caption="Esquema del Hexámetro Dactílico",
-                 use_container_width=True)
-                 
-    st.info("🚧 Contenido en desarrollo. Próximamente: Hexametro dactílico, escansión y figuras retóricas.")
+    def theory_content():
+        st.markdown("""
+        ## Lección 30: Verbos Irregulares y Síntesis Final
+        
+        ### 1. Los Tres Irregulares Clásicos
+        
+        Para completar tu dominio del latín, debes conocer tres verbos irregulares omnipresentes que desafían las reglas normales.
+        
+        #### A. Fero, ferre, tuli, latum (Llevar, soportar)
+        
+        Es irregular porque **pierde la vocal de unión** en Presente.
+        
+        *   **Presente**: *Fero, Fers, Fert, Ferimus, Fertis, Ferunt*.
+        *   **Infinitivo**: *Ferre* (no *ferere*).
+        *   **Compuestos**: *Au-fero* (llevarse), *In-fero* (introducir), *Con-fero* (reunir).
+        
+        """
+        )
+
+        if os.path.exists("static/images/curso_gramatica/leccion30_fero_v2.png"):
+            st.image("static/images/curso_gramatica/leccion30_fero_v2.png",
+                     caption="El Viajero FERO: Sus múltiples equipajes (compuestos)",
+                     width="stretch")
+
+        st.markdown("""
+        #### B. Eo, ire, ii, itum (Ir)
+        
+        La raíz es **i-**. Se transforma en **e-** ante vocal (*eo, eunt*).
+        
+        *   **Presente**: *Eo, Is, It, Imus, Itis, Eunt*.
+        *   **Futuro**: *Ibo, ibis...* (Como la 1ª/2ª conj).
+        *   **Compuestos**: *Ex-eo* (salir), *Red-eo* (volver), *Transe-o* (cruzar).
+        
+        #### C. Fio, fieri, factus sum (Hacerse, suceder)
+        
+        Funciona como la **voz pasiva de *Facio*** (hacer).
+        
+        *   **Presente**: *Fio, Fis, Fit, Fimus, Fitis, Fiunt*.
+        *   **Significado**:
+            *   *Hoc **fit**.* = Esto **sucede** / Esto **es hecho**.
+            *   *Consul **factus est**.* = **Se hizo** (fue nombrado) cónsul.
+        
+        ---
+
+        ### 2. La Métrica Latina (Bonus)
+        
+        El latín clásico no se basaba en la rima, sino en la **cantidad** (duración) de las sílabas.
+        
+        *   **Sílaba Larga (-)**: Dura dos tiempos.
+        *   **Sílaba Breve (u)**: Dura un tiempo.
+        
+        El verso más famoso es el **Hexametro Dactílico** (usado en la Eneida).
+        
+        ### 3. Síntesis y Despedida
+        
+        Has recorrido el camino desde `Rosa, -ae` hasta el Estilo Indirecto y los verbos anómalos. Tienes, ahora sí, las llaves de Roma.
+        
+        > **Per aspera ad astra**
+        > (A través de las dificultades, hacia las estrellas)
+        
+        A partir de aquí, el aprendizaje continúa leyendo a los clásicos: César, Cicerón, Virgilio.
+        
+        **¡Felicidades, Grammaticus!**
+        """)
+        
+        if os.path.exists("static/images/curso_gramatica/leccion30_sintesis.png"):
+             st.image("static/images/curso_gramatica/leccion30_sintesis.png",
+                      caption="Síntesis del Curso",
+                      width="stretch")
+
+    render_lesson_with_tabs(30, theory_content)
+
+
+
 
 def render_lesson_31():
-    st.markdown("## Lección 31: César y la Prosa Militar")
-    st.image("static/images/curso_gramatica/leccion31_cesar.png",
-             caption="Julio César y la Guerra de las Galias",
-             use_container_width=True)
-    st.info("🚧 Contenido en desarrollo. Próximamente: Análisis de 'De Bello Gallico', estilo directo y preciso.")
+    def theory_content():
+        st.markdown("""
+        ## Lección 31: César y la Prosa Militar
+        
+        ### 1. C. Iulius Caesar (100-44 a.C.)
+        
+        Julio César no solo fue uno de los generales y políticos más brillantes de Roma, sino también un **maestro de la prosa latina**. Sus *Commentarii* (Comentarios) son el modelo de la latinidad pura.
+        """)
+
+        st.image("static/images/curso_gramatica/leccion31_cesar.png",
+                 caption="Julio César: Conquistador y Escritor",
+                 width="stretch")
+
+        st.markdown("""
+        ### 2. Estilo: *Pura et Illustris Brevitas*
+        
+        El estilo de César se caracteriza por:
+        *   **Brevedad y Claridad**: Evita palabras raras o arcaicas.
+        *   **Uso de la 3ª Persona**: Se refiere a sí mismo como "César" para dar apariencia de objetividad.
+        *   **Vocabulario Militar**: Preciso y técnico (*acies, legio, castra, imperator*).
+        *   **Ablativo Absoluto**: Uso frecuente para acelerar la narración.
+        
+        ### 3. Texto: De Bello Gallico (I.1)
+        
+        El inicio más famoso de la literatura latina histórica:
+        
+        > *Gallia est omnis divisa in partes tres, quarum unam incolunt Belgae, aliam Aquitani, tertiam qui ipsorum lingua Celtae, nostra Galli appellantur.*
+        
+        **Traducción**:
+        "Toda la Galia está dividida en tres partes, de las cuales una la habitan los Belgas, otra los Aquitanos, la tercera los que en su propia lengua se llaman Celtas, en la nuestra Galos."
+        
+        ### 4. Vocabulario de Autor
+        *   **Divido, -ere, -visi, -visum**: dividir
+        *   **Incolo, -ere, -ui**: habitar
+        *   **Appello, -are**: llamar
+        *   **Lex, legis**: ley
+        *   **Proelium, -ii**: batalla
+        """)
+    
+    render_lesson_with_tabs(31, theory_content)
 
 def render_lesson_32():
-    st.markdown("## Lección 32: Cicerón y la Retórica")
-    st.image("static/images/curso_gramatica/leccion32_ciceron.png",
-             caption="Cicerón: El Maestro de la Oratoria",
-             use_container_width=True)
-    st.info("🚧 Contenido en desarrollo. Próximamente: Análisis de discursos (Catilinarias), periodos oratorios.")
+    def theory_content():
+        st.markdown("""
+        ## Lección 32: Cicerón y la Retórica
+        
+        ### 1. M. Tullius Cicero (106-43 a.C.)
+        
+        Cicerón es la cumbre de la oratoria romana y el creador del lenguaje filosófico latino. Su vida estuvo dedicada a la defensa de la República.
+        """)
+        
+        st.image("static/images/curso_gramatica/leccion32_ciceron.png",
+                 caption="Cicerón denunciando a Catilina en el Senado",
+                 width="stretch")
+
+        st.markdown("""
+        ### 2. Estilo: El Periodo Oratorio
+        
+        A diferencia de la brevedad de César, Cicerón busca la **amplitud y el ritmo**:
+        *   **Concinnitas**: Equilibrio y simetría en las frases.
+        *   **Cláusulas Métricas**: El final de las frases tiene un ritmo poético.
+        *   **Anáfora y Tricolon**: Repetición de palabras y estructuras de tres elementos.
+        
+        ### 3. Texto: In Catilinam (I.1)
+        
+        El ataque directo contra el conspirador Catilina:
+        
+        > *Quousque tandem abutere, Catilina, patientia nostra? Quamdiu etiam furor iste tuus nos eludet? Quem ad finem sese effrenata iactabit audacia?*
+        
+        **Traducción**:
+        "¿Hasta cuándo, finalmente, abusarás, Catilina, de nuestra paciencia? ¿Cuánto tiempo todavía esa locura tuya se burlará de nosotros? ¿Hasta qué límite se arrojará esa audacia desenfrenada?"
+        
+        ### 4. Vocabulario de Autor
+        *   **Abutor, -i, -usus sum** (+ Abl): abusar
+        *   **Patientia, -ae**: paciencia
+        *   **Furor, -oris**: locura
+        *   **Eludo, -ere**: burlar, esquivar
+        *   **Audacia, -ae**: audacia, osadía
+        """)
+    
+    render_lesson_with_tabs(32, theory_content)
 
 def render_lesson_33():
-    st.markdown("## Lección 33: Salustio y la Historiografía")
-    st.image("static/images/curso_gramatica/leccion33_salustio.png",
-             caption="Salustio: La Conjuración de Catilina",
-             use_container_width=True)
-    st.info("🚧 Contenido en desarrollo. Próximamente: 'Conjuración de Catilina', arcaísmos y brevedad.")
+    def theory_content():
+        st.markdown("""
+        ## Lección 33: Salustio y la Historiografía
+        
+        ### 1. C. Sallustius Crispus (86-34 a.C.)
+        
+        Salustio creó la **monografía histórica**. Se centró en la corrupción moral de Roma que llevó al fin de la República.
+        """)
+        
+        st.image("static/images/curso_gramatica/leccion33_salustio.png",
+                 caption="Salustio: El Historiador Moralista",
+                 width="stretch")
+
+        st.markdown("""
+        ### 2. Estilo: *Inconcinnitas* y Arcaísmo
+        
+        Salustio se opone al estilo de Cicerón:
+        *   **Brevitas**: Concisión extrema, a veces oscura.
+        *   **Inconcinnitas**: Evita la simetría deliberadamente para sorprender.
+        *   **Arcaísmos**: Usa palabras antiguas para dar gravedad (*optumus* en vez de *optimus*).
+        *   **Infinitivo Histórico**: Usa infinitivos como verbos principales para dar rapidez.
+        
+        ### 3. Texto: Retrato de Catilina (5.1)
+        
+        > *Lucius Catilina, nobili genere natus, fuit magna vi et animi et corporis, sed ingenio malo pravoque.*
+        
+        **Traducción**:
+        "Lucio Catilina, nacido de noble linaje, fue de gran fuerza tanto de espíritu como de cuerpo, pero de carácter malo y depravado."
+        
+        ### 4. Vocabulario de Autor
+        *   **Ingenium, -ii**: carácter, talento natural
+        *   **Pravus, -a, -um**: torcido, depravado
+        *   **Inedia, -ae**: falta de comida, ayuno
+        *   **Algor, -oris**: frío
+        *   **Vigilia, -ae**: falta de sueño, guardia
+        """)
+    
+    render_lesson_with_tabs(33, theory_content)
 
 def render_lesson_34():
-    st.markdown("## Lección 34: Catulo y la Lírica")
-    st.image("static/images/curso_gramatica/leccion34_catulo.png",
-             caption="Catulo: Pasión y Lírica",
-             use_container_width=True)
-    st.info("🚧 Contenido en desarrollo. Próximamente: Poesía neotérica, endecasílabos falecios, Odio et Amo.")
+    def theory_content():
+        st.markdown("""
+        ## Lección 34: Catulo y la Lírica
+        
+        ### 1. C. Valerius Catullus (84-54 a.C.)
+        
+        Líder de los *Poetae Novi* (Neotéricos). Se alejó de la épica y la política para centrarse en **el arte por el arte** y los **sentimientos personales**.
+        """)
+        
+        st.image("static/images/curso_gramatica/leccion34_catulo.png",
+                 caption="Catulo y Lesbia: El Odio y el Amor",
+                 width="stretch")
+
+        st.markdown("""
+        ### 2. Estilo: Pasión y Erudición
+        
+        *   **Endecasílabo Falecio**: Su metro favorito (11 sílabas).
+        *   **Diminutivos**: Uso afectivo (*libellus, ocellus*).
+        *   **Coloquialismos**: Lenguaje de la calle mezclado con mitología griega.
+        *   **Lesbia**: Pseudónimo de su amada Clodia.
+        
+        ### 3. Texto: Odi et Amo (Carmen 85)
+        
+        Dos versos que resumen la complejidad del amor:
+        
+        > *Odi et amo. Quare id faciam, fortasse requiris.*
+        > *Nescio, sed fieri sentio et excrucior.*
+        
+        **Traducción**:
+        "Odio y amo. Por qué hago esto, quizás preguntas.
+        No lo sé, pero siento que sucede y me torturo."
+        
+        ### 4. Vocabulario de Autor
+        *   **Odi** (defectivo): odiar
+        *   **Requiro, -ere**: preguntar, buscar
+        *   **Fio, fieri**: suceder, hacerse
+        *   **Sentio, -ire**: sentir
+        *   **Excrucior, -ari**: ser torturado (crucificado)
+        """)
+    
+    render_lesson_with_tabs(34, theory_content)
 
 def render_lesson_35():
-    st.markdown("## Lección 35: Virgilio y la Épica")
-    st.image("static/images/curso_gramatica/leccion35_virgilio.png",
-             caption="Virgilio y la Eneida",
-             use_container_width=True)
-    st.info("🚧 Contenido en desarrollo. Próximamente: 'La Eneida', hexámetro épico, destino de Roma.")
+    def theory_content():
+        st.markdown("""
+        ## Lección 35: Virgilio y la Épica
+        
+        ### 1. P. Vergilius Maro (70-19 a.C.)
+        
+        El poeta nacional de Roma. Su obra glorifica los orígenes míticos de Roma y la familia Julia (Augusto).
+        """)
+        
+        st.image("static/images/curso_gramatica/leccion35_virgilio.png",
+                 caption="Virgilio leyendo la Eneida a Augusto",
+                 width="stretch")
+
+        st.markdown("""
+        ### 2. Estilo: La Perfección del Hexámetro
+        
+        *   **Hexámetro Dactílico**: Virgilio llevó este metro a su máxima perfección y armonía.
+        *   **Pietas**: El tema central de Eneas, el deber hacia los dioses, la patria y la familia.
+        *   **Pathos**: Gran sensibilidad hacia el sufrimiento humano (las "lágrimas de las cosas").
+        
+        ### 3. Texto: La Eneida (I.1-3)
+        
+        El inicio de la gran epopeya romana:
+        
+        > *Arma virumque cano, Troiae qui primus ab oris*
+        > *Italiam, fato profugus, Laviniaque venit*
+        > *litora...*
+        
+        **Traducción**:
+        "Canto a las armas y al hombre que, el primero desde las costas de Troya,
+        llegó a Italia, prófugo por el destino, y a las costas de Lavinio..."
+        
+        ### 4. Vocabulario de Autor
+        *   **Cano, -ere, cecini**: cantar (poéticamente)
+        *   **Ora, -ae**: costa, orilla
+        *   **Fatum, -i**: destino, hado
+        *   **Profugus, -a, -um**: prófugo, fugitivo
+        *   **Litus, -oris**: playa, costa
+        """)
+    
+    render_lesson_with_tabs(35, theory_content)
 
 def render_lesson_36():
-    st.markdown("## Lección 36: Horacio y las Odas")
-    st.image("static/images/curso_gramatica/leccion36_horacio.png",
-             caption="Horacio: Carpe Diem",
-             use_container_width=True)
-    st.info("🚧 Contenido en desarrollo. Próximamente: 'Carpe Diem', aurea mediocritas, lírica reflexiva.")
+    def theory_content():
+        st.markdown("""
+        ## Lección 36: Horacio y las Odas
+        
+        ### 1. Q. Horatius Flaccus (65-8 a.C.)
+        
+        Amigo de Virgilio y protegido de Mecenas. Es el maestro de la lírica reflexiva y la sátira.
+        """)
+        
+        st.image("static/images/curso_gramatica/leccion36_horacio.png",
+                 caption="Horacio: El Poeta del Carpe Diem",
+                 width="stretch")
+
+        st.markdown("""
+        ### 2. Estilo: *Curiosa Felicitas*
+        
+        *   **Curiosa Felicitas**: La "dicha cuidadosamente buscada". Perfección técnica que parece natural.
+        *   **Aurea Mediocritas**: El ideal del "dorado término medio", la moderación.
+        *   **Temas**: El paso del tiempo, el vino, la amistad, la vida sencilla.
+        
+        ### 3. Texto: Carpe Diem (Odas I.11)
+        
+        > *Carpe diem, quam minimum credula postero.*
+        
+        **Traducción**:
+        "Aprovecha el día, confiando lo menos posible en el mañana."
+        (Literalmente: "Cosecha el día...")
+        
+        ### 4. Vocabulario de Autor
+        *   **Carpo, -ere, carpsi**: arrancar, cosechar, aprovechar
+        *   **Credulus, -a, -um**: crédulo, confiado
+        *   **Posterus, -a, -um**: siguiente, futuro
+        *   **Aetas, -atis**: edad, tiempo, vida
+        *   **Fugio, -ere**: huir
+        """)
+    
+    render_lesson_with_tabs(36, theory_content)
 
 def render_lesson_37():
-    st.markdown("## Lección 37: Ovidio y la Narrativa Poética")
-    st.image("static/images/curso_gramatica/leccion37_ovidio.png",
-             caption="Ovidio: El Poeta del Cambio",
-             use_container_width=True)
-    st.info("🚧 Contenido en desarrollo. Próximamente: 'Metamorfosis', dístico elegíaco, mitología.")
+    def theory_content():
+        st.markdown("""
+        ## Lección 37: Ovidio y la Mitología
+        
+        ### 1. P. Ovidius Naso (43 a.C. - 17 d.C.)
+        
+        El más joven de los elegíacos. Poeta del amor (*Amores*, *Ars Amatoria*) y de los mitos (*Metamorfosis*). Murió en el exilio.
+        """)
+        
+        st.image("static/images/curso_gramatica/leccion37_ovidio.png",
+                 caption="Ovidio: Las Metamorfosis",
+                 width="stretch")
+
+        st.markdown("""
+        ### 2. Estilo: Ingenio y Fluidez
+        
+        *   **Facilidad Versificadora**: "Todo lo que intentaba decir se convertía en verso".
+        *   **Narrativa Visual**: Sus descripciones son casi cinematográficas.
+        *   **Psicología Femenina**: Gran capacidad para retratar los sentimientos de sus heroínas (Heroidas).
+        
+        ### 3. Texto: Dafne y Apolo (Met. I.452)
+        
+        > *Primus amor Phoebi Daphne Peneia, quem non*
+        > *fors ignara dedit, sed saeva Cupidinis ira.*
+        
+        **Traducción**:
+        "El primer amor de Febo (Apolo) fue Dafne, hija de Peneo, el cual no
+        lo dio el azar ignorante, sino la ira cruel de Cupido."
+        
+        ### 4. Vocabulario de Autor
+        *   **Amor, -oris**: amor
+        *   **Ira, -ae**: ira
+        *   **Saevus, -a, -um**: cruel, fiero
+        *   **Fors, fortis**: suerte, azar
+        *   **Ignarus, -a, -um**: ignorante
+        """)
+    
+    render_lesson_with_tabs(37, theory_content)
 
 def render_lesson_38():
-    st.markdown("## Lección 38: Latín Medieval")
-    st.info("🚧 Contenido en desarrollo. Próximamente: Cambios sintácticos, vocabulario cristiano, 'Carmina Burana'.")
+    def theory_content():
+        st.markdown("""
+        ## Lección 38: Latín Medieval
+        
+        ### 1. Características Generales
+        
+        El latín medieval (aprox. 500-1400 d.C.) fue la lengua franca de la cultura, la iglesia y la universidad en Europa.
+        
+        *   **Simplificación Sintáctica**: Menos uso de oraciones subordinadas complejas; preferencia por *quod* + indicativo en lugar de AcI.
+        *   **Cambios Fonéticos**: *ae/oe* > *e* (caelum > celum).
+        *   **Vocabulario**: Influencia cristiana y germánica.
+        
+        ### 2. Texto: Dies Irae (Tomás de Celano, s. XIII)
+        
+        > *Dies irae, dies illa,*
+        > *Solvet saeclum in favilla,*
+        > *Teste David cum Sibylla.*
+        
+        **Traducción**:
+        "Día de ira, aquel día,
+        disolverá el mundo en cenizas,
+        como testigos David con la Sibila."
+        """)
+        
+        if os.path.exists("static/images/curso_gramatica/leccion38_latin_medieval.png"):
+            st.image("static/images/curso_gramatica/leccion38_latin_medieval.png",
+                     caption="Manuscrito Medieval",
+                     width="stretch")
+    
+    render_lesson_with_tabs(38, theory_content)
+
+
 
 def render_lesson_39():
-    st.markdown("## Lección 39: Latín Eclesiástico")
-    st.info("🚧 Contenido en desarrollo. Próximamente: La Vulgata, liturgia, pronunciación eclesiástica.")
+    def theory_content():
+        st.markdown("""
+        ## Lección 39: Latín Eclesiástico
+        
+        ### 1. El Latín de la Iglesia
+        
+        Es la forma de latín usada en la liturgia católica. Se basa en el latín tardío y la Vulgata de San Jerónimo.
+        
+        *   **Pronunciación**: "Italianizante" (c ante e/i = ch; g ante e/i = y).
+        *   **Vocabulario**: Términos teológicos griegos latinizados (*ecclesia, angelus, baptisma*).
+        
+        ### 2. Texto: Pater Noster
+        
+        > *Pater noster, qui es in caelis,*
+        > *sanctificetur nomen tuum.*
+        > *Adveniat regnum tuum.*
+        
+        **Traducción**:
+        "Padre nuestro, que estás en los cielos,
+        santificado sea tu nombre.
+        Venga tu reino."
+        """)
+        
+        if os.path.exists("static/images/curso_gramatica/leccion39_latin_eclesiastico.png"):
+            st.image("static/images/curso_gramatica/leccion39_latin_eclesiastico.png",
+                     caption="Latín Eclesiástico",
+                     width="stretch")
+    
+    render_lesson_with_tabs(39, theory_content)
 
 def render_lesson_40():
-    st.markdown("## Lección 40: Latín Renacentista y Neolatín")
-    st.info("🚧 Contenido en desarrollo. Próximamente: Erasmo, Newton, Spinoza, el latín como lengua científica.")
+    def theory_content():
+        st.markdown("""
+        ## Lección 40: Latín Renacentista y Científico
+        
+        ### 1. El Retorno a los Clásicos y la Ciencia
+        
+        En el Renacimiento, los humanistas intentaron volver al latín de Cicerón. Más tarde, el latín se convirtió en el idioma universal de la ciencia (Newton, Linneo, Descartes).
+        
+        *   **Neologismos**: Creación de palabras para conceptos nuevos (*microscopium, electricitas*).
+        *   **Estilo**: Preciso, lógico y descriptivo.
+        
+        ### 2. Texto: Descartes (Principia Philosophiae)
+        
+        > *Cogito, ergo sum.*
+        
+        **Traducción**:
+        "Pienso, luego existo."
+        
+        ### 3. Texto: Newton (Principia Mathematica)
+        
+        > *Hypotheses non fingo.*
+        
+        **Traducción**:
+        "No invento hipótesis."
+        """)
+        
+        if os.path.exists("static/images/curso_gramatica/leccion40_latin_renacentista.png"):
+            st.image("static/images/curso_gramatica/leccion40_latin_renacentista.png",
+                     caption="Latín Científico",
+                     width="stretch")
+    
+    render_lesson_with_tabs(40, theory_content)
 
 if __name__ == "__main__":
     main()

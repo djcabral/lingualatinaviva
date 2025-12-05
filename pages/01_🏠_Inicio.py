@@ -58,6 +58,10 @@ load_css()
 if 'language' not in st.session_state:
     st.session_state.language = 'es'
 
+# Global Config (Font Size)
+from utils.ui_helpers import render_sidebar_config
+render_sidebar_config()
+
 # Header
 st.markdown(
     """

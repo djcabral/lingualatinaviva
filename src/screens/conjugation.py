@@ -24,36 +24,27 @@ class ConjugationScreen(Screen):
 
     def compose(self) -> ComposeResult:
         yield Header()
-        yield Container(
-            Label(get_text('conjugation'), classes="title"),
-            Label("", id="conj-word", classes="latin-word"),
+        with Container():
+            yield Label(get_text('conjugation'), classes="title")
+            yield Label("", id="conj-word", classes="latin-word")
             
-            TabbedContent(classes="conjugation-content"):
+            with TabbedContent(classes="conjugation-content"):
                 with TabPane(get_text('indicative')):
-                    Container(
-                        DataTable(id="table-indicative"),
-                        classes="table-container"
-                    )
+                    with Container(classes="table-container"):
+                        yield DataTable(id="table-indicative")
                 with TabPane(get_text('subjunctive')):
-                    Container(
-                        DataTable(id="table-subjunctive"),
-                        classes="table-container"
-                    )
+                    with Container(classes="table-container"):
+                        yield DataTable(id="table-subjunctive")
                 with TabPane(get_text('other_forms')): # Imperative & Participles
-                    Container(
-                        Label(get_text('imperative'), classes="section-title"),
-                        DataTable(id="table-imperative"),
-                        Label(get_text('participles'), classes="section-title"),
-                        DataTable(id="table-participles"),
-                        classes="table-container"
-                    )
+                    with Container(classes="table-container"):
+                        yield Label(get_text('imperative'), classes="section-title")
+                        yield DataTable(id="table-imperative")
+                        yield Label(get_text('participles'), classes="section-title")
+                        yield DataTable(id="table-participles")
 
-            Horizontal(
-                Button(get_text('new_word'), id="btn-new"),
-                Button(get_text('dashboard'), id="btn-back"),
-                classes="button-row"
-            )
-        )
+            with Horizontal(classes="button-row"):
+                yield Button(get_text('new_word'), id="btn-new")
+                yield Button(get_text('dashboard'), id="btn-back")
         yield Footer()
 
     def on_mount(self) -> None:

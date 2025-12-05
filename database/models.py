@@ -65,6 +65,7 @@ class Word(SQLModel, table=True):
     is_fundamental: bool = Field(default=False)  # Top 100 + invariables importantes
     category: Optional[str] = None  # "preposition", "adverb", "conjunction", etc.
     irregular_forms: Optional[str] = None  # JSON string overriding specific forms e.g. {"dat_pl": "filiābus"}
+    cultural_context: Optional[str] = None  # Cultural note related to the word (e.g., "Patria Potestas" for "pater")
     
     # Collatinus dictionary integration
     definition_es: Optional[str] = None  # Full Spanish definition from Collatinus
@@ -109,6 +110,9 @@ class UserProfile(SQLModel, table=True):
     perfect_challenges: int = Field(default=0)  # Con 3 estrellas
     current_challenge_id: Optional[int] = None
     badges_json: Optional[str] = None  # JSON: ["declension_master", "speed_demon", ...]
+    
+    # Preferencias de usuario
+    preferences_json: Optional[str] = None  # JSON: {"font_size": 1.3, "theme": "dark", ...}
 
 class Text(SQLModel, table=True):
     """Texto latino para lectura progresiva"""
@@ -282,3 +286,26 @@ class Lesson(SQLModel, table=True):
 
 
 
+
+class Feedback(SQLModel, table=True):
+    """Feedback, comentarios y sugerencias de los usuarios"""
+    __table_args__ = {'extend_existing': True}
+    
+    id: Optional[int] = Field(default=None, primary_key=True)
+    user_id: Optional[int] = Field(default=1) # Por ahora usuario único, pero preparado para multi-usuario
+    name: str
+    email: str
+    message: str
+    feedback_type: str = Field(default="general") # "general", "bug", "feature_request", "content_issue"
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    is_read: bool = Field(default=False)
+
+
+class SystemSetting(SQLModel, table=True):
+    """Configuración global del sistema (key-value)"""
+    __table_args__ = {'extend_existing': True}
+    
+    key: str = Field(primary_key=True)
+    value: str
+    description: Optional[str] = None
+    updated_at: datetime = Field(default_factory=datetime.utcnow)

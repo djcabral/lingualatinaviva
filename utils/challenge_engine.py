@@ -76,7 +76,7 @@ class ChallengeEngine:
     
     def __init__(self):
         """Inicializa el motor de verificación"""
-        self.session = get_session()
+        pass
     
     def verify_challenge(
         self, 
@@ -278,9 +278,10 @@ class ChallengeEngine:
         numbers_to_check = config.get('numbers', ['singular', 'plural'])
         
         # Buscar la palabra en la BD
-        word = self.session.exec(
-            select(Word).where(Word.latin == word_latin)
-        ).first()
+        with get_session() as session:
+            word = session.exec(
+                select(Word).where(Word.latin == word_latin)
+            ).first()
         
         if not word:
             return (0.0, [f"Palabra '{word_latin}' no encontrada en BD"], {})
@@ -401,12 +402,13 @@ class ChallengeEngine:
         voice = config.get('voice', 'active')
         
         # Buscar el verbo en la BD
-        verb = self.session.exec(
-            select(Word).where(
-                Word.latin == verb_latin,
-                Word.part_of_speech == 'verb'
-            )
-        ).first()
+        with get_session() as session:
+            verb = session.exec(
+                select(Word).where(
+                    Word.latin == verb_latin,
+                    Word.part_of_speech == 'verb'
+                )
+            ).first()
         
         if not verb:
             return (0.0, [f"Verbo '{verb_latin}' no encontrado en BD"], {})

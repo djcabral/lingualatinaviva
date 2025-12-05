@@ -47,6 +47,9 @@ Thumbs.db
 # Streamlit
 .streamlit/secrets.toml
 
+# Private Documentation
+docs/HISTORIA_DESARROLLO.md
+
 # Database (keep only schema/migrations in repo)
 *.db
 *.sqlite

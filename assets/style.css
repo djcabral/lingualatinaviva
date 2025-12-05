@@ -26,7 +26,7 @@ h6 {
 }
 
 .stat-value {
-    font-size: 2.5em;
+    font-size: 3.5em;
     font-weight: bold;
     font-family: 'Cinzel', serif;
 }
@@ -141,4 +141,16 @@ table tbody td:first-child {
 .pretty-table tbody tr:hover {
     background-color: rgba(0, 0, 0, 0.05);
     cursor: default;
+}
+
+/* Increase size of metric values in Streamlit st.metric() */
+[data-testid="stMetricValue"] {
+    font-size: 3.5em !important;
+    font-weight: bold !important;
+    font-family: 'Cinzel', serif !important;
+}
+
+[data-testid="stMetricLabel"] {
+    font-size: 1.1em !important;
+    font-family: 'Cinzel', serif !important;
 }

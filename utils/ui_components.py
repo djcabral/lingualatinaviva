@@ -180,7 +180,7 @@ def render_stat_box(value: str, label: str, icon: str = ""):
                     padding: 20px; border-radius: 10px; text-align: center; 
                     border: 2px solid rgba(139,69,19,0.2); min-height: 120px;
                     display: flex; flex-direction: column; justify-content: center;'\u003e
-            \u003cdiv style='font-size: 2.5em; font-weight: bold; color: #8b4513; margin-bottom: 5px;'\u003e
+            \u003cdiv style='font-size: 3.5em; font-weight: bold; color: #8b4513; margin-bottom: 5px;'\u003e
                 {icon} {value}
             \u003c/div\u003e
             \u003cdiv style='font-size: 0.9em; color: #666; text-transform: uppercase; letter-spacing: 1px;'\u003e
@@ -316,3 +316,43 @@ def render_lesson_practice_section(lesson_number: int, unlocked_items: Dict[str,
             st.switch_page("pages/04_⚔️_Práctica.py")
     else:
         st.markdown("### 🔒 Desafío Final\n*Se desbloqueará al completar: Vocabulario 80% + Ejercicios + Lectura + Análisis sintáctico*")
+
+
+def render_flashcard(latin_text: str, hint: str = None, translation: str = None, part_of_speech: str = None):
+    """
+    Renderiza una tarjeta de palabra con estilo estandarizado (Flashcard).
+    Usa las clases CSS: .vocab-card, .vocab-latin, .vocab-translation
+    
+    Args:
+        latin_text: La palabra en latín (grande)
+        hint: Texto pequeño de desambiguación opciónal (ej: conjugación, genitivo)
+        translation: Traducción (se muestra debajo si se provee)
+        part_of_speech: Tipo de palabra (se muestra debajo si se provee)
+    """
+    hint_html = ""
+    if hint:
+        hint_html = f'<div style="font-size: 0.6em; color: #888; margin-top: -10px; font-style: italic;">{hint}</div>'
+    
+    st.markdown(
+        f"""
+        <div class="vocab-card" style="margin: 20px auto; padding: 40px;">
+            <div class="vocab-latin">{latin_text}</div>
+            {hint_html}
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+    
+    if translation or part_of_speech:
+        translation_html = f'<div class="vocab-translation">{translation}</div>' if translation else ""
+        pos_html = f'<div class="vocab-pos">{part_of_speech}</div>' if part_of_speech else ""
+        
+        st.markdown(
+            f"""
+            <div style="text-align: center; margin-bottom: 20px;">
+                {translation_html}
+                {pos_html}
+            </div>
+            """,
+            unsafe_allow_html=True
+        )

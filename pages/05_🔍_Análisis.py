@@ -13,44 +13,51 @@ st.set_page_config(
 )
 
 load_css()
+from utils.ui_helpers import render_sidebar_config
+render_sidebar_config()
 render_page_header("Análisis", "🔍")
 
-tabs = st.tabs(["📐 Sintaxis Visual", "🔍 Analizador Morfológico", "📊 Generador de Paradigmas", "✍️ Scriptorium"])
+# Initialize session state for module selection
+if 'analysis_module' not in st.session_state:
+    st.session_state.analysis_module = "📐 Sintaxis Visual"
 
-with tabs[0]:
-    try:
+# Module selection with radio buttons
+selected_module = st.radio(
+    "Selecciona una herramienta de análisis:",
+    ["📐 Sintaxis Visual", "🔍 Analizador Morfológico", "✍️ Scriptorium", "📖 Consulta Collatinus"],
+    horizontal=True,
+    key='analysis_module',
+    label_visibility="collapsed"
+)
+
+st.markdown("---")
+
+# Render the selected module
+try:
+    if selected_module == "📐 Sintaxis Visual":
         import pages.modules.syntax_view as syntax_view
         syntax_view.render_content()
-    except Exception as e:
-        st.error(f"Error al cargar Sintaxis Visual: {str(e)}")
-        import traceback
-        st.code(traceback.format_exc())
-
-with tabs[1]:
-    try:
+    
+    elif selected_module == "🔍 Analizador Morfológico":
         import pages.modules.analyzer_view as analyzer_view
         analyzer_view.render_content()
-    except Exception as e:
-        st.error(f"Error al cargar Analizador Morfológico: {str(e)}")
-        import traceback
-        st.code(traceback.format_exc())
-
-with tabs[2]:
-    try:
-        import pages.modules.paradigm_generator_view as paradigm_generator_view
-        paradigm_generator_view.render_content()
-    except Exception as e:
-        st.error(f"Error al cargar Generador de Paradigmas: {str(e)}")
-        import traceback
-        st.code(traceback.format_exc())
-
-with tabs[3]:
-    try:
+    
+    # elif selected_module == "📊 Generador de Paradigmas":
+    #     import pages.modules.paradigm_generator_view as paradigm_generator_view
+    #     paradigm_generator_view.render_content()
+    
+    elif selected_module == "✍️ Scriptorium":
         import pages.modules.scriptorium_view as scriptorium_view
         scriptorium_view.render_content()
-    except Exception as e:
-        st.error(f"Error al cargar Scriptorium: {str(e)}")
-        import traceback
+    
+    elif selected_module == "📖 Consulta Collatinus":
+        import pages.modules.collatinus_view as collatinus_view
+        collatinus_view.render_content()
+
+except Exception as e:
+    st.error(f"❌ Error al cargar el módulo {selected_module}: {str(e)}")
+    import traceback
+    with st.expander("Ver detalles del error"):
         st.code(traceback.format_exc())
 
 render_sidebar_footer()

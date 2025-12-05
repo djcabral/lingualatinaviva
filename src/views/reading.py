@@ -1,6 +1,6 @@
 import streamlit as st
 
-from i18n import get_text
+from utils.i18n import get_text
 
 def show_reading():
     st.markdown(f"## 📖 {get_text('reading', st.session_state.language)}")

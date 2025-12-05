@@ -1,12 +1,20 @@
 import os
 import random
 import sys
+import json
 from datetime import datetime
 
 import streamlit as st
 from sqlmodel import or_, select
 
-from database import UserProfile, Word
+from database import (
+    UserProfile, 
+    Word, 
+    Lesson,
+    LessonVocabulary,
+    ExerciseAttempt, 
+    UserVocabularyProgress
+)
 from database.connection import get_session
 from utils.constants import CASE_LABELS, CASES, NUMBER_LABELS, NUMBERS
 from utils.gamification import process_xp_gain
@@ -19,6 +27,7 @@ from utils.latin_logic import (
 )
 from utils.text_utils import normalize_latin
 from utils.ui_helpers import load_css
+from utils.ui_components import render_flashcard
 
 
 def render_content():
@@ -38,7 +47,63 @@ def render_content():
         user = session.exec(select(UserProfile)).first()
         user_level = user.level if user else 1
 
-    st.markdown(f"### 📚 Nivel {user_level} - Sustantivos")
+    # Init session state for lesson filter
+    if "declension_lesson_filter" not in st.session_state:
+        st.session_state.declension_lesson_filter = None
+
+    # Check for Active Lesson in Session State (from Sidebar)
+    current_lesson_id = st.session_state.get("current_lesson_id")
+    
+    # Context Banner Logic
+    lesson_mode = False
+    active_lesson = None
+    
+    if current_lesson_id:
+        with get_session() as session:
+            active_lesson = session.get(Lesson, current_lesson_id)
+            if active_lesson:
+                lesson_mode = True
+                # Override filter if we are in a forced context
+                st.session_state.declension_lesson_filter = active_lesson.lesson_number
+                
+                st.markdown(f"""
+                <div style="background-color: #f0f2f6; padding: 1rem; border-radius: 0.5rem; border-left: 5px solid #8b4513; margin-bottom: 1rem;">
+                    <h3 style="margin: 0; color: #8b4513;">📜 Practicando: Lección {active_lesson.lesson_number}</h3>
+                    <p style="margin: 0;">{active_lesson.title}</p>
+                </div>
+                """, unsafe_allow_html=True)
+    
+    # If not in forced lesson mode, show selector
+    if not lesson_mode:
+        col1, col2 = st.columns([3, 1])
+        with col1:
+            st.markdown(f"### 📚 Nivel {user_level} - Sustantivos")
+        with col2:
+            # Selector for specific lesson practice (optional)
+            with get_session() as session:
+                lessons = session.exec(select(Lesson).order_by(Lesson.lesson_number)).all()
+                lesson_opts = [0] + [l.lesson_number for l in lessons]
+                
+                def fmt_lesson(x):
+                    if x == 0: return "🌍 Modo Libre (Por Nivel)"
+                    l = next((l for l in lessons if l.lesson_number == x), None)
+                    return f"Lección {x}: {l.title}" if l else f"Lección {x}"
+                
+                selected_filter = st.selectbox(
+                    "Filtrar por Lección:",
+                    options=lesson_opts,
+                    format_func=fmt_lesson,
+                    key="declension_lesson_selector",
+                    index=0 # Default to Free Mode
+                )
+                
+                if selected_filter != 0:
+                    st.session_state.declension_lesson_filter = selected_filter
+                    lesson_mode = True
+                else:
+                    st.session_state.declension_lesson_filter = None
+
+    st.markdown("---")
 
     # Check for Practice Context
     practice_context = st.session_state.get("practice_context")
@@ -81,8 +146,27 @@ def render_content():
 
         # Get words from available declensions and POS
         with get_session() as session:
-            # Apply Context Filters if active
-            if practice_context and practice_context.get("active"):
+            # 1. Lesson Filter (Priority)
+            if st.session_state.declension_lesson_filter:
+                lesson_num = st.session_state.declension_lesson_filter
+                # Get nouns for this lesson
+                query = (
+                    select(Word)
+                    .join(LessonVocabulary, Word.id == LessonVocabulary.word_id)
+                    .where(
+                        LessonVocabulary.lesson_number == lesson_num,
+                        Word.part_of_speech == "noun"
+                    )
+                )
+                nouns = session.exec(query).all()
+                
+                if not nouns:
+                    st.warning(f"⚠️ No hay sustantivos registrados para la Lección {lesson_num}.")
+                    # Fallback to level-based to avoid crash?
+                    # Better to let the user know.
+            
+            # 2. Practice Context (Legacy/Side-loaded)
+            elif practice_context and practice_context.get("active"):
                 filters = practice_context.get("filters", {})
                 query = select(Word)
                 
@@ -92,7 +176,6 @@ def render_content():
                     query = query.where(Word.declension.in_(filters["declension"]))
                 if "gender" in filters:
                     query = query.where(Word.gender.in_(filters["gender"]))
-                # Add more filters as needed
                 
                 nouns = session.exec(query).all()
                 
@@ -105,8 +188,9 @@ def render_content():
                             Word.declension.in_(available_declensions),
                         )
                     ).all()
+
+            # 3. Normal Level-based selection (Default)
             else:
-                # Normal Level-based selection
                 nouns = session.exec(
                     select(Word).where(
                         Word.part_of_speech.in_(available_pos),
@@ -125,10 +209,20 @@ def render_content():
 
             # Always fetch the current noun from database to ensure it's attached to session
             noun = session.get(Word, st.session_state.current_noun_id)
-
-            st.markdown(f"### Declina: **{noun.latin}** ({noun.translation})")
+            
+            # Prioritize Spanish definition
+            display_translation = noun.definition_es if noun.definition_es else noun.translation
+            
+            # Use Render Flashcard for consistency
+            render_flashcard(
+                latin_text=noun.latin,
+                hint=f"{noun.declension}ª decl. • {noun.gender}",
+                translation=display_translation,
+                part_of_speech="Sustantivo"
+            )
+            
             st.info(
-                f"📋 Declinación: {noun.declension}ª • Género: {noun.gender} • Genitivo: {noun.genitive}"
+                f"📋 Genitivo: {noun.genitive}"
             )
 
             # Create declension table
@@ -637,6 +731,59 @@ def render_content():
                                         f"🎉 ¡FELICIDADES! Has alcanzado el Nivel {new_level}!"
                                     )
                                 st.session_state.xp_feedback = f"🎉 +{xp_gained} XP ({correct_count}/{total_count} correctas)"
+
+                    # --- TRACKING INTEGRATION ---
+                    if total_count > 0:
+                        with get_session() as session:
+                            # 1. Register Exercise Attempt
+                            attempt = ExerciseAttempt(
+                                user_id=1, # Default user
+                                lesson_number=st.session_state.declension_lesson_filter or 0, # 0 if free mode
+                                exercise_type="declension",
+                                exercise_config=json.dumps({
+                                    "word": noun.latin,
+                                    "declension": noun.declension,
+                                    "mode": "guided" if not is_demonstrative else "demonstrative"
+                                }),
+                                user_answer=json.dumps(st.session_state.user_declension_answers),
+                                correct_answer="[JSON DATA HIDDEN]", # Optional for privacy
+                                is_correct=(correct_count == total_count),
+                                time_spent_seconds=0, 
+                                hint_used=st.session_state.show_declension_answers
+                            )
+                            session.add(attempt)
+                            
+                            # 2. Update Vocabulary Progress
+                            # Find or create progress record
+                            vocab_progress = session.exec(
+                                select(UserVocabularyProgress).where(
+                                    UserVocabularyProgress.word_id == noun.id,
+                                    UserVocabularyProgress.user_id == 1
+                                )
+                            ).first()
+                            
+                            if not vocab_progress:
+                                vocab_progress = UserVocabularyProgress(
+                                    user_id=1, 
+                                    word_id=noun.id,
+                                    first_seen=datetime.utcnow()
+                                )
+                                session.add(vocab_progress)
+                            
+                            vocab_progress.times_seen += 1
+                            if correct_count == total_count:
+                                vocab_progress.times_correct += 1
+                            else:
+                                vocab_progress.times_incorrect += 1
+                                
+                            vocab_progress.last_reviewed = datetime.utcnow()
+                            
+                            # Simple mastery calculation
+                            total_attempts = vocab_progress.times_correct + vocab_progress.times_incorrect
+                            if total_attempts > 0:
+                                vocab_progress.mastery_level = vocab_progress.times_correct / total_attempts
+                            
+                            session.commit()
 
                     st.session_state.show_declension_answers = True
                     st.rerun()

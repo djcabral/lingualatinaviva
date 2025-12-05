@@ -3,7 +3,7 @@ from sqlmodel import select
 from database import get_session
 from database import UserProfile
 
-from i18n import get_text
+from utils.i18n import get_text
 
 def show_dashboard():
     st.markdown(f"# 🏛️ {get_text('app_title', st.session_state.language)}")

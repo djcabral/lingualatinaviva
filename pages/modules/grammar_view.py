@@ -26,7 +26,7 @@ def render_grammar_content():
     
     # Create tabs for different grammar topics
     # Create tabs for different grammar topics
-    grammar_tabs = st.tabs(["🏛️ Declinaciones", "⚔️ Conjugaciones", "👤 Pronombres", "✨ Adjetivos", "📝 Sintaxis", "💡 Consejos"])
+    grammar_tabs = st.tabs(["🏛️ Declinaciones", "⚔️ Conjugaciones", "👤 Pronombres", "✨ Adjetivos", "📝 Sintaxis", "🇪🇸 Gramática Española", "💡 Consejos"])
     
     # ===== TAB 1: DECLENSIONS =====
     with grammar_tabs[0]:
@@ -859,8 +859,76 @@ def render_grammar_content():
     > - Traducción: **Una vez capturada la ciudad**, los enemigos se marcharon.
             """)
     
-    # ===== TAB 6: TRANSLATION TIPS =====
+    # ===== TAB 6: SPANISH GRAMMAR =====
     with grammar_tabs[5]:
+        st.markdown("## 🇪🇸 Gramática Española para Traductores")
+        st.info("Dominar la gramática española es fundamental para traducir correctamente del latín. Aquí tienes un repaso visual.")
+        
+        # Define base path for images
+        import os
+        BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        ASSETS_DIR = os.path.join(BASE_DIR, "assets", "images")
+
+        # 1. Morphology
+        with st.expander("🔤 Morfología (Tipos de Palabras)", expanded=True):
+            st.image(os.path.join(ASSETS_DIR, "spanish_morphology.png"), caption="Clasificación de las palabras en español")
+            st.markdown("""
+            **Puntos clave:**
+            - **Sustantivo:** Nombra entidades (personas, cosas, ideas).
+            - **Verbo:** Indica acción o estado. Es el núcleo de la oración.
+            - **Adjetivo:** Modifica al sustantivo (califica o determina).
+            - **Adverbio:** Modifica al verbo, adjetivo u otro adverbio.
+            """)
+
+        # 2. Connectors & Prepositions
+        with st.expander("🔗 Elementos de Enlace (Nexos y Preposiciones)"):
+            col1, col2 = st.columns(2)
+            with col1:
+                st.markdown("### Nexos (Conectores)")
+                st.image(os.path.join(ASSETS_DIR, "spanish_connectors.png"), caption="Principales conectores")
+            with col2:
+                st.markdown("### Preposiciones")
+                st.image(os.path.join(ASSETS_DIR, "spanish_prepositions.png"), caption="Lista de preposiciones")
+            
+            st.markdown("### Subordinantes")
+            st.image(os.path.join(ASSETS_DIR, "spanish_subordinators.png"), caption="Palabras que introducen subordinación")
+
+        # 3. Simple & Compound Sentences
+        with st.expander("🏗️ La Oración (Simple y Compuesta)"):
+            st.markdown("### Oración Simple")
+            st.image(os.path.join(ASSETS_DIR, "spanish_simple_sentences.png"), caption="Estructura de la oración simple")
+            
+            st.divider()
+            
+            st.markdown("### Oración Compuesta")
+            st.image(os.path.join(ASSETS_DIR, "spanish_compound_sentences.png"), caption="Coordinación vs Subordinación")
+
+        # 4. Subordinate Clauses
+        with st.expander("🧩 Oraciones Subordinadas"):
+            st.markdown("### Vista General")
+            st.image(os.path.join(ASSETS_DIR, "spanish_subordinadas_resumen.png"), caption="Resumen de oraciones subordinadas en español")
+            
+            st.divider()
+            
+            st.markdown("### 1. Sustantivas (Noun Clauses)")
+            st.info("Funcionan como un **Sustantivo** dentro de la oración (Sujeto, OD, Atributo, etc.)")
+            st.image(os.path.join(ASSETS_DIR, "spanish_completivas_sustantivas.png"), caption="Completivas sustantivas: tipos y ejemplos")
+            st.image(os.path.join(ASSETS_DIR, "spanish_noun_clauses.png"), caption="Funcionan como un Sustantivo (Sujeto u OD)")
+            
+            st.divider()
+            
+            st.markdown("### 2. Adjetivas (Adjective Clauses)")
+            st.info("Funcionan como un **Adjetivo**, modificando a un sustantivo anterior (antecedente). Introducidas por 'que', 'quien', 'el cual', 'cuyo', 'donde', 'cuando'.")
+            st.image(os.path.join(ASSETS_DIR, "spanish_adjetivas.png"), caption="Subordinadas adjetivas: especificativas vs explicativas")
+            
+            st.divider()
+            
+            st.markdown("### 3. Adverbiales (Adverbial Clauses)")
+            st.info("Funcionan como un **Adverbio** (indican tiempo, lugar, modo, causa, finalidad, condición, concesión, consecuencia...).")
+            st.image(os.path.join(ASSETS_DIR, "spanish_adverbiales.png"), caption="Los 8 tipos de subordinadas adverbiales")
+
+    # ===== TAB 7: TRANSLATION TIPS =====
+    with grammar_tabs[6]:
         st.markdown("## 💡 Consejos para el Traductor")
         
         with st.expander("🕵️ El Método Detective (Paso a Paso)", expanded=True):

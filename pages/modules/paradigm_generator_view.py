@@ -28,7 +28,7 @@ def render_content():
     if not analyzer.is_ready():
         st.error("⚠️ PyCollatinus no está disponible. Por favor, contacta al administrador.")
         st.info("Para instalar: `pip install pycollatinus`")
-        st.stop()
+        return
     
     # Input para la palabra
     col1, col2 = st.columns([3, 1])
@@ -42,30 +42,30 @@ def render_content():
     
     with col2:
         st.markdown("<br>", unsafe_allow_html=True)
-        generate_btn = st.button("🔍 Generar Paradigma", type="primary", use_container_width=True)
+        generate_btn = st.button("🔍 Generar Paradigma", type="primary", width="stretch")
     
     # Ejemplos rápidos
     st.markdown("**Ejemplos rápidos:**")
     col_ex1, col_ex2, col_ex3, col_ex4, col_ex5 = st.columns(5)
     
     with col_ex1:
-        if st.button("rosa 🌹", use_container_width=True):
+        if st.button("rosa 🌹", width="stretch"):
             st.session_state.paradigm_word = "rosa"
             st.rerun()
     with col_ex2:
-        if st.button("amo ❤️", use_container_width=True):
+        if st.button("amo ❤️", width="stretch"):
             st.session_state.paradigm_word = "amo"
             st.rerun()
     with col_ex3:
-        if st.button("dominus 👑", use_container_width=True):
+        if st.button("dominus 👑", width="stretch"):
             st.session_state.paradigm_word = "dominus"
             st.rerun()
     with col_ex4:
-        if st.button("sum 🌟", use_container_width=True):
+        if st.button("sum 🌟", width="stretch"):
             st.session_state.paradigm_word = "sum"
             st.rerun()
     with col_ex5:
-        if st.button("do 🎁", use_container_width=True):
+        if st.button("do 🎁", width="stretch"):
             st.session_state.paradigm_word = "do"
             st.rerun()
     
@@ -102,7 +102,7 @@ def render_content():
             with col_info2:
                 st.info(f"**Modelo:** {paradigm['model'].split('[')[1].split(']')[0]}")
             with col_info3:
-                if st.button("🔄 Nueva palabra", use_container_width=True):
+                if st.button("🔄 Nueva palabra", width="stretch"):
                     # Limpiar session_state
                     st.session_state.current_paradigm = None
                     st.session_state.current_word = None
@@ -364,12 +364,19 @@ def render_verb_paradigm(paradigm):
         persona = ""
         numero = ""
         
-        # Buscar tiempo
-        tiempos = ["Presente", "Imperfecto", "Futuro", "Perfecto", "Pluscuamperfecto"]
-        for t in tiempos:
-            if t in morph:
-                tiempo = t
-                break
+        # Buscar tiempo (orden importante: más específico primero)
+        if "Futuro Perfecto" in morph:
+            tiempo = "Futuro Perfecto"
+        elif "Futuro" in morph:
+            tiempo = "Futuro Imperfecto"
+        elif "Pluscuamperfecto" in morph:
+            tiempo = "Pluscuamperfecto"
+        elif "Perfecto" in morph:
+            tiempo = "Perfecto"
+        elif "Imperfecto" in morph:
+            tiempo = "Imperfecto"
+        elif "Presente" in morph:
+            tiempo = "Presente"
         
         # Buscar modo
         if "Subjuntivo" in morph:
@@ -402,15 +409,17 @@ def render_verb_paradigm(paradigm):
         elif "Plural" in morph:
             numero = "Plur"
         
-        # Crear clave de categoría
+        # Crear clave de categoría (reemplazar espacios en tiempo para evitar problemas con split)
+        tiempo_key = tiempo.replace(" ", "_")
+        
         if modo in ["Infinitivo", "Gerundio", "Supino"]:
             category = f"{modo}_{voz}"
             subcategory = morph  # Usar morfología completa como subcategoría
         elif modo == "Participio":
-            category = f"Participio_{tiempo}_{voz}"
+            category = f"Participio_{tiempo_key}_{voz}"
             subcategory = morph
         else:
-            category = f"{modo}_{tiempo}_{voz}"
+            category = f"{modo}_{tiempo_key}_{voz}"
             subcategory = f"{persona}_{numero}"
         
         if category not in organized:
@@ -446,13 +455,17 @@ def render_verb_paradigm(paradigm):
     with col_f3:
         tiempo_filter = st.multiselect(
             "Tiempo",
-            ["Presente", "Imperfecto", "Futuro", "Perfecto", "Pluscuamperfecto"],
+            ["Presente", "Imperfecto", "Futuro Imperfecto", "Futuro Perfecto", "Perfecto", "Pluscuamperfecto"],
             default=["Presente", "Perfecto"],
             help="Selecciona los tiempos que quieres ver"
         )
     
     # Aplicar filtros
     filtered_categories = []
+    
+    # Normalizar filtros de tiempo para coincidir con el formato de las claves (espacios -> guiones bajos)
+    tiempo_filter_normalized = [t.replace(" ", "_") for t in tiempo_filter]
+    
     for category in organized.keys():
         parts = category.split('_')
         modo_match = any(m in category for m in modo_filter)
@@ -460,7 +473,15 @@ def render_verb_paradigm(paradigm):
         
         # Para modos que tienen tiempo
         if parts[0] in ["Indicativo", "Subjuntivo"]:
-            tiempo_match = any(t in category for t in tiempo_filter)
+            # Extraer el tiempo de la categoría (todo entre el modo y la voz)
+            # Estructura: Modo_Tiempo_..._Voz
+            if len(parts) >= 3:
+                category_tiempo = "_".join(parts[1:-1])
+                # Usar coincidencia exacta para evitar que "Perfecto" coincida con "Futuro_Perfecto"
+                tiempo_match = category_tiempo in tiempo_filter_normalized
+            else:
+                tiempo_match = False
+                
             if modo_match and voz_match and tiempo_match:
                 filtered_categories.append(category)
         else:
@@ -476,12 +497,14 @@ def render_verb_paradigm(paradigm):
     priority_order = [
         "Indicativo_Presente_Activa",
         "Indicativo_Imperfecto_Activa",
-        "Indicativo_Futuro_Activa",
+        "Indicativo_Futuro_Imperfecto_Activa",
+        "Indicativo_Futuro_Perfecto_Activa",
         "Indicativo_Perfecto_Activa",
         "Indicativo_Pluscuamperfecto_Activa",
         "Indicativo_Presente_Pasiva",
         "Indicativo_Imperfecto_Pasiva",
-        "Indicativo_Futuro_Pasiva",
+        "Indicativo_Futuro_Imperfecto_Pasiva",
+        "Indicativo_Futuro_Perfecto_Pasiva",
         "Indicativo_Perfecto_Pasiva",
         "Indicativo_Pluscuamperfecto_Pasiva",
         "Subjuntivo_Presente_Activa",

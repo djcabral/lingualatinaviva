@@ -119,6 +119,8 @@ TRANSLATIONS = {
         "prep": "Preposición",
         "part": "Partícula",
         "supine": "Supino",
+        "adj": "Adjetivo",
+        "pronoun": "Pronombre",
     }
 }
 
