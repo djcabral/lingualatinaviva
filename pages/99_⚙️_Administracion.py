@@ -810,29 +810,36 @@ if section == "Vocabulario":
     with vocab_tabs[6]:
         st.markdown("### Lista de Vocabulario")
         
-        # Cache words in session state
+        # Cache words in session state (as dicts to avoid DetachedInstanceError)
         if 'vocab_list_cache' not in st.session_state:
             with st.spinner("⏳ Cargando vocabulario..."):
                 with get_session() as session:
                     words = session.exec(select(Word)).all()
-                    st.session_state.vocab_list_cache = words
-        else:
-            words = st.session_state.vocab_list_cache
+                    # Convert to dicts WHILE session is still open
+                    st.session_state.vocab_list_cache = [
+                        {
+                            "ID": w.id,
+                            "Latín": w.latin,
+                            "Traducción": w.translation,
+                            "Tipo": w.part_of_speech,
+                            "Nivel": w.level
+                        }
+                        for w in words
+                    ]
         
-        if words:
+        cached_data = st.session_state.vocab_list_cache
+        
+        # Ensure cached_data is list of dicts (defensive check)
+        if cached_data and not isinstance(cached_data[0], dict):
+            st.session_state.vocab_list_cache = None
+            st.rerun()
+        
+        if cached_data:
             # Filter
             filter_text = st.text_input("🔍 Buscar palabra", "")
-            filtered_words = [w for w in words if filter_text.lower() in w.latin.lower() or filter_text.lower() in w.translation.lower()] if filter_text else words
+            filtered_words = [w for w in cached_data if filter_text.lower() in w["Latín"].lower() or filter_text.lower() in w["Traducción"].lower()] if filter_text else cached_data
             
-            data = []
-            for w in filtered_words:
-                data.append({
-                    "ID": w.id,
-                    "Latín": w.latin,
-                    "Traducción": w.translation,
-                    "Tipo": w.part_of_speech,
-                    "Nivel": w.level
-                })
+            data = filtered_words
             st.dataframe(
                 data, 
                 column_config={
@@ -1129,14 +1136,28 @@ elif section == "Textos":
             with st.spinner("⏳ Cargando textos..."):
                 with get_session() as session:
                     texts = session.exec(select(Text)).all()
-                    st.session_state.texts_list_cache = texts
+                    # Convert to dicts WHILE session is still open
+                    st.session_state.texts_list_cache = [
+                        {
+                            "title": t.title,
+                            "content": t.content,
+                            "difficulty": t.difficulty,
+                            "author": t.author
+                        }
+                        for t in texts
+                    ]
         else:
             texts = st.session_state.texts_list_cache
         
+        # Ensure texts is a list of dicts (defensive check)
+        if texts and not isinstance(texts[0], dict):
+            st.session_state.texts_list_cache = None
+            st.rerun()
+        
         for t in texts:
-            with st.expander(f"{t.title} (Nivel {t.difficulty})"):
-                st.write(t.content[:200] + "...")
-                st.caption(f"Autor: {t.author if t.author else 'Desconocido'}")
+            with st.expander(f"{t['title']} (Nivel {t['difficulty']})"):
+                st.write(t['content'][:200] + "...")
+                st.caption(f"Autor: {t['author'] if t['author'] else 'Desconocido'}")
 
     # --- Import Tab ---
     with text_tabs[2]:
@@ -1392,9 +1413,23 @@ elif section == "Lecciones":
                     lessons = session.exec(
                         select(Lesson).order_by(Lesson.lesson_number)
                     ).all()
-                    st.session_state.lessons_list_cache = lessons
+                    # Convert to dicts WHILE session is still open
+                    st.session_state.lessons_list_cache = [
+                        {
+                            "lesson_number": l.lesson_number,
+                            "title": l.title,
+                            "description": l.description,
+                            "created_at": l.created_at.isoformat() if l.created_at else None
+                        }
+                        for l in lessons
+                    ]
         else:
             lessons = st.session_state.lessons_list_cache
+        
+        # Ensure lessons is list of dicts (defensive check)
+        if lessons and not isinstance(lessons[0], dict):
+            st.session_state.lessons_list_cache = None
+            st.rerun()
         
         if not lessons:
             st.info("📭 No hay lecciones en la base de datos aún. Crea la primera usando la pestaña anterior.")
@@ -1405,11 +1440,10 @@ elif section == "Lecciones":
             lesson_data = []
             for lesson in lessons:
                 lesson_data.append({
-                    "Nº": lesson.lesson_number,
-                    "Título": lesson.title,
-                    "Nivel": lesson.level.upper(),
-                    "Publicada": "✅" if lesson.is_published else "❌",
-                    "Creada": lesson.created_at.strftime("%Y-%m-%d") if lesson.created_at else "N/A"
+                    "Nº": lesson['lesson_number'],
+                    "Título": lesson['title'],
+                    "Descripción": lesson['description'],
+                    "Creada": lesson['created_at'] if lesson['created_at'] else "N/A"
                 })
             
             df = pd.DataFrame(lesson_data)
@@ -2140,18 +2174,22 @@ elif section == "Estadísticas":
             with get_session() as session:
                 all_words = session.exec(select(Word)).all()
                 texts = session.exec(select(Text)).all()
-                st.session_state.stats_cache = (all_words, texts)
+                # Convert to dicts WHILE session is still open
+                st.session_state.stats_cache = (
+                    [{'part_of_speech': w.part_of_speech, 'level': w.level} for w in all_words],
+                    len(texts)
+                )
     else:
-        all_words, texts = st.session_state.stats_cache
+        all_words, texts_count = st.session_state.stats_cache
     
     col1, col2, col3 = st.columns(3)
     col1.metric("Total Palabras", len(all_words))
-    col2.metric("Total Textos", len(texts))
+    col2.metric("Total Textos", texts_count)
     
     # Breakdown
     pos_counts = {}
     for w in all_words:
-        pos_counts[w.part_of_speech] = pos_counts.get(w.part_of_speech, 0) + 1
+        pos_counts[w['part_of_speech']] = pos_counts.get(w['part_of_speech'], 0) + 1
     
     st.markdown("### Distribución por Tipo")
     st.bar_chart(pos_counts)
