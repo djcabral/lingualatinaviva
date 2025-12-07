@@ -97,29 +97,30 @@ if section == "Vocabulario":
     
     if editing_word_id:
         # Load the word to edit and convert to dict
-        with get_session() as session:
-            word_obj = session.get(Word, editing_word_id)
-            if word_obj:
-                # Convert to dict to avoid DetachedInstanceError
-                word_to_edit = {
-                    'id': word_obj.id,
-                    'latin': word_obj.latin,
-                    'translation': word_obj.translation,
-                    'part_of_speech': word_obj.part_of_speech,
-                    'level': word_obj.level,
-                    'genitive': word_obj.genitive,
-                    'gender': word_obj.gender,
-                    'declension': word_obj.declension,
-                    'parisyllabic': word_obj.parisyllabic,
-                    'is_plurale_tantum': word_obj.is_plurale_tantum,
-                    'is_singulare_tantum': word_obj.is_singulare_tantum,
-                    'irregular_forms': word_obj.irregular_forms,
-                    'principal_parts': word_obj.principal_parts,
-                    'conjugation': word_obj.conjugation,
-                    'is_invariable': word_obj.is_invariable
-                }
-            else:
-                word_to_edit = None
+        with st.spinner("⏳ Cargando palabra..."):
+            with get_session() as session:
+                word_obj = session.get(Word, editing_word_id)
+                if word_obj:
+                    # Convert to dict to avoid DetachedInstanceError
+                    word_to_edit = {
+                        'id': word_obj.id,
+                        'latin': word_obj.latin,
+                        'translation': word_obj.translation,
+                        'part_of_speech': word_obj.part_of_speech,
+                        'level': word_obj.level,
+                        'genitive': word_obj.genitive,
+                        'gender': word_obj.gender,
+                        'declension': word_obj.declension,
+                        'parisyllabic': word_obj.parisyllabic,
+                        'is_plurale_tantum': word_obj.is_plurale_tantum,
+                        'is_singulare_tantum': word_obj.is_singulare_tantum,
+                        'irregular_forms': word_obj.irregular_forms,
+                        'principal_parts': word_obj.principal_parts,
+                        'conjugation': word_obj.conjugation,
+                        'is_invariable': word_obj.is_invariable
+                    }
+                else:
+                    word_to_edit = None
             
         if word_to_edit:
             st.info(f"✏️ **Editando palabra:** {word_to_edit['latin']}")
@@ -808,33 +809,34 @@ if section == "Vocabulario":
     # --- Tab: List ---
     with vocab_tabs[6]:
         st.markdown("### Lista de Vocabulario")
-        with get_session() as session:
-            words = session.exec(select(Word)).all()
-            if words:
-                # Filter
-                filter_text = st.text_input("🔍 Buscar palabra", "")
-                filtered_words = [w for w in words if filter_text.lower() in w.latin.lower() or filter_text.lower() in w.translation.lower()] if filter_text else words
-                
-                data = []
-                for w in filtered_words:
-                    data.append({
-                        "ID": w.id,
-                        "Latín": w.latin,
-                        "Traducción": w.translation,
-                        "Tipo": w.part_of_speech,
-                        "Nivel": w.level
-                    })
-                st.dataframe(
-                    data, 
-                    column_config={
-                        "id": None,
-                        "author_id": None,
-                        "irregular_forms": st.column_config.TextColumn("Irregular", help="Formas irregulares JSON"),
-                    },
-                    width='stretch'
-                )
-            else:
-                st.info("No hay palabras.")
+        with st.spinner("⏳ Cargando vocabulario..."):
+            with get_session() as session:
+                words = session.exec(select(Word)).all()
+                if words:
+                    # Filter
+                    filter_text = st.text_input("🔍 Buscar palabra", "")
+                    filtered_words = [w for w in words if filter_text.lower() in w.latin.lower() or filter_text.lower() in w.translation.lower()] if filter_text else words
+                    
+                    data = []
+                    for w in filtered_words:
+                        data.append({
+                            "ID": w.id,
+                            "Latín": w.latin,
+                            "Traducción": w.translation,
+                            "Tipo": w.part_of_speech,
+                            "Nivel": w.level
+                        })
+                    st.dataframe(
+                        data, 
+                        column_config={
+                            "id": None,
+                            "author_id": None,
+                            "irregular_forms": st.column_config.TextColumn("Irregular", help="Formas irregulares JSON"),
+                        },
+                        width='stretch'
+                    )
+                else:
+                    st.info("No hay palabras.")
     
     # --- Tab: Help ---
     with vocab_tabs[7]:
@@ -1075,50 +1077,52 @@ elif section == "Textos":
         
         if st.button("💾 Guardar Texto", width='stretch', type="primary"):
             if title and content:
-                with get_session() as session:
-                    new_text = Text(
-                        title=title, 
-                        author=author, 
-                        content=content, 
-                        difficulty=level,
-                        book_number=book if book > 0 else None,
-                        chapter_number=chapter if chapter > 0 else None
-                    )
-                    session.add(new_text)
-                    session.commit()
-                    session.refresh(new_text)
-                    
-                    # Tokenize and Link
-                    words_in_text = re.findall(r'[a-zA-ZāēīōūĀĒĪŌŪ]+', content.lower())
-                    word_freq = {}
-                    for w in words_in_text:
-                        nw = normalize_latin(w)
-                        word_freq[nw] = word_freq.get(nw, 0) + 1
-                    
-                    all_words = session.exec(select(Word)).all()
-                    linked_count = 0
-                    
-                    for text_word, freq in word_freq.items():
-                        for db_word in all_words:
-                            if normalize_latin(db_word.latin.lower()) == text_word:
-                                link = TextWordLink(text_id=new_text.id, word_id=db_word.id, frequency=freq)
-                                session.add(link)
-                                session.add(link)
-                                linked_count += 1
-                                break
-                    session.commit()
-                    st.success(f"Texto guardado. {linked_count} palabras vinculadas.")
+                with st.spinner("⏳ Guardando y analizando texto..."):
+                    with get_session() as session:
+                        new_text = Text(
+                            title=title, 
+                            author=author, 
+                            content=content, 
+                            difficulty=level,
+                            book_number=book if book > 0 else None,
+                            chapter_number=chapter if chapter > 0 else None
+                        )
+                        session.add(new_text)
+                        session.commit()
+                        session.refresh(new_text)
+                        
+                        # Tokenize and Link
+                        words_in_text = re.findall(r'[a-zA-ZāēīōūĀĒĪŌŪ]+', content.lower())
+                        word_freq = {}
+                        for w in words_in_text:
+                            nw = normalize_latin(w)
+                            word_freq[nw] = word_freq.get(nw, 0) + 1
+                        
+                        all_words = session.exec(select(Word)).all()
+                        linked_count = 0
+                        
+                        for text_word, freq in word_freq.items():
+                            for db_word in all_words:
+                                if normalize_latin(db_word.latin.lower()) == text_word:
+                                    link = TextWordLink(text_id=new_text.id, word_id=db_word.id, frequency=freq)
+                                    session.add(link)
+                                    session.add(link)
+                                    linked_count += 1
+                                    break
+                        session.commit()
+                        st.success(f"Texto guardado. {linked_count} palabras vinculadas.")
             else:
                 st.error("Título y contenido requeridos.")
 
     with text_tabs[1]:
         st.markdown("### Textos Existentes")
-        with get_session() as session:
-            texts = session.exec(select(Text)).all()
-            for t in texts:
-                with st.expander(f"{t.title} (Nivel {t.difficulty})"):
-                    st.write(t.content[:200] + "...")
-                    st.caption(f"Autor: {t.author if t.author else 'Desconocido'}")
+        with st.spinner("⏳ Cargando textos..."):
+            with get_session() as session:
+                texts = session.exec(select(Text)).all()
+                for t in texts:
+                    with st.expander(f"{t.title} (Nivel {t.difficulty})"):
+                        st.write(t.content[:200] + "...")
+                        st.caption(f"Autor: {t.author if t.author else 'Desconocido'}")
 
     # --- Import Tab ---
     with text_tabs[2]:
@@ -1169,13 +1173,14 @@ elif section == "Textos":
                         st.dataframe(df.head())
                         
                         if st.button("🚀 Importar Textos", type="primary"):
-                            with get_session() as session:
-                                texts = ContentImporter.dataframe_to_texts(df)
-                                for t in texts:
-                                    session.add(t)
-                                session.commit()
-                                st.success(f"✅ Se importaron {len(texts)} textos exitosamente.")
-                                st.balloons()
+                            with st.spinner("⏳ Importando textos..."):
+                                with get_session() as session:
+                                    texts = ContentImporter.dataframe_to_texts(df)
+                                    for t in texts:
+                                        session.add(t)
+                                    session.commit()
+                                    st.success(f"✅ Se importaron {len(texts)} textos exitosamente.")
+                                    st.balloons()
                     else:
                         st.error("❌ El archivo tiene errores:")
                         for err in errors:
@@ -1337,38 +1342,40 @@ elif section == "Lecciones":
                 st.error("⚠️ Título y contenido son obligatorios")
             else:
                 try:
-                    with get_session() as session:
-                        # Check if lesson number already exists
-                        existing = session.exec(
-                            select(Lesson).where(Lesson.lesson_number == lesson_number)
-                        ).first()
-                        
-                        if existing:
-                            st.error(f"❌ Ya existe una lección con el número {lesson_number}")
-                        else:
-                            new_lesson = Lesson(
-                                lesson_number=lesson_number,
-                                title=lesson_title,
-                                level=level,
-                                content_markdown=content_markdown,
-                                image_path=image_path if image_path else None,
-                                is_published=is_published,
-                                order_in_level=order_in_level
-                            )
-                            session.add(new_lesson)
-                            session.commit()
-                            st.success(f"✅ Lección {lesson_number}: {lesson_title} guardada correctamente")
-                            st.balloons()
+                    with st.spinner("⏳ Guardando lección..."):
+                        with get_session() as session:
+                            # Check if lesson number already exists
+                            existing = session.exec(
+                                select(Lesson).where(Lesson.lesson_number == lesson_number)
+                            ).first()
+                            
+                            if existing:
+                                st.error(f"❌ Ya existe una lección con el número {lesson_number}")
+                            else:
+                                new_lesson = Lesson(
+                                    lesson_number=lesson_number,
+                                    title=lesson_title,
+                                    level=level,
+                                    content_markdown=content_markdown,
+                                    image_path=image_path if image_path else None,
+                                    is_published=is_published,
+                                    order_in_level=order_in_level
+                                )
+                                session.add(new_lesson)
+                                session.commit()
+                                st.success(f"✅ Lección {lesson_number}: {lesson_title} guardada correctamente")
+                                st.balloons()
                 except Exception as e:
                     st.error(f"❌ Error al guardar: {str(e)}")
     
     with lesson_tabs[1]:
         st.markdown("### Lecciones Existentes")
         
-        with get_session() as session:
-            lessons = session.exec(
-                select(Lesson).order_by(Lesson.lesson_number)
-            ).all()
+        with st.spinner("⏳ Cargando lecciones..."):
+            with get_session() as session:
+                lessons = session.exec(
+                    select(Lesson).order_by(Lesson.lesson_number)
+                ).all()
             
             if not lessons:
                 st.info("📭 No hay lecciones en la base de datos aún. Crea la primera usando la pestaña anterior.")
@@ -2108,21 +2115,22 @@ elif section == "Usuario":
 elif section == "Estadísticas":
     st.markdown("## 📋 Estadísticas del Corpus")
     
-    with get_session() as session:
-        all_words = session.exec(select(Word)).all()
-        texts = session.exec(select(Text)).all()
-        
-        col1, col2, col3 = st.columns(3)
-        col1.metric("Total Palabras", len(all_words))
-        col2.metric("Total Textos", len(texts))
-        
-        # Breakdown
-        pos_counts = {}
-        for w in all_words:
-            pos_counts[w.part_of_speech] = pos_counts.get(w.part_of_speech, 0) + 1
-        
-        st.markdown("### Distribución por Tipo")
-        st.bar_chart(pos_counts)
+    with st.spinner("⏳ Calculando estadísticas..."):
+        with get_session() as session:
+            all_words = session.exec(select(Word)).all()
+            texts = session.exec(select(Text)).all()
+            
+            col1, col2, col3 = st.columns(3)
+            col1.metric("Total Palabras", len(all_words))
+            col2.metric("Total Textos", len(texts))
+            
+            # Breakdown
+            pos_counts = {}
+            for w in all_words:
+                pos_counts[w.part_of_speech] = pos_counts.get(w.part_of_speech, 0) + 1
+            
+            st.markdown("### Distribución por Tipo")
+            st.bar_chart(pos_counts)
 
 
 # --- SECTION: REQUISITOS DE LECCIÓN ---
@@ -2143,11 +2151,12 @@ if section == "Requisitos de Lección":
     
     with get_session() as session:
         # Obtener requisitos existentes para esta lección
-        requirements = session.exec(
-            select(LessonRequirement)
-            .where(LessonRequirement.lesson_number == lesson_number)
-            .order_by(LessonRequirement.id)
-        ).all()
+        with st.spinner("⏳ Cargando requisitos..."):
+            requirements = session.exec(
+                select(LessonRequirement)
+                .where(LessonRequirement.lesson_number == lesson_number)
+                .order_by(LessonRequirement.id)
+            ).all()
         
         st.markdown(f"### Requisitos para Lección {lesson_number}")
         
