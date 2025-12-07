@@ -60,10 +60,22 @@ with st.sidebar:
         st.session_state.is_admin = False
         st.rerun()
 
-# Sidebar Navigation
+# Importar módulo de catalogación (si está disponible)
+try:
+    from utils.admin_catalog_module import get_catalog_module
+    catalog_module = get_catalog_module()
+except ImportError:
+    catalog_module = None
+
+# Sidebar Navigation - Agregar Catalogación si está disponible
+sections = ["Vocabulario", "Textos", "Lecciones", "Ejercicios", "Sintaxis", "Usuario", "Estadísticas", "Requisitos de Lección"]
+if catalog_module and catalog_module.is_available:
+    sections.append("Catalogación")
+sections.append("Configuración")
+
 section = st.sidebar.radio(
     "Sección",
-    ["Vocabulario", "Textos", "Lecciones", "Ejercicios", "Sintaxis", "Usuario", "Estadísticas", "Requisitos de Lección", "Configuración"],
+    sections,
     index=0
 )
 
@@ -2301,7 +2313,22 @@ if section == "Requisitos de Lección":
                 
                 st.success(f"✅ Requisito agregado a Lección {lesson_number}")
                 st.rerun()
-        
+
+# --- SECTION: CATALOGACIÓN (Módulo independiente) ---
+elif section == "Catalogación":
+    if catalog_module and catalog_module.render(section):
+        pass  # El módulo se renderiza a sí mismo
+    else:
+        st.warning("⚠️ Módulo de Catalogación no disponible")
+        st.info("""
+        Para usar este módulo:
+        1. Instala las dependencias del catalogador
+        2. Ejecuta: `python catalog_tool.py`
+        3. Vuelve a cargar esta página
+        """)
+
+# --- SECTION: CONFIGURACIÓN ---
+elif section == "Configuración":
         # Configuración Global
         st.markdown("---")
         st.markdown("### ⚙️ Configuración Global")

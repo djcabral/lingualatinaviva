@@ -1,227 +1,178 @@
-# 🔧 Panel Administrativo - Guía Rápida
+# 📊 Módulo de Catalogación - Guía Rápida
 
 ## ¿Qué es?
 
-Un **panel de administración integrado en Streamlit** para gestionar:
-- 📚 Vocabulario (agregar, editar, buscar, eliminar)
-- 📝 Sentencias (agregar, eliminar, gestionar)
-- 📥 Importación de resultados del catalogador
-- 📊 Dashboard con estadísticas
+Un **módulo independiente de administración de catalogación** integrado dentro del Panel de Administración principal.
 
-**Ubicación:** Accede en `pages/00_🔧_Panel_Admin.py`
+**Ubicación:** Administración → Sección "Catalogación" (si está disponible)
+
+### Características
+- 📊 Dashboard con estadísticas
+- 📥 Importación de resultados del catalogador
+- 🔄 Módulo autónomo (solo visible si está instalado)
+- 📋 Vista previa de importaciones
 
 ---
 
-## 🚀 Cómo Empezar
+## 🚀 Cómo Acceder
 
-### 1. Acceder al Panel
-
+### 1. Inicia Streamlit
 ```bash
 streamlit run app.py
 ```
 
-En el menú lateral, selecciona **🔧 Panel Admin**.
+### 2. Ve a Administración (⚙️)
+- Click en "⚙️ Admin - Panel de Administración" en el menú lateral
 
-### 2. Autenticación
+### 3. Login
+- Contraseña: `admin123` (la del admin principal)
 
-**Contraseña por defecto:** `admin`
-
-(Cambiar en `pages/00_🔧_Panel_Admin.py` línea con `if password == "admin":`)
+### 4. Selecciona "Catalogación"
+- Si ves esta opción en el radio button de secciones, el módulo está disponible
+- Si NO aparece, el módulo aún no está instalado/disponible
 
 ---
 
-## 📊 Secciones del Panel
+## 📊 Secciones del Módulo
 
-### 1️⃣ Dashboard
-- 📊 Métricas principales (total de palabras, sentencias, lecciones)
-- 📈 Gráficos de distribución por nivel
-- 🕐 Estadísticas en tiempo real
+### Dashboard
+- **📚 Total Palabras:** Cantidad actual en BD
+- **📝 Total Sentencias:** Cantidad actual en BD
+- **🕐 Última Actualización:** Timestamp
+- **📈 Gráfico:** Distribución por nivel
 
-### 2️⃣ Vocabulario
+### Importar Catalogación
 
-**Agregar Palabra:**
-```
-🔤 Palabra Latina: rosa
-🔤 Traducción: rosa
-📝 Parte de Oración: noun
-📍 Nivel: 1
-⚧ Género: f
-🔤 Genitivo: rosae
-```
+**Opción 1: Subir archivo JSON**
+```bash
+# Genera el archivo con el catalogador
+python catalog_tool.py process --input mi_texto.json --output resultado.json
 
-**Listar:** Ver todas las palabras en tabla
-**Buscar:** Buscar por palabra o traducción
-
-### 3️⃣ Sentencias
-
-**Agregar Sentencia:**
-```
-📜 Texto Latino: Rosa est pulchra.
-🔤 Traducción: La rosa es hermosa.
-📍 Nivel: 1
-📚 Fuente: Liber Exemplorum
-📝 Notas: Nominativo singular, predicado nominal
+# En el panel Admin → Catalogación → Importar
+# Sube el archivo resultado.json
 ```
 
-**Listar:** Ver y eliminar sentencias
+**Opción 2: Entrada manual**
+- Pega el JSON directamente en el text area
+- Click "Importar JSON"
 
-### 4️⃣ Importar Catalogación
+**Vista previa automática:**
+- Muestra cuántas palabras y sentencias se importarán
+- Permite revisar antes de confirmar
+- Click "Importar Todo" para guardar en BD
 
-**Flujo:** 
-1. Ejecuta el catalogador: `python catalog_tool.py process --input textos.json`
-2. Sube el archivo JSON resultante
-3. Vista previa de contenido
-4. Click en "Importar Todo"
+---
 
-**Formato esperado:**
-```json
-{
-  "text": "Rosa est pulchra",
-  "vocabulary": [
-    {
-      "word": "rosa",
-      "lemma": "rosa",
-      "translation": "rose",
-      "pos": "noun"
-    }
-  ],
-  "sentences": [
-    {
-      "text": "Rosa est pulchra",
-      "translation": "The rose is beautiful"
-    }
-  ]
-}
-```
+## ⚙️ Características Técnicas
 
-### 5️⃣ Configuración
-- 📊 Info de BD (cantidad de palabras, sentencias, lecciones)
-- 🔐 Recomendaciones de seguridad
-- ℹ️ Información del panel
+### Modularidad
+- **Independiente:** Funciona como módulo autónomo
+- **Detecta disponibilidad:** Solo aparece si la BD está disponible
+- **Sin dependencias adicionales:** Usa SQLite directamente
+
+### Integración
+- Se integra dentro del admin existente (99_⚙️_Administracion.py)
+- Comparte autenticación con el admin principal
+- No duplica funcionalidades
+
+### Compatibilidad
+- ✅ Funciona con BD existente (lingua_latina.db)
+- ✅ Compatible con todas las versiones de Streamlit
+- ✅ No requiere cambios en app.py
 
 ---
 
 ## 💡 Casos de Uso
 
-### Caso 1: Agregar una palabra individual
-1. Panel Admin → Vocabulario → Agregar
-2. Rellena campos
-3. Click "Agregar Palabra"
+### Caso 1: Ver estadísticas
+```
+Admin → Catalogación → Dashboard
+├─ Verás métricas actualizadas
+└─ Gráfico con distribución por nivel
+```
 
-### Caso 2: Importar un texto catalogado
-1. Ejecuta: `python catalog_tool.py process --input mi_texto.json --output resultado.json`
-2. Panel Admin → Importar Catalogación
-3. Sube `resultado.json`
-4. Click "Importar Todo"
-5. Revisa las métricas
+### Caso 2: Procesar texto del catalogador
+```
+Terminal:
+$ python catalog_tool.py process --input libro.json --output libro_results.json
 
-### Caso 3: Buscar y editar una palabra
-1. Panel Admin → Vocabulario → Buscar
-2. Escribe la palabra
-3. Click "✏️ Editar" (nota: función de edición requiere ampliación)
+Admin Panel:
+├─ Catalogación → Importar
+├─ Sube libro_results.json
+├─ Vista previa: X palabras, Y sentencias
+└─ Click "Importar Todo" → Guardado en BD ✓
+```
 
-### Caso 4: Ver estadísticas
-1. Panel Admin → Dashboard
-2. Observa métricas y gráficos en tiempo real
+### Caso 3: Importación manual
+```
+Admin → Catalogación → Importar (pestaña "Entrada Manual")
+├─ Pega el JSON generado por el catalogador
+└─ Click "Importar JSON" → Guardado en BD ✓
+```
+
+---
+
+## 🔍 Detección de Disponibilidad
+
+El módulo se agrega al menú SOLO si:
+1. La BD (lingua_latina.db) está accesible
+2. La tabla `word` existe en la BD
+3. El módulo Python se carga correctamente
+
+Si NO ves "Catalogación" en el menú:
+- Verifica que `lingua_latina.db` exista
+- Comprueba que la BD está inicializada
+- Revisa los logs de Streamlit
 
 ---
 
 ## 🔧 Personalización
 
-### Cambiar Contraseña
-
-Edita `pages/00_🔧_Panel_Admin.py`:
-
+### Cambiar la contraseña del admin principal
+Edita `pages/99_⚙️_Administracion.py`:
 ```python
-# Línea ~85
-if password == "admin":  # ← Cambiar aquí
-    st.session_state.admin_authenticated = True
+# Línea ~49
+if password == "admin123":  # ← Cambiar aquí
+    st.session_state.is_admin = True
 ```
 
-### Agregar Nuevas Secciones
-
-1. Extiende el radio button en `st.sidebar.radio()`
-2. Agrega un `elif section == "Mi Nueva Sección":`
-3. Implementa la lógica
-
-### Integrar con tu Catalogador
-
-Los resultados del catalogador se importan directamente a SQLite:
-
-```python
-from utils.admin_manager import CatalogationImporter
-
-importer = CatalogationImporter()
-results = importer.import_catalog_results(catalog_json)
-print(f"✅ {results['imported_vocab']} palabras importadas")
-```
+### Agregar más secciones al módulo
+El módulo está en `utils/admin_catalog_module.py`:
+1. Agrega métodos a la clase `CatalogAdminModule`
+2. Llama desde `render()`
+3. El menú se actualiza automáticamente
 
 ---
 
-## 📁 Archivos Creados
+## 📁 Archivos Relacionados
 
 ```
 utils/
-├── admin_manager.py          ← Gestor CRUD y importación
-└── (otros módulos existentes)
+├── admin_catalog_module.py    ← Módulo independiente
+├── admin_manager.py           ← Gestores CRUD (legacy)
+└── (otros módulos)
 
 pages/
-├── 00_🔧_Panel_Admin.py     ← Interfaz principal
+├── 99_⚙️_Administracion.py   ← Admin principal (integra el módulo)
 └── (otras páginas)
+
+DOCUMENTACIÓN:
+├── ADMIN_PANEL_GUIA.md        ← Esta guía
+├── CATALOGACION_README.md     ← Guía del catalogador
+└── CATALOGACION_GUIDE.md      ← Documentación del catalogador
 ```
 
 ---
 
-## 🔐 Seguridad
+## 🎓 Próximas Mejoras
 
-**Recomendaciones para producción:**
-
-1. **Cambiar contraseña** - No dejar "admin"
-2. **HTTPS** - Si es acceso remoto
-3. **Respaldos** - Hacer copias regulares de `lingua_latina.db`
-4. **Auditoría** - Registrar cambios importantes
-5. **Permiso de archivos** - Proteger acceso a BD
+- [ ] Historial de importaciones
+- [ ] Validación de datos antes de importar
+- [ ] Exportar vocabulario a CSV
+- [ ] Edición de palabras importadas
+- [ ] Control de duplicados
 
 ---
 
-## 🐛 Solución de Problemas
+**Versión:** 2.0 (Modular) | **Estado:** ✅ Producción | **Fecha:** 2025-12-07
 
-### "No veo el Panel Admin"
-- Verifica que el archivo esté en `pages/00_🔧_Panel_Admin.py`
-- Reinicia Streamlit
-
-### "Contraseña no funciona"
-- Abre `pages/00_🔧_Panel_Admin.py`
-- Busca `if password == "admin":` 
-- Verifica el valor exacto
-
-### "No se importan palabras"
-- Verifica que el JSON tenga la estructura correcta
-- Revisa los logs de error
-- Comprueba que SQLite esté accesible
-
-### "Base de datos vacía"
-- Ejecuta `python -m database.connection` para inicializar
-- Agrega palabras manualmente en Vocabulario → Agregar
-
----
-
-## 📚 Próximas Mejoras
-
-- [ ] Edición inline de palabras
-- [ ] Eliminar/editar desde dashboard
-- [ ] Exportar vocabulario a CSV/Excel
-- [ ] Historial de cambios
-- [ ] Múltiples usuarios con roles
-- [ ] Backups automáticos
-
----
-
-## 📞 Soporte
-
-Para problemas o mejoras, revisar:
-- `CATALOGACION_README.md` - Guía del catalogador
-- `utils/admin_manager.py` - Código de managers
-- `pages/00_🔧_Panel_Admin.py` - Código de interfaz
-
-**Versión:** 1.0 | **Fecha:** 2025-12-07
