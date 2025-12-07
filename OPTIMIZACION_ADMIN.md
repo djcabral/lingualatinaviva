@@ -12,6 +12,12 @@ La página de Administración (`pages/99_⚙️_Administracion.py`) tiene **2346
 
 ### Corto Plazo (Ya hecho)
 
+✅ **Spinners visuales en secciones principales**
+- Agregados indicadores "⏳ Cargando..." en 9 secciones principales
+- El usuario recibe feedback visual mientras trabaja
+- Evita la sensación de que la página está "colgada"
+- Ubicadas en: Vocabulario, Textos, Lecciones, Ejercicios, Estadísticas, Requisitos
+
 ✅ **`utils/admin_performance.py`**
 - Módulo con funciones cacheadas usando `@st.cache_data(ttl=300)`
 - Permite cachear por 5 minutos
