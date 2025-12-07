@@ -9,55 +9,51 @@ even when the application code is reloaded.
 """
 
 import logging
+import sys
 
 logger = logging.getLogger(__name__)
 
-# Try to import Streamlit for caching
-try:
-    import streamlit as st
-    HAS_STREAMLIT = True
-except ImportError:
-    HAS_STREAMLIT = False
-    logger.debug("Streamlit not available, caching disabled")
+# Global cache to prevent reimporting
+_models_cache = None
 
 
-def _import_models_impl():
+def get_models():
     """
-    Internal function that actually imports the model modules.
-    This is called by the cached wrapper or directly if no Streamlit.
+    Get database models using module-level caching.
+    Returns dict with 'models', 'integration_models', 'syntax_models'.
+    
+    This function uses a simple global cache instead of Streamlit's cache
+    to avoid conflicts during hot-reloads.
     """
+    global _models_cache
+    
+    # If already imported, return cached version
+    if _models_cache is not None:
+        logger.debug("Returning cached models")
+        return _models_cache
+    
     logger.info("Importing database models...")
     
-    # Import all model modules in order
-    from database import models
-    from database import integration_models
-    from database import syntax_models
-    
-    logger.info("✓ Database models imported successfully")
-    
-    return {
-        'models': models,
-        'integration_models': integration_models,
-        'syntax_models': syntax_models
-    }
-
-
-if HAS_STREAMLIT:
-    @st.cache_resource(show_spinner=False)
-    def _import_models_cached():
-        """
-        Cached wrapper for model imports (Streamlit version).
-        This function is only called ONCE per Streamlit session.
-        """
-        logger.debug("Using Streamlit cache for model imports")
-        return _import_models_impl()
-    
-    def get_models():
-        """
-        Get database models using Streamlit cache.
-        Returns dict with 'models', 'integration_models', 'syntax_models'.
-        """
-        return _import_models_cached()
+    try:
+        # Import all model modules in order
+        from database import models
+        from database import integration_models
+        from database import syntax_models
+        
+        logger.info("✓ Database models imported successfully")
+        
+        # Cache and return
+        _models_cache = {
+            'models': models,
+            'integration_models': integration_models,
+            'syntax_models': syntax_models
+        }
+        
+        return _models_cache
+        
+    except Exception as e:
+        logger.error(f"✗ Failed to import models: {e}")
+        raise
 else:
     # Non-Streamlit fallback
     _models_cache = None

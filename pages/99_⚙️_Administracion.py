@@ -13,10 +13,15 @@ if root_path not in sys.path:
     sys.path.append(root_path)
 
 from database.connection import get_session, init_db
-from database import Word, Text, ReviewLog, UserProfile, TextWordLink, Lesson
-from database import SentenceAnalysis, TokenAnnotation, SentenceStructure
-from database import LessonRequirement, UserLessonProgress
+from database import (
+    Word, Text, ReviewLog, UserProfile, TextWordLink, Lesson,
+    SentenceAnalysis, TokenAnnotation, SentenceStructure,
+    LessonRequirement, UserLessonProgress,
+    LessonProgress, UserVocabularyProgress, ExerciseAttempt,
+    ReadingProgress, UserProgressSummary, Author, UserChallengeProgress
+)
 from utils.csv_handler import import_vocabulary_from_csv, export_vocabulary_to_excel
+from database.seed import seed_user
 
 from utils.i18n import get_text
 from utils.ui_helpers import load_css
@@ -37,6 +42,15 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
+# Sistema de estado de carga global
+if 'loading_status' not in st.session_state:
+    st.session_state.loading_status = None
+
+# Mostrar estado de carga si está activo
+if st.session_state.loading_status:
+    with st.status(st.session_state.loading_status, expanded=True):
+        st.write("Por favor espera...")
 
 # Admin Authentication
 if 'is_admin' not in st.session_state:
@@ -79,6 +93,52 @@ section = st.sidebar.radio(
     sections,
     index=0
 )
+
+st.sidebar.markdown("---")
+
+# --- SIDEBAR: Cache Management and Loading Status ---
+st.sidebar.markdown("### 📊 Estado del Sistema")
+
+# Initialize loading cache flags
+if 'cache_load_started' not in st.session_state:
+    st.session_state.cache_load_started = False
+
+if 'cache_status' not in st.session_state:
+    st.session_state.cache_status = {
+        'vocabulary': False,
+        'texts': False,
+        'lessons': False,
+        'stats': False
+    }
+
+# Container for status messages
+status_placeholder = st.sidebar.empty()
+
+def update_cache_status(cache_name, status):
+    """Update cache loading status in sidebar"""
+    st.session_state.cache_status[cache_name] = status
+    
+    # Build status message
+    statuses = []
+    for name, loaded in st.session_state.cache_status.items():
+        icon = "✅" if loaded else "⏳"
+        statuses.append(f"{icon} {name.capitalize()}")
+    
+    status_text = "\n".join(statuses)
+    status_placeholder.info(status_text)
+
+# Show cache status
+def show_cache_status():
+    """Display current cache status"""
+    statuses = []
+    for name, loaded in st.session_state.cache_status.items():
+        icon = "✅" if loaded else "⏳"
+        statuses.append(f"{icon} {name.capitalize()}")
+    status_text = "\n".join(statuses)
+    status_placeholder.info(status_text)
+
+# Initial status display
+show_cache_status()
 
 st.sidebar.markdown("---")
 st.sidebar.info("Usa este panel para gestionar el contenido de la aplicación.")
@@ -810,22 +870,35 @@ if section == "Vocabulario":
     with vocab_tabs[6]:
         st.markdown("### Lista de Vocabulario")
         
+        # Agregar botón de refrescar
+        col1, col2 = st.columns([4, 1])
+        with col2:
+            if st.button("🔄 Refrescar", key="refresh_vocab"):
+                if 'vocab_list_cache' in st.session_state:
+                    del st.session_state.vocab_list_cache
+                st.rerun()
+        
         # Cache words in session state (as dicts to avoid DetachedInstanceError)
         if 'vocab_list_cache' not in st.session_state:
             with st.spinner("⏳ Cargando vocabulario..."):
-                with get_session() as session:
-                    words = session.exec(select(Word)).all()
-                    # Convert to dicts WHILE session is still open
-                    st.session_state.vocab_list_cache = [
-                        {
-                            "ID": w.id,
-                            "Latín": w.latin,
-                            "Traducción": w.translation,
-                            "Tipo": w.part_of_speech,
-                            "Nivel": w.level
-                        }
-                        for w in words
-                    ]
+                try:
+                    with get_session() as session:
+                        words = session.exec(select(Word)).all()
+                        # Convert to dicts WHILE session is still open
+                        st.session_state.vocab_list_cache = [
+                            {
+                                "ID": w.id,
+                                "Latín": w.latin,
+                                "Traducción": w.translation,
+                                "Tipo": w.part_of_speech,
+                                "Nivel": w.level
+                            }
+                            for w in words
+                        ]
+                    update_cache_status('vocabulary', True)
+                except Exception as e:
+                    st.error(f"Error cargando vocabulario: {e}")
+                    update_cache_status('vocabulary', False)
         
         cached_data = st.session_state.vocab_list_cache
         
@@ -1134,18 +1207,23 @@ elif section == "Textos":
         # Cache texts in session state
         if 'texts_list_cache' not in st.session_state:
             with st.spinner("⏳ Cargando textos..."):
-                with get_session() as session:
-                    texts = session.exec(select(Text)).all()
-                    # Convert to dicts WHILE session is still open
-                    st.session_state.texts_list_cache = [
-                        {
-                            "title": t.title,
-                            "content": t.content,
-                            "difficulty": t.difficulty,
-                            "author": t.author
-                        }
-                        for t in texts
-                    ]
+                try:
+                    with get_session() as session:
+                        texts = session.exec(select(Text)).all()
+                        # Convert to dicts WHILE session is still open
+                        st.session_state.texts_list_cache = [
+                            {
+                                "title": t.title,
+                                "content": t.content,
+                                "difficulty": t.difficulty,
+                                "author": t.author
+                            }
+                            for t in texts
+                        ]
+                    update_cache_status('texts', True)
+                except Exception as e:
+                    st.error(f"Error cargando textos: {e}")
+                    update_cache_status('texts', False)
         else:
             texts = st.session_state.texts_list_cache
         
@@ -1409,20 +1487,25 @@ elif section == "Lecciones":
         # Cache lessons in session state
         if 'lessons_list_cache' not in st.session_state:
             with st.spinner("⏳ Cargando lecciones..."):
-                with get_session() as session:
-                    lessons = session.exec(
-                        select(Lesson).order_by(Lesson.lesson_number)
-                    ).all()
-                    # Convert to dicts WHILE session is still open
-                    st.session_state.lessons_list_cache = [
-                        {
-                            "lesson_number": l.lesson_number,
-                            "title": l.title,
-                            "description": l.description,
-                            "created_at": l.created_at.isoformat() if l.created_at else None
-                        }
-                        for l in lessons
-                    ]
+                try:
+                    with get_session() as session:
+                        lessons = session.exec(
+                            select(Lesson).order_by(Lesson.lesson_number)
+                        ).all()
+                        # Convert to dicts WHILE session is still open
+                        st.session_state.lessons_list_cache = [
+                            {
+                                "lesson_number": l.lesson_number,
+                                "title": l.title,
+                                "description": l.description,
+                                "created_at": l.created_at.isoformat() if l.created_at else None
+                            }
+                            for l in lessons
+                        ]
+                    update_cache_status('lessons', True)
+                except Exception as e:
+                    st.error(f"Error cargando lecciones: {e}")
+                    update_cache_status('lessons', False)
         else:
             lessons = st.session_state.lessons_list_cache
         
@@ -1911,9 +1994,6 @@ elif section == "Usuario":
                 col6.metric("Desafíos Perfectos", user.perfect_challenges)
                 col7.metric("Último Login", user.last_login.strftime("%Y-%m-%d %H:%M"))
                 
-                # Progress tables
-                from database import LessonProgress, UserVocabularyProgress, ExerciseAttempt
-                
                 st.markdown("---")
                 st.markdown("#### Detalles de Progreso por Sistema")
                 
@@ -1947,7 +2027,6 @@ elif section == "Usuario":
             else:
                 st.warning("⚠️ No hay perfil de usuario creado")
                 if st.button("Crear Perfil por Defecto"):
-                    from database.seed import seed_user
                     seed_user()
                     st.success("✅ Perfil creado")
                     st.rerun()
@@ -2013,12 +2092,6 @@ elif section == "Usuario":
                     if confirm:
                         try:
                             with get_session() as session:
-                                from database import (
-                                    LessonProgress, UserVocabularyProgress, 
-                                    ExerciseAttempt, ReadingProgress, ReviewLog,
-                                    UserProgressSummary
-                                )
-                                
                                 # Delete all progress records
                                 for model in [LessonProgress, UserVocabularyProgress, 
                                             ExerciseAttempt, ReadingProgress, ReviewLog]:
@@ -2079,11 +2152,6 @@ elif section == "Usuario":
                     if confirm1 and confirm2 and confirmation_text == "RESETEAR TODO":
                         try:
                             with get_session() as session:
-                                from database import (
-                                    UserProfile, LessonProgress, UserVocabularyProgress,
-                                    ExerciseAttempt, ReadingProgress, ReviewLog,
-                                    UserChallengeProgress, UserProgressSummary
-                                )
                                 
                                 # Reset user profile
                                 user = session.exec(select(UserProfile)).first()
@@ -2171,14 +2239,19 @@ elif section == "Estadísticas":
     # Cache stats in session state
     if 'stats_cache' not in st.session_state:
         with st.spinner("⏳ Calculando estadísticas..."):
-            with get_session() as session:
-                all_words = session.exec(select(Word)).all()
-                texts = session.exec(select(Text)).all()
-                # Convert to dicts WHILE session is still open
-                st.session_state.stats_cache = (
-                    [{'part_of_speech': w.part_of_speech, 'level': w.level} for w in all_words],
-                    len(texts)
-                )
+            try:
+                with get_session() as session:
+                    all_words = session.exec(select(Word)).all()
+                    texts = session.exec(select(Text)).all()
+                    # Convert to dicts WHILE session is still open
+                    st.session_state.stats_cache = (
+                        [{'part_of_speech': w.part_of_speech, 'level': w.level} for w in all_words],
+                        len(texts)
+                    )
+                update_cache_status('stats', True)
+            except Exception as e:
+                st.error(f"Error cargando estadísticas: {e}")
+                update_cache_status('stats', False)
     else:
         all_words, texts_count = st.session_state.stats_cache
     
