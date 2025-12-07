@@ -1,0 +1,514 @@
+[
+    {
+        "id": 121,
+        "latin": "Puellae pulchrae sunt.",
+        "notes": "Correcto (pulchrae = modificador_adjetival)."
+    },
+    {
+        "id": 122,
+        "latin": "Libri magni in mensa sunt.",
+        "notes": "Correcto."
+    },
+    {
+        "id": 123,
+        "latin": "Puer bonus est.",
+        "notes": "Correcto."
+    },
+    {
+        "id": 124,
+        "latin": "Domus alta est.",
+        "notes": "Correcto."
+    },
+    {
+        "id": 125,
+        "latin": "Equus albus currit.",
+        "notes": "Correcto."
+    },
+    {
+        "id": 126,
+        "latin": "Vir fortis gladio pugnat.",
+        "notes": "Correcto."
+    },
+    {
+        "id": 127,
+        "latin": "Mater filiam amat.",
+        "notes": "Correcto."
+    },
+    {
+        "id": 128,
+        "latin": "Canis fidelis est.",
+        "notes": "Correcto."
+    },
+    {
+        "id": 129,
+        "latin": "Flumen latum est.",
+        "notes": "Correcto."
+    },
+    {
+        "id": 130,
+        "latin": "Poeta carmina scribit.",
+        "notes": "Correcto."
+    },
+    {
+        "id": 131,
+        "latin": "Discipuli magistrum audiunt.",
+        "notes": "Correcto."
+    },
+    {
+        "id": 151,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "determinante",
+                "correct_role": "determinante",
+                "note": "uter = cuál de los dos"
+            }
+        ]
+    },
+    {
+        "id": 152,
+        "corrections": [
+            {
+                "idx": 2,
+                "current_role": "complemento_circunstancial",
+                "correct_role": "complemento_agente",
+                "note": "a/ab + ablativo en pasiva = agente"
+            }
+        ]
+    },
+    {
+        "id": 153,
+        "corrections": [
+            {
+                "idx": 2,
+                "current_role": "complemento_circunstancial",
+                "correct_role": "complemento_agente"
+            }
+        ]
+    },
+    {
+        "id": 154,
+        "corrections": [
+            {
+                "idx": 2,
+                "current_role": "complemento_circunstancial",
+                "correct_role": "complemento_agente"
+            }
+        ]
+    },
+    {
+        "id": 155,
+        "notes": "Correcto (pasiva impersonal)."
+    },
+    {
+        "id": 156,
+        "notes": "Correcto."
+    },
+    {
+        "id": 157,
+        "notes": "Correcto."
+    },
+    {
+        "id": 158,
+        "notes": "Correcto (participio perfecto pasivo concordado)."
+    },
+    {
+        "id": 159,
+        "notes": "Correcto."
+    },
+    {
+        "id": 160,
+        "notes": "Correcto."
+    },
+    {
+        "id": 161,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "complemento_circunstancial",
+                "correct_role": "complemento_agente"
+            }
+        ]
+    },
+    {
+        "id": 162,
+        "notes": "Correcto."
+    },
+    {
+        "id": 163,
+        "notes": "Correcto (cum histórico)."
+    },
+    {
+        "id": 164,
+        "notes": "Correcto (futuro perfecto en prótasis)."
+    },
+    {
+        "id": 165,
+        "notes": "Correcto (condicional futuro más que perfecto)."
+    },
+    {
+        "id": 166,
+        "notes": "Correcto."
+    },
+    {
+        "id": 167,
+        "notes": "Correcto."
+    },
+    {
+        "id": 168,
+        "notes": "Correcto."
+    },
+    {
+        "id": 169,
+        "notes": "Correcto."
+    },
+    {
+        "id": 170,
+        "notes": "Correcto."
+    },
+    {
+        "id": 171,
+        "notes": "Correcto."
+    },
+    {
+        "id": 172,
+        "corrections": [
+            {
+                "idx": 2,
+                "current_role": "complemento_circunstancial",
+                "correct_role": "complemento_agente"
+            }
+        ]
+    },
+    {
+        "id": 173,
+        "notes": "Correcto (pasiva impersonal)."
+    },
+    {
+        "id": 174,
+        "notes": "Correcto (pasiva impersonal)."
+    },
+    {
+        "id": 175,
+        "notes": "Correcto."
+    },
+    {
+        "id": 176,
+        "corrections": [
+            {
+                "idx": 2,
+                "current_role": "complemento_circunstancial",
+                "correct_role": "complemento_agente"
+            }
+        ]
+    },
+    {
+        "id": 177,
+        "notes": "Correcto."
+    },
+    {
+        "id": 178,
+        "notes": "Correcto."
+    },
+    {
+        "id": 179,
+        "notes": "Correcto."
+    },
+    {
+        "id": 180,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "objeto_directo",
+                "correct_role": "sujeto_paciente"
+            },
+            {
+                "idx": 1,
+                "current_role": "predicado",
+                "correct_role": "predicado"
+            }
+        ]
+    },
+    {
+        "id": 181,
+        "notes": "Correcto."
+    },
+    {
+        "id": 182,
+        "notes": "Correcto (perfecto pasivo analítico)."
+    },
+    {
+        "id": 183,
+        "notes": "Correcto."
+    },
+    {
+        "id": 184,
+        "notes": "Correcto."
+    },
+    {
+        "id": 185,
+        "notes": "Correcto."
+    },
+    {
+        "id": 186,
+        "notes": "Correcto."
+    },
+    {
+        "id": 187,
+        "notes": "Correcto."
+    },
+    {
+        "id": 188,
+        "notes": "Correcto."
+    },
+    {
+        "id": 189,
+        "notes": "Correcto."
+    },
+    {
+        "id": 190,
+        "notes": "Correcto."
+    },
+    {
+        "id": 191,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "complemento_predicativo",
+                "correct_role": "complemento_predicativo"
+            }
+        ]
+    },
+    {
+        "id": 192,
+        "notes": "Correcto (perífrasis verbal profecti sunt)."
+    },
+    {
+        "id": 193,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "objeto_directo",
+                "correct_role": "objeto_directo"
+            }
+        ]
+    },
+    {
+        "id": 194,
+        "notes": "Correcto (gaudeo + infinitivo)."
+    },
+    {
+        "id": 195,
+        "notes": "Correcto."
+    },
+    {
+        "id": 196,
+        "notes": "Correcto (verbum loqui + acusativo)."
+    },
+    {
+        "id": 197,
+        "notes": "Correcto (utor + ablativo)."
+    },
+    {
+        "id": 198,
+        "notes": "Correcto."
+    },
+    {
+        "id": 199,
+        "notes": "Correcto."
+    },
+    {
+        "id": 200,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "ablativo_absoluto",
+                "correct_role": "ablativo_absoluto"
+            }
+        ]
+    },
+    {
+        "id": 201,
+        "notes": "Correcto (imperativo + infinitivo)."
+    },
+    {
+        "id": 202,
+        "notes": "Correcto (verbo de voluntad + ut + subj.)."
+    },
+    {
+        "id": 203,
+        "notes": "Correcto (timeo ne = temo que sí)."
+    },
+    {
+        "id": 204,
+        "notes": "Correcto (oportet + ut + subj.)."
+    },
+    {
+        "id": 205,
+        "notes": "Correcto (cum descriptivo)."
+    },
+    {
+        "id": 206,
+        "notes": "Correcto."
+    },
+    {
+        "id": 207,
+        "notes": "Correcto."
+    },
+    {
+        "id": 208,
+        "notes": "Correcto (nolo + ut)."
+    },
+    {
+        "id": 209,
+        "notes": "Correcto (licet + dativo + infinitivo)."
+    },
+    {
+        "id": 210,
+        "notes": "Correcto (metuo ut = temo que no)."
+    },
+    {
+        "id": 211,
+        "notes": "Correcto."
+    },
+    {
+        "id": 212,
+        "notes": "Correcto (AcI)."
+    },
+    {
+        "id": 213,
+        "notes": "Correcto (AcI con infinitivo perfecto)."
+    },
+    {
+        "id": 214,
+        "notes": "Correcto."
+    },
+    {
+        "id": 215,
+        "notes": "Correcto."
+    },
+    {
+        "id": 216,
+        "notes": "Correcto."
+    },
+    {
+        "id": 217,
+        "notes": "Correcto."
+    },
+    {
+        "id": 218,
+        "notes": "Correcto."
+    },
+    {
+        "id": 219,
+        "notes": "Correcto."
+    },
+    {
+        "id": 220,
+        "notes": "Correcto (interrogativa indirecta)."
+    },
+    {
+        "id": 221,
+        "notes": "Correcto."
+    },
+    {
+        "id": 222,
+        "notes": "Correcto (infinitivo sustantivado como sujeto)."
+    },
+    {
+        "id": 223,
+        "notes": "Correcto."
+    },
+    {
+        "id": 224,
+        "notes": "Correcto."
+    },
+    {
+        "id": 225,
+        "notes": "Correcto (AcI)."
+    },
+    {
+        "id": 226,
+        "notes": "Correcto (infinitivo futuro activo)."
+    },
+    {
+        "id": 227,
+        "notes": "Correcto."
+    },
+    {
+        "id": 228,
+        "notes": "Correcto."
+    },
+    {
+        "id": 229,
+        "notes": "Correcto (infinitivo perfecto)."
+    },
+    {
+        "id": 230,
+        "notes": "Correcto."
+    },
+    {
+        "id": 231,
+        "notes": "Correcto."
+    },
+    {
+        "id": 232,
+        "notes": "Correcto."
+    },
+    {
+        "id": 233,
+        "corrections": [
+            {
+                "idx": 3,
+                "current_role": "oración_de_relativo",
+                "correct_role": "oración_de_relativo"
+            }
+        ]
+    },
+    {
+        "id": 234,
+        "corrections": [
+            {
+                "idx": 2,
+                "current_role": "complemento_circunstancial",
+                "correct_role": "complemento_agente"
+            },
+            {
+                "idx": 7,
+                "current_role": "oración_adverbial",
+                "correct_role": "oración_adverbial",
+                "note": "quod causal"
+            }
+        ]
+    },
+    {
+        "id": 235,
+        "notes": "Correcto."
+    },
+    {
+        "id": 236,
+        "notes": "Correcto."
+    },
+    {
+        "id": 237,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "ablativo_absoluto",
+                "correct_role": "ablativo_absoluto"
+            }
+        ]
+    },
+    {
+        "id": 238,
+        "notes": "Correcto (ut final)."
+    },
+    {
+        "id": 239,
+        "notes": "Correcto (imperare + dativo + ut)."
+    },
+    {
+        "id": 240,
+        "notes": "Correcto (interrogativa indirecta en pluscuamperfecto de subjuntivo)."
+    }
+]

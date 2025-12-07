@@ -10,3 +10,5 @@ https://huggingface.co/latincy/la_core_web_lg/resolve/main/la_core_web_lg-any-py
 fuzzywuzzy>=0.18.0
 python-Levenshtein>=0.12.2
 alembic>=1.13.0
+
+pycollatinus>=0.1

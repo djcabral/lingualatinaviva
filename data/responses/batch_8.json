@@ -1,0 +1,82 @@
+[
+  {
+    "id": 430,
+    "latin": "quotidiānus",
+    "part_of_speech": "adjective",
+    "genitive": null,
+    "definition_es": "cotidiano, diario, de cada día",
+    "status": "active"
+  },
+  {
+    "id": 431,
+    "latin": "dēbitor",
+    "part_of_speech": "noun",
+    "genitive": "dēbitōris",
+    "definition_es": "deudor",
+    "status": "active"
+  },
+  {
+    "id": 432,
+    "latin": "tentātiō",
+    "part_of_speech": "noun",
+    "genitive": "tentātiōnis",
+    "definition_es": "tentación, prueba, ensayo",
+    "status": "active"
+  },
+  {
+    "id": 433,
+    "latin": "hypothesis",
+    "part_of_speech": "noun",
+    "genitive": "hypotheseōs",
+    "definition_es": "hipótesis, suposición (préstamo griego, latín tardío y medieval)",
+    "status": "active"
+  },
+  {
+    "id": 434,
+    "latin": "experīmentum",
+    "part_of_speech": "noun",
+    "genitive": "experīmentī",
+    "definition_es": "prueba, experimento, experiencia",
+    "status": "active"
+  },
+  {
+    "id": 435,
+    "latin": "gravitās",
+    "part_of_speech": "noun",
+    "genitive": "gravitātis",
+    "definition_es": "peso, gravedad; seriedad, importancia",
+    "status": "active"
+  },
+  {
+    "id": 436,
+    "latin": "orbita",
+    "part_of_speech": "noun",
+    "genitive": "orbitae",
+    "definition_es": "huella, rodada; órbita (sentido astronómico en latín tardío y medieval)",
+    "status": "active"
+  },
+  {
+    "id": 437,
+    "latin": "calculus",
+    "part_of_speech": "noun",
+    "genitive": "calculī",
+    "definition_es": "piedrecita, guijarro; ficha de cálculo, cálculo (matemático o médico)",
+    "status": "active"
+  },
+  {
+    "id": 438,
+    "latin": "methodus",
+    "part_of_speech": "noun",
+    "genitive": "methodī",
+    "definition_es": "método, procedimiento (préstamo griego, latín tardío y escolástico)",
+    "status": "active"
+  },
+  {
+    "id": 439,
+    "latin": "nātūra",
+    "part_of_speech": "noun",
+    "genitive": "nātūrae",
+    "definition_es": "naturaleza, carácter, esencia, nacimiento",
+    "status": "active"
+  }
+]

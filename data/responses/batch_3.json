@@ -1,0 +1,82 @@
+[
+  {
+    "id": 379,
+    "latin": "vigilia",
+    "part_of_speech": "noun",
+    "genitive": "vigiliae",
+    "definition_es": "vigilia, vela, insomnio; guardia nocturna",
+    "status": "active"
+  },
+  {
+    "id": 381,
+    "latin": "cupīdō",
+    "part_of_speech": "noun",
+    "genitive": "cupīdinis",
+    "definition_es": "deseo, pasión, codicia; (Cupīdō) Cupido, dios del amor",
+    "status": "active"
+  },
+  {
+    "id": 382,
+    "latin": "cōniūrātiō",
+    "part_of_speech": "noun",
+    "genitive": "cōniūrātiōnis",
+    "definition_es": "conjuración, complot, alianza jurada",
+    "status": "active"
+  },
+  {
+    "id": 383,
+    "latin": "cīvitās",
+    "part_of_speech": "noun",
+    "genitive": "cīvitātis",
+    "definition_es": "ciudadanía, Estado, ciudad, comunidad política",
+    "status": "active"
+  },
+  {
+    "id": 384,
+    "latin": "requīrō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "buscar, preguntar por, requerir, necesitar",
+    "status": "active"
+  },
+  {
+    "id": 385,
+    "latin": "excrucio",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "torturar, atormentar, crucificar",
+    "status": "active"
+  },
+  {
+    "id": 386,
+    "latin": "passer",
+    "part_of_speech": "noun",
+    "genitive": "passeris",
+    "definition_es": "gorrión",
+    "status": "active"
+  },
+  {
+    "id": 387,
+    "latin": "bāsium",
+    "part_of_speech": "noun",
+    "genitive": "bāsiī",
+    "definition_es": "beso (en los labios)",
+    "status": "active"
+  },
+  {
+    "id": 388,
+    "latin": "vīvō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "vivir, estar vivo",
+    "status": "active"
+  },
+  {
+    "id": 389,
+    "latin": "rūmor",
+    "part_of_speech": "noun",
+    "genitive": "rūmōris",
+    "definition_es": "rumor, murmullo, fama popular",
+    "status": "active"
+  }
+]

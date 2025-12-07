@@ -1,0 +1,82 @@
+[
+  {
+    "id": 410,
+    "latin": "fors",
+    "part_of_speech": "noun",
+    "genitive": "fortis",
+    "definition_es": "suerte, azar, casualidad (a menudo en la expresión forsitan o forte)",
+    "status": "active"
+  },
+  {
+    "id": 411,
+    "latin": "ignārus",
+    "part_of_speech": "adjective",
+    "genitive": null,
+    "definition_es": "ignorante, que no sabe, desconocedor de (con genitivo)",
+    "status": "active"
+  },
+  {
+    "id": 412,
+    "latin": "mūtō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "cambiar, transformar, mudar, alterar",
+    "status": "active"
+  },
+  {
+    "id": 413,
+    "latin": "fōrma",
+    "part_of_speech": "noun",
+    "genitive": "fōrmae",
+    "definition_es": "forma, figura, belleza, apariencia",
+    "status": "active"
+  },
+  {
+    "id": 414,
+    "latin": "orbis",
+    "part_of_speech": "noun",
+    "genitive": "orbis",
+    "definition_es": "círculo, disco; orbe terráqueo, mundo; esfera",
+    "status": "active"
+  },
+  {
+    "id": 415,
+    "latin": "Phoebus",
+    "part_of_speech": "proper_noun",
+    "genitive": "Phoebī",
+    "definition_es": "Febo (epíteto de Apolo, dios del sol, la música y la profecía)",
+    "status": "active"
+  },
+  {
+    "id": 416,
+    "latin": "ūniversitās",
+    "part_of_speech": "noun",
+    "genitive": "ūniversitātis",
+    "definition_es": "totalidad, conjunto, universo; (en latín medieval) corporación, universidad",
+    "status": "active"
+  },
+  {
+    "id": 417,
+    "latin": "scholasticus",
+    "part_of_speech": "adjective",
+    "genitive": null,
+    "definition_es": "escolar, relativo a la escuela; (en latín medieval y posterior) escolástico",
+    "status": "active"
+  },
+  {
+    "id": 418,
+    "latin": "trīnitās",
+    "part_of_speech": "noun",
+    "genitive": "trīnitātis",
+    "definition_es": "(en latín cristiano) Trinidad",
+    "status": "active"
+  },
+  {
+    "id": 419,
+    "latin": "peccātum",
+    "part_of_speech": "noun",
+    "genitive": "peccātī",
+    "definition_es": "falta, pecado, error",
+    "status": "active"
+  }
+]

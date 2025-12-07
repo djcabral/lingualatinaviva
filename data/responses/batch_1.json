@@ -1,0 +1,82 @@
+[
+  {
+    "id": 359,
+    "latin": "dīvidō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "dividir, repartir, separar",
+    "status": "active"
+  },
+  {
+    "id": 360,
+    "latin": "incolō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "habitar, residir, vivir en un lugar",
+    "status": "active"
+  },
+  {
+    "id": 361,
+    "latin": "proelium",
+    "part_of_speech": "noun",
+    "genitive": "proeliī",
+    "definition_es": "batalla, combate",
+    "status": "active"
+  },
+  {
+    "id": 362,
+    "latin": "flūmen",
+    "part_of_speech": "noun",
+    "genitive": "flūminis",
+    "definition_es": "río, corriente de agua",
+    "status": "active"
+  },
+  {
+    "id": 363,
+    "latin": "mōns",
+    "part_of_speech": "noun",
+    "genitive": "montis",
+    "definition_es": "monte, montaña",
+    "status": "active"
+  },
+  {
+    "id": 364,
+    "latin": "fīnis",
+    "part_of_speech": "noun",
+    "genitive": "fīnis",
+    "definition_es": "frontera, límite, territorio (normalmente en plural: fīnēs, fīnium)",
+    "status": "active"
+  },
+  {
+    "id": 365,
+    "latin": "copia",
+    "part_of_speech": "noun",
+    "genitive": "copiae",
+    "definition_es": "abundancia; tropas, fuerzas (en plural: ejércitos, recursos militares)",
+    "status": "active"
+  },
+  {
+    "id": 366,
+    "latin": "abūtor",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "abusar de, servirse mal de (verbo deponente, construye ablativo)",
+    "status": "active"
+  },
+  {
+    "id": 367,
+    "latin": "patientia",
+    "part_of_speech": "noun",
+    "genitive": "patientiae",
+    "definition_es": "paciencia, sufrimiento, resistencia",
+    "status": "active"
+  },
+  {
+    "id": 368,
+    "latin": "furor",
+    "part_of_speech": "noun",
+    "genitive": "furōris",
+    "definition_es": "furia, rabia, locura, frenesí",
+    "status": "active"
+  }
+]

@@ -1,0 +1,1100 @@
+[
+    {
+        "id": 361,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "sujeto",
+                "correct_role": "sujeto"
+            },
+            {
+                "idx": 2,
+                "current_role": "objeto_directo",
+                "correct_role": "objeto_directo"
+            }
+        ]
+    },
+    {
+        "id": 362,
+        "corrections": [
+            {
+                "idx": 4,
+                "current_role": "sujeto",
+                "correct_role": "complemento_predicativo",
+                "note": "Belgae es el verdadero sujeto → predicativo"
+            }
+        ]
+    },
+    {
+        "id": 363,
+        "notes": "Correcto (cum + abl. = compañía)."
+    },
+    {
+        "id": 364,
+        "notes": "Correcto."
+    },
+    {
+        "id": 365,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "aposición",
+                "correct_role": "sujeto",
+                "note": "Flumen Rhenus = sujeto completo"
+            },
+            {
+                "idx": 1,
+                "current_role": "sujeto",
+                "correct_role": "aposición"
+            }
+        ]
+    },
+    {
+        "id": 366,
+        "notes": "Correcto."
+    },
+    {
+        "id": 367,
+        "notes": "Correcto."
+    },
+    {
+        "id": 368,
+        "notes": "Correcto (in + acusativo = movimiento hacia)."
+    },
+    {
+        "id": 369,
+        "corrections": [
+            {
+                "idx": 3,
+                "current_role": "complemento_circunstancial",
+                "correct_role": "complemento_regimen",
+                "note": "abutor + ablativo = régimen"
+            }
+        ]
+    },
+    {
+        "id": 370,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "vocativo",
+                "correct_role": "vocativo"
+            },
+            {
+                "idx": 4,
+                "current_role": "vocativo",
+                "correct_role": "vocativo"
+            }
+        ]
+    },
+    {
+        "id": 371,
+        "notes": "Correcto."
+    },
+    {
+        "id": 372,
+        "notes": "Correcto (objeto directo elíptico)."
+    },
+    {
+        "id": 373,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "sujeto",
+                "correct_role": "sujeto",
+                "note": "hic usado como demostrativo = sujeto"
+            }
+        ]
+    },
+    {
+        "id": 374,
+        "notes": "Correcto."
+    },
+    {
+        "id": 375,
+        "corrections": [
+            {
+                "idx": 2,
+                "current_role": "complemento_predicativo",
+                "correct_role": "complemento_predicativo"
+            },
+            {
+                "idx": 3,
+                "current_role": "modificador_adjetival",
+                "correct_role": "modificador_adjetival"
+            }
+        ]
+    },
+    {
+        "id": 376,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "vocativo",
+                "correct_role": "vocativo"
+            },
+            {
+                "idx": 2,
+                "current_role": "complemento_predicativo",
+                "correct_role": "complemento_predicativo"
+            }
+        ]
+    },
+    {
+        "id": 377,
+        "corrections": [
+            {
+                "idx": 4,
+                "current_role": "vocativo",
+                "correct_role": "vocativo"
+            }
+        ]
+    },
+    {
+        "id": 378,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "sujeto",
+                "correct_role": "sujeto"
+            }
+        ]
+    },
+    {
+        "id": 379,
+        "notes": "Correcto (participio perfecto pasivo como predicado)."
+    },
+    {
+        "id": 380,
+        "corrections": [
+            {
+                "idx": 2,
+                "current_role": "complemento_predicativo",
+                "correct_role": "complemento_predicativo",
+                "note": "vi = predicativo del sujeto omitido"
+            },
+            {
+                "idx": 5,
+                "current_role": "elemento_coordinado",
+                "correct_role": "elemento_coordinado"
+            }
+        ]
+    },
+    {
+        "id": 381,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "complemento_predicativo",
+                "correct_role": "complemento_predicativo"
+            },
+            {
+                "idx": 4,
+                "current_role": "cópula",
+                "correct_role": "cópula"
+            }
+        ]
+    },
+    {
+        "id": 382,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "objeto_indirecto",
+                "correct_role": "objeto_indirecto",
+                "note": "huic = dativo de interés"
+            },
+            {
+                "idx": 3,
+                "current_role": "sujeto",
+                "correct_role": "sujeto"
+            }
+        ]
+    },
+    {
+        "id": 383,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "complemento_predicativo",
+                "correct_role": "complemento_predicativo"
+            },
+            {
+                "idx": 2,
+                "current_role": "complemento_del_nombre",
+                "correct_role": "complemento_regimen",
+                "note": "patiens + genitivo = régimen"
+            }
+        ]
+    },
+    {
+        "id": 384,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "sujeto",
+                "correct_role": "sujeto omitido (es él)"
+            },
+            {
+                "idx": 1,
+                "current_role": "modificador_adjetival",
+                "correct_role": "modificador_adjetival"
+            },
+            {
+                "idx": 4,
+                "current_role": "modificador_adjetival",
+                "correct_role": "modificador_adjetival"
+            }
+        ]
+    },
+    {
+        "id": 385,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "complemento_predicativo",
+                "correct_role": "complemento_predicativo",
+                "note": "satis / parum + genitivo = construcción predicativa"
+            },
+            {
+                "idx": 4,
+                "current_role": "complemento_predicativo",
+                "correct_role": "complemento_predicativo"
+            }
+        ]
+    },
+    {
+        "id": 386,
+        "corrections": [
+            {
+                "idx": 2,
+                "current_role": "modificador_adjetival",
+                "correct_role": "complemento_predicativo",
+                "note": "immoderata = predicativo objetivo"
+            }
+        ]
+    },
+    {
+        "id": 387,
+        "notes": "Correcto."
+    },
+    {
+        "id": 388,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "sujeto",
+                "correct_role": "sujeto"
+            }
+        ]
+    },
+    {
+        "id": 389,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "predicado",
+                "correct_role": "predicado"
+            },
+            {
+                "idx": 3,
+                "current_role": "vocativo",
+                "correct_role": "vocativo"
+            }
+        ]
+    },
+    {
+        "id": 390,
+        "notes": "Correcto."
+    },
+    {
+        "id": 391,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "oración_completiva",
+                "correct_role": "infinitivo_complemento"
+            },
+            {
+                "idx": 3,
+                "current_role": "oración_completiva",
+                "correct_role": "infinitivo_complemento"
+            }
+        ]
+    },
+    {
+        "id": 392,
+        "corrections": [
+            {
+                "idx": 3,
+                "current_role": "predicado",
+                "correct_role": "predicado",
+                "note": "gerundivo de obligación + dativo agente"
+            }
+        ]
+    },
+    {
+        "id": 393,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "predicado",
+                "correct_role": "predicado"
+            },
+            {
+                "idx": 3,
+                "current_role": "vocativo",
+                "correct_role": "vocativo"
+            },
+            {
+                "idx": 4,
+                "current_role": "vocativo",
+                "correct_role": "vocativo"
+            }
+        ]
+    },
+    {
+        "id": 394,
+        "corrections": [
+            {
+                "idx": 4,
+                "current_role": "complemento_del_nombre",
+                "correct_role": "complemento_del_nombre",
+                "note": "meae puellae = genitivo de posesión"
+            }
+        ]
+    },
+    {
+        "id": 395,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "vocativo",
+                "correct_role": "vocativo"
+            }
+        ]
+    },
+    {
+        "id": 396,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "objeto_indirecto",
+                "correct_role": "complemento_regimen",
+                "note": "nubere + dativo"
+            },
+            {
+                "idx": 6,
+                "current_role": "oración_completiva",
+                "correct_role": "infinitivo_complemento"
+            }
+        ]
+    },
+    {
+        "id": 397,
+        "corrections": [
+            {
+                "idx": 5,
+                "current_role": "objeto_indirecto",
+                "correct_role": "objeto_indirecto"
+            }
+        ]
+    },
+    {
+        "id": 398,
+        "corrections": [
+            {
+                "idx": 3,
+                "current_role": "predicado",
+                "correct_role": "predicado"
+            }
+        ]
+    },
+    {
+        "id": 399,
+        "corrections": [
+            {
+                "idx": 5,
+                "current_role": "oración_de_relativo",
+                "correct_role": "oración_de_relativo"
+            }
+        ]
+    },
+    {
+        "id": 400,
+        "corrections": [
+            {
+                "idx": 4,
+                "current_role": "predicado",
+                "correct_role": "predicado"
+            }
+        ]
+    },
+    {
+        "id": 401,
+        "corrections": [
+            {
+                "idx": 4,
+                "current_role": "oración_completiva",
+                "correct_role": "sujeto",
+                "note": "infinitivo + acusativo = sujeto lógico"
+            }
+        ]
+    },
+    {
+        "id": 402,
+        "corrections": [
+            {
+                "idx": 6,
+                "current_role": "oración_de_relativo",
+                "correct_role": "oración_de_relativo"
+            }
+        ]
+    },
+    {
+        "id": 403,
+        "corrections": [
+            {
+                "idx": 4,
+                "current_role": "modificador_adjetival",
+                "correct_role": "complemento_circunstancial",
+                "note": "participio presente circunstancial"
+            }
+        ]
+    },
+    {
+        "id": 404,
+        "corrections": [
+            {
+                "idx": 2,
+                "current_role": "complemento_del_nombre",
+                "correct_role": "complemento_del_nombre"
+            }
+        ]
+    },
+    {
+        "id": 405,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "objeto_indirecto",
+                "correct_role": "complemento_circunstancial",
+                "note": "omnibus = dativo de referencia"
+            }
+        ]
+    },
+    {
+        "id": 406,
+        "notes": "Correcto."
+    },
+    {
+        "id": 407,
+        "corrections": [
+            {
+                "idx": 2,
+                "current_role": "aposición",
+                "correct_role": "aposición"
+            },
+            {
+                "idx": 5,
+                "current_role": "oración_de_relativo",
+                "correct_role": "oración_de_relativo"
+            }
+        ]
+    },
+    {
+        "id": 408,
+        "notes": "Correcto."
+    },
+    {
+        "id": 409,
+        "corrections": [
+            {
+                "idx": 2,
+                "current_role": "predicado",
+                "correct_role": "predicado",
+                "note": "gerundivo de obligación impersonal"
+            }
+        ]
+    },
+    {
+        "id": 410,
+        "notes": "Correcto (frase nominal)."
+    },
+    {
+        "id": 411,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "vocativo",
+                "correct_role": "vocativo"
+            }
+        ]
+    },
+    {
+        "id": 412,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "sujeto",
+                "correct_role": "sujeto"
+            }
+        ]
+    },
+    {
+        "id": 413,
+        "notes": "Correcto."
+    },
+    {
+        "id": 414,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "complemento_predicativo",
+                "correct_role": "complemento_predicativo"
+            }
+        ]
+    },
+    {
+        "id": 415,
+        "corrections": [
+            {
+                "idx": 2,
+                "current_role": "objeto_directo",
+                "correct_role": "objeto_directo"
+            }
+        ]
+    },
+    {
+        "id": 416,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "complemento_predicativo",
+                "correct_role": "complemento_predicativo"
+            }
+        ]
+    },
+    {
+        "id": 417,
+        "corrections": [
+            {
+                "idx": 5,
+                "current_role": "oración_completiva",
+                "correct_role": "infinitivo_complemento"
+            }
+        ]
+    },
+    {
+        "id": 418,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "complemento_predicativo",
+                "correct_role": "complemento_predicativo"
+            }
+        ]
+    },
+    {
+        "id": 419,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "vocativo",
+                "correct_role": "vocativo"
+            }
+        ]
+    },
+    {
+        "id": 420,
+        "corrections": [
+            {
+                "idx": 2,
+                "current_role": "ablativo_absoluto",
+                "correct_role": "ablativo_absoluto"
+            }
+        ]
+    },
+    {
+        "id": 421,
+        "notes": "Correcto."
+    },
+    {
+        "id": 422,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "complemento_predicativo",
+                "correct_role": "complemento_predicativo"
+            }
+        ]
+    },
+    {
+        "id": 423,
+        "notes": "Correcto."
+    },
+    {
+        "id": 424,
+        "corrections": [
+            {
+                "idx": 2,
+                "current_role": "oración_adverbial",
+                "correct_role": "oración_adverbial temporal"
+            }
+        ]
+    },
+    {
+        "id": 425,
+        "notes": "Correcto."
+    },
+    {
+        "id": 426,
+        "corrections": [
+            {
+                "idx": 2,
+                "current_role": "complemento_circunstancial",
+                "correct_role": "complemento_regimen",
+                "note": "latere + ablativo"
+            }
+        ]
+    },
+    {
+        "id": 427,
+        "corrections": [
+            {
+                "idx": 3,
+                "current_role": "sujeto",
+                "correct_role": "aposición"
+            }
+        ]
+    },
+    {
+        "id": 428,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "vocativo",
+                "correct_role": "vocativo"
+            }
+        ]
+    },
+    {
+        "id": 429,
+        "corrections": [
+            {
+                "idx": 3,
+                "current_role": "complemento_predicativo",
+                "correct_role": "complemento_predicativo"
+            }
+        ]
+    },
+    {
+        "id": 430,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "modificador_adverbial",
+                "correct_role": "modificador_adverbial"
+            }
+        ]
+    },
+    {
+        "id": 431,
+        "corrections": [
+            {
+                "idx": 2,
+                "current_role": "modificador_adjetival",
+                "correct_role": "modificador_adjetival"
+            }
+        ]
+    },
+    {
+        "id": 432,
+        "corrections": [
+            {
+                "idx": 2,
+                "current_role": "vocativo",
+                "correct_role": "vocativo"
+            }
+        ]
+    },
+    {
+        "id": 433,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "objeto_indirecto",
+                "correct_role": "objeto_indirecto"
+            }
+        ]
+    },
+    {
+        "id": 434,
+        "corrections": [
+            {
+                "idx": 3,
+                "current_role": "objeto_indirecto",
+                "correct_role": "objeto_indirecto"
+            },
+            {
+                "idx": 5,
+                "current_role": "vocativo",
+                "correct_role": "vocativo"
+            }
+        ]
+    },
+    {
+        "id": 435,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "aposición",
+                "correct_role": "aposición"
+            }
+        ]
+    },
+    {
+        "id": 436,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "vocativo",
+                "correct_role": "vocativo"
+            }
+        ]
+    },
+    {
+        "id": 437,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "vocativo",
+                "correct_role": "vocativo"
+            }
+        ]
+    },
+    {
+        "id": 438,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "sujeto_paciente",
+                "correct_role": "sujeto_paciente"
+            }
+        ]
+    },
+    {
+        "id": 439,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "sujeto_paciente",
+                "correct_role": "sujeto"
+            }
+        ]
+    },
+    {
+        "id": 440,
+        "notes": "Correcto."
+    },
+    {
+        "id": 441,
+        "corrections": [
+            {
+                "idx": 3,
+                "current_role": "objeto_directo",
+                "correct_role": "objeto_directo"
+            }
+        ]
+    },
+    {
+        "id": 442,
+        "notes": "Correcto (sicut = comparativa)."
+    },
+    {
+        "id": 443,
+        "notes": "Correcto."
+    },
+    {
+        "id": 444,
+        "notes": "Correcto."
+    },
+    {
+        "id": 445,
+        "notes": "Correcto (dativo de ventaja)."
+    },
+    {
+        "id": 446,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "objeto_directo",
+                "correct_role": "objeto_directo"
+            }
+        ]
+    },
+    {
+        "id": 447,
+        "corrections": [
+            {
+                "idx": 2,
+                "current_role": "predicado",
+                "correct_role": "predicado"
+            }
+        ]
+    },
+    {
+        "id": 448,
+        "corrections": [
+            {
+                "idx": 3,
+                "current_role": "complemento_circunstancial",
+                "correct_role": "complemento_regimen",
+                "note": "abhorrere + ab + ablativo"
+            }
+        ]
+    },
+    {
+        "id": 449,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "objeto_indirecto",
+                "correct_role": "complemento_predicativo",
+                "note": "dativo predicativo: es un lobo para el hombre"
+            }
+        ]
+    },
+    {
+        "id": 450,
+        "notes": "Correcto."
+    },
+    {
+        "id": 451,
+        "notes": "Correcto."
+    },
+    {
+        "id": 452,
+        "notes": "Correcto."
+    },
+    {
+        "id": 453,
+        "notes": "Correcto."
+    },
+    {
+        "id": 454,
+        "notes": "Correcto (título completo)."
+    },
+    {
+        "id": 455,
+        "corrections": [
+            {
+                "idx": 4,
+                "current_role": "vocativo",
+                "correct_role": "vocativo"
+            }
+        ]
+    },
+    {
+        "id": 456,
+        "corrections": [
+            {
+                "idx": 5,
+                "current_role": "oración_adjetiva",
+                "correct_role": "oración_adjetiva"
+            }
+        ]
+    },
+    {
+        "id": 457,
+        "corrections": [
+            {
+                "idx": 5,
+                "current_role": "antecedente_relativa",
+                "correct_role": "complemento_del_nombre"
+            }
+        ]
+    },
+    {
+        "id": 458,
+        "corrections": [
+            {
+                "idx": 5,
+                "current_role": "sujeto",
+                "correct_role": "sujeto (tú omitido)"
+            }
+        ]
+    },
+    {
+        "id": 459,
+        "corrections": [
+            {
+                "idx": 3,
+                "current_role": "aposición",
+                "correct_role": "aposición"
+            }
+        ]
+    },
+    {
+        "id": 460,
+        "corrections": [
+            {
+                "idx": 2,
+                "current_role": "complemento_predicativo",
+                "correct_role": "complemento_predicativo"
+            }
+        ]
+    },
+    {
+        "id": 461,
+        "corrections": [
+            {
+                "idx": 2,
+                "current_role": "complemento_predicativo",
+                "correct_role": "complemento_predicativo"
+            }
+        ]
+    },
+    {
+        "id": 462,
+        "corrections": [
+            {
+                "idx": 2,
+                "current_role": "complemento_predicativo",
+                "correct_role": "complemento_predicativo"
+            }
+        ]
+    },
+    {
+        "id": 463,
+        "corrections": [
+            {
+                "idx": 2,
+                "current_role": "complemento_predicativo",
+                "correct_role": "complemento_predicativo"
+            }
+        ]
+    },
+    {
+        "id": 464,
+        "notes": "Correcto."
+    },
+    {
+        "id": 465,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "complemento_predicativo",
+                "correct_role": "complemento_predicativo"
+            }
+        ]
+    },
+    {
+        "id": 466,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "complemento_predicativo",
+                "correct_role": "complemento_predicativo"
+            }
+        ]
+    },
+    {
+        "id": 467,
+        "notes": "Correcto."
+    },
+    {
+        "id": 468,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "complemento_predicativo",
+                "correct_role": "complemento_predicativo"
+            }
+        ]
+    },
+    {
+        "id": 469,
+        "notes": "Correcto."
+    },
+    {
+        "id": 470,
+        "notes": "Correcto."
+    },
+    {
+        "id": 471,
+        "corrections": [
+            {
+                "idx": 2,
+                "current_role": "complemento_predicativo",
+                "correct_role": "complemento_predicativo"
+            }
+        ]
+    },
+    {
+        "id": 472,
+        "notes": "Correcto."
+    },
+    {
+        "id": 473,
+        "notes": "Correcto."
+    },
+    {
+        "id": 474,
+        "notes": "Correcto."
+    },
+    {
+        "id": 475,
+        "notes": "Correcto."
+    },
+    {
+        "id": 476,
+        "corrections": [
+            {
+                "idx": 2,
+                "current_role": "complemento_predicativo",
+                "correct_role": "complemento_predicativo"
+            }
+        ]
+    },
+    {
+        "id": 477,
+        "corrections": [
+            {
+                "idx": 2,
+                "current_role": "complemento_predicativo",
+                "correct_role": "complemento_predicativo"
+            }
+        ]
+    },
+    {
+        "id": 478,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "objeto_indirecto",
+                "correct_role": "objeto_indirecto"
+            }
+        ]
+    },
+    {
+        "id": 479,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "objeto_indirecto",
+                "correct_role": "objeto_indirecto"
+            }
+        ]
+    },
+    {
+        "id": 480,
+        "corrections": [
+            {
+                "idx": 2,
+                "current_role": "complemento_predicativo",
+                "correct_role": "complemento_predicativo"
+            }
+        ]
+    }
+]

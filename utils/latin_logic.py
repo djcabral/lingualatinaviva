@@ -145,6 +145,55 @@ class LatinMorphology:
                     forms[key] = "—"
 
         return forms
+    @staticmethod
+    def decline_adjective(word: str, declension: str, gender: str, genitive: str) -> Dict[str, str]:
+        """
+        Generates declension for adjectives.
+        Handles 2-1-2 (bonus, bona, bonum) and 3rd declension (tristis, forte).
+        """
+        forms = {}
+        
+        # 1st/2nd Declension (2-1-2)
+        if declension == "1/2":
+            # word is masculine form: bonus
+            stem = word[:-2] if word.endswith("us") else (word[:-2] + "r" if word.endswith("er") else word)
+            # Correction for 'er' adjectives (pulcher -> pulchr)
+            if word.endswith("er") and genitive:
+                stem = genitive[:-1] # pulchri -> pulchr
+            
+            # Masculine (2nd Declension)
+            forms.update({f"{k}_m": v for k, v in LatinMorphology.decline_noun(word, "2", "m", genitive).items()})
+            
+            # Feminine (1st Declension)
+            fem_base = stem + "a"
+            forms.update({f"{k}_f": v for k, v in LatinMorphology.decline_noun(fem_base, "1", "f", stem + "ae").items()})
+            
+            # Neuter (2nd Declension Neuter)
+            neut_base = stem + "um"
+            forms.update({f"{k}_n": v for k, v in LatinMorphology.decline_noun(neut_base, "2", "n", stem + "i").items()})
+
+        # 3rd Declension
+        elif declension == "3":
+            # Handles: tristis (m/f), triste (n); audax (m/f/n); acer (m), acris (f), acre (n)
+            # Simplified approach using noun logic for now
+            # Assume entry is masculine/common form
+            stem = genitive[:-2] # tristis -> trist
+            
+            # Masculine/Feminine
+            forms.update({f"{k}_m": v for k, v in LatinMorphology.decline_noun(word, "3", "m", genitive, parisyllabic=True).items()})
+            forms.update({f"{k}_f": v for k, v in LatinMorphology.decline_noun(word, "3", "f", genitive, parisyllabic=True).items()})
+            
+            # Neuter
+            # If word is 'tristis', neuter is 'triste'
+            if word.endswith("is"):
+                neut_base = word[:-2] + "e"
+                forms.update({f"{k}_n": v for k, v in LatinMorphology.decline_noun(neut_base, "3", "n", genitive, parisyllabic=True).items()})
+            else:
+                 # Fallback
+                forms.update({f"{k}_n": v for k, v in LatinMorphology.decline_noun(word, "3", "n", genitive, parisyllabic=True).items()})
+                
+        return forms
+
 
     @staticmethod
     def decline_pronoun(pronoun: str) -> Dict[str, str]:

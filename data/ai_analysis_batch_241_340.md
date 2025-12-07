@@ -1,0 +1,6268 @@
+# TAREA: Análisis Sintáctico de Oraciones Latinas
+
+Eres un experto en gramática latina clásica. Tu tarea es analizar las siguientes oraciones latinas y asignar funciones sintácticas a cada palabra.
+
+## FORMATO DE ENTRADA
+Recibirás oraciones en este formato JSON:
+```json
+{
+  "id": 1,
+  "latin": "Puella rosam videt.",
+  "spanish": "La niña ve la rosa.",
+  "tokens": [
+    {"idx": 0, "word": "Puella", "lemma": "puella", "pos": "NOUN", "morph": "Case=Nom|Gender=Fem|Number=Sing", "dep": "nsubj", "head": 2, "current_role": "sujeto"},
+    ...
+  ]
+}
+```
+
+## ROLES SINTÁCTICOS DISPONIBLES
+Usa EXACTAMENTE estas etiquetas (en español, con guiones bajos):
+
+### Sujeto y Predicado
+- `sujeto` - Nominativo que realiza la acción
+- `sujeto_paciente` - Sujeto de voz pasiva
+- `predicado` - Verbo principal (ROOT)
+- `cópula` - Verbo copulativo (sum, esse)
+- `auxiliar` - Verbo auxiliar
+
+### Objetos
+- `objeto_directo` - Acusativo, ¿qué?
+- `objeto_indirecto` - Dativo, ¿a quién?
+- `complemento_predicativo` - Predicativo del sujeto u objeto
+
+### Complementos
+- `complemento_circunstancial` - Ablativo/oblicuo: cómo, cuándo, dónde, con qué
+- `complemento_del_nombre` - Genitivo que modifica sustantivo
+
+### Modificadores
+- `modificador_adjetival` - Adjetivo que modifica sustantivo
+- `modificador_adverbial` - Adverbio que modifica verbo
+
+### Oraciones Subordinadas
+- `oración_completiva` - Subordinada sustantiva
+- `oración_de_relativo` - Con pronombre relativo
+- `oración_adverbial` - Subordinada circunstancial
+
+### Conjunciones y Conectores
+- `conjunción_coordinante` - et, aut, sed
+- `conjunción_subordinante` - ut, cum, si
+- `elemento_coordinado` - Elemento unido por conjunción
+
+### Otros
+- `preposición` - Introduce complementos
+- `determinante` - Determina al sustantivo
+- `aposición` - Explicación de otro sustantivo
+- `vocativo` - Llamada o invocación
+- `puntuación` - Signos de puntuación
+
+## FORMATO DE RESPUESTA
+Para CADA oración, devuelve un JSON con tu análisis corregido:
+
+```json
+{
+  "id": 1,
+  "corrections": [
+    {"idx": 0, "current_role": "sujeto", "correct_role": "sujeto", "is_correct": true},
+    {"idx": 1, "current_role": "objeto_directo", "correct_role": "objeto_directo", "is_correct": true},
+    {"idx": 2, "current_role": "predicado", "correct_role": "predicado", "is_correct": true},
+    {"idx": 3, "current_role": "puntuación", "correct_role": "puntuación", "is_correct": true}
+  ],
+  "notes": "Análisis correcto. Oración simple SVO."
+}
+```
+
+## CRITERIOS DE EVALUACIÓN
+1. **Sujeto**: Nominativo que concuerda con el verbo en persona y número
+2. **Objeto Directo**: Acusativo que recibe la acción directa
+3. **Objeto Indirecto**: Dativo, beneficiario de la acción
+4. **Complemento Circunstancial**: Ablativos y sintagmas preposicionales
+5. **Predicado**: El verbo principal en forma finita (ROOT)
+6. **Cópula**: Específicamente formas de "sum, esse"
+
+## INSTRUCCIONES ADICIONALES
+- Si el análisis actual es correcto, marca `is_correct: true`
+- Si hay error, indica el rol correcto en `correct_role`
+- Presta especial atención a:
+  - Distinción entre sujeto activo y pasivo
+  - Diferencia entre cópula (sum) y auxiliar
+  - Identificación de subordinadas (completivas, relativas, adverbiales)
+  - Ablativos absolutos
+  - Acusativo + Infinitivo
+
+---
+
+# ORACIONES A ANALIZAR
+
+[
+  {
+    "id": 241,
+    "latin": "Dico te bonum amicum esse.",
+    "spanish": "Digo que tú eres un buen amigo.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Dico",
+        "lemma": "dico",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=1|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 0,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 1,
+        "word": "te",
+        "lemma": "tu",
+        "pos": "PRON",
+        "morph": "Case=Acc|Number=Sing|Person=2",
+        "dep": "obj",
+        "head": 0,
+        "current_role": "objeto_directo"
+      },
+      {
+        "idx": 2,
+        "word": "bonum",
+        "lemma": "bonus",
+        "pos": "ADJ",
+        "morph": "Case=Acc|Gender=Masc|Number=Sing",
+        "dep": "nsubj",
+        "head": 3,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 3,
+        "word": "amicum",
+        "lemma": "amicus",
+        "pos": "NOUN",
+        "morph": "Case=Acc|Gender=Masc|Number=Sing",
+        "dep": "ccomp",
+        "head": 0,
+        "current_role": "oración_completiva"
+      },
+      {
+        "idx": 4,
+        "word": "esse",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Tense=Pres|VerbForm=Inf",
+        "dep": "cop",
+        "head": 3,
+        "current_role": "cópula"
+      },
+      {
+        "idx": 5,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 0,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 242,
+    "latin": "Romani bella gerunt.",
+    "spanish": "Los romanos hacen guerras.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Romani",
+        "lemma": "Romanus",
+        "pos": "ADJ",
+        "morph": "Case=Nom|Gender=Masc|Number=Plur",
+        "dep": "nsubj",
+        "head": 2,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 1,
+        "word": "bella",
+        "lemma": "bellum",
+        "pos": "NOUN",
+        "morph": "Case=Acc|Gender=Neut|Number=Plur",
+        "dep": "obj",
+        "head": 2,
+        "current_role": "objeto_directo"
+      },
+      {
+        "idx": 2,
+        "word": "gerunt",
+        "lemma": "gero",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Plur|Person=3|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 2,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 3,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 2,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 243,
+    "latin": "Servi aquam portant.",
+    "spanish": "Los esclavos llevan agua.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Servi",
+        "lemma": "Seruius",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Masc|Number=Plur",
+        "dep": "nsubj",
+        "head": 2,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 1,
+        "word": "aquam",
+        "lemma": "aqua",
+        "pos": "NOUN",
+        "morph": "Case=Acc|Gender=Fem|Number=Sing",
+        "dep": "obj",
+        "head": 2,
+        "current_role": "objeto_directo"
+      },
+      {
+        "idx": 2,
+        "word": "portant",
+        "lemma": "porto",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Plur|Person=3|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 2,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 3,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 2,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 244,
+    "latin": "Poeta verba scribit.",
+    "spanish": "El poeta escribe palabras.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Poeta",
+        "lemma": "poeta",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Fem|Number=Sing",
+        "dep": "nsubj",
+        "head": 2,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 1,
+        "word": "verba",
+        "lemma": "uerbum",
+        "pos": "NOUN",
+        "morph": "Case=Acc|Gender=Neut|Number=Plur",
+        "dep": "obj",
+        "head": 2,
+        "current_role": "objeto_directo"
+      },
+      {
+        "idx": 2,
+        "word": "scribit",
+        "lemma": "scribo",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 2,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 3,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 2,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 245,
+    "latin": "Rex civibus leges dat.",
+    "spanish": "El rey da leyes a los ciudadanos.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Rex",
+        "lemma": "Rex",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "nsubj",
+        "head": 3,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 1,
+        "word": "civibus",
+        "lemma": "ciuis",
+        "pos": "NOUN",
+        "morph": "Case=Dat|Gender=Masc|Number=Plur",
+        "dep": "obl:arg",
+        "head": 3,
+        "current_role": "objeto_indirecto"
+      },
+      {
+        "idx": 2,
+        "word": "leges",
+        "lemma": "lex",
+        "pos": "NOUN",
+        "morph": "Case=Acc|Gender=Fem|Number=Plur",
+        "dep": "obj",
+        "head": 3,
+        "current_role": "objeto_directo"
+      },
+      {
+        "idx": 3,
+        "word": "dat",
+        "lemma": "do",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 3,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 4,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 3,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 246,
+    "latin": "Mater filio panem dat.",
+    "spanish": "La madre da pan al hijo.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Mater",
+        "lemma": "mater",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Fem|Number=Sing",
+        "dep": "nsubj",
+        "head": 3,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 1,
+        "word": "filio",
+        "lemma": "filius",
+        "pos": "NOUN",
+        "morph": "Case=Dat|Gender=Masc|Number=Sing",
+        "dep": "appos",
+        "head": 0,
+        "current_role": "aposición"
+      },
+      {
+        "idx": 2,
+        "word": "panem",
+        "lemma": "panis",
+        "pos": "NOUN",
+        "morph": "Case=Acc|Gender=Masc|Number=Sing",
+        "dep": "obj",
+        "head": 3,
+        "current_role": "objeto_directo"
+      },
+      {
+        "idx": 3,
+        "word": "dat",
+        "lemma": "do",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 3,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 4,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 3,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 247,
+    "latin": "Homines urbi muros aedificant.",
+    "spanish": "Los hombres construyen muros para la ciudad.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Homines",
+        "lemma": "homo",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Masc|Number=Plur",
+        "dep": "nsubj",
+        "head": 3,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 1,
+        "word": "urbi",
+        "lemma": "urbs",
+        "pos": "NOUN",
+        "morph": "Case=Dat|Gender=Fem|Number=Sing",
+        "dep": "obl:arg",
+        "head": 3,
+        "current_role": "complemento_obligatorio"
+      },
+      {
+        "idx": 2,
+        "word": "muros",
+        "lemma": "murus",
+        "pos": "NOUN",
+        "morph": "Case=Acc|Gender=Masc|Number=Plur",
+        "dep": "obj",
+        "head": 3,
+        "current_role": "objeto_directo"
+      },
+      {
+        "idx": 3,
+        "word": "aedificant",
+        "lemma": "aedifico",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Plur|Person=3|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 3,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 4,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 3,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 248,
+    "latin": "Caesar exercitum duxit.",
+    "spanish": "César condujo el ejército.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Caesar",
+        "lemma": "Caesar",
+        "pos": "PROPN",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "nsubj",
+        "head": 2,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 1,
+        "word": "exercitum",
+        "lemma": "exercitus",
+        "pos": "NOUN",
+        "morph": "Case=Acc|Gender=Masc|Number=Sing",
+        "dep": "obj",
+        "head": 2,
+        "current_role": "objeto_directo"
+      },
+      {
+        "idx": 2,
+        "word": "duxit",
+        "lemma": "duco",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 2,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 3,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 2,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 249,
+    "latin": "Senatus consulem audivit.",
+    "spanish": "El senado oyó al cónsul.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Senatus",
+        "lemma": "senatus",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "nmod",
+        "head": 1,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 1,
+        "word": "consulem",
+        "lemma": "consul",
+        "pos": "NOUN",
+        "morph": "Case=Acc|Gender=Masc|Number=Sing",
+        "dep": "obj",
+        "head": 2,
+        "current_role": "objeto_directo"
+      },
+      {
+        "idx": 2,
+        "word": "audivit",
+        "lemma": "audio",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 2,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 3,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 2,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 250,
+    "latin": "Spes victoriae militibus est.",
+    "spanish": "Los soldados tienen esperanza de victoria.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Spes",
+        "lemma": "spes",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Fem|Number=Plur",
+        "dep": "ROOT",
+        "head": 0,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 1,
+        "word": "victoriae",
+        "lemma": "uictoria",
+        "pos": "NOUN",
+        "morph": "Case=Gen|Gender=Fem|Number=Sing",
+        "dep": "nmod",
+        "head": 0,
+        "current_role": "complemento_del_nombre"
+      },
+      {
+        "idx": 2,
+        "word": "militibus",
+        "lemma": "miles",
+        "pos": "NOUN",
+        "morph": "Case=Dat|Gender=Masc|Number=Plur",
+        "dep": "nmod",
+        "head": 0,
+        "current_role": "complemento_del_nombre"
+      },
+      {
+        "idx": 3,
+        "word": "est",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "cop",
+        "head": 2,
+        "current_role": "cópula"
+      },
+      {
+        "idx": 4,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 2,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 251,
+    "latin": "Dux militibus fortibus praemia dat.",
+    "spanish": "El líder da premios a los soldados valientes.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Dux",
+        "lemma": "dux",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "nsubj",
+        "head": 4,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 1,
+        "word": "militibus",
+        "lemma": "miles",
+        "pos": "NOUN",
+        "morph": "Case=Dat|Gender=Masc|Number=Plur",
+        "dep": "nmod",
+        "head": 0,
+        "current_role": "objeto_indirecto"
+      },
+      {
+        "idx": 2,
+        "word": "fortibus",
+        "lemma": "fortis",
+        "pos": "ADJ",
+        "morph": "Case=Dat|Gender=Masc|Number=Plur",
+        "dep": "amod",
+        "head": 1,
+        "current_role": "modificador_adjetival"
+      },
+      {
+        "idx": 3,
+        "word": "praemia",
+        "lemma": "praemium",
+        "pos": "NOUN",
+        "morph": "Case=Acc|Gender=Neut|Number=Plur",
+        "dep": "obj",
+        "head": 4,
+        "current_role": "objeto_directo"
+      },
+      {
+        "idx": 4,
+        "word": "dat",
+        "lemma": "do",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 4,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 5,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 4,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 252,
+    "latin": "Puer currens cecidit.",
+    "spanish": "El niño corriendo cayó.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Puer",
+        "lemma": "puer",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "nsubj",
+        "head": 2,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 1,
+        "word": "currens",
+        "lemma": "curro",
+        "pos": "VERB",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing|Tense=Pres|VerbForm=Part|Voice=Act",
+        "dep": "advcl",
+        "head": 2,
+        "current_role": "oración_adverbial"
+      },
+      {
+        "idx": 2,
+        "word": "cecidit",
+        "lemma": "cado",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 2,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 3,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 2,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 253,
+    "latin": "Video puellam legentem.",
+    "spanish": "Veo a la niña que lee.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Video",
+        "lemma": "uideo",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=1|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 0,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 1,
+        "word": "puellam",
+        "lemma": "puella",
+        "pos": "NOUN",
+        "morph": "Case=Acc|Gender=Fem|Number=Sing",
+        "dep": "obj",
+        "head": 0,
+        "current_role": "objeto_directo"
+      },
+      {
+        "idx": 2,
+        "word": "legentem",
+        "lemma": "legens",
+        "pos": "VERB",
+        "morph": "Case=Acc|Gender=Fem|Number=Sing|Tense=Pres|VerbForm=Part|Voice=Act",
+        "dep": "acl",
+        "head": 1,
+        "current_role": "oración_adjetiva"
+      },
+      {
+        "idx": 3,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 0,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 254,
+    "latin": "Milites pugnantes vicerunt.",
+    "spanish": "Los soldados que luchaban vencieron.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Milites",
+        "lemma": "miles",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Masc|Number=Plur",
+        "dep": "nsubj",
+        "head": 2,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 1,
+        "word": "pugnantes",
+        "lemma": "pugno",
+        "pos": "VERB",
+        "morph": "Case=Nom|Gender=Masc|Number=Plur|Tense=Pres|VerbForm=Part|Voice=Act",
+        "dep": "advcl",
+        "head": 2,
+        "current_role": "oración_adverbial"
+      },
+      {
+        "idx": 2,
+        "word": "vicerunt",
+        "lemma": "uinco",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Plur|Person=3|Tense=Past|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 2,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 3,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 2,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 255,
+    "latin": "Urbs capta incensa est.",
+    "spanish": "La ciudad capturada fue quemada.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Urbs",
+        "lemma": "urbs",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Fem|Number=Sing",
+        "dep": "nsubj:pass",
+        "head": 2,
+        "current_role": "sujeto_paciente"
+      },
+      {
+        "idx": 1,
+        "word": "capta",
+        "lemma": "capio",
+        "pos": "VERB",
+        "morph": "Case=Nom|Gender=Fem|Number=Sing|Tense=Past|VerbForm=Part|Voice=Pass",
+        "dep": "acl",
+        "head": 0,
+        "current_role": "oración_adjetiva"
+      },
+      {
+        "idx": 2,
+        "word": "incensa",
+        "lemma": "incendo",
+        "pos": "VERB",
+        "morph": "Case=Nom|Gender=Fem|Number=Sing|Tense=Past|VerbForm=Part|Voice=Pass",
+        "dep": "ROOT",
+        "head": 2,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 3,
+        "word": "est",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "aux:pass",
+        "head": 2,
+        "current_role": "auxiliar_pasivo"
+      },
+      {
+        "idx": 4,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 2,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 256,
+    "latin": "Poeta laudatus felix erat.",
+    "spanish": "El poeta alabado era feliz.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Poeta",
+        "lemma": "poeta",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Fem|Number=Sing",
+        "dep": "nsubj",
+        "head": 2,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 1,
+        "word": "laudatus",
+        "lemma": "laudo",
+        "pos": "VERB",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing|Tense=Past|VerbForm=Part|Voice=Pass",
+        "dep": "acl",
+        "head": 0,
+        "current_role": "oración_adjetiva"
+      },
+      {
+        "idx": 2,
+        "word": "felix",
+        "lemma": "felix",
+        "pos": "ADJ",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "ROOT",
+        "head": 2,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 3,
+        "word": "erat",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin",
+        "dep": "cop",
+        "head": 2,
+        "current_role": "cópula"
+      },
+      {
+        "idx": 4,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 2,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 257,
+    "latin": "Ave, Caesar, morituri te salutant.",
+    "spanish": "Salve, César, los que van a morir te saludan.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Ave",
+        "lemma": "ave",
+        "pos": "VERB",
+        "morph": "Mood=Imp|Number=Sing|Person=2|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "discourse",
+        "head": 6,
+        "current_role": "marcador_discursivo"
+      },
+      {
+        "idx": 1,
+        "word": ",",
+        "lemma": ",",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 2,
+        "current_role": "puntuación"
+      },
+      {
+        "idx": 2,
+        "word": "Caesar",
+        "lemma": "Caesar",
+        "pos": "PROPN",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "vocative",
+        "head": 6,
+        "current_role": "vocativo"
+      },
+      {
+        "idx": 3,
+        "word": ",",
+        "lemma": ",",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 2,
+        "current_role": "puntuación"
+      },
+      {
+        "idx": 4,
+        "word": "morituri",
+        "lemma": "morior",
+        "pos": "VERB",
+        "morph": "Case=Nom|Gender=Masc|Number=Plur|Tense=Fut|VerbForm=Part|Voice=Act",
+        "dep": "advcl",
+        "head": 6,
+        "current_role": "oración_adverbial"
+      },
+      {
+        "idx": 5,
+        "word": "te",
+        "lemma": "tu",
+        "pos": "PRON",
+        "morph": "Case=Acc|Number=Sing|Person=2",
+        "dep": "obj",
+        "head": 6,
+        "current_role": "objeto_directo"
+      },
+      {
+        "idx": 6,
+        "word": "salutant",
+        "lemma": "saluto",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Plur|Person=3|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 6,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 7,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 6,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 258,
+    "latin": "Nuntii venturi sunt.",
+    "spanish": "Los mensajeros están por llegar.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Nuntii",
+        "lemma": "nuntium",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Masc|Number=Plur",
+        "dep": "nsubj",
+        "head": 1,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 1,
+        "word": "venturi",
+        "lemma": "uenio",
+        "pos": "VERB",
+        "morph": "Case=Nom|Gender=Masc|Number=Plur|Tense=Past|VerbForm=Part|Voice=Pass",
+        "dep": "ROOT",
+        "head": 1,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 2,
+        "word": "sunt",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Plur|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "aux",
+        "head": 1,
+        "current_role": "auxiliar"
+      },
+      {
+        "idx": 3,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 259,
+    "latin": "Liber lectus bonus est.",
+    "spanish": "El libro leído es bueno.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Liber",
+        "lemma": "Liber",
+        "pos": "ADJ",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "amod",
+        "head": 1,
+        "current_role": "modificador_adjetival"
+      },
+      {
+        "idx": 1,
+        "word": "lectus",
+        "lemma": "lectus",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "nsubj",
+        "head": 2,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 2,
+        "word": "bonus",
+        "lemma": "bonus",
+        "pos": "ADJ",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "ROOT",
+        "head": 2,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 3,
+        "word": "est",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "cop",
+        "head": 2,
+        "current_role": "cópula"
+      },
+      {
+        "idx": 4,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 2,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 260,
+    "latin": "Consul urbem videns laetus erat.",
+    "spanish": "El cónsul viendo la ciudad estaba contento.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Consul",
+        "lemma": "consul",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "nsubj",
+        "head": 3,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 1,
+        "word": "urbem",
+        "lemma": "urbs",
+        "pos": "NOUN",
+        "morph": "Case=Acc|Gender=Fem|Number=Sing",
+        "dep": "obj",
+        "head": 2,
+        "current_role": "objeto_directo"
+      },
+      {
+        "idx": 2,
+        "word": "videns",
+        "lemma": "uideo",
+        "pos": "VERB",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing|Tense=Pres|VerbForm=Part|Voice=Act",
+        "dep": "advcl",
+        "head": 3,
+        "current_role": "oración_adverbial"
+      },
+      {
+        "idx": 3,
+        "word": "laetus",
+        "lemma": "laetus",
+        "pos": "ADJ",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "ROOT",
+        "head": 3,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 4,
+        "word": "erat",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin",
+        "dep": "cop",
+        "head": 3,
+        "current_role": "cópula"
+      },
+      {
+        "idx": 5,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 3,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 261,
+    "latin": "Hostes fugientes victi sunt.",
+    "spanish": "Los enemigos que huían fueron vencidos.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Hostes",
+        "lemma": "hostis",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Masc|Number=Plur",
+        "dep": "nsubj:pass",
+        "head": 2,
+        "current_role": "sujeto_paciente"
+      },
+      {
+        "idx": 1,
+        "word": "fugientes",
+        "lemma": "fugio",
+        "pos": "VERB",
+        "morph": "Case=Nom|Gender=Masc|Number=Plur|Tense=Pres|VerbForm=Part|Voice=Act",
+        "dep": "advcl",
+        "head": 2,
+        "current_role": "oración_adverbial"
+      },
+      {
+        "idx": 2,
+        "word": "victi",
+        "lemma": "vico",
+        "pos": "VERB",
+        "morph": "Case=Nom|Gender=Masc|Number=Plur|Tense=Past|VerbForm=Part|Voice=Pass",
+        "dep": "ROOT",
+        "head": 2,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 3,
+        "word": "sunt",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Plur|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "aux:pass",
+        "head": 2,
+        "current_role": "auxiliar_pasivo"
+      },
+      {
+        "idx": 4,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 2,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 262,
+    "latin": "Sole oriente, aves canunt.",
+    "spanish": "Al salir el sol, las aves cantan.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Sole",
+        "lemma": "sol",
+        "pos": "NOUN",
+        "morph": "Case=Abl|Gender=Masc|Number=Sing",
+        "dep": "obl",
+        "head": 4,
+        "current_role": "complemento_circunstancial"
+      },
+      {
+        "idx": 1,
+        "word": "oriente",
+        "lemma": "oriens",
+        "pos": "VERB",
+        "morph": "Case=Abl|Gender=Fem|Number=Sing|Tense=Pres|VerbForm=Part|Voice=Act",
+        "dep": "acl",
+        "head": 0,
+        "current_role": "oración_adjetiva"
+      },
+      {
+        "idx": 2,
+        "word": ",",
+        "lemma": ",",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      },
+      {
+        "idx": 3,
+        "word": "aves",
+        "lemma": "auis",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Fem|Number=Plur",
+        "dep": "nsubj",
+        "head": 4,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 4,
+        "word": "canunt",
+        "lemma": "cano",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Plur|Person=3|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 4,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 5,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 4,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 263,
+    "latin": "Urbe capta, hostes redierunt.",
+    "spanish": "Capturada la ciudad, los enemigos regresaron.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Urbe",
+        "lemma": "Urbs",
+        "pos": "NOUN",
+        "morph": "Case=Abl|Gender=Fem|Number=Sing",
+        "dep": "nsubj:pass",
+        "head": 1,
+        "current_role": "sujeto_paciente"
+      },
+      {
+        "idx": 1,
+        "word": "capta",
+        "lemma": "capio",
+        "pos": "VERB",
+        "morph": "Case=Abl|Gender=Fem|Number=Sing|Tense=Past|VerbForm=Part|Voice=Pass",
+        "dep": "advcl:abs",
+        "head": 4,
+        "current_role": "otro"
+      },
+      {
+        "idx": 2,
+        "word": ",",
+        "lemma": ",",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      },
+      {
+        "idx": 3,
+        "word": "hostes",
+        "lemma": "hostis",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Masc|Number=Plur",
+        "dep": "nsubj",
+        "head": 4,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 4,
+        "word": "redierunt",
+        "lemma": "redeo",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Plur|Person=3|Tense=Past|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 4,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 5,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 4,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 264,
+    "latin": "Me consule, pax erat.",
+    "spanish": "Siendo yo cónsul, había paz.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Me",
+        "lemma": "ego",
+        "pos": "PRON",
+        "morph": "Case=Abl|Number=Sing|Person=1",
+        "dep": "nsubj",
+        "head": 1,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 1,
+        "word": "consule",
+        "lemma": "consul",
+        "pos": "NOUN",
+        "morph": "Case=Abl|Gender=Masc|Number=Sing",
+        "dep": "advcl",
+        "head": 3,
+        "current_role": "oración_adverbial"
+      },
+      {
+        "idx": 2,
+        "word": ",",
+        "lemma": ",",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      },
+      {
+        "idx": 3,
+        "word": "pax",
+        "lemma": "pax",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Fem|Number=Sing",
+        "dep": "ROOT",
+        "head": 3,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 4,
+        "word": "erat",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin",
+        "dep": "cop",
+        "head": 3,
+        "current_role": "cópula"
+      },
+      {
+        "idx": 5,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 3,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 265,
+    "latin": "Caesare duce, Romani vincebant.",
+    "spanish": "Siendo César el jefe, los romanos vencían.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Caesare",
+        "lemma": "Caesar",
+        "pos": "PROPN",
+        "morph": "Case=Abl|Gender=Masc|Number=Sing",
+        "dep": "obl",
+        "head": 4,
+        "current_role": "complemento_circunstancial"
+      },
+      {
+        "idx": 1,
+        "word": "duce",
+        "lemma": "dux",
+        "pos": "NOUN",
+        "morph": "Case=Abl|Gender=Masc|Number=Sing",
+        "dep": "appos",
+        "head": 0,
+        "current_role": "aposición"
+      },
+      {
+        "idx": 2,
+        "word": ",",
+        "lemma": ",",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 4,
+        "current_role": "puntuación"
+      },
+      {
+        "idx": 3,
+        "word": "Romani",
+        "lemma": "Romanus",
+        "pos": "ADJ",
+        "morph": "Case=Nom|Gender=Masc|Number=Plur",
+        "dep": "xcomp",
+        "head": 4,
+        "current_role": "complemento_predicativo"
+      },
+      {
+        "idx": 4,
+        "word": "vincebant",
+        "lemma": "uinco",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Plur|Person=3|Tense=Past|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 4,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 5,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 4,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 266,
+    "latin": "Me tacente, tu loquebaris.",
+    "spanish": "Callando yo, tú hablabas.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Me",
+        "lemma": "ego",
+        "pos": "PRON",
+        "morph": "Case=Abl|Number=Sing|Person=1",
+        "dep": "nsubj",
+        "head": 1,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 1,
+        "word": "tacente",
+        "lemma": "taceo",
+        "pos": "VERB",
+        "morph": "Case=Abl|Gender=Masc|Number=Sing|Tense=Pres|VerbForm=Part|Voice=Act",
+        "dep": "advcl:abs",
+        "head": 4,
+        "current_role": "otro"
+      },
+      {
+        "idx": 2,
+        "word": ",",
+        "lemma": ",",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      },
+      {
+        "idx": 3,
+        "word": "tu",
+        "lemma": "tu",
+        "pos": "PRON",
+        "morph": "Case=Nom|Number=Sing|Person=2",
+        "dep": "nsubj",
+        "head": 4,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 4,
+        "word": "loquebaris",
+        "lemma": "loquor",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=2|Tense=Pres|VerbForm=Fin|Voice=Pass",
+        "dep": "ROOT",
+        "head": 4,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 5,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 4,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 267,
+    "latin": "His rebus cognitis, Caesar exercitum movit.",
+    "spanish": "Conocidas estas cosas, César movió el ejército.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "His",
+        "lemma": "hic",
+        "pos": "DET",
+        "morph": "Case=Abl|Gender=Fem|Number=Plur",
+        "dep": "det",
+        "head": 1,
+        "current_role": "determinante"
+      },
+      {
+        "idx": 1,
+        "word": "rebus",
+        "lemma": "res",
+        "pos": "NOUN",
+        "morph": "Case=Abl|Gender=Fem|Number=Plur",
+        "dep": "nsubj:pass",
+        "head": 2,
+        "current_role": "sujeto_paciente"
+      },
+      {
+        "idx": 2,
+        "word": "cognitis",
+        "lemma": "cognosco",
+        "pos": "VERB",
+        "morph": "Case=Abl|Gender=Fem|Number=Plur|Tense=Past|VerbForm=Part|Voice=Pass",
+        "dep": "advcl:abs",
+        "head": 6,
+        "current_role": "otro"
+      },
+      {
+        "idx": 3,
+        "word": ",",
+        "lemma": ",",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 2,
+        "current_role": "puntuación"
+      },
+      {
+        "idx": 4,
+        "word": "Caesar",
+        "lemma": "Caesar",
+        "pos": "PROPN",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "nsubj",
+        "head": 6,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 5,
+        "word": "exercitum",
+        "lemma": "exercitus",
+        "pos": "NOUN",
+        "morph": "Case=Acc|Gender=Masc|Number=Sing",
+        "dep": "obj",
+        "head": 6,
+        "current_role": "objeto_directo"
+      },
+      {
+        "idx": 6,
+        "word": "movit",
+        "lemma": "moueo",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 6,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 7,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 6,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 268,
+    "latin": "Vivo patre, felix sum.",
+    "spanish": "Viviendo el padre, soy feliz.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Vivo",
+        "lemma": "Viuus",
+        "pos": "ADJ",
+        "morph": "Case=Abl|Gender=Masc|Number=Sing",
+        "dep": "advcl:abs",
+        "head": 3,
+        "current_role": "otro"
+      },
+      {
+        "idx": 1,
+        "word": "patre",
+        "lemma": "pater",
+        "pos": "NOUN",
+        "morph": "Case=Abl|Gender=Masc|Number=Sing",
+        "dep": "obl:arg",
+        "head": 0,
+        "current_role": "complemento_obligatorio"
+      },
+      {
+        "idx": 2,
+        "word": ",",
+        "lemma": ",",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 3,
+        "current_role": "puntuación"
+      },
+      {
+        "idx": 3,
+        "word": "felix",
+        "lemma": "felix",
+        "pos": "ADJ",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "ROOT",
+        "head": 3,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 4,
+        "word": "sum",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=1|Tense=Pres|VerbForm=Fin",
+        "dep": "cop",
+        "head": 3,
+        "current_role": "cópula"
+      },
+      {
+        "idx": 5,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 3,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 269,
+    "latin": "Romanis pugnantibus, hostes fugerunt.",
+    "spanish": "Luchando los romanos, los enemigos huyeron.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Romanis",
+        "lemma": "Romanus",
+        "pos": "ADJ",
+        "morph": "Case=Dat|Gender=Masc|Number=Plur",
+        "dep": "nsubj:pass",
+        "head": 1,
+        "current_role": "sujeto_paciente"
+      },
+      {
+        "idx": 1,
+        "word": "pugnantibus",
+        "lemma": "pugno",
+        "pos": "VERB",
+        "morph": "Case=Dat|Gender=Masc|Number=Plur|Tense=Pres|VerbForm=Part|Voice=Act",
+        "dep": "advcl:abs",
+        "head": 4,
+        "current_role": "otro"
+      },
+      {
+        "idx": 2,
+        "word": ",",
+        "lemma": ",",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      },
+      {
+        "idx": 3,
+        "word": "hostes",
+        "lemma": "hostis",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Masc|Number=Plur",
+        "dep": "nsubj",
+        "head": 4,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 4,
+        "word": "fugerunt",
+        "lemma": "fugio",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Plur|Person=3|Tense=Past|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 4,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 5,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 4,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 270,
+    "latin": "Caesare mortuo, Marcus consul factus est.",
+    "spanish": "Muerto César, Marco fue hecho cónsul.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Caesare",
+        "lemma": "Caesar",
+        "pos": "PROPN",
+        "morph": "Case=Abl|Gender=Masc|Number=Sing",
+        "dep": "nsubj:pass",
+        "head": 1,
+        "current_role": "sujeto_paciente"
+      },
+      {
+        "idx": 1,
+        "word": "mortuo",
+        "lemma": "mortuus",
+        "pos": "VERB",
+        "morph": "Case=Abl|Gender=Masc|Number=Sing|Tense=Past|VerbForm=Part|Voice=Pass",
+        "dep": "advcl:abs",
+        "head": 5,
+        "current_role": "otro"
+      },
+      {
+        "idx": 2,
+        "word": ",",
+        "lemma": ",",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 5,
+        "current_role": "puntuación"
+      },
+      {
+        "idx": 3,
+        "word": "Marcus",
+        "lemma": "Marcus",
+        "pos": "PROPN",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "nsubj:pass",
+        "head": 5,
+        "current_role": "sujeto_paciente"
+      },
+      {
+        "idx": 4,
+        "word": "consul",
+        "lemma": "consul",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "xcomp",
+        "head": 5,
+        "current_role": "complemento_predicativo"
+      },
+      {
+        "idx": 5,
+        "word": "factus",
+        "lemma": "facio",
+        "pos": "VERB",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing|Tense=Past|VerbForm=Part|Voice=Pass",
+        "dep": "ROOT",
+        "head": 5,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 6,
+        "word": "est",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "aux:pass",
+        "head": 5,
+        "current_role": "auxiliar_pasivo"
+      },
+      {
+        "idx": 7,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 5,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 271,
+    "latin": "Omnibus audientibus, orator dixit.",
+    "spanish": "Escuchando todos, el orador habló.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Omnibus",
+        "lemma": "omnis",
+        "pos": "DET",
+        "morph": "Case=Dat|Gender=Neut|Number=Plur",
+        "dep": "nsubj",
+        "head": 1,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 1,
+        "word": "audientibus",
+        "lemma": "audio",
+        "pos": "VERB",
+        "morph": "Case=Abl|Gender=Masc|Number=Plur|Tense=Pres|VerbForm=Part|Voice=Act",
+        "dep": "advcl:abs",
+        "head": 4,
+        "current_role": "otro"
+      },
+      {
+        "idx": 2,
+        "word": ",",
+        "lemma": ",",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      },
+      {
+        "idx": 3,
+        "word": "orator",
+        "lemma": "orator",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "nsubj",
+        "head": 4,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 4,
+        "word": "dixit",
+        "lemma": "dico",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 4,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 5,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 4,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 272,
+    "latin": "Ars amandi difficilis est.",
+    "spanish": "El arte de amar es difícil.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Ars",
+        "lemma": "ars",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Fem|Number=Sing",
+        "dep": "nsubj",
+        "head": 2,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 1,
+        "word": "amandi",
+        "lemma": "amandum",
+        "pos": "VERB",
+        "morph": "Case=Gen|Gender=Neut|Mood=Ger|Number=Sing|Tense=Fut|VerbForm=Part|Voice=Pass",
+        "dep": "acl",
+        "head": 0,
+        "current_role": "oración_adjetiva"
+      },
+      {
+        "idx": 2,
+        "word": "difficilis",
+        "lemma": "difficilis",
+        "pos": "ADJ",
+        "morph": "Case=Nom|Gender=Fem|Number=Sing",
+        "dep": "ROOT",
+        "head": 2,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 3,
+        "word": "est",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "cop",
+        "head": 2,
+        "current_role": "cópula"
+      },
+      {
+        "idx": 4,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 2,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 273,
+    "latin": "Paratus ad pugnandum est.",
+    "spanish": "Está preparado para luchar.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Paratus",
+        "lemma": "paratus",
+        "pos": "VERB",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing|Tense=Past|VerbForm=Part|Voice=Pass",
+        "dep": "ROOT",
+        "head": 0,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 1,
+        "word": "ad",
+        "lemma": "ad",
+        "pos": "ADP",
+        "morph": "",
+        "dep": "mark",
+        "head": 2,
+        "current_role": "conjunción_subordinante"
+      },
+      {
+        "idx": 2,
+        "word": "pugnandum",
+        "lemma": "pugno",
+        "pos": "VERB",
+        "morph": "Case=Acc|Mood=Ger|Number=Sing|Tense=Fut|VerbForm=Part|Voice=Pass",
+        "dep": "advcl",
+        "head": 0,
+        "current_role": "oración_adverbial"
+      },
+      {
+        "idx": 3,
+        "word": "est",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "aux:pass",
+        "head": 2,
+        "current_role": "auxiliar_pasivo"
+      },
+      {
+        "idx": 4,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 0,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 274,
+    "latin": "Discimus legendo.",
+    "spanish": "Aprendemos leyendo.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Discimus",
+        "lemma": "disco",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Plur|Person=1|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 0,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 1,
+        "word": "legendo",
+        "lemma": "legendus",
+        "pos": "VERB",
+        "morph": "Case=Abl|Mood=Ger|Number=Sing|Tense=Fut|VerbForm=Part|Voice=Pass",
+        "dep": "advcl",
+        "head": 0,
+        "current_role": "oración_adverbial"
+      },
+      {
+        "idx": 2,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 0,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 275,
+    "latin": "Cupidus videndi urbem est.",
+    "spanish": "Está deseoso de ver la ciudad.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Cupidus",
+        "lemma": "cupidus",
+        "pos": "ADJ",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "ROOT",
+        "head": 0,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 1,
+        "word": "videndi",
+        "lemma": "",
+        "pos": "VERB",
+        "morph": "Case=Gen|Gender=Neut|Mood=Ger|Number=Sing|Tense=Fut|VerbForm=Part|Voice=Pass",
+        "dep": "ccomp",
+        "head": 0,
+        "current_role": "oración_completiva"
+      },
+      {
+        "idx": 2,
+        "word": "urbem",
+        "lemma": "urbs",
+        "pos": "NOUN",
+        "morph": "Case=Acc|Gender=Fem|Number=Sing",
+        "dep": "obj",
+        "head": 1,
+        "current_role": "objeto_directo"
+      },
+      {
+        "idx": 3,
+        "word": "est",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "cop",
+        "head": 2,
+        "current_role": "cópula"
+      },
+      {
+        "idx": 4,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 0,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 276,
+    "latin": "Ad pacem petendam venerunt.",
+    "spanish": "Vinieron para pedir la paz.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Ad",
+        "lemma": "ad",
+        "pos": "ADP",
+        "morph": "",
+        "dep": "mark",
+        "head": 2,
+        "current_role": "conjunción_subordinante"
+      },
+      {
+        "idx": 1,
+        "word": "pacem",
+        "lemma": "pax",
+        "pos": "NOUN",
+        "morph": "Case=Acc|Gender=Fem|Number=Sing",
+        "dep": "nsubj:pass",
+        "head": 2,
+        "current_role": "sujeto_paciente"
+      },
+      {
+        "idx": 2,
+        "word": "petendam",
+        "lemma": "petendus",
+        "pos": "VERB",
+        "morph": "Case=Acc|Gender=Fem|Mood=Gdv|Number=Sing|Tense=Fut|VerbForm=Part|Voice=Pass",
+        "dep": "advcl",
+        "head": 3,
+        "current_role": "oración_adverbial"
+      },
+      {
+        "idx": 3,
+        "word": "venerunt",
+        "lemma": "uenio",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Plur|Person=3|Tense=Past|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 3,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 4,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 3,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 277,
+    "latin": "Tempus legendi est.",
+    "spanish": "Es tiempo de leer.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Tempus",
+        "lemma": "tempus",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Neut|Number=Sing",
+        "dep": "nsubj",
+        "head": 1,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 1,
+        "word": "legendi",
+        "lemma": "lego",
+        "pos": "VERB",
+        "morph": "Case=Gen|Gender=Neut|Mood=Ger|Number=Sing|Tense=Fut|VerbForm=Part|Voice=Pass",
+        "dep": "ROOT",
+        "head": 1,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 2,
+        "word": "est",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "aux:pass",
+        "head": 1,
+        "current_role": "auxiliar_pasivo"
+      },
+      {
+        "idx": 3,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 278,
+    "latin": "Studiorum causa Romam venit.",
+    "spanish": "Vino a Roma por causa de los estudios.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Studiorum",
+        "lemma": "studium",
+        "pos": "NOUN",
+        "morph": "Case=Gen|Gender=Fem|Number=Plur",
+        "dep": "nmod",
+        "head": 1,
+        "current_role": "complemento_del_nombre"
+      },
+      {
+        "idx": 1,
+        "word": "causa",
+        "lemma": "causa",
+        "pos": "NOUN",
+        "morph": "Case=Abl|Gender=Fem|Number=Sing",
+        "dep": "nsubj",
+        "head": 3,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 2,
+        "word": "Romam",
+        "lemma": "Roma",
+        "pos": "PROPN",
+        "morph": "Case=Acc|Gender=Fem|Number=Sing",
+        "dep": "obl:arg",
+        "head": 3,
+        "current_role": "complemento_obligatorio"
+      },
+      {
+        "idx": 3,
+        "word": "venit",
+        "lemma": "uenio",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 3,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 4,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 3,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 279,
+    "latin": "Virtus laudanda est.",
+    "spanish": "La virtud debe ser alabada.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Virtus",
+        "lemma": "uirtus",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Fem|Number=Sing",
+        "dep": "nsubj:pass",
+        "head": 1,
+        "current_role": "sujeto_paciente"
+      },
+      {
+        "idx": 1,
+        "word": "laudanda",
+        "lemma": "laudandus",
+        "pos": "VERB",
+        "morph": "Case=Nom|Gender=Fem|Mood=Gdv|Number=Sing|Tense=Fut|VerbForm=Part|Voice=Pass",
+        "dep": "ROOT",
+        "head": 1,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 2,
+        "word": "est",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "aux:pass",
+        "head": 1,
+        "current_role": "auxiliar_pasivo"
+      },
+      {
+        "idx": 3,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 280,
+    "latin": "Liber legendus est.",
+    "spanish": "El libro debe ser leído.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Liber",
+        "lemma": "Liber",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "nsubj:pass",
+        "head": 1,
+        "current_role": "sujeto_paciente"
+      },
+      {
+        "idx": 1,
+        "word": "legendus",
+        "lemma": "legendus",
+        "pos": "VERB",
+        "morph": "Case=Nom|Gender=Masc|Mood=Gdv|Number=Sing|Tense=Fut|VerbForm=Part|Voice=Pass",
+        "dep": "ROOT",
+        "head": 1,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 2,
+        "word": "est",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "aux:pass",
+        "head": 1,
+        "current_role": "auxiliar_pasivo"
+      },
+      {
+        "idx": 3,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 281,
+    "latin": "Peritus dicendi orator erat.",
+    "spanish": "Era un orador experto en hablar.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Peritus",
+        "lemma": "peritus",
+        "pos": "ADJ",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "ROOT",
+        "head": 0,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 1,
+        "word": "dicendi",
+        "lemma": "dico",
+        "pos": "VERB",
+        "morph": "Case=Gen|Mood=Ger|Number=Sing|Tense=Fut|VerbForm=Part|Voice=Pass",
+        "dep": "acl",
+        "head": 0,
+        "current_role": "oración_adjetiva"
+      },
+      {
+        "idx": 2,
+        "word": "orator",
+        "lemma": "orator",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "nsubj",
+        "head": 0,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 3,
+        "word": "erat",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin",
+        "dep": "cop",
+        "head": 2,
+        "current_role": "cópula"
+      },
+      {
+        "idx": 4,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 0,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 282,
+    "latin": "Pax agenda est.",
+    "spanish": "La paz debe ser hecha.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Pax",
+        "lemma": "pax",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Fem|Number=Sing",
+        "dep": "nsubj:pass",
+        "head": 1,
+        "current_role": "sujeto_paciente"
+      },
+      {
+        "idx": 1,
+        "word": "agenda",
+        "lemma": "agendus",
+        "pos": "VERB",
+        "morph": "Case=Nom|Gender=Fem|Mood=Gdv|Number=Sing|Tense=Fut|VerbForm=Part|Voice=Pass",
+        "dep": "ROOT",
+        "head": 1,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 2,
+        "word": "est",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "aux:pass",
+        "head": 1,
+        "current_role": "auxiliar_pasivo"
+      },
+      {
+        "idx": 3,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 283,
+    "latin": "Leges servandae sunt.",
+    "spanish": "Las leyes deben ser guardadas.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Leges",
+        "lemma": "lex",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Fem|Number=Plur",
+        "dep": "nsubj:pass",
+        "head": 1,
+        "current_role": "sujeto_paciente"
+      },
+      {
+        "idx": 1,
+        "word": "servandae",
+        "lemma": "servo",
+        "pos": "VERB",
+        "morph": "Case=Nom|Gender=Fem|Mood=Gdv|Number=Plur|Tense=Fut|VerbForm=Part|Voice=Pass",
+        "dep": "ROOT",
+        "head": 1,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 2,
+        "word": "sunt",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Plur|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "aux:pass",
+        "head": 1,
+        "current_role": "auxiliar_pasivo"
+      },
+      {
+        "idx": 3,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 284,
+    "latin": "Carthago delenda est.",
+    "spanish": "Cartago debe ser destruida.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Carthago",
+        "lemma": "Carthago",
+        "pos": "PROPN",
+        "morph": "Case=Nom|Gender=Fem|Number=Sing",
+        "dep": "nsubj:pass",
+        "head": 1,
+        "current_role": "sujeto_paciente"
+      },
+      {
+        "idx": 1,
+        "word": "delenda",
+        "lemma": "delendus",
+        "pos": "VERB",
+        "morph": "Case=Nom|Gender=Fem|Mood=Gdv|Number=Sing|Tense=Fut|VerbForm=Part|Voice=Pass",
+        "dep": "ROOT",
+        "head": 1,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 2,
+        "word": "est",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "aux:pass",
+        "head": 1,
+        "current_role": "auxiliar_pasivo"
+      },
+      {
+        "idx": 3,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 285,
+    "latin": "Legatus missurus est.",
+    "spanish": "El legado está por enviar.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Legatus",
+        "lemma": "legatus",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "nsubj",
+        "head": 1,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 1,
+        "word": "missurus",
+        "lemma": "mitto",
+        "pos": "VERB",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing|Tense=Fut|VerbForm=Part|Voice=Act",
+        "dep": "ROOT",
+        "head": 1,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 2,
+        "word": "est",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "aux",
+        "head": 1,
+        "current_role": "auxiliar"
+      },
+      {
+        "idx": 3,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 286,
+    "latin": "Puer scripturus erat.",
+    "spanish": "El niño iba a escribir.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Puer",
+        "lemma": "puer",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "nsubj",
+        "head": 1,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 1,
+        "word": "scripturus",
+        "lemma": "scribo",
+        "pos": "VERB",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing|Tense=Fut|VerbForm=Part|Voice=Act",
+        "dep": "ROOT",
+        "head": 1,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 2,
+        "word": "erat",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin",
+        "dep": "aux",
+        "head": 1,
+        "current_role": "auxiliar"
+      },
+      {
+        "idx": 3,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 287,
+    "latin": "Dei colendi sunt.",
+    "spanish": "Los dioses deben ser honrados.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Dei",
+        "lemma": "Deus",
+        "pos": "NOUN",
+        "morph": "Case=Gen|Gender=Masc|Number=Sing",
+        "dep": "ROOT",
+        "head": 0,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 1,
+        "word": "colendi",
+        "lemma": "colo",
+        "pos": "VERB",
+        "morph": "Case=Nom|Gender=Masc|Mood=Gdv|Number=Plur|Tense=Fut|VerbForm=Part|Voice=Pass",
+        "dep": "acl",
+        "head": 0,
+        "current_role": "oración_adjetiva"
+      },
+      {
+        "idx": 2,
+        "word": "sunt",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Plur|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "aux:pass",
+        "head": 1,
+        "current_role": "auxiliar_pasivo"
+      },
+      {
+        "idx": 3,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 0,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 288,
+    "latin": "Opus perfectum est.",
+    "spanish": "La obra está terminada.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Opus",
+        "lemma": "opus",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Neut|Number=Sing",
+        "dep": "nsubj",
+        "head": 1,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 1,
+        "word": "perfectum",
+        "lemma": "perfectus",
+        "pos": "ADJ",
+        "morph": "Case=Nom|Gender=Neut|Number=Sing",
+        "dep": "ROOT",
+        "head": 1,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 2,
+        "word": "est",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "cop",
+        "head": 1,
+        "current_role": "cópula"
+      },
+      {
+        "idx": 3,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 289,
+    "latin": "Hostes fugiendi sunt.",
+    "spanish": "Los enemigos deben ser evitados.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Hostes",
+        "lemma": "hostis",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Masc|Number=Plur",
+        "dep": "nsubj:pass",
+        "head": 1,
+        "current_role": "sujeto_paciente"
+      },
+      {
+        "idx": 1,
+        "word": "fugiendi",
+        "lemma": "fugieo",
+        "pos": "VERB",
+        "morph": "Case=Nom|Gender=Masc|Mood=Gdv|Number=Plur|Tense=Fut|VerbForm=Part|Voice=Pass",
+        "dep": "ROOT",
+        "head": 1,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 2,
+        "word": "sunt",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Plur|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "aux:pass",
+        "head": 1,
+        "current_role": "auxiliar_pasivo"
+      },
+      {
+        "idx": 3,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 290,
+    "latin": "Bellum gerendum erat.",
+    "spanish": "La guerra debía ser llevada a cabo.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Bellum",
+        "lemma": "bellum",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Neut|Number=Sing",
+        "dep": "nsubj:pass",
+        "head": 1,
+        "current_role": "sujeto_paciente"
+      },
+      {
+        "idx": 1,
+        "word": "gerendum",
+        "lemma": "gero",
+        "pos": "VERB",
+        "morph": "Case=Nom|Gender=Neut|Mood=Gdv|Number=Sing|Tense=Fut|VerbForm=Part|Voice=Pass",
+        "dep": "ROOT",
+        "head": 1,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 2,
+        "word": "erat",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin",
+        "dep": "aux:pass",
+        "head": 1,
+        "current_role": "auxiliar_pasivo"
+      },
+      {
+        "idx": 3,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 291,
+    "latin": "Moriendum est omnibus.",
+    "spanish": "Todos deben morir.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Moriendum",
+        "lemma": "Morior",
+        "pos": "VERB",
+        "morph": "Case=Nom|Gender=Neut|Mood=Gdv|Number=Sing|Tense=Fut|VerbForm=Part|Voice=Pass",
+        "dep": "ROOT",
+        "head": 0,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 1,
+        "word": "est",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "aux:pass",
+        "head": 0,
+        "current_role": "auxiliar_pasivo"
+      },
+      {
+        "idx": 2,
+        "word": "omnibus",
+        "lemma": "omnis",
+        "pos": "DET",
+        "morph": "Case=Dat|Gender=Masc|Number=Plur",
+        "dep": "obl:arg",
+        "head": 0,
+        "current_role": "complemento_obligatorio"
+      },
+      {
+        "idx": 3,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 0,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 292,
+    "latin": "Venit et vidit et vicit.",
+    "spanish": "Vino y vio y venció.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Venit",
+        "lemma": "uenio",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 0,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 1,
+        "word": "et",
+        "lemma": "et",
+        "pos": "CCONJ",
+        "morph": "",
+        "dep": "cc",
+        "head": 2,
+        "current_role": "conjunción_coordinante"
+      },
+      {
+        "idx": 2,
+        "word": "vidit",
+        "lemma": "uideo",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin|Voice=Act",
+        "dep": "conj",
+        "head": 0,
+        "current_role": "elemento_coordinado"
+      },
+      {
+        "idx": 3,
+        "word": "et",
+        "lemma": "et",
+        "pos": "CCONJ",
+        "morph": "",
+        "dep": "cc",
+        "head": 4,
+        "current_role": "conjunción_coordinante"
+      },
+      {
+        "idx": 4,
+        "word": "vicit",
+        "lemma": "uinco",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin|Voice=Act",
+        "dep": "conj",
+        "head": 0,
+        "current_role": "elemento_coordinado"
+      },
+      {
+        "idx": 5,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 0,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 293,
+    "latin": "Senatus Populusque Romanus.",
+    "spanish": "El Senado y el Pueblo Romano.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Senatus",
+        "lemma": "senatus",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "ROOT",
+        "head": 0,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 1,
+        "word": "Populus",
+        "lemma": "populus",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "conj",
+        "head": 0,
+        "current_role": "elemento_coordinado"
+      },
+      {
+        "idx": 2,
+        "word": "que",
+        "lemma": "que",
+        "pos": "CCONJ",
+        "morph": "",
+        "dep": "cc",
+        "head": 1,
+        "current_role": "conjunción_coordinante"
+      },
+      {
+        "idx": 3,
+        "word": "Romanus",
+        "lemma": "Romanus",
+        "pos": "ADJ",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "amod",
+        "head": 0,
+        "current_role": "modificador_adjetival"
+      },
+      {
+        "idx": 4,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 0,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 294,
+    "latin": "Non vivere sed valere vita est.",
+    "spanish": "La vida no es vivir sino estar sanos.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Non",
+        "lemma": "non",
+        "pos": "PART",
+        "morph": "",
+        "dep": "advmod:neg",
+        "head": 1,
+        "current_role": "modificador"
+      },
+      {
+        "idx": 1,
+        "word": "vivere",
+        "lemma": "uiuo",
+        "pos": "VERB",
+        "morph": "Tense=Pres|VerbForm=Inf|Voice=Act",
+        "dep": "csubj",
+        "head": 4,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 2,
+        "word": "sed",
+        "lemma": "sed",
+        "pos": "CCONJ",
+        "morph": "",
+        "dep": "cc",
+        "head": 3,
+        "current_role": "conjunción_coordinante"
+      },
+      {
+        "idx": 3,
+        "word": "valere",
+        "lemma": "ualeo",
+        "pos": "VERB",
+        "morph": "Tense=Pres|VerbForm=Inf|Voice=Act",
+        "dep": "conj",
+        "head": 1,
+        "current_role": "elemento_coordinado"
+      },
+      {
+        "idx": 4,
+        "word": "vita",
+        "lemma": "uita",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Fem|Number=Sing",
+        "dep": "ROOT",
+        "head": 4,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 5,
+        "word": "est",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "cop",
+        "head": 4,
+        "current_role": "cópula"
+      },
+      {
+        "idx": 6,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 4,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 295,
+    "latin": "Cum Caesar in Galliam venisset, Romani laeti erant.",
+    "spanish": "Cuando César hubo llegado a la Galia, los romanos estaban contentos.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Cum",
+        "lemma": "cum",
+        "pos": "SCONJ",
+        "morph": "",
+        "dep": "mark",
+        "head": 4,
+        "current_role": "conjunción_subordinante"
+      },
+      {
+        "idx": 1,
+        "word": "Caesar",
+        "lemma": "Caesar",
+        "pos": "PROPN",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "nsubj",
+        "head": 4,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 2,
+        "word": "in",
+        "lemma": "in",
+        "pos": "ADP",
+        "morph": "",
+        "dep": "case",
+        "head": 3,
+        "current_role": "preposición"
+      },
+      {
+        "idx": 3,
+        "word": "Galliam",
+        "lemma": "Gallia",
+        "pos": "PROPN",
+        "morph": "Case=Acc|Gender=Fem|Number=Sing",
+        "dep": "obl",
+        "head": 4,
+        "current_role": "complemento_circunstancial"
+      },
+      {
+        "idx": 4,
+        "word": "venisset",
+        "lemma": "uenio",
+        "pos": "VERB",
+        "morph": "Mood=Sub|Number=Sing|Person=3|Tense=Pqp|VerbForm=Fin|Voice=Act",
+        "dep": "advcl",
+        "head": 7,
+        "current_role": "oración_adverbial"
+      },
+      {
+        "idx": 5,
+        "word": ",",
+        "lemma": ",",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 7,
+        "current_role": "puntuación"
+      },
+      {
+        "idx": 6,
+        "word": "Romani",
+        "lemma": "Romanus",
+        "pos": "ADJ",
+        "morph": "Case=Nom|Gender=Masc|Number=Plur",
+        "dep": "nsubj",
+        "head": 7,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 7,
+        "word": "laeti",
+        "lemma": "laetus",
+        "pos": "ADJ",
+        "morph": "Case=Nom|Gender=Masc|Number=Plur",
+        "dep": "ROOT",
+        "head": 7,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 8,
+        "word": "erant",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Plur|Person=3|Tense=Past|VerbForm=Fin",
+        "dep": "cop",
+        "head": 7,
+        "current_role": "cópula"
+      },
+      {
+        "idx": 9,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 7,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 296,
+    "latin": "Postquam urbs capta est, milites redierunt.",
+    "spanish": "Después de que la ciudad fue tomada, los soldados regresaron.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Postquam",
+        "lemma": "postquam",
+        "pos": "SCONJ",
+        "morph": "",
+        "dep": "mark",
+        "head": 2,
+        "current_role": "conjunción_subordinante"
+      },
+      {
+        "idx": 1,
+        "word": "urbs",
+        "lemma": "urbs",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Fem|Number=Sing",
+        "dep": "nsubj:pass",
+        "head": 2,
+        "current_role": "sujeto_paciente"
+      },
+      {
+        "idx": 2,
+        "word": "capta",
+        "lemma": "capio",
+        "pos": "VERB",
+        "morph": "Case=Nom|Gender=Fem|Number=Sing|Tense=Past|VerbForm=Part|Voice=Pass",
+        "dep": "advcl",
+        "head": 6,
+        "current_role": "oración_adverbial"
+      },
+      {
+        "idx": 3,
+        "word": "est",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "aux:pass",
+        "head": 2,
+        "current_role": "auxiliar_pasivo"
+      },
+      {
+        "idx": 4,
+        "word": ",",
+        "lemma": ",",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 2,
+        "current_role": "puntuación"
+      },
+      {
+        "idx": 5,
+        "word": "milites",
+        "lemma": "miles",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Masc|Number=Plur",
+        "dep": "nsubj",
+        "head": 6,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 6,
+        "word": "redierunt",
+        "lemma": "redeo",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Plur|Person=3|Tense=Past|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 6,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 7,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 6,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 297,
+    "latin": "Dum Romae sum, multos libros lego.",
+    "spanish": "Mientras estoy en Roma, leo muchos libros.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Dum",
+        "lemma": "dum",
+        "pos": "SCONJ",
+        "morph": "",
+        "dep": "mark",
+        "head": 1,
+        "current_role": "conjunción_subordinante"
+      },
+      {
+        "idx": 1,
+        "word": "Romae",
+        "lemma": "Roma",
+        "pos": "PROPN",
+        "morph": "Case=Loc|Gender=Fem|Number=Sing",
+        "dep": "advcl",
+        "head": 6,
+        "current_role": "oración_adverbial"
+      },
+      {
+        "idx": 2,
+        "word": "sum",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=1|Tense=Pres|VerbForm=Fin",
+        "dep": "cop",
+        "head": 1,
+        "current_role": "cópula"
+      },
+      {
+        "idx": 3,
+        "word": ",",
+        "lemma": ",",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      },
+      {
+        "idx": 4,
+        "word": "multos",
+        "lemma": "multus",
+        "pos": "DET",
+        "morph": "Case=Acc|Gender=Masc|Number=Plur",
+        "dep": "det",
+        "head": 5,
+        "current_role": "determinante"
+      },
+      {
+        "idx": 5,
+        "word": "libros",
+        "lemma": "liber",
+        "pos": "NOUN",
+        "morph": "Case=Acc|Gender=Masc|Number=Plur",
+        "dep": "obj",
+        "head": 6,
+        "current_role": "objeto_directo"
+      },
+      {
+        "idx": 6,
+        "word": "lego",
+        "lemma": "lego",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=1|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 6,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 7,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 6,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 298,
+    "latin": "Quod vales, gaudeo.",
+    "spanish": "Porque estás bien, me alegro.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Quod",
+        "lemma": "qui",
+        "pos": "PRON",
+        "morph": "Case=Acc|Gender=Neut|Number=Sing",
+        "dep": "obj",
+        "head": 1,
+        "current_role": "objeto_directo"
+      },
+      {
+        "idx": 1,
+        "word": "vales",
+        "lemma": "ualeo",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=2|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "ccomp",
+        "head": 3,
+        "current_role": "oración_completiva"
+      },
+      {
+        "idx": 2,
+        "word": ",",
+        "lemma": ",",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      },
+      {
+        "idx": 3,
+        "word": "gaudeo",
+        "lemma": "gaudeo",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=1|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 3,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 4,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 3,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 299,
+    "latin": "Socrates accusatus est quod corrumperet juventutem.",
+    "spanish": "Sócrates fue acusado porque corrompía a la juventud.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Socrates",
+        "lemma": "Socrates",
+        "pos": "PROPN",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "nsubj:pass",
+        "head": 1,
+        "current_role": "sujeto_paciente"
+      },
+      {
+        "idx": 1,
+        "word": "accusatus",
+        "lemma": "accuso",
+        "pos": "VERB",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing|Tense=Past|VerbForm=Part|Voice=Pass",
+        "dep": "ROOT",
+        "head": 1,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 2,
+        "word": "est",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "aux:pass",
+        "head": 1,
+        "current_role": "auxiliar_pasivo"
+      },
+      {
+        "idx": 3,
+        "word": "quod",
+        "lemma": "quod",
+        "pos": "SCONJ",
+        "morph": "",
+        "dep": "mark",
+        "head": 4,
+        "current_role": "conjunción_subordinante"
+      },
+      {
+        "idx": 4,
+        "word": "corrumperet",
+        "lemma": "corrumpo",
+        "pos": "VERB",
+        "morph": "Mood=Sub|Number=Sing|Person=3|Tense=Past|VerbForm=Fin|Voice=Act",
+        "dep": "advcl",
+        "head": 1,
+        "current_role": "oración_adverbial"
+      },
+      {
+        "idx": 5,
+        "word": "juventutem",
+        "lemma": "iuuentus",
+        "pos": "NOUN",
+        "morph": "Case=Acc|Gender=Fem|Number=Sing",
+        "dep": "obj",
+        "head": 4,
+        "current_role": "objeto_directo"
+      },
+      {
+        "idx": 6,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 300,
+    "latin": "Vincunt neque cedunt.",
+    "spanish": "Vencen y no ceden.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Vincunt",
+        "lemma": "uinco",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Plur|Person=3|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 0,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 1,
+        "word": "neque",
+        "lemma": "neque",
+        "pos": "CCONJ",
+        "morph": "",
+        "dep": "cc",
+        "head": 2,
+        "current_role": "conjunción_coordinante"
+      },
+      {
+        "idx": 2,
+        "word": "cedunt",
+        "lemma": "cedo",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Plur|Person=3|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "conj",
+        "head": 0,
+        "current_role": "elemento_coordinado"
+      },
+      {
+        "idx": 3,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 0,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 301,
+    "latin": "Oro te ne eas.",
+    "spanish": "Te ruego que no vayas.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Oro",
+        "lemma": "oro",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=1|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 0,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 1,
+        "word": "te",
+        "lemma": "tu",
+        "pos": "PRON",
+        "morph": "Case=Acc|Number=Sing|Person=2",
+        "dep": "obj",
+        "head": 0,
+        "current_role": "objeto_directo"
+      },
+      {
+        "idx": 2,
+        "word": "ne",
+        "lemma": "ne",
+        "pos": "PART",
+        "morph": "",
+        "dep": "mark",
+        "head": 3,
+        "current_role": "conjunción_subordinante"
+      },
+      {
+        "idx": 3,
+        "word": "eas",
+        "lemma": "is",
+        "pos": "PRON",
+        "morph": "Case=Acc|Gender=Fem|Number=Plur|Person=3",
+        "dep": "ccomp",
+        "head": 0,
+        "current_role": "oración_completiva"
+      },
+      {
+        "idx": 4,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 0,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 302,
+    "latin": "Edo ut vivam.",
+    "spanish": "Como para vivir.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Edo",
+        "lemma": "edo",
+        "pos": "INTJ",
+        "morph": "",
+        "dep": "ROOT",
+        "head": 0,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 1,
+        "word": "ut",
+        "lemma": "ut",
+        "pos": "SCONJ",
+        "morph": "",
+        "dep": "mark",
+        "head": 2,
+        "current_role": "conjunción_subordinante"
+      },
+      {
+        "idx": 2,
+        "word": "vivam",
+        "lemma": "viuus",
+        "pos": "VERB",
+        "morph": "Mood=Sub|Number=Sing|Person=1|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "advcl",
+        "head": 0,
+        "current_role": "oración_adverbial"
+      },
+      {
+        "idx": 3,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 0,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 303,
+    "latin": "Tam stultus est ut nihil intelligat.",
+    "spanish": "Es tan tonto que no entiende nada.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Tam",
+        "lemma": "tam",
+        "pos": "ADV",
+        "morph": "",
+        "dep": "advmod",
+        "head": 1,
+        "current_role": "modificador_adverbial"
+      },
+      {
+        "idx": 1,
+        "word": "stultus",
+        "lemma": "stultus",
+        "pos": "ADJ",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "ROOT",
+        "head": 1,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 2,
+        "word": "est",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "cop",
+        "head": 1,
+        "current_role": "cópula"
+      },
+      {
+        "idx": 3,
+        "word": "ut",
+        "lemma": "ut",
+        "pos": "SCONJ",
+        "morph": "",
+        "dep": "mark",
+        "head": 5,
+        "current_role": "conjunción_subordinante"
+      },
+      {
+        "idx": 4,
+        "word": "nihil",
+        "lemma": "nihil",
+        "pos": "PRON",
+        "morph": "",
+        "dep": "obj",
+        "head": 5,
+        "current_role": "objeto_directo"
+      },
+      {
+        "idx": 5,
+        "word": "intelligat",
+        "lemma": "intellego",
+        "pos": "VERB",
+        "morph": "Mood=Sub|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "advcl",
+        "head": 1,
+        "current_role": "oración_adverbial"
+      },
+      {
+        "idx": 6,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 304,
+    "latin": "Milites pugnant ut urbem defendant.",
+    "spanish": "Los soldados luchan para defender la ciudad.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Milites",
+        "lemma": "miles",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Masc|Number=Plur",
+        "dep": "nsubj",
+        "head": 1,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 1,
+        "word": "pugnant",
+        "lemma": "pugno",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Plur|Person=3|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 1,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 2,
+        "word": "ut",
+        "lemma": "ut",
+        "pos": "SCONJ",
+        "morph": "",
+        "dep": "mark",
+        "head": 4,
+        "current_role": "conjunción_subordinante"
+      },
+      {
+        "idx": 3,
+        "word": "urbem",
+        "lemma": "urbs",
+        "pos": "NOUN",
+        "morph": "Case=Acc|Gender=Fem|Number=Sing",
+        "dep": "obj",
+        "head": 4,
+        "current_role": "objeto_directo"
+      },
+      {
+        "idx": 4,
+        "word": "defendant",
+        "lemma": "defendo",
+        "pos": "VERB",
+        "morph": "Mood=Sub|Number=Plur|Person=3|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "advcl",
+        "head": 1,
+        "current_role": "oración_adverbial"
+      },
+      {
+        "idx": 5,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 305,
+    "latin": "Portas clausit ne hostes intrarent.",
+    "spanish": "Cerró las puertas para que no entraran los enemigos.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Portas",
+        "lemma": "portas",
+        "pos": "NOUN",
+        "morph": "Case=Acc|Gender=Fem|Number=Plur",
+        "dep": "obj",
+        "head": 1,
+        "current_role": "objeto_directo"
+      },
+      {
+        "idx": 1,
+        "word": "clausit",
+        "lemma": "claudo",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 1,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 2,
+        "word": "ne",
+        "lemma": "ne",
+        "pos": "SCONJ",
+        "morph": "",
+        "dep": "mark",
+        "head": 4,
+        "current_role": "conjunción_subordinante"
+      },
+      {
+        "idx": 3,
+        "word": "hostes",
+        "lemma": "hostis",
+        "pos": "NOUN",
+        "morph": "Case=Acc|Gender=Masc|Number=Plur",
+        "dep": "nsubj",
+        "head": 4,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 4,
+        "word": "intrarent",
+        "lemma": "intro",
+        "pos": "VERB",
+        "morph": "Mood=Sub|Number=Plur|Person=3|Tense=Past|VerbForm=Fin|Voice=Act",
+        "dep": "advcl",
+        "head": 1,
+        "current_role": "oración_adverbial"
+      },
+      {
+        "idx": 5,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 306,
+    "latin": "Timeo ne hostes veniant.",
+    "spanish": "Temo que los enemigos vengan.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Timeo",
+        "lemma": "timeo",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=1|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 0,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 1,
+        "word": "ne",
+        "lemma": "ne",
+        "pos": "SCONJ",
+        "morph": "",
+        "dep": "mark",
+        "head": 3,
+        "current_role": "conjunción_subordinante"
+      },
+      {
+        "idx": 2,
+        "word": "hostes",
+        "lemma": "hostis",
+        "pos": "NOUN",
+        "morph": "Case=Acc|Gender=Masc|Number=Plur",
+        "dep": "nsubj",
+        "head": 3,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 3,
+        "word": "veniant",
+        "lemma": "uenio",
+        "pos": "VERB",
+        "morph": "Mood=Sub|Number=Plur|Person=3|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "ccomp",
+        "head": 0,
+        "current_role": "oración_completiva"
+      },
+      {
+        "idx": 4,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 0,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 307,
+    "latin": "Solis ardor tam magnus est ut herba arescat.",
+    "spanish": "El calor del sol es tan grande que la hierba se seca.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Solis",
+        "lemma": "Soli",
+        "pos": "PROPN",
+        "morph": "Case=Gen|Gender=Masc|Number=Sing",
+        "dep": "nmod",
+        "head": 1,
+        "current_role": "complemento_del_nombre"
+      },
+      {
+        "idx": 1,
+        "word": "ardor",
+        "lemma": "ardor",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "nsubj",
+        "head": 3,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 2,
+        "word": "tam",
+        "lemma": "tam",
+        "pos": "ADV",
+        "morph": "",
+        "dep": "advmod:emph",
+        "head": 3,
+        "current_role": "modificador"
+      },
+      {
+        "idx": 3,
+        "word": "magnus",
+        "lemma": "magnus",
+        "pos": "ADJ",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "ROOT",
+        "head": 3,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 4,
+        "word": "est",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "cop",
+        "head": 3,
+        "current_role": "cópula"
+      },
+      {
+        "idx": 5,
+        "word": "ut",
+        "lemma": "ut",
+        "pos": "SCONJ",
+        "morph": "",
+        "dep": "mark",
+        "head": 7,
+        "current_role": "conjunción_subordinante"
+      },
+      {
+        "idx": 6,
+        "word": "herba",
+        "lemma": "herba",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Fem|Number=Sing",
+        "dep": "nsubj",
+        "head": 7,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 7,
+        "word": "arescat",
+        "lemma": "aresco",
+        "pos": "VERB",
+        "morph": "Mood=Sub|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "advcl",
+        "head": 3,
+        "current_role": "oración_adverbial"
+      },
+      {
+        "idx": 8,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 3,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 308,
+    "latin": "Legatos misit ut pacem peterent.",
+    "spanish": "Envió embajadores para pedir la paz.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Legatos",
+        "lemma": "legatus",
+        "pos": "NOUN",
+        "morph": "Case=Acc|Gender=Masc|Number=Plur",
+        "dep": "obj",
+        "head": 1,
+        "current_role": "objeto_directo"
+      },
+      {
+        "idx": 1,
+        "word": "misit",
+        "lemma": "mitto",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 1,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 2,
+        "word": "ut",
+        "lemma": "ut",
+        "pos": "SCONJ",
+        "morph": "",
+        "dep": "mark",
+        "head": 4,
+        "current_role": "conjunción_subordinante"
+      },
+      {
+        "idx": 3,
+        "word": "pacem",
+        "lemma": "pax",
+        "pos": "NOUN",
+        "morph": "Case=Acc|Gender=Fem|Number=Sing",
+        "dep": "obj",
+        "head": 4,
+        "current_role": "objeto_directo"
+      },
+      {
+        "idx": 4,
+        "word": "peterent",
+        "lemma": "peto",
+        "pos": "VERB",
+        "morph": "Mood=Sub|Number=Plur|Person=3|Tense=Past|VerbForm=Fin|Voice=Act",
+        "dep": "advcl",
+        "head": 1,
+        "current_role": "oración_adverbial"
+      },
+      {
+        "idx": 5,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 309,
+    "latin": "Ita locutus est ut omnes flerent.",
+    "spanish": "Habló de tal modo que todos lloraban.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Ita",
+        "lemma": "ita",
+        "pos": "ADV",
+        "morph": "",
+        "dep": "advmod",
+        "head": 1,
+        "current_role": "modificador_adverbial"
+      },
+      {
+        "idx": 1,
+        "word": "locutus",
+        "lemma": "loquor",
+        "pos": "VERB",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing|Tense=Past|VerbForm=Part|Voice=Pass",
+        "dep": "ROOT",
+        "head": 1,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 2,
+        "word": "est",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "aux:pass",
+        "head": 1,
+        "current_role": "auxiliar_pasivo"
+      },
+      {
+        "idx": 3,
+        "word": "ut",
+        "lemma": "ut",
+        "pos": "SCONJ",
+        "morph": "",
+        "dep": "mark",
+        "head": 5,
+        "current_role": "conjunción_subordinante"
+      },
+      {
+        "idx": 4,
+        "word": "omnes",
+        "lemma": "omnis",
+        "pos": "DET",
+        "morph": "Case=Nom|Gender=Masc|Number=Plur",
+        "dep": "nsubj",
+        "head": 5,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 5,
+        "word": "flerent",
+        "lemma": "fleo",
+        "pos": "VERB",
+        "morph": "Mood=Sub|Number=Plur|Person=3|Tense=Past|VerbForm=Fin|Voice=Act",
+        "dep": "advcl",
+        "head": 1,
+        "current_role": "oración_adverbial"
+      },
+      {
+        "idx": 6,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 310,
+    "latin": "Si hoc faceres, felix esses.",
+    "spanish": "Si hicieras esto, serías feliz.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Si",
+        "lemma": "si",
+        "pos": "SCONJ",
+        "morph": "",
+        "dep": "mark",
+        "head": 2,
+        "current_role": "conjunción_subordinante"
+      },
+      {
+        "idx": 1,
+        "word": "hoc",
+        "lemma": "hic",
+        "pos": "DET",
+        "morph": "Case=Acc|Gender=Neut|Number=Sing",
+        "dep": "obj",
+        "head": 2,
+        "current_role": "objeto_directo"
+      },
+      {
+        "idx": 2,
+        "word": "faceres",
+        "lemma": "facio",
+        "pos": "VERB",
+        "morph": "Mood=Sub|Number=Sing|Person=2|Tense=Past|VerbForm=Fin|Voice=Act",
+        "dep": "advcl",
+        "head": 4,
+        "current_role": "oración_adverbial"
+      },
+      {
+        "idx": 3,
+        "word": ",",
+        "lemma": ",",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 2,
+        "current_role": "puntuación"
+      },
+      {
+        "idx": 4,
+        "word": "felix",
+        "lemma": "felix",
+        "pos": "ADJ",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "ROOT",
+        "head": 4,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 5,
+        "word": "esses",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Sub|Number=Sing|Person=2|Tense=Past|VerbForm=Fin",
+        "dep": "cop",
+        "head": 4,
+        "current_role": "cópula"
+      },
+      {
+        "idx": 6,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 4,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 311,
+    "latin": "Nisi pluat, ibimus.",
+    "spanish": "Si no llueve, iremos.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Nisi",
+        "lemma": "nisi",
+        "pos": "SCONJ",
+        "morph": "",
+        "dep": "mark",
+        "head": 1,
+        "current_role": "conjunción_subordinante"
+      },
+      {
+        "idx": 1,
+        "word": "pluat",
+        "lemma": "pluo",
+        "pos": "VERB",
+        "morph": "Mood=Sub|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "advcl",
+        "head": 3,
+        "current_role": "oración_adverbial"
+      },
+      {
+        "idx": 2,
+        "word": ",",
+        "lemma": ",",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      },
+      {
+        "idx": 3,
+        "word": "ibimus",
+        "lemma": "eo",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Plur|Person=1|Tense=Fut|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 3,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 4,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 3,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 312,
+    "latin": "Si me amavisti, laetus sum.",
+    "spanish": "Si me amaste, soy feliz.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Si",
+        "lemma": "si",
+        "pos": "SCONJ",
+        "morph": "",
+        "dep": "mark",
+        "head": 2,
+        "current_role": "conjunción_subordinante"
+      },
+      {
+        "idx": 1,
+        "word": "me",
+        "lemma": "ego",
+        "pos": "PRON",
+        "morph": "Case=Acc|Number=Sing|Person=1",
+        "dep": "obj",
+        "head": 2,
+        "current_role": "objeto_directo"
+      },
+      {
+        "idx": 2,
+        "word": "amavisti",
+        "lemma": "amo",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=2|Tense=Past|VerbForm=Fin|Voice=Act",
+        "dep": "advcl",
+        "head": 4,
+        "current_role": "oración_adverbial"
+      },
+      {
+        "idx": 3,
+        "word": ",",
+        "lemma": ",",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 2,
+        "current_role": "puntuación"
+      },
+      {
+        "idx": 4,
+        "word": "laetus",
+        "lemma": "laetus",
+        "pos": "ADJ",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "ROOT",
+        "head": 4,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 5,
+        "word": "sum",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=1|Tense=Pres|VerbForm=Fin",
+        "dep": "cop",
+        "head": 4,
+        "current_role": "cópula"
+      },
+      {
+        "idx": 6,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 4,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 313,
+    "latin": "Si vivam, te videbo.",
+    "spanish": "Si viviere, te veré.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Si",
+        "lemma": "si",
+        "pos": "SCONJ",
+        "morph": "",
+        "dep": "mark",
+        "head": 1,
+        "current_role": "conjunción_subordinante"
+      },
+      {
+        "idx": 1,
+        "word": "vivam",
+        "lemma": "uivus",
+        "pos": "VERB",
+        "morph": "Mood=Sub|Number=Sing|Person=1|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "advcl",
+        "head": 4,
+        "current_role": "oración_adverbial"
+      },
+      {
+        "idx": 2,
+        "word": ",",
+        "lemma": ",",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      },
+      {
+        "idx": 3,
+        "word": "te",
+        "lemma": "tu",
+        "pos": "PRON",
+        "morph": "Case=Acc|Number=Sing|Person=2",
+        "dep": "obj",
+        "head": 4,
+        "current_role": "objeto_directo"
+      },
+      {
+        "idx": 4,
+        "word": "videbo",
+        "lemma": "uideo",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=1|Tense=Fut|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 4,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 5,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 4,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 314,
+    "latin": "Memento mori.",
+    "spanish": "Acuérdate de morir.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Memento",
+        "lemma": "memini",
+        "pos": "NOUN",
+        "morph": "Case=Abl|Gender=Neut|Number=Sing",
+        "dep": "ROOT",
+        "head": 0,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 1,
+        "word": "mori",
+        "lemma": "morior",
+        "pos": "VERB",
+        "morph": "Tense=Pres|VerbForm=Inf|Voice=Pass",
+        "dep": "ccomp",
+        "head": 0,
+        "current_role": "oración_completiva"
+      },
+      {
+        "idx": 2,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 0,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 315,
+    "latin": "Si sapiens esses, hoc non faceres.",
+    "spanish": "Si fueras sabio, no harías esto.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Si",
+        "lemma": "si",
+        "pos": "SCONJ",
+        "morph": "",
+        "dep": "mark",
+        "head": 1,
+        "current_role": "conjunción_subordinante"
+      },
+      {
+        "idx": 1,
+        "word": "sapiens",
+        "lemma": "sapiens",
+        "pos": "ADJ",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "advcl",
+        "head": 6,
+        "current_role": "oración_adverbial"
+      },
+      {
+        "idx": 2,
+        "word": "esses",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Sub|Number=Sing|Person=2|Tense=Past|VerbForm=Fin",
+        "dep": "cop",
+        "head": 1,
+        "current_role": "cópula"
+      },
+      {
+        "idx": 3,
+        "word": ",",
+        "lemma": ",",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      },
+      {
+        "idx": 4,
+        "word": "hoc",
+        "lemma": "hic",
+        "pos": "DET",
+        "morph": "Case=Acc|Gender=Neut|Number=Sing",
+        "dep": "obj",
+        "head": 6,
+        "current_role": "objeto_directo"
+      },
+      {
+        "idx": 5,
+        "word": "non",
+        "lemma": "non",
+        "pos": "PART",
+        "morph": "",
+        "dep": "advmod:neg",
+        "head": 6,
+        "current_role": "modificador"
+      },
+      {
+        "idx": 6,
+        "word": "faceres",
+        "lemma": "facio",
+        "pos": "VERB",
+        "morph": "Mood=Sub|Number=Sing|Person=2|Tense=Past|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 6,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 7,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 6,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 316,
+    "latin": "Dummodo adsint, vincere possumus.",
+    "spanish": "Con tal que estén presentes, podemos vencer.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Dummodo",
+        "lemma": "dummodo",
+        "pos": "SCONJ",
+        "morph": "",
+        "dep": "mark",
+        "head": 1,
+        "current_role": "conjunción_subordinante"
+      },
+      {
+        "idx": 1,
+        "word": "adsint",
+        "lemma": "adsum",
+        "pos": "VERB",
+        "morph": "Mood=Sub|Number=Plur|Person=3|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "advcl",
+        "head": 4,
+        "current_role": "oración_adverbial"
+      },
+      {
+        "idx": 2,
+        "word": ",",
+        "lemma": ",",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      },
+      {
+        "idx": 3,
+        "word": "vincere",
+        "lemma": "uinco",
+        "pos": "VERB",
+        "morph": "Tense=Pres|VerbForm=Inf|Voice=Act",
+        "dep": "xcomp",
+        "head": 4,
+        "current_role": "complemento_predicativo"
+      },
+      {
+        "idx": 4,
+        "word": "possumus",
+        "lemma": "possum",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Plur|Person=1|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 4,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 5,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 4,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 317,
+    "latin": "Sin autem discesseris, dolebo.",
+    "spanish": "Pero si te hubieres marchado, me dolerá.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Sin",
+        "lemma": "sin",
+        "pos": "SCONJ",
+        "morph": "",
+        "dep": "mark",
+        "head": 2,
+        "current_role": "conjunción_subordinante"
+      },
+      {
+        "idx": 1,
+        "word": "autem",
+        "lemma": "autem",
+        "pos": "CCONJ",
+        "morph": "",
+        "dep": "discourse",
+        "head": 4,
+        "current_role": "modificador_adverbial"
+      },
+      {
+        "idx": 2,
+        "word": "discesseris",
+        "lemma": "discedo",
+        "pos": "VERB",
+        "morph": "Mood=Sub|Number=Sing|Person=2|Tense=Past|VerbForm=Fin|Voice=Act",
+        "dep": "advcl",
+        "head": 4,
+        "current_role": "oración_adverbial"
+      },
+      {
+        "idx": 3,
+        "word": ",",
+        "lemma": ",",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 2,
+        "current_role": "puntuación"
+      },
+      {
+        "idx": 4,
+        "word": "dolebo",
+        "lemma": "doleo",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=1|Tense=Fut|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 4,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 5,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 4,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 318,
+    "latin": "Novi hominem.",
+    "spanish": "Conozco al hombre.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Novi",
+        "lemma": "nosco",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=1|Tense=Past|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 0,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 1,
+        "word": "hominem",
+        "lemma": "homo",
+        "pos": "NOUN",
+        "morph": "Case=Acc|Gender=Masc|Number=Sing",
+        "dep": "obj",
+        "head": 0,
+        "current_role": "objeto_directo"
+      },
+      {
+        "idx": 2,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 0,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 319,
+    "latin": "Odi et amo.",
+    "spanish": "Odio y amo.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Odi",
+        "lemma": "odi",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=1|Tense=Past|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 0,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 1,
+        "word": "et",
+        "lemma": "et",
+        "pos": "CCONJ",
+        "morph": "",
+        "dep": "cc",
+        "head": 2,
+        "current_role": "conjunción_coordinante"
+      },
+      {
+        "idx": 2,
+        "word": "amo",
+        "lemma": "amo",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=1|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "conj",
+        "head": 0,
+        "current_role": "elemento_coordinado"
+      },
+      {
+        "idx": 3,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 0,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 320,
+    "latin": "Quamquam pauper est, felix est.",
+    "spanish": "Aunque es pobre, es feliz.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Quamquam",
+        "lemma": "quamquam",
+        "pos": "SCONJ",
+        "morph": "",
+        "dep": "mark",
+        "head": 1,
+        "current_role": "conjunción_subordinante"
+      },
+      {
+        "idx": 1,
+        "word": "pauper",
+        "lemma": "pauper",
+        "pos": "ADJ",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "advcl",
+        "head": 4,
+        "current_role": "oración_adverbial"
+      },
+      {
+        "idx": 2,
+        "word": "est",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "cop",
+        "head": 1,
+        "current_role": "cópula"
+      },
+      {
+        "idx": 3,
+        "word": ",",
+        "lemma": ",",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      },
+      {
+        "idx": 4,
+        "word": "felix",
+        "lemma": "felix",
+        "pos": "ADJ",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "ROOT",
+        "head": 4,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 5,
+        "word": "est",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "cop",
+        "head": 4,
+        "current_role": "cópula"
+      },
+      {
+        "idx": 6,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 4,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 321,
+    "latin": "Quamvis fortis sit, non vincet.",
+    "spanish": "Aunque sea fuerte, no vencerá.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Quamvis",
+        "lemma": "quamvis",
+        "pos": "SCONJ",
+        "morph": "",
+        "dep": "advmod",
+        "head": 1,
+        "current_role": "modificador_adverbial"
+      },
+      {
+        "idx": 1,
+        "word": "fortis",
+        "lemma": "fortis",
+        "pos": "ADJ",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "advcl",
+        "head": 5,
+        "current_role": "oración_adverbial"
+      },
+      {
+        "idx": 2,
+        "word": "sit",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Sub|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "cop",
+        "head": 1,
+        "current_role": "cópula"
+      },
+      {
+        "idx": 3,
+        "word": ",",
+        "lemma": ",",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      },
+      {
+        "idx": 4,
+        "word": "non",
+        "lemma": "non",
+        "pos": "PART",
+        "morph": "",
+        "dep": "advmod:neg",
+        "head": 5,
+        "current_role": "modificador"
+      },
+      {
+        "idx": 5,
+        "word": "vincet",
+        "lemma": "uinco",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Fut|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 5,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 6,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 5,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 322,
+    "latin": "Etsi tardus est, pervenit.",
+    "spanish": "Aunque es lento, llega.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Etsi",
+        "lemma": "etsi",
+        "pos": "ADV",
+        "morph": "",
+        "dep": "mark",
+        "head": 1,
+        "current_role": "conjunción_subordinante"
+      },
+      {
+        "idx": 1,
+        "word": "tardus",
+        "lemma": "tardus",
+        "pos": "ADJ",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "advcl",
+        "head": 4,
+        "current_role": "oración_adverbial"
+      },
+      {
+        "idx": 2,
+        "word": "est",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "cop",
+        "head": 1,
+        "current_role": "cópula"
+      },
+      {
+        "idx": 3,
+        "word": ",",
+        "lemma": ",",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      },
+      {
+        "idx": 4,
+        "word": "pervenit",
+        "lemma": "peruenio",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 4,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 5,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 4,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 323,
+    "latin": "Licet pluat, ibo.",
+    "spanish": "Aunque llueva, iré.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Licet",
+        "lemma": "licet",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "mark",
+        "head": 1,
+        "current_role": "conjunción_subordinante"
+      },
+      {
+        "idx": 1,
+        "word": "pluat",
+        "lemma": "pluo",
+        "pos": "VERB",
+        "morph": "Mood=Sub|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "advcl",
+        "head": 3,
+        "current_role": "oración_adverbial"
+      },
+      {
+        "idx": 2,
+        "word": ",",
+        "lemma": ",",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      },
+      {
+        "idx": 3,
+        "word": "ibo",
+        "lemma": "eo",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=1|Tense=Fut|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 3,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 4,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 3,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 324,
+    "latin": "Qui bene amat, bene castigat.",
+    "spanish": "Quien bien ama, bien castiga.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Qui",
+        "lemma": "qui",
+        "pos": "PRON",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "nsubj",
+        "head": 2,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 1,
+        "word": "bene",
+        "lemma": "bene",
+        "pos": "ADV",
+        "morph": "",
+        "dep": "advmod",
+        "head": 2,
+        "current_role": "modificador_adverbial"
+      },
+      {
+        "idx": 2,
+        "word": "amat",
+        "lemma": "amo",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "csubj",
+        "head": 5,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 3,
+        "word": ",",
+        "lemma": ",",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 2,
+        "current_role": "puntuación"
+      },
+      {
+        "idx": 4,
+        "word": "bene",
+        "lemma": "bene",
+        "pos": "ADV",
+        "morph": "",
+        "dep": "advmod",
+        "head": 5,
+        "current_role": "modificador_adverbial"
+      },
+      {
+        "idx": 5,
+        "word": "castigat",
+        "lemma": "castigo",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 5,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 6,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 5,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 325,
+    "latin": "Quae utilitas, ea honestas.",
+    "spanish": "Lo que es útil, es honesto.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Quae",
+        "lemma": "qui",
+        "pos": "PRON",
+        "morph": "Case=Nom|Gender=Fem|Number=Sing",
+        "dep": "det",
+        "head": 1,
+        "current_role": "determinante"
+      },
+      {
+        "idx": 1,
+        "word": "utilitas",
+        "lemma": "utilitas",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Fem|Number=Sing",
+        "dep": "nsubj",
+        "head": 4,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 2,
+        "word": ",",
+        "lemma": ",",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      },
+      {
+        "idx": 3,
+        "word": "ea",
+        "lemma": "is",
+        "pos": "PRON",
+        "morph": "Case=Nom|Gender=Fem|Number=Sing",
+        "dep": "det",
+        "head": 4,
+        "current_role": "determinante"
+      },
+      {
+        "idx": 4,
+        "word": "honestas",
+        "lemma": "honestas",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Fem|Number=Sing",
+        "dep": "ROOT",
+        "head": 4,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 5,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 4,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 326,
+    "latin": "Quod natura negat, nemo dare potest.",
+    "spanish": "Lo que la naturaleza niega, nadie puede dar.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Quod",
+        "lemma": "qui",
+        "pos": "PRON",
+        "morph": "Case=Acc|Gender=Neut|Number=Sing",
+        "dep": "obj",
+        "head": 2,
+        "current_role": "objeto_directo"
+      },
+      {
+        "idx": 1,
+        "word": "natura",
+        "lemma": "natura",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Fem|Number=Sing",
+        "dep": "nsubj",
+        "head": 2,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 2,
+        "word": "negat",
+        "lemma": "nego",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "ccomp",
+        "head": 6,
+        "current_role": "oración_completiva"
+      },
+      {
+        "idx": 3,
+        "word": ",",
+        "lemma": ",",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 2,
+        "current_role": "puntuación"
+      },
+      {
+        "idx": 4,
+        "word": "nemo",
+        "lemma": "nemo",
+        "pos": "PRON",
+        "morph": "Case=Nom",
+        "dep": "nsubj",
+        "head": 6,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 5,
+        "word": "dare",
+        "lemma": "do",
+        "pos": "VERB",
+        "morph": "Case=Acc|Gender=Neut|Number=Sing|Tense=Pres|VerbForm=Inf|Voice=Act",
+        "dep": "xcomp",
+        "head": 6,
+        "current_role": "complemento_predicativo"
+      },
+      {
+        "idx": 6,
+        "word": "potest",
+        "lemma": "possum",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 6,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 7,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 6,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 327,
+    "latin": "Vinculum amoris fortius est quam ferro.",
+    "spanish": "El vínculo del amor es más fuerte que el hierro.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Vinculum",
+        "lemma": "uinculum",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Neut|Number=Sing",
+        "dep": "nsubj",
+        "head": 2,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 1,
+        "word": "amoris",
+        "lemma": "amor",
+        "pos": "NOUN",
+        "morph": "Case=Gen|Gender=Masc|Number=Sing",
+        "dep": "nmod",
+        "head": 0,
+        "current_role": "complemento_del_nombre"
+      },
+      {
+        "idx": 2,
+        "word": "fortius",
+        "lemma": "fortis",
+        "pos": "ADJ",
+        "morph": "Case=Nom|Gender=Neut|Number=Sing",
+        "dep": "ROOT",
+        "head": 2,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 3,
+        "word": "est",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "cop",
+        "head": 2,
+        "current_role": "cópula"
+      },
+      {
+        "idx": 4,
+        "word": "quam",
+        "lemma": "quam",
+        "pos": "SCONJ",
+        "morph": "",
+        "dep": "mark",
+        "head": 5,
+        "current_role": "conjunción_subordinante"
+      },
+      {
+        "idx": 5,
+        "word": "ferro",
+        "lemma": "ferrum",
+        "pos": "NOUN",
+        "morph": "Case=Abl|Gender=Neut|Number=Sing",
+        "dep": "advcl:cmp",
+        "head": 2,
+        "current_role": "otro"
+      },
+      {
+        "idx": 6,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 2,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 328,
+    "latin": "Etsi difficile est, facere debeo.",
+    "spanish": "Aunque es difícil, debo hacerlo.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Etsi",
+        "lemma": "etsi",
+        "pos": "ADV",
+        "morph": "",
+        "dep": "mark",
+        "head": 1,
+        "current_role": "conjunción_subordinante"
+      },
+      {
+        "idx": 1,
+        "word": "difficile",
+        "lemma": "difficilis",
+        "pos": "ADJ",
+        "morph": "Case=Nom|Gender=Neut|Number=Sing",
+        "dep": "advcl",
+        "head": 5,
+        "current_role": "oración_adverbial"
+      },
+      {
+        "idx": 2,
+        "word": "est",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "cop",
+        "head": 1,
+        "current_role": "cópula"
+      },
+      {
+        "idx": 3,
+        "word": ",",
+        "lemma": ",",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      },
+      {
+        "idx": 4,
+        "word": "facere",
+        "lemma": "facio",
+        "pos": "VERB",
+        "morph": "Tense=Pres|VerbForm=Inf|Voice=Act",
+        "dep": "xcomp",
+        "head": 5,
+        "current_role": "complemento_predicativo"
+      },
+      {
+        "idx": 5,
+        "word": "debeo",
+        "lemma": "debeo",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=1|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 5,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 6,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 5,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 329,
+    "latin": "Quamquam multi impedimenta sunt, vincere volumus.",
+    "spanish": "Aunque hay muchos impedimentos, queremos vencer.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Quamquam",
+        "lemma": "quamquam",
+        "pos": "SCONJ",
+        "morph": "",
+        "dep": "mark",
+        "head": 2,
+        "current_role": "conjunción_subordinante"
+      },
+      {
+        "idx": 1,
+        "word": "multi",
+        "lemma": "multus",
+        "pos": "DET",
+        "morph": "Case=Nom|Gender=Masc|Number=Plur",
+        "dep": "det",
+        "head": 2,
+        "current_role": "determinante"
+      },
+      {
+        "idx": 2,
+        "word": "impedimenta",
+        "lemma": "impedimentum",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Neut|Number=Plur",
+        "dep": "advcl",
+        "head": 6,
+        "current_role": "oración_adverbial"
+      },
+      {
+        "idx": 3,
+        "word": "sunt",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Plur|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "cop",
+        "head": 2,
+        "current_role": "cópula"
+      },
+      {
+        "idx": 4,
+        "word": ",",
+        "lemma": ",",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 2,
+        "current_role": "puntuación"
+      },
+      {
+        "idx": 5,
+        "word": "vincere",
+        "lemma": "uinco",
+        "pos": "VERB",
+        "morph": "Tense=Pres|VerbForm=Inf|Voice=Act",
+        "dep": "xcomp",
+        "head": 6,
+        "current_role": "complemento_predicativo"
+      },
+      {
+        "idx": 6,
+        "word": "volumus",
+        "lemma": "uolo",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Plur|Person=1|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 6,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 7,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 6,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 330,
+    "latin": "Caesar respondit se venturum esse.",
+    "spanish": "César respondió que vendría.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Caesar",
+        "lemma": "Caesar",
+        "pos": "PROPN",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "nsubj",
+        "head": 1,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 1,
+        "word": "respondit",
+        "lemma": "respondeo",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 1,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 2,
+        "word": "se",
+        "lemma": "sui",
+        "pos": "PRON",
+        "morph": "Case=Acc|Number=Sing|Person=3",
+        "dep": "nsubj",
+        "head": 3,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 3,
+        "word": "venturum",
+        "lemma": "uenio",
+        "pos": "VERB",
+        "morph": "Case=Acc|Gender=Masc|Number=Sing|Tense=Fut|VerbForm=Part|Voice=Act",
+        "dep": "ccomp",
+        "head": 1,
+        "current_role": "oración_completiva"
+      },
+      {
+        "idx": 4,
+        "word": "esse",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Tense=Pres|VerbForm=Inf",
+        "dep": "aux",
+        "head": 3,
+        "current_role": "auxiliar"
+      },
+      {
+        "idx": 5,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 331,
+    "latin": "Fama est Romam aeternam esse.",
+    "spanish": "Se dice que Roma es eterna.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Fama",
+        "lemma": "fama",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Fem|Number=Sing",
+        "dep": "ROOT",
+        "head": 0,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 1,
+        "word": "est",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "cop",
+        "head": 0,
+        "current_role": "cópula"
+      },
+      {
+        "idx": 2,
+        "word": "Romam",
+        "lemma": "Roma",
+        "pos": "PROPN",
+        "morph": "Case=Acc|Gender=Fem|Number=Sing",
+        "dep": "obl:arg",
+        "head": 3,
+        "current_role": "complemento_obligatorio"
+      },
+      {
+        "idx": 3,
+        "word": "aeternam",
+        "lemma": "aeternus",
+        "pos": "ADJ",
+        "morph": "Case=Acc|Gender=Fem|Number=Sing",
+        "dep": "csubj",
+        "head": 0,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 4,
+        "word": "esse",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Tense=Pres|VerbForm=Inf",
+        "dep": "cop",
+        "head": 3,
+        "current_role": "cópula"
+      },
+      {
+        "idx": 5,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 0,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 332,
+    "latin": "Nuntiat hostes appropinquare.",
+    "spanish": "Anuncia que los enemigos se acercan.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Nuntiat",
+        "lemma": "nuntio",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 0,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 1,
+        "word": "hostes",
+        "lemma": "hostis",
+        "pos": "NOUN",
+        "morph": "Case=Acc|Gender=Masc|Number=Plur",
+        "dep": "nsubj",
+        "head": 0,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 2,
+        "word": "appropinquare",
+        "lemma": "appropinquo",
+        "pos": "VERB",
+        "morph": "Tense=Pres|VerbForm=Inf|Voice=Act",
+        "dep": "ccomp",
+        "head": 0,
+        "current_role": "oración_completiva"
+      },
+      {
+        "idx": 3,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 0,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 333,
+    "latin": "Legatus refert milites vicisse.",
+    "spanish": "El legado informa que los soldados vencieron.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Legatus",
+        "lemma": "legatus",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "nsubj",
+        "head": 1,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 1,
+        "word": "refert",
+        "lemma": "refero",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 1,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 2,
+        "word": "milites",
+        "lemma": "miles",
+        "pos": "NOUN",
+        "morph": "Case=Acc|Gender=Masc|Number=Plur",
+        "dep": "nsubj",
+        "head": 3,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 3,
+        "word": "vicisse",
+        "lemma": "uinco",
+        "pos": "VERB",
+        "morph": "Tense=Past|VerbForm=Inf|Voice=Act",
+        "dep": "ccomp",
+        "head": 1,
+        "current_role": "oración_completiva"
+      },
+      {
+        "idx": 4,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 334,
+    "latin": "Interrogavit quis esset.",
+    "spanish": "Preguntó quién era.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Interrogavit",
+        "lemma": "interrogo",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Past|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 0,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 1,
+        "word": "quis",
+        "lemma": "quis",
+        "pos": "PRON",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "nsubj",
+        "head": 0,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 2,
+        "word": "esset",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Sub|Number=Sing|Person=3|Tense=Past|VerbForm=Fin",
+        "dep": "cop",
+        "head": 1,
+        "current_role": "cópula"
+      },
+      {
+        "idx": 3,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 0,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 335,
+    "latin": "Certum est eum mentiri.",
+    "spanish": "Es cierto que él miente.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Certum",
+        "lemma": "certus",
+        "pos": "ADJ",
+        "morph": "Case=Nom|Gender=Neut|Number=Sing",
+        "dep": "ROOT",
+        "head": 0,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 1,
+        "word": "est",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "aux:pass",
+        "head": 0,
+        "current_role": "cópula"
+      },
+      {
+        "idx": 2,
+        "word": "eum",
+        "lemma": "is",
+        "pos": "PRON",
+        "morph": "Case=Acc|Gender=Masc|Number=Sing|Person=3",
+        "dep": "nsubj:pass",
+        "head": 3,
+        "current_role": "sujeto_paciente"
+      },
+      {
+        "idx": 3,
+        "word": "mentiri",
+        "lemma": "mentior",
+        "pos": "VERB",
+        "morph": "Tense=Pres|VerbForm=Inf|Voice=Pass",
+        "dep": "ccomp",
+        "head": 0,
+        "current_role": "oración_completiva"
+      },
+      {
+        "idx": 4,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 0,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 336,
+    "latin": "Dubium non est quin victor sit.",
+    "spanish": "No hay duda de que es el vencedor.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Dubium",
+        "lemma": "dubius",
+        "pos": "ADJ",
+        "morph": "Case=Nom|Gender=Neut|Number=Sing",
+        "dep": "ROOT",
+        "head": 0,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 1,
+        "word": "non",
+        "lemma": "non",
+        "pos": "PART",
+        "morph": "",
+        "dep": "advmod:neg",
+        "head": 0,
+        "current_role": "modificador"
+      },
+      {
+        "idx": 2,
+        "word": "est",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "cop",
+        "head": 0,
+        "current_role": "cópula"
+      },
+      {
+        "idx": 3,
+        "word": "quin",
+        "lemma": "quin",
+        "pos": "SCONJ",
+        "morph": "",
+        "dep": "mark",
+        "head": 4,
+        "current_role": "conjunción_subordinante"
+      },
+      {
+        "idx": 4,
+        "word": "victor",
+        "lemma": "uictor",
+        "pos": "NOUN",
+        "morph": "Case=Nom|Gender=Masc|Number=Sing",
+        "dep": "ccomp",
+        "head": 0,
+        "current_role": "oración_completiva"
+      },
+      {
+        "idx": 5,
+        "word": "sit",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Mood=Sub|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin",
+        "dep": "cop",
+        "head": 4,
+        "current_role": "cópula"
+      },
+      {
+        "idx": 6,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 0,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 337,
+    "latin": "Caesar inquit se non fugere.",
+    "spanish": "César dice que él no huye.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Caesar",
+        "lemma": "Caesar",
+        "pos": "PROPN",
+        "morph": "Case=Voc|Gender=Masc|Number=Sing",
+        "dep": "nsubj",
+        "head": 1,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 1,
+        "word": "inquit",
+        "lemma": "inquio",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 1,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 2,
+        "word": "se",
+        "lemma": "sui",
+        "pos": "PRON",
+        "morph": "Case=Acc|Number=Sing|Person=3",
+        "dep": "nsubj",
+        "head": 4,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 3,
+        "word": "non",
+        "lemma": "non",
+        "pos": "PART",
+        "morph": "",
+        "dep": "advmod:neg",
+        "head": 4,
+        "current_role": "modificador"
+      },
+      {
+        "idx": 4,
+        "word": "fugere",
+        "lemma": "fugio",
+        "pos": "VERB",
+        "morph": "Tense=Pres|VerbForm=Inf|Voice=Act",
+        "dep": "ccomp",
+        "head": 1,
+        "current_role": "oración_completiva"
+      },
+      {
+        "idx": 5,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 1,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 338,
+    "latin": "Nuntiaverunt urbem captam esse.",
+    "spanish": "Anunciaron que la ciudad había sido capturada.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Nuntiaverunt",
+        "lemma": "nuntio",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Plur|Person=3|Tense=Past|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 0,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 1,
+        "word": "urbem",
+        "lemma": "urbs",
+        "pos": "NOUN",
+        "morph": "Case=Acc|Gender=Fem|Number=Sing",
+        "dep": "nsubj:pass",
+        "head": 2,
+        "current_role": "sujeto_paciente"
+      },
+      {
+        "idx": 2,
+        "word": "captam",
+        "lemma": "capio",
+        "pos": "VERB",
+        "morph": "Case=Acc|Gender=Fem|Number=Sing|Tense=Past|VerbForm=Part|Voice=Pass",
+        "dep": "ccomp",
+        "head": 0,
+        "current_role": "oración_completiva"
+      },
+      {
+        "idx": 3,
+        "word": "esse",
+        "lemma": "sum",
+        "pos": "AUX",
+        "morph": "Tense=Pres|VerbForm=Inf",
+        "dep": "aux:pass",
+        "head": 2,
+        "current_role": "auxiliar_pasivo"
+      },
+      {
+        "idx": 4,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 0,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 339,
+    "latin": "Respondeo me hoc non fecisse.",
+    "spanish": "Respondo que yo no hice esto.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Respondeo",
+        "lemma": "respondeo",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Sing|Person=1|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 0,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 1,
+        "word": "me",
+        "lemma": "ego",
+        "pos": "PRON",
+        "morph": "Case=Acc|Number=Sing|Person=1",
+        "dep": "nsubj",
+        "head": 4,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 2,
+        "word": "hoc",
+        "lemma": "hic",
+        "pos": "DET",
+        "morph": "Case=Acc|Gender=Neut|Number=Sing",
+        "dep": "obj",
+        "head": 4,
+        "current_role": "objeto_directo"
+      },
+      {
+        "idx": 3,
+        "word": "non",
+        "lemma": "non",
+        "pos": "PART",
+        "morph": "",
+        "dep": "advmod:neg",
+        "head": 4,
+        "current_role": "modificador"
+      },
+      {
+        "idx": 4,
+        "word": "fecisse",
+        "lemma": "facio",
+        "pos": "VERB",
+        "morph": "Tense=Past|VerbForm=Inf|Voice=Act",
+        "dep": "ccomp",
+        "head": 0,
+        "current_role": "oración_completiva"
+      },
+      {
+        "idx": 5,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 0,
+        "current_role": "puntuación"
+      }
+    ]
+  },
+  {
+    "id": 340,
+    "latin": "Omnia fieri possunt.",
+    "spanish": "Todo puede hacerse.",
+    "tokens": [
+      {
+        "idx": 0,
+        "word": "Omnia",
+        "lemma": "omnis",
+        "pos": "DET",
+        "morph": "Case=Nom|Gender=Neut|Number=Plur",
+        "dep": "nsubj",
+        "head": 2,
+        "current_role": "sujeto"
+      },
+      {
+        "idx": 1,
+        "word": "fieri",
+        "lemma": "fio",
+        "pos": "VERB",
+        "morph": "Tense=Pres|VerbForm=Inf|Voice=Act",
+        "dep": "xcomp",
+        "head": 2,
+        "current_role": "complemento_predicativo"
+      },
+      {
+        "idx": 2,
+        "word": "possunt",
+        "lemma": "possum",
+        "pos": "VERB",
+        "morph": "Mood=Ind|Number=Plur|Person=3|Tense=Pres|VerbForm=Fin|Voice=Act",
+        "dep": "ROOT",
+        "head": 2,
+        "current_role": "predicado"
+      },
+      {
+        "idx": 3,
+        "word": ".",
+        "lemma": ".",
+        "pos": "PUNCT",
+        "morph": "",
+        "dep": "punct",
+        "head": 2,
+        "current_role": "puntuación"
+      }
+    ]
+  }
+]

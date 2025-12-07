@@ -1,0 +1,56 @@
+{
+  "metadata": {
+    "total_sentences": 1,
+    "format_version": "1.0",
+    "description": "Oraciones latinas con análisis sintáctico actual de LatinCy/spaCy"
+  },
+  "sentences": [
+    {
+      "id": 1,
+      "latin": "Vincere aut mori.",
+      "spanish": "Vencer o morir.",
+      "tokens": [
+        {
+          "idx": 0,
+          "word": "Vincere",
+          "lemma": "uinco",
+          "pos": "VERB",
+          "morph": "Tense=Pres|VerbForm=Inf|Voice=Act",
+          "dep": "ROOT",
+          "head": 0,
+          "current_role": "predicado"
+        },
+        {
+          "idx": 1,
+          "word": "aut",
+          "lemma": "aut",
+          "pos": "CCONJ",
+          "morph": "",
+          "dep": "cc",
+          "head": 2,
+          "current_role": "conjunción_coordinante"
+        },
+        {
+          "idx": 2,
+          "word": "mori",
+          "lemma": "morior",
+          "pos": "VERB",
+          "morph": "Tense=Pres|VerbForm=Inf|Voice=Pass",
+          "dep": "conj",
+          "head": 0,
+          "current_role": "elemento_coordinado"
+        },
+        {
+          "idx": 3,
+          "word": ".",
+          "lemma": ".",
+          "pos": "PUNCT",
+          "morph": "",
+          "dep": "punct",
+          "head": 0,
+          "current_role": "puntuación"
+        }
+      ]
+    }
+  ]
+}

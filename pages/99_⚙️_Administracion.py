@@ -20,6 +20,7 @@ from utils.csv_handler import import_vocabulary_from_csv, export_vocabulary_to_e
 from utils.i18n import get_text
 from utils.ui_helpers import load_css
 from utils.text_utils import normalize_latin
+from utils.content_importer import ContentImporter as NLPContentImporter
 
 st.set_page_config(page_title="Admin", page_icon="⚙️", layout="wide")
 
@@ -1109,60 +1110,100 @@ elif section == "Textos":
     # --- Import Tab ---
     with text_tabs[2]:
         st.markdown("### 📥 Importar Textos")
-        st.info("Sube archivos CSV o Excel con tus textos. Columnas requeridas: title, content, difficulty.")
         
-        from utils.content_import_export import ContentImporter, ContentTemplateGenerator
+        import_mode = st.radio("Método de Importación", ["Desde Archivo (CSV/Excel)", "Desde Texto con NLP (Inteligente)"], horizontal=True)
         
-        # Download Template
-        st.markdown("#### 1. Descargar Plantilla")
-        col_t1, col_t2 = st.columns(2)
-        template_df = ContentTemplateGenerator.generate_text_template()
-        
-        with col_t1:
-            st.download_button(
-                "⬇️ Plantilla CSV",
-                data=template_df.to_csv(index=False).encode('utf-8'),
-                file_name="plantilla_textos.csv",
-                mime="text/csv",
-                width="stretch"
-            )
-        with col_t2:
-            output = io.BytesIO()
-            with pd.ExcelWriter(output, engine='openpyxl') as writer:
-                template_df.to_excel(writer, index=False)
-            st.download_button(
-                "⬇️ Plantilla Excel",
-                data=output.getvalue(),
-                file_name="plantilla_textos.xlsx",
-                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                width="stretch"
-            )
+        if import_mode == "Desde Archivo (CSV/Excel)":
+            st.info("Sube archivos CSV o Excel con tus textos. Columnas requeridas: title, content, difficulty.")
             
-        st.markdown("#### 2. Subir Archivo")
-        uploaded_file = st.file_uploader("Seleccionar archivo", type=['csv', 'xlsx', 'xls'], key="text_uploader")
-        
-        if uploaded_file:
-            try:
-                df = ContentImporter.parse_file(uploaded_file.getvalue(), uploaded_file.name)
-                is_valid, errors = ContentImporter.validate_dataframe(df, 'text')
+            from utils.content_import_export import ContentImporter, ContentTemplateGenerator
+            
+            # Download Template
+            st.markdown("#### 1. Descargar Plantilla")
+            col_t1, col_t2 = st.columns(2)
+            template_df = ContentTemplateGenerator.generate_text_template()
+            
+            with col_t1:
+                st.download_button(
+                    "⬇️ Plantilla CSV",
+                    data=template_df.to_csv(index=False).encode('utf-8'),
+                    file_name="plantilla_textos.csv",
+                    mime="text/csv",
+                    width="stretch"
+                )
+            with col_t2:
+                output = io.BytesIO()
+                with pd.ExcelWriter(output, engine='openpyxl') as writer:
+                    template_df.to_excel(writer, index=False)
+                st.download_button(
+                    "⬇️ Plantilla Excel",
+                    data=output.getvalue(),
+                    file_name="plantilla_textos.xlsx",
+                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    width="stretch"
+                )
                 
-                if is_valid:
-                    st.success(f"✅ Archivo válido. {len(df)} textos encontrados.")
-                    st.dataframe(df.head())
+            st.markdown("#### 2. Subir Archivo")
+            uploaded_file = st.file_uploader("Seleccionar archivo", type=['csv', 'xlsx', 'xls'], key="text_uploader")
+            
+            if uploaded_file:
+                try:
+                    df = ContentImporter.parse_file(uploaded_file.getvalue(), uploaded_file.name)
+                    is_valid, errors = ContentImporter.validate_dataframe(df, 'text')
                     
-                    if st.button("🚀 Importar Textos", type="primary"):
-                        with get_session() as session:
-                            texts = ContentImporter.dataframe_to_texts(df)
-                            for t in texts:
-                                session.add(t)
-                            session.commit()
-                            st.success(f"✅ Se importaron {len(texts)} textos exitosamente.")
-                else:
-                    st.error("❌ El archivo tiene errores:")
-                    for e in errors:
-                        st.write(f"- {e}")
-            except Exception as e:
-                st.error(f"Error al procesar: {e}")
+                    if is_valid:
+                        st.success(f"✅ Archivo válido. {len(df)} textos encontrados.")
+                        st.dataframe(df.head())
+                        
+                        if st.button("🚀 Importar Textos", type="primary"):
+                            with get_session() as session:
+                                texts = ContentImporter.dataframe_to_texts(df)
+                                for t in texts:
+                                    session.add(t)
+                                session.commit()
+                                st.success(f"✅ Se importaron {len(texts)} textos exitosamente.")
+                                st.balloons()
+                    else:
+                        st.error("❌ El archivo tiene errores:")
+                        for err in errors:
+                            st.write(f"- {err}")
+                            
+                except Exception as e:
+                    st.error(f"Error al procesar el archivo: {e}")
+                    
+        else:
+            # NLP Smart Import
+            st.info("🤖 **Importación Inteligente**: Pega cualquier texto en latín. El sistema analizará morfológicamente cada palabra, detectará lemas y generará todo el vocabulario necesario automáticamente.")
+            
+            with st.form("nlp_import_form"):
+                col1, col2 = st.columns(2)
+                with col1:
+                    title = st.text_input("Título del Texto", placeholder="Ej: De Bello Gallico I.1")
+                    author_name = st.text_input("Autor", placeholder="Ej: Caesar")
+                with col2:
+                    level = st.slider("Nivel de Dificultad", 1, 10, 1, key="nlp_level")
+                
+                content = st.text_area("Contenido (Latín)", height=300, placeholder="Gallia est omnis divisa in partes tres...")
+                
+                submitted = st.form_submit_button("🚀 Analizar e Importar", type="primary")
+                
+                if submitted and content and title:
+                    with st.spinner("🧠 Analizando texto con Spacy NLP + Base de Datos..."):
+                        try:
+                            # Already imported at top as NLPContentImporter
+                            importer = NLPContentImporter()
+                            text_id = importer.import_text(title, content, level, author_name)
+                            
+                            st.success(f"✅ Texto '{title}' importado correctamente (ID: {text_id}).")
+                            st.balloons()
+                            
+                            with get_session() as session:
+                                link_count = len(session.exec(select(TextWordLink).where(TextWordLink.text_id == text_id)).all())
+                                st.info(f"📊 Se han analizado y vinculado {link_count} palabras.")
+                                
+                        except Exception as e:
+                            st.error(f"Error durante la importación: {e}")
+
 
     # --- Export Tab ---
     with text_tabs[3]:

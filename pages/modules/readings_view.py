@@ -237,9 +237,9 @@ def render_interactive_text(text_id: int, text_content: str, session):
                 if analyses:
                     primary = analyses[0]
                     lemma = primary["lemma"]
-                    translation = primary["translation"]
-                    pos = primary["pos"]
-                    morphology = primary["morphology"]
+                    translation = primary.get("translation", "[...]")
+                    pos = primary.get("pos", "unknown")
+                    morphology = primary.get("morphology", {})
                     word_id = primary.get("word_id")
             
             if lemma:

@@ -85,7 +85,7 @@ def undo_last_change():
 
 def render_content():
     
-    # Custom CSS for syntax highlighting
+    # Custom CSS for syntax highlighting (roles en español)
     st.markdown("""
         <style>
             .syntax-token {
@@ -97,22 +97,68 @@ def render_content():
                 font-family: 'Cardo', serif;
                 font-size: 1.1em;
             }
-            .role-subject { background-color: #FF6B6B; color: white; }
-            .role-predicate { background-color: #4ECDC4; color: white; }
-            .role-direct_object { background-color: #95E1D3; color: #333; }
-            .role-indirect_object { background-color: #FFE66D; color: #333; }
-            .role-complement { background-color: #A8E6CF; color: #333; }
-            .role-attribute { background-color: #C7CEEA; color: #333; }
-            .role-apposition { background-color: #FF9FF3; color: white; }
+            /* === SUJETO === */
+            .role-sujeto { background-color: #FF6B6B; color: white; }
+            .role-sujeto_paciente { background-color: #E55555; color: white; }
+            
+            /* === PREDICADO === */
+            .role-predicado { background-color: #4ECDC4; color: white; }
+            .role-cópula { background-color: #3DBDB5; color: white; }
+            .role-auxiliar { background-color: #2CADA5; color: white; }
+            .role-auxiliar_pasivo { background-color: #1C9D95; color: white; }
+            
+            /* === OBJETOS === */
+            .role-objeto_directo { background-color: #95E1D3; color: #333; }
+            .role-objeto_indirecto { background-color: #FFE66D; color: #333; }
+            .role-oración_completiva { background-color: #B8E1D3; color: #333; }
+            .role-complemento_predicativo { background-color: #A5D8C8; color: #333; }
+            
+            /* === COMPLEMENTOS === */
+            .role-complemento_circunstancial { background-color: #A8E6CF; color: #333; }
+            .role-complemento_temporal { background-color: #98D6BF; color: #333; }
+            .role-complemento_obligatorio { background-color: #88C6AF; color: #333; }
+            .role-complemento_del_nombre { background-color: #78B69F; color: #333; }
+            
+            /* === MODIFICADORES === */
+            .role-modificador_adjetival { background-color: #C7CEEA; color: #333; }
+            .role-modificador_adverbial { background-color: #B7BEDA; color: #333; }
+            .role-modificador_numeral { background-color: #A7AECA; color: #333; }
+            .role-modificador { background-color: #D7DEFA; color: #333; }
+            
+            /* === ORACIONES SUBORDINADAS === */
+            .role-oración_adjetiva { background-color: #DDA0DD; color: #333; }
+            .role-oración_de_relativo { background-color: #D8A0E8; color: #333; }
+            .role-oración_adverbial { background-color: #E8A0D8; color: #333; }
+            
+            /* === OTROS ELEMENTOS === */
+            .role-aposición { background-color: #FF9FF3; color: white; }
+            .role-determinante { background-color: #FFEAA7; color: #333; }
+            .role-preposición { background-color: #74B9FF; color: white; }
+            .role-vocativo { background-color: #FD79A8; color: white; }
+            .role-ablativo_absoluto { background-color: #e84393; color: white; }
+            
+            /* === CONJUNCIONES === */
+            .role-conjunción_coordinante { background-color: #81ECEC; color: #333; }
+            .role-conjunción_subordinante { background-color: #71DCDC; color: #333; }
+            .role-elemento_coordinado { background-color: #61CCCC; color: #333; }
+            
+            /* === PUNTUACIÓN Y OTROS === */
+            .role-puntuación { background-color: #DFE6E9; color: #636E72; }
+            .role-nombre_compuesto { background-color: #FDCB6E; color: #333; }
+            .role-expresión_fija { background-color: #E17055; color: white; }
+            .role-parataxis { background-color: #00CEC9; color: white; }
+            .role-otro { background-color: #B2BEC3; color: #333; }
             
             .legend-item {
                 display: inline-block;
                 padding: 2px 6px;
                 border-radius: 3px;
                 margin-right: 10px;
+                margin-bottom: 5px;
                 font-size: 0.9em;
+                white-space: nowrap;
             }
-            .role-none { background-color: #E0E0E0; color: #333; border: 1px solid #CCC; } /* Default style */
+            .role-none { background-color: #E0E0E0; color: #333; border: 1px solid #CCC; }
         </style>
         """, unsafe_allow_html=True)
     
@@ -241,6 +287,7 @@ def render_content():
                         'syntax_roles': s.syntax_roles,
                         'tree_diagram_svg': s.tree_diagram_svg,
                         'constructions': s.constructions,
+                        'verified': getattr(s, 'verified', False),  # Add verified field safely
                         'token_annotations': [
                             {
                                 'token_index': ann.token_index,
@@ -263,7 +310,12 @@ def render_content():
             return filtered
     
     def is_sentence_complete(sentence):
-        """Check if sentence has annotations for ALL tokens."""
+        """Check if sentence is ready for public view (Verified)."""
+        # If explicitly marked as verified in DB (syntax checked), it's good.
+        if sentence.get('verified'):
+            return True
+
+        # Otherwise fall back to annotation completeness
         try:
             deps = json.loads(sentence['dependency_json'])
             n_tokens = len(deps)
@@ -274,7 +326,6 @@ def render_content():
                 return False
                 
             # 2. Quality check (User Request: Strictness)
-            # If any annotation is auto-generated, it's not ready for public view
             for ann in sentence['token_annotations']:
                 if ann['explanation'] and "Generado automáticamente" in ann['explanation']:
                     return False
@@ -289,7 +340,7 @@ def render_content():
     
     if view_mode == "📚 Corpus Verificado":
         sentences = [s for s in raw_sentences if is_sentence_complete(s)]
-        st.success(f"Mostrando {len(sentences)} oraciones verificadas (100% analizadas)")
+        st.success(f"Mostrando {len(sentences)} oraciones verificadas (syntax verified or 100% annotated)")
     else:
         # Zona de Espera: Show ALL sentences matching filters, regardless of completeness
         # but mark them visually later
@@ -384,17 +435,68 @@ def render_content():
         "Sup": "Superlativo"
     }
     
+    # Traducciones para mostrar en UI (clave interna -> nombre legible)
     SYNTAX_ROLE_TRANSLATIONS = {
-        "subject": "Sujeto",
-        "predicate": "Predicado",
-        "direct_object": "Complemento Directo",
-        "indirect_object": "Complemento Indirecto",
-        "complement": "Complemento Circunstancial",
-        "attribute": "Atributo",
-        "apposition": "Aposición",
-        "modifier": "Modificador",
-        "determiner": "Determinante",
-        "conjunction": "Conjunción"
+        # Sujeto
+        "sujeto": "Sujeto",
+        "sujeto_paciente": "Sujeto Paciente",
+        
+        # Predicado
+        "predicado": "Predicado",
+        "cópula": "Cópula",
+        "auxiliar": "Auxiliar",
+        "auxiliar_pasivo": "Aux. Pasivo",
+        
+        # Objetos
+        "objeto_directo": "Obj. Directo",
+        "objeto_indirecto": "Obj. Indirecto",
+        "oración_completiva": "Or. Completiva",
+        "complemento_predicativo": "C. Predicativo",
+        
+        # Complementos
+        "complemento_circunstancial": "C. Circunstancial",
+        "complemento_temporal": "C. Temporal",
+        "complemento_obligatorio": "C. Obligatorio",
+        "complemento_del_nombre": "C. del Nombre",
+        
+        # Modificadores
+        "modificador_adjetival": "Mod. Adjetival",
+        "modificador_adverbial": "Mod. Adverbial",
+        "modificador_numeral": "Mod. Numeral",
+        "modificador": "Modificador",
+        
+        # Oraciones subordinadas
+        "oración_adjetiva": "Or. Adjetiva",
+        "oración_de_relativo": "Or. de Relativo",
+        "oración_adverbial": "Or. Adverbial",
+        
+        # Otros elementos
+        "aposición": "Aposición",
+        "determinante": "Determinante",
+        "preposición": "Preposición",
+        "vocativo": "Vocativo",
+        
+        # Conjunciones
+        "conjunción_coordinante": "Conj. Coord.",
+        "conjunción_subordinante": "Conj. Subord.",
+        "elemento_coordinado": "Elem. Coord.",
+        
+        # Puntuación y otros
+        "puntuación": "Puntuación",
+        "nombre_compuesto": "Nombre Comp.",
+        "compuesto": "Compuesto",
+        "expresión_fija": "Expr. Fija",
+        "ablativo_absoluto": "Ablativo Absoluto",
+        "marcador_discursivo": "Marc. Discursivo",
+        "huérfano": "Huérfano",
+        "dependencia": "Dependencia",
+        "expletivo": "Expletivo",
+        "parataxis": "Parataxis",
+        "elemento_de_lista": "Elem. Lista",
+        "dislocado": "Dislocado",
+        "reparación": "Reparación",
+        "fragmento": "Fragmento",
+        "otro": "Otro"
     }
     
     def format_morphology(morph_str):
@@ -483,41 +585,50 @@ def render_content():
         st.write(f"Página {current_page + 1} de {total_pages}")
     
     # Glosario de abreviaturas (global, antes de las oraciones)
-    with st.popover("📖 Glosario de Abreviaturas del Árbol", width="content"):
+    with st.popover("📖 Glosario de Abreviaturas", width="content"):
         st.markdown("""
-        **Funciones Sintácticas:**
-        - **Sujeto** - Quién realiza la acción
-        - **RAÍZ** - Verbo principal de la oración
-        - **C. Directo** - Complemento Directo (¿qué?)
-        - **C. Indirecto** - Complemento Indirecto (¿a quién?)
-        - **C. Circunst.** - Complemento Circunstancial (cómo, cuándo, dónde...)
-        - **C. Adverbial** - Complemento Adverbial
+        **🔴 Sujeto:**
+        - **Sujeto** - Quién realiza la acción (Nominativo)
+        - **Sujeto Paciente** - Sujeto de voz pasiva
+        
+        **🔵 Predicado:**
+        - **Predicado** - Verbo principal (RAÍZ)
+        - **Cópula** - Verbo copulativo (sum, esse)
+        - **Auxiliar** - Verbo auxiliar
+        
+        **🟢 Objetos:**
+        - **Obj. Directo** - ¿Qué? (Acusativo)
+        - **Obj. Indirecto** - ¿A quién? (Dativo)
         - **C. Predicativo** - Complemento Predicativo
         
-        **Modificadores:**
-        - **Modificador** - Palabra que modifica a otra (generalmente adjetivos)
-        - **Determinante** - Palabras que determinan al sustantivo
-        - **Mod. Numérico** - Modificador numérico
+        **🟡 Complementos:**
+        - **C. Circunstancial** - Cómo, cuándo, dónde (Ablativo/oblicuo)
+        - **C. Temporal** - Complemento de tiempo
+        - **C. del Nombre** - Genitivo que modifica sustantivo
         
-        **Conjunciones:**
-        - **Conj. Coord.** - Conjunción Coordinante (y, o, pero)
-        - **Conj. Subord.** - Conjunción Subordinante (que, cuando, si)
-        - **Coordinado** - Elemento coordinado con otro
+        **🟣 Modificadores:**
+        - **Mod. Adjetival** - Adjetivo que modifica sustantivo
+        - **Mod. Adverbial** - Adverbio que modifica verbo
+        - **Mod. Numeral** - Numeral modificador
         
-        **Verbos y Auxiliares:**
-        - **Auxiliar** - Verbo auxiliar
-        - **Cópula** - Verbo copulativo (sum, esse)
+        **💜 Oraciones Subordinadas:**
+        - **Or. Adjetiva** - Subordinada que modifica sustantivo
+        - **Or. de Relativo** - Con pronombre relativo (qui, quae, quod)
+        - **Or. Adverbial** - Subordinada circunstancial
+        - **Or. Completiva** - Subordinada sustantiva
         
-        **Oraciones Subordinadas:**
-        - **Or. Adjetiva** - Oración subordinada adjetiva
-        - **Or. Relativa** - Oración de relativo (qui, quae, quod)
-        - **Or. Adverbial** - Oración subordinada adverbial
-        - **Or. Completiva** - Oración completiva
+        **⚪ Conjunciones:**
+        - **Conj. Coord.** - y, o, pero (et, aut, sed)
+        - **Conj. Subord.** - que, cuando, si (ut, cum, si)
+        - **Elem. Coord.** - Elemento coordinado
         
-        **Otros:**
-        - **Aposición** - Explicación o aclaración de un sustantivo
-        - **Preposición** - Palabra que introduce complementos (ad, in, cum)
+        **⚫ Otros:**
+        - **Preposición** - Introduce complementos (ad, in, cum)
+        - **Determinante** - Determina al sustantivo
+        - **Aposición** - Explicación de un sustantivo
         - **Vocativo** - Llamada o invocación
+        - **Puntuación** - Signos de puntuación
+        - **Ablativo Absoluto** - Construcción absoluta
         """)
     
     st.markdown("---")
@@ -550,13 +661,18 @@ def render_content():
                 st.markdown("""
                 <div style="font-size:0.8em; margin-top: 10px;">
                     <strong>Leyenda:</strong><br>
-                    <span class="legend-item role-subject">Sujeto</span>
-                    <span class="legend-item role-predicate">Predicado</span>
-                    <span class="legend-item role-direct_object">Objeto Directo</span>
-                    <span class="legend-item role-indirect_object">Objeto Indirecto</span>
-                    <span class="legend-item role-complement">Complemento</span>
-                    <span class="legend-item role-attribute">Atributo</span>
-                    <span class="legend-item role-apposition">Aposición</span>
+                    <span class="legend-item role-sujeto">Sujeto</span>
+                    <span class="legend-item role-predicado">Predicado</span>
+                    <span class="legend-item role-objeto_directo">Obj. Directo</span>
+                    <span class="legend-item role-objeto_indirecto">Obj. Indirecto</span>
+                    <span class="legend-item role-complemento_predicativo">C. Predicativo</span>
+                    <span class="legend-item role-cópula">Cópula</span>
+                    <span class="legend-item role-complemento_circunstancial">C. Circunst.</span>
+                    <span class="legend-item role-modificador_adjetival">Modificador</span>
+                    <span class="legend-item role-complemento_del_nombre">C. del Nombre</span>
+                    <span class="legend-item role-ablativo_absoluto">Abl. Absoluto</span>
+                    <span class="legend-item role-preposición">Preposición</span>
+                    <span class="legend-item role-puntuación">Puntuación</span>
                 </div>
                 """, unsafe_allow_html=True)
                 

@@ -488,9 +488,6 @@ def render_content():
                 if st.button("🎲 Nuevo Verbo", width='stretch', key="conj_new_verb_guided"):
                     # Select new verb ID instead of storing object
                     with get_session() as new_session:
-                if st.button("🎲 Nuevo Verbo", width='stretch', key="conj_new_verb_guided"):
-                    # Select new verb ID instead of storing object
-                    with get_session() as new_session:
                         all_verbs = new_session.exec(select(Word).where(Word.part_of_speech == "verb")).all()
                         
                         # Apply filter again for new button

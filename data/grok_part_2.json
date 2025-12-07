@@ -1,0 +1,338 @@
+[
+    {
+        "id": 311,
+        "corrections": [],
+        "notes": "Condicional con nisi. Todo correcto."
+    },
+    {
+        "id": 312,
+        "corrections": [],
+        "notes": "Condicional real."
+    },
+    {
+        "id": 313,
+        "corrections": [],
+        "notes": "Condicional potencial."
+    },
+    {
+        "id": 314,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "predicado",
+                "correct_role": "predicado",
+                "is_correct": true
+            },
+            {
+                "idx": 1,
+                "current_role": "oración_completiva",
+                "correct_role": "oración_completiva",
+                "is_correct": true
+            }
+        ],
+        "notes": "Memento + infinitivo = imperativo perifrástico."
+    },
+    {
+        "id": 315,
+        "corrections": [],
+        "notes": "Condicional irreal de presente."
+    },
+    {
+        "id": 316,
+        "corrections": [],
+        "notes": "Dummodo + subjuntivo = condicional de provisión."
+    },
+    {
+        "id": 317,
+        "corrections": [],
+        "notes": "Sin autem + futuro perfecto = condicional real con matiz adversativo."
+    },
+    {
+        "id": 318,
+        "corrections": [],
+        "notes": "Oración simple correcta."
+    },
+    {
+        "id": 319,
+        "corrections": [],
+        "notes": "Coordinación asindética."
+    },
+    {
+        "id": 320,
+        "corrections": [],
+        "notes": "Concesiva con quamquam + indicativo."
+    },
+    {
+        "id": 321,
+        "corrections": [],
+        "notes": "Concesiva con quamvis + subjuntivo."
+    },
+    {
+        "id": 322,
+        "corrections": [],
+        "notes": "Concesiva con etsi + indicativo."
+    },
+    {
+        "id": 323,
+        "corrections": [],
+        "notes": "Concesiva con licet + subjuntivo."
+    },
+    {
+        "id": 324,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "sujeto",
+                "correct_role": "sujeto",
+                "is_correct": true
+            },
+            {
+                "idx": 2,
+                "current_role": "sujeto",
+                "correct_role": "oración_de_relativo",
+                "is_correct": false
+            }
+        ],
+        "notes": "La relativa «qui bene amat» funciona como sujeto de «castigat»."
+    },
+    {
+        "id": 325,
+        "corrections": [],
+        "notes": "Relativa neutra como sujeto."
+    },
+    {
+        "id": 326,
+        "corrections": [],
+        "notes": "Relativa neutra como objeto directo."
+    },
+    {
+        "id": 327,
+        "corrections": [],
+        "notes": "Comparativa con quam + ablativo."
+    },
+    {
+        "id": 328,
+        "corrections": [],
+        "notes": "Concesiva con etsi + indicativo."
+    },
+    {
+        "id": 329,
+        "corrections": [],
+        "notes": "Concesiva con quamquam + indicativo."
+    },
+    {
+        "id": 330,
+        "corrections": [],
+        "notes": "AcI (accusativus cum infinitivo) correcto."
+    },
+    {
+        "id": 331,
+        "corrections": [
+            {
+                "idx": 2,
+                "current_role": "sujeto",
+                "correct_role": "complemento_predicativo",
+                "is_correct": false
+            },
+            {
+                "idx": 3,
+                "current_role": "complemento_predicativo",
+                "correct_role": "sujeto",
+                "is_correct": false
+            },
+            {
+                "idx": 4,
+                "current_role": "cópula",
+                "correct_role": "cópula",
+                "is_correct": true
+            }
+        ],
+        "notes": "Construcción impersonal «fama est + AcI». Sujeto lógico: Romam; predicativo: aeternam."
+    },
+    {
+        "id": 332,
+        "corrections": [],
+        "notes": "AcI simple."
+    },
+    {
+        "id": 333,
+        "corrections": [],
+        "notes": "AcI con infinitivo perfecto."
+    },
+    {
+        "id": 334,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "sujeto",
+                "correct_role": "sujeto",
+                "is_correct": true
+            },
+            {
+                "idx": 2,
+                "current_role": "cópula",
+                "correct_role": "cópula",
+                "is_correct": true
+            }
+        ],
+        "notes": "Interrogativa indirecta."
+    },
+    {
+        "id": 335,
+        "corrections": [],
+        "notes": "AcI impersonal."
+    },
+    {
+        "id": 336,
+        "corrections": [
+            {
+                "idx": 4,
+                "current_role": "oración_completiva",
+                "correct_role": "oración_completiva",
+                "is_correct": true
+            }
+        ],
+        "notes": "quin + subjuntivo después de negación."
+    },
+    {
+        "id": 337,
+        "corrections": [],
+        "notes": "AcI con inquit (verbo de declaración)."
+    },
+    {
+        "id": 338,
+        "corrections": [],
+        "notes": "AcI con participio perfecto pasivo."
+    },
+    {
+        "id": 339,
+        "corrections": [],
+        "notes": "AcI con infinitivo perfecto."
+    },
+    {
+        "id": 340,
+        "corrections": [],
+        "notes": "Infinitivo pasivo impersonal."
+    },
+    {
+        "id": 341,
+        "corrections": [],
+        "notes": "Verbo de movimiento + acusativo de dirección (sin preposición)."
+    },
+    {
+        "id": 342,
+        "corrections": [],
+        "notes": "domum = acusativo de dirección sin preposición."
+    },
+    {
+        "id": 343,
+        "corrections": [],
+        "notes": "Correcto."
+    },
+    {
+        "id": 344,
+        "corrections": [
+            {
+                "idx": 2,
+                "current_role": "predicado",
+                "correct_role": "predicado",
+                "is_correct": true
+            }
+        ],
+        "notes": "Verbo depoente feror (pasivo formal, activo de sentido)."
+    },
+    {
+        "id": 345,
+        "corrections": [],
+        "notes": "Imperativos paralelos."
+    },
+    {
+        "id": 346,
+        "corrections": [],
+        "notes": "Imperativo plural."
+    },
+    {
+        "id": 347,
+        "corrections": [],
+        "notes": "Imperativo + cum + ablativo de comparación."
+    },
+    {
+        "id": 348,
+        "corrections": [],
+        "notes": "Correcto."
+    },
+    {
+        "id": 349,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "sujeto_paciente",
+                "correct_role": "sujeto_paciente",
+                "is_correct": true
+            }
+        ],
+        "notes": "fiat = subjuntivo jussivo impersonal."
+    },
+    {
+        "id": 350,
+        "corrections": [],
+        "notes": "Participio presente como complemento circunstancial (con valor concesivo/temporal)."
+    },
+    {
+        "id": 351,
+        "corrections": [],
+        "notes": "Ablativo absoluto correcto."
+    },
+    {
+        "id": 352,
+        "corrections": [],
+        "notes": "Cupidus + genitivo gerundivo."
+    },
+    {
+        "id": 353,
+        "corrections": [],
+        "notes": "Gerundivo impersonal de obligación + pro + ablativo."
+    },
+    {
+        "id": 354,
+        "corrections": [],
+        "notes": "cum histórico + pluscuamperfecto de subjuntivo."
+    },
+    {
+        "id": 355,
+        "corrections": [],
+        "notes": "ut final."
+    },
+    {
+        "id": 356,
+        "corrections": [],
+        "notes": "Condicional irreal de presente/futuro."
+    },
+    {
+        "id": 357,
+        "corrections": [],
+        "notes": "AcI con infinitivo futuro."
+    },
+    {
+        "id": 358,
+        "corrections": [],
+        "notes": "Jussivo impersonal."
+    },
+    {
+        "id": 359,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "cópula",
+                "correct_role": "auxiliar",
+                "is_correct": false
+            }
+        ],
+        "notes": "est = auxiliar en pasiva perifrástica."
+    },
+    {
+        "id": 360,
+        "corrections": [],
+        "notes": "Correcto."
+    }
+]

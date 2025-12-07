@@ -1,0 +1,1418 @@
+[
+  {
+    "id": 440,
+    "latin": "mōtus",
+    "part_of_speech": "noun",
+    "genitive": "mōtūs",
+    "definition_es": "movimiento, agitación, emoción, motín",
+    "status": "active"
+  },
+  {
+    "id": 441,
+    "latin": "observātiō",
+    "part_of_speech": "noun",
+    "genitive": "observātiōnis",
+    "definition_es": "observación, atención, vigilancia",
+    "status": "active"
+  },
+  {
+    "id": 442,
+    "latin": "systema",
+    "part_of_speech": "noun",
+    "genitive": "systematis",
+    "definition_es": "sistema, conjunto organizado (helenismo)",
+    "status": "active"
+  },
+  {
+    "id": 549,
+    "latin": "Rōma",
+    "part_of_speech": "proper_noun",
+    "genitive": "Rōmae",
+    "definition_es": "Roma",
+    "status": "active"
+  },
+  {
+    "id": 550,
+    "latin": "Italia",
+    "part_of_speech": "proper_noun",
+    "genitive": "Italiae",
+    "definition_es": "Italia",
+    "status": "active"
+  },
+  {
+    "id": 551,
+    "latin": "Eurōpa",
+    "part_of_speech": "proper_noun",
+    "genitive": "Eurōpae",
+    "definition_es": "Europa",
+    "status": "active"
+  },
+  {
+    "id": 552,
+    "latin": "Graecia",
+    "part_of_speech": "proper_noun",
+    "genitive": "Graeciae",
+    "definition_es": "Grecia",
+    "status": "active"
+  },
+  {
+    "id": 553,
+    "latin": "Gallia",
+    "part_of_speech": "proper_noun",
+    "genitive": "Galliae",
+    "definition_es": "Galia",
+    "status": "active"
+  },
+  {
+    "id": 554,
+    "latin": "Hispānia",
+    "part_of_speech": "proper_noun",
+    "genitive": "Hispāniae",
+    "definition_es": "Hispania",
+    "status": "active"
+  },
+  {
+    "id": 555,
+    "latin": "Aegyptus",
+    "part_of_speech": "proper_noun",
+    "genitive": "Aegyptī",
+    "definition_es": "Egipto",
+    "status": "active"
+  },
+  {
+    "id": 556,
+    "latin": "Nīlus",
+    "part_of_speech": "proper_noun",
+    "genitive": "Nils",
+    "definition_es": "Nilo",
+    "status": "active"
+  },
+  {
+    "id": 557,
+    "latin": "Rhēnus",
+    "part_of_speech": "proper_noun",
+    "genitive": "Rhēnī",
+    "definition_es": "Rin",
+    "status": "active"
+  },
+  {
+    "id": 558,
+    "latin": "Dānuvius",
+    "part_of_speech": "proper_noun",
+    "genitive": "Dānuviī",
+    "definition_es": "Danubio",
+    "status": "active"
+  },
+  {
+    "id": 560,
+    "latin": "pārs",
+    "part_of_speech": "noun",
+    "genitive": "partis",
+    "definition_es": "parte, porción, dirección, partido",
+    "status": "review"
+  },
+  {
+    "id": 561,
+    "latin": "Belgae",
+    "part_of_speech": "proper_noun",
+    "genitive": "Belgārum",
+    "definition_es": "los belgas (pueblo galo)",
+    "status": "review"
+  },
+  {
+    "id": 563,
+    "latin": "Eurōpa",
+    "part_of_speech": "proper_noun",
+    "genitive": "Eurōpae",
+    "definition_es": "Europa",
+    "status": "review"
+  },
+  {
+    "id": 565,
+    "latin": "Latīnē",
+    "part_of_speech": "adverb",
+    "genitive": null,
+    "definition_es": "en latín, a la manera latina",
+    "status": "review"
+  },
+  {
+    "id": 566,
+    "latin": "Iūlius",
+    "part_of_speech": "proper_noun",
+    "genitive": "Iūliī",
+    "definition_es": "Julio (praenomen o nombre de la gens Julia)",
+    "status": "review"
+  },
+  {
+    "id": 567,
+    "latin": "Aemilia",
+    "part_of_speech": "proper_noun",
+    "genitive": "Aemiliae",
+    "definition_es": "Emilia (nombre femenino)",
+    "status": "review"
+  },
+  {
+    "id": 568,
+    "latin": "Marcus",
+    "part_of_speech": "proper_noun",
+    "genitive": "Marcī",
+    "definition_es": "Marco (praenomen)",
+    "status": "review"
+  },
+  {
+    "id": 569,
+    "latin": "Quīntus",
+    "part_of_speech": "proper_noun",
+    "genitive": "Quīntī",
+    "definition_es": "Quinto (praenomen)",
+    "status": "review"
+  },
+  {
+    "id": 570,
+    "latin": "Iūlius",
+    "part_of_speech": "adjective",
+    "genitive": null,
+    "definition_es": "julio, de (la gens) Julia",
+    "status": "review"
+  },
+  {
+    "id": 571,
+    "latin": "familia",
+    "part_of_speech": "noun",
+    "genitive": "familiae",
+    "definition_es": "familia, casa, servidumbre",
+    "status": "review"
+  },
+  {
+    "id": 572,
+    "latin": "discipulus",
+    "part_of_speech": "noun",
+    "genitive": "discipulī",
+    "definition_es": "discípulo, alumno",
+    "status": "review"
+  },
+  {
+    "id": 573,
+    "latin": "schola",
+    "part_of_speech": "noun",
+    "genitive": "scholae",
+    "definition_es": "escuela, lección, secta filosófica",
+    "status": "review"
+  },
+  {
+    "id": 574,
+    "latin": "magister",
+    "part_of_speech": "noun",
+    "genitive": "magistrī",
+    "definition_es": "maestro, director, capitán",
+    "status": "review"
+  },
+  {
+    "id": 575,
+    "latin": "magister",
+    "part_of_speech": "noun",
+    "genitive": "magistrī",
+    "definition_es": "maestro, director, capitán",
+    "status": "review"
+  },
+  {
+    "id": 576,
+    "latin": "fābula",
+    "part_of_speech": "noun",
+    "genitive": "fābulae",
+    "definition_es": "relato, fábula, historia, drama",
+    "status": "review"
+  },
+  {
+    "id": 577,
+    "latin": "forum",
+    "part_of_speech": "proper_noun",
+    "genitive": "forī",
+    "definition_es": "Foro Romano",
+    "status": "review"
+  },
+  {
+    "id": 578,
+    "latin": "mercātor",
+    "part_of_speech": "noun",
+    "genitive": "mercātōris",
+    "definition_es": "mercader, comerciante",
+    "status": "review"
+  },
+  {
+    "id": 579,
+    "latin": "forum",
+    "part_of_speech": "noun",
+    "genitive": "forī",
+    "definition_es": "foro, plaza pública, mercado",
+    "status": "review"
+  },
+  {
+    "id": 581,
+    "latin": "pecūnia",
+    "part_of_speech": "noun",
+    "genitive": "pecūniae",
+    "definition_es": "dinero, riqueza, fortuna",
+    "status": "review"
+  },
+  {
+    "id": 582,
+    "latin": "merx",
+    "part_of_speech": "noun",
+    "genitive": "mercis",
+    "definition_es": "mercancía, género",
+    "status": "review"
+  },
+  {
+    "id": 583,
+    "latin": "vendō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "vender",
+    "status": "review"
+  },
+  {
+    "id": 584,
+    "latin": "Iuppiter",
+    "part_of_speech": "proper_noun",
+    "genitive": "Iovis",
+    "definition_es": "Júpiter",
+    "status": "review"
+  },
+  {
+    "id": 585,
+    "latin": "deus",
+    "part_of_speech": "noun",
+    "genitive": "deī",
+    "definition_es": "dios",
+    "status": "review"
+  },
+  {
+    "id": 586,
+    "latin": "Iūnō",
+    "part_of_speech": "proper_noun",
+    "genitive": "Iūnōnis",
+    "definition_es": "Juno",
+    "status": "review"
+  },
+  {
+    "id": 587,
+    "latin": "rēgīna",
+    "part_of_speech": "noun",
+    "genitive": "rēgīnae",
+    "definition_es": "reina",
+    "status": "review"
+  },
+  {
+    "id": 588,
+    "latin": "Mārs",
+    "part_of_speech": "proper_noun",
+    "genitive": "Martis",
+    "definition_es": "Marte",
+    "status": "review"
+  },
+  {
+    "id": 589,
+    "latin": "Venus",
+    "part_of_speech": "proper_noun",
+    "genitive": "Veneris",
+    "definition_es": "Venus",
+    "status": "review"
+  },
+  {
+    "id": 590,
+    "latin": "multus",
+    "part_of_speech": "adjective",
+    "genitive": null,
+    "definition_es": "mucho, numeroso, abundante",
+    "status": "review"
+  },
+  {
+    "id": 591,
+    "latin": "cēna",
+    "part_of_speech": "noun",
+    "genitive": "cēnae",
+    "definition_es": "cena, comida principal",
+    "status": "review"
+  },
+  {
+    "id": 592,
+    "latin": "Servius",
+    "part_of_speech": "proper_noun",
+    "genitive": "Serviī",
+    "definition_es": "Servio (praenomen o nombre)",
+    "status": "review"
+  },
+  {
+    "id": 593,
+    "latin": "cibus",
+    "part_of_speech": "noun",
+    "genitive": "cibī",
+    "definition_es": "alimento, comida",
+    "status": "review"
+  },
+  {
+    "id": 594,
+    "latin": "triclīnium",
+    "part_of_speech": "noun",
+    "genitive": "triclīniī",
+    "definition_es": "comedor, triclinio",
+    "status": "review"
+  },
+  {
+    "id": 595,
+    "latin": "cēnō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "cenar, comer",
+    "status": "review"
+  },
+  {
+    "id": 597,
+    "latin": "misceō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "mezclar, revolver; agitar",
+    "status": "review"
+  },
+  {
+    "id": 598,
+    "latin": "post",
+    "part_of_speech": "preposition",
+    "genitive": null,
+    "definition_es": "después de, detrás de (con acusativo)",
+    "status": "review"
+  },
+  {
+    "id": 600,
+    "latin": "viātor",
+    "part_of_speech": "noun",
+    "genitive": "viātōris",
+    "definition_es": "viajero, caminante",
+    "status": "review"
+  },
+  {
+    "id": 602,
+    "latin": "tandem",
+    "part_of_speech": "adverb",
+    "genitive": null,
+    "definition_es": "por fin, al fin, finalmente",
+    "status": "review"
+  },
+  {
+    "id": 603,
+    "latin": "ad",
+    "part_of_speech": "preposition",
+    "genitive": null,
+    "definition_es": "hacia, a, hasta, cerca de (con acusativo)",
+    "status": "review"
+  },
+  {
+    "id": 604,
+    "latin": "perveniō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "llegar, arribar, alcanzar",
+    "status": "review"
+  },
+  {
+    "id": 605,
+    "latin": "annus",
+    "part_of_speech": "noun",
+    "genitive": "annī",
+    "definition_es": "año",
+    "status": "review"
+  },
+  {
+    "id": 606,
+    "latin": "quattuor",
+    "part_of_speech": "numeral",
+    "genitive": null,
+    "definition_es": "cuatro",
+    "status": "review"
+  },
+  {
+    "id": 607,
+    "latin": "vēr",
+    "part_of_speech": "noun",
+    "genitive": "vēris",
+    "definition_es": "primavera",
+    "status": "review"
+  },
+  {
+    "id": 608,
+    "latin": "aestās",
+    "part_of_speech": "noun",
+    "genitive": "aestātis",
+    "definition_es": "verano, calor",
+    "status": "review"
+  },
+  {
+    "id": 609,
+    "latin": "autumnus",
+    "part_of_speech": "noun",
+    "genitive": "autumnī",
+    "definition_es": "otoño",
+    "status": "review"
+  },
+  {
+    "id": 610,
+    "latin": "vēre",
+    "part_of_speech": "adverb",
+    "genitive": null,
+    "definition_es": "en primavera",
+    "status": "review"
+  },
+  {
+    "id": 611,
+    "latin": "flōs",
+    "part_of_speech": "noun",
+    "genitive": "flōris",
+    "definition_es": "flor",
+    "status": "review"
+  },
+  {
+    "id": 612,
+    "latin": "flōreō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "florecer, estar en flor, prosperar",
+    "status": "review"
+  },
+  {
+    "id": 613,
+    "latin": "sōl",
+    "part_of_speech": "noun",
+    "genitive": "sōlis",
+    "definition_es": "sol",
+    "status": "review"
+  },
+  {
+    "id": 614,
+    "latin": "calidus",
+    "part_of_speech": "adjective",
+    "genitive": null,
+    "definition_es": "caliente, cálido",
+    "status": "review"
+  },
+  {
+    "id": 615,
+    "latin": "autumnō",
+    "part_of_speech": "adverb",
+    "genitive": null,
+    "definition_es": "en otoño",
+    "status": "review"
+  },
+  {
+    "id": 616,
+    "latin": "mātūrescō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "madurar, llegar a la madurez",
+    "status": "review"
+  },
+  {
+    "id": 617,
+    "latin": "nix",
+    "part_of_speech": "noun",
+    "genitive": "nivis",
+    "definition_es": "nieve",
+    "status": "review"
+  },
+  {
+    "id": 618,
+    "latin": "gladius",
+    "part_of_speech": "noun",
+    "genitive": "gladiī",
+    "definition_es": "espada",
+    "status": "review"
+  },
+  {
+    "id": 619,
+    "latin": "scūtum",
+    "part_of_speech": "noun",
+    "genitive": "scūtī",
+    "definition_es": "escudo",
+    "status": "review"
+  },
+  {
+    "id": 620,
+    "latin": "imperātor",
+    "part_of_speech": "noun",
+    "genitive": "imperātōris",
+    "definition_es": "general, emperador",
+    "status": "review"
+  },
+  {
+    "id": 621,
+    "latin": "pāreō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "obedecer, someterse (con dativo)",
+    "status": "review"
+  },
+  {
+    "id": 622,
+    "latin": "legiō",
+    "part_of_speech": "noun",
+    "genitive": "legiōnis",
+    "definition_es": "legión",
+    "status": "review"
+  },
+  {
+    "id": 623,
+    "latin": "invictus",
+    "part_of_speech": "adjective",
+    "genitive": null,
+    "definition_es": "invicto, no conquistado",
+    "status": "review"
+  },
+  {
+    "id": 624,
+    "latin": "Gāius",
+    "part_of_speech": "proper_noun",
+    "genitive": "Gāiī",
+    "definition_es": "Cayo (praenomen)",
+    "status": "review"
+  },
+  {
+    "id": 625,
+    "latin": "suus",
+    "part_of_speech": "adjective",
+    "genitive": null,
+    "definition_es": "suyo, propio (reflejo de 3.ª persona)",
+    "status": "review"
+  },
+  {
+    "id": 626,
+    "latin": "salūs",
+    "part_of_speech": "noun",
+    "genitive": "salūtis",
+    "definition_es": "salud, salvación, saludo",
+    "status": "review"
+  },
+  {
+    "id": 627,
+    "latin": "valēsne",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "¿estás bien?, ¿tienes salud?",
+    "status": "review"
+  },
+  {
+    "id": 628,
+    "latin": "valeō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "estar fuerte, tener salud, valer; ¡adiós!",
+    "status": "review"
+  },
+  {
+    "id": 629,
+    "latin": "hodiē",
+    "part_of_speech": "adverb",
+    "genitive": null,
+    "definition_es": "hoy",
+    "status": "review"
+  },
+  {
+    "id": 630,
+    "latin": "hortus",
+    "part_of_speech": "noun",
+    "genitive": "hortī",
+    "definition_es": "jardín",
+    "status": "review"
+  },
+  {
+    "id": 631,
+    "latin": "lūdō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "jugar, divertirse",
+    "status": "review"
+  },
+  {
+    "id": 632,
+    "latin": "crās",
+    "part_of_speech": "adverb",
+    "genitive": null,
+    "definition_es": "mañana",
+    "status": "review"
+  },
+  {
+    "id": 633,
+    "latin": "veniō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "venir, llegar",
+    "status": "review"
+  },
+  {
+    "id": 634,
+    "latin": "Rōmulus",
+    "part_of_speech": "proper_noun",
+    "genitive": "Rōmulī",
+    "definition_es": "Rómulo",
+    "status": "review"
+  },
+  {
+    "id": 635,
+    "latin": "Rēmī",
+    "part_of_speech": "proper_noun",
+    "genitive": "Rēmōrum",
+    "definition_es": "los remos (pueblo belga)",
+    "status": "review"
+  },
+  {
+    "id": 636,
+    "latin": "geminus",
+    "part_of_speech": "adjective",
+    "genitive": null,
+    "definition_es": "gemelo, doble",
+    "status": "review"
+  },
+  {
+    "id": 637,
+    "latin": "lupa",
+    "part_of_speech": "noun",
+    "genitive": "lupae",
+    "definition_es": "loba; (coloq.) prostituta",
+    "status": "review"
+  },
+  {
+    "id": 638,
+    "latin": "nūtriō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "alimentar, criar, nutrir",
+    "status": "review"
+  },
+  {
+    "id": 640,
+    "latin": "Hannibal",
+    "part_of_speech": "proper_noun",
+    "genitive": "Hannibalis",
+    "definition_es": "Aníbal",
+    "status": "review"
+  },
+  {
+    "id": 641,
+    "latin": "Carthāginiēnsis",
+    "part_of_speech": "adjective",
+    "genitive": null,
+    "definition_es": "cartaginés",
+    "status": "review"
+  },
+  {
+    "id": 642,
+    "latin": "elephantus",
+    "part_of_speech": "noun",
+    "genitive": "elephantī",
+    "definition_es": "elefante",
+    "status": "review"
+  },
+  {
+    "id": 643,
+    "latin": "Alpēs",
+    "part_of_speech": "proper_noun",
+    "genitive": "Alpium",
+    "definition_es": "los Alpes",
+    "status": "review"
+  },
+  {
+    "id": 644,
+    "latin": "superō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "vencer, superar, sobrevivir",
+    "status": "review"
+  },
+  {
+    "id": 645,
+    "latin": "tamen",
+    "part_of_speech": "adverb",
+    "genitive": null,
+    "definition_es": "sin embargo, no obstante",
+    "status": "review"
+  },
+  {
+    "id": 646,
+    "latin": "conveniō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "reunirse, convenir, acordar",
+    "status": "review"
+  },
+  {
+    "id": 647,
+    "latin": "ōrātor",
+    "part_of_speech": "noun",
+    "genitive": "ōrātōris",
+    "definition_es": "orador, embajador",
+    "status": "review"
+  },
+  {
+    "id": 648,
+    "latin": "verbum",
+    "part_of_speech": "noun",
+    "genitive": "verbī",
+    "definition_es": "palabra, verbo",
+    "status": "review"
+  },
+  {
+    "id": 649,
+    "latin": "aliquis",
+    "part_of_speech": "pronoun",
+    "genitive": null,
+    "definition_es": "alguien, alguno",
+    "status": "review"
+  },
+  {
+    "id": 650,
+    "latin": "vituperō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "reprochar, censurar, injuriar",
+    "status": "review"
+  },
+  {
+    "id": 651,
+    "latin": "sīc",
+    "part_of_speech": "adverb",
+    "genitive": null,
+    "definition_es": "así, de esta manera",
+    "status": "review"
+  },
+  {
+    "id": 652,
+    "latin": "lībertās",
+    "part_of_speech": "noun",
+    "genitive": "lībertātis",
+    "definition_es": "libertad",
+    "status": "review"
+  },
+  {
+    "id": 653,
+    "latin": "Aenēās",
+    "part_of_speech": "proper_noun",
+    "genitive": "Aenēae",
+    "definition_es": "Eneas",
+    "status": "review"
+  },
+  {
+    "id": 654,
+    "latin": "Troia",
+    "part_of_speech": "proper_noun",
+    "genitive": "Troiae",
+    "definition_es": "Troya",
+    "status": "review"
+  },
+  {
+    "id": 655,
+    "latin": "per",
+    "part_of_speech": "preposition",
+    "genitive": null,
+    "definition_es": "a través de, por, durante (con acusativo)",
+    "status": "review"
+  },
+  {
+    "id": 656,
+    "latin": "errō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "errar, vagar, equivocarse",
+    "status": "review"
+  },
+  {
+    "id": 657,
+    "latin": "ibi",
+    "part_of_speech": "adverb",
+    "genitive": null,
+    "definition_es": "allí, ahí",
+    "status": "review"
+  },
+  {
+    "id": 660,
+    "latin": "ab",
+    "part_of_speech": "preposition",
+    "genitive": null,
+    "definition_es": "de, desde, por (con ablativo)",
+    "status": "review"
+  },
+  {
+    "id": 661,
+    "latin": "oriundus",
+    "part_of_speech": "adjective",
+    "genitive": null,
+    "definition_es": "originario de, procedente de (con ablativo)",
+    "status": "review"
+  },
+  {
+    "id": 662,
+    "latin": "Aquitānī",
+    "part_of_speech": "proper_noun",
+    "genitive": "Aquitānōrum",
+    "definition_es": "los aquitanos",
+    "status": "review"
+  },
+  {
+    "id": 663,
+    "latin": "Celtae",
+    "part_of_speech": "proper_noun",
+    "genitive": "Celtārum",
+    "definition_es": "los celtas",
+    "status": "review"
+  },
+  {
+    "id": 664,
+    "latin": "lingua",
+    "part_of_speech": "noun",
+    "genitive": "linguae",
+    "definition_es": "lengua, idioma",
+    "status": "review"
+  },
+  {
+    "id": 665,
+    "latin": "dīfferō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "diferir, distinguirse, separar",
+    "status": "review"
+  },
+  {
+    "id": 666,
+    "latin": "amīcitia",
+    "part_of_speech": "noun",
+    "genitive": "amīcitiae",
+    "definition_es": "amistad",
+    "status": "review"
+  },
+  {
+    "id": 667,
+    "latin": "dīvīnus",
+    "part_of_speech": "adjective",
+    "genitive": null,
+    "definition_es": "divino",
+    "status": "review"
+  },
+  {
+    "id": 668,
+    "latin": "hūmānus",
+    "part_of_speech": "adjective",
+    "genitive": null,
+    "definition_es": "humano, propio del hombre",
+    "status": "review"
+  },
+  {
+    "id": 669,
+    "latin": "-que",
+    "part_of_speech": "conjunction",
+    "genitive": null,
+    "definition_es": "y (enclítico)",
+    "status": "review"
+  },
+  {
+    "id": 670,
+    "latin": "benevolentia",
+    "part_of_speech": "noun",
+    "genitive": "benevolentiae",
+    "definition_es": "benevolencia, bondad",
+    "status": "review"
+  },
+  {
+    "id": 671,
+    "latin": "cāritās",
+    "part_of_speech": "noun",
+    "genitive": "cāritātis",
+    "definition_es": "cariño, afecto; (crist.) caridad",
+    "status": "review"
+  },
+  {
+    "id": 672,
+    "latin": "cōnsēnsiō",
+    "part_of_speech": "noun",
+    "genitive": "cōnsēnsiōnis",
+    "definition_es": "acuerdo, unanimidad, conspiración",
+    "status": "review"
+  },
+  {
+    "id": 673,
+    "latin": "vīta",
+    "part_of_speech": "noun",
+    "genitive": "vītae",
+    "definition_es": "vida",
+    "status": "review"
+  },
+  {
+    "id": 674,
+    "latin": "nūllus",
+    "part_of_speech": "adjective",
+    "genitive": null,
+    "definition_es": "ninguno, ningún",
+    "status": "review"
+  },
+  {
+    "id": 675,
+    "latin": "Porsenna",
+    "part_of_speech": "proper_noun",
+    "genitive": "Porsennae",
+    "definition_es": "Porsena (rey etrusco)",
+    "status": "review"
+  },
+  {
+    "id": 676,
+    "latin": "Horātius",
+    "part_of_speech": "proper_noun",
+    "genitive": "Horātiī",
+    "definition_es": "Horacio (Horacio Cocles)",
+    "status": "review"
+  },
+  {
+    "id": 677,
+    "latin": "pōns",
+    "part_of_speech": "noun",
+    "genitive": "pontis",
+    "definition_es": "puente",
+    "status": "review"
+  },
+  {
+    "id": 678,
+    "latin": "stō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "estar de pie, permanecer",
+    "status": "review"
+  },
+  {
+    "id": 679,
+    "latin": "sustineō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "sostener, resistir, mantener",
+    "status": "review"
+  },
+  {
+    "id": 680,
+    "latin": "tergum",
+    "part_of_speech": "noun",
+    "genitive": "tergī",
+    "definition_es": "espalda, dorso",
+    "status": "review"
+  },
+  {
+    "id": 681,
+    "latin": "solvō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "soltar, desatar, pagar",
+    "status": "review"
+  },
+  {
+    "id": 682,
+    "latin": "deinde",
+    "part_of_speech": "adverb",
+    "genitive": null,
+    "definition_es": "luego, después, a continuación",
+    "status": "review"
+  },
+  {
+    "id": 683,
+    "latin": "dēsiliō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "saltar abajo, bajar de un salto",
+    "status": "review"
+  },
+  {
+    "id": 684,
+    "latin": "Catilīna",
+    "part_of_speech": "proper_noun",
+    "genitive": "Catilīnae",
+    "definition_es": "Catilina",
+    "status": "review"
+  },
+  {
+    "id": 685,
+    "latin": "pūblicus",
+    "part_of_speech": "adjective",
+    "genitive": null,
+    "definition_es": "público, del pueblo, estatal",
+    "status": "review"
+  },
+  {
+    "id": 687,
+    "latin": "Cicero",
+    "part_of_speech": "proper_noun",
+    "genitive": "Cicerōnis",
+    "definition_es": "Cicerón",
+    "status": "review"
+  },
+  {
+    "id": 688,
+    "latin": "dētegō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "descubrir, revelar, destapar",
+    "status": "review"
+  },
+  {
+    "id": 689,
+    "latin": "noster",
+    "part_of_speech": "adjective",
+    "genitive": null,
+    "definition_es": "nuestro",
+    "status": "review"
+  },
+  {
+    "id": 690,
+    "latin": "mīlitō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "servir como soldado, hacer la guerra",
+    "status": "review"
+  },
+  {
+    "id": 691,
+    "latin": "castra",
+    "part_of_speech": "noun",
+    "genitive": "castrōrum",
+    "definition_es": "campamento militar",
+    "status": "review"
+  },
+  {
+    "id": 693,
+    "latin": "habilis",
+    "part_of_speech": "adjective",
+    "genitive": null,
+    "definition_es": "hábil, apto, manejable",
+    "status": "review"
+  },
+  {
+    "id": 694,
+    "latin": "Venus",
+    "part_of_speech": "proper_noun",
+    "genitive": "Veneris",
+    "definition_es": "Venus",
+    "status": "review"
+  },
+  {
+    "id": 695,
+    "latin": "turpis",
+    "part_of_speech": "adjective",
+    "genitive": null,
+    "definition_es": "feo, vergonzoso, infame",
+    "status": "review"
+  },
+  {
+    "id": 696,
+    "latin": "senīlis",
+    "part_of_speech": "adjective",
+    "genitive": null,
+    "definition_es": "de viejo, senil",
+    "status": "review"
+  },
+  {
+    "id": 697,
+    "latin": "parum",
+    "part_of_speech": "adverb",
+    "genitive": null,
+    "definition_es": "poco, demasiado poco",
+    "status": "review"
+  },
+  {
+    "id": 698,
+    "latin": "plūs",
+    "part_of_speech": "adverb",
+    "genitive": null,
+    "definition_es": "más (comparativo de multum)",
+    "status": "review"
+  },
+  {
+    "id": 699,
+    "latin": "pauper",
+    "part_of_speech": "adjective",
+    "genitive": null,
+    "definition_es": "pobre, humilde",
+    "status": "review"
+  },
+  {
+    "id": 700,
+    "latin": "dīvitiae",
+    "part_of_speech": "noun",
+    "genitive": "dīvitiārum",
+    "definition_es": "riquezas, fortuna",
+    "status": "review"
+  },
+  {
+    "id": 701,
+    "latin": "careō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "carecer de, estar libre de (con ablativo)",
+    "status": "review"
+  },
+  {
+    "id": 702,
+    "latin": "Caesar",
+    "part_of_speech": "proper_noun",
+    "genitive": "Caesaris",
+    "definition_es": "César",
+    "status": "review"
+  },
+  {
+    "id": 703,
+    "latin": "trāns",
+    "part_of_speech": "preposition",
+    "genitive": null,
+    "definition_es": "al otro lado de, a través de (con acusativo)",
+    "status": "review"
+  },
+  {
+    "id": 705,
+    "latin": "Germānī",
+    "part_of_speech": "proper_noun",
+    "genitive": "Germānōrum",
+    "definition_es": "los germanos",
+    "status": "review"
+  },
+  {
+    "id": 708,
+    "latin": "rescindō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "anular, derogar, romper",
+    "status": "review"
+  },
+  {
+    "id": 709,
+    "latin": "regnō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "reinar, ser rey",
+    "status": "review"
+  },
+  {
+    "id": 710,
+    "latin": "crēscō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "crecer, aumentar",
+    "status": "review"
+  },
+  {
+    "id": 712,
+    "latin": "senātor",
+    "part_of_speech": "noun",
+    "genitive": "senātōris",
+    "definition_es": "senador",
+    "status": "review"
+  },
+  {
+    "id": 713,
+    "latin": "convocō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "convocar, reunir",
+    "status": "review"
+  },
+  {
+    "id": 714,
+    "latin": "officium",
+    "part_of_speech": "noun",
+    "genitive": "officiī",
+    "definition_es": "deber, obligación, servicio",
+    "status": "review"
+  },
+  {
+    "id": 715,
+    "latin": "gerō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "llevar, realizar, administrar (gerendus = que debe ser llevado)",
+    "status": "review"
+  },
+  {
+    "id": 716,
+    "latin": "dīgnitās",
+    "part_of_speech": "noun",
+    "genitive": "dīgnitātis",
+    "definition_es": "dignidad, prestigio, cargo",
+    "status": "review"
+  },
+  {
+    "id": 717,
+    "latin": "suī",
+    "part_of_speech": "pronoun",
+    "genitive": null,
+    "definition_es": "de sí, consigo (reflexivo de 3.ª persona)",
+    "status": "review"
+  },
+  {
+    "id": 718,
+    "latin": "exsolvō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "pagar, cumplir, liberar",
+    "status": "review"
+  },
+  {
+    "id": 719,
+    "latin": "dēfendō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "defender (dēfendendus = que debe ser defendido)",
+    "status": "review"
+  },
+  {
+    "id": 721,
+    "latin": "adipīscor",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "conseguir, alcanzar (adipīscendus = que debe ser alcanzado)",
+    "status": "review"
+  },
+  {
+    "id": 722,
+    "latin": "Helvētiī",
+    "part_of_speech": "proper_noun",
+    "genitive": "Helvētiōrum",
+    "definition_es": "los helvecios",
+    "status": "review"
+  },
+  {
+    "id": 723,
+    "latin": "dē",
+    "part_of_speech": "preposition",
+    "genitive": null,
+    "definition_es": "de, acerca de, desde (con ablativo)",
+    "status": "review"
+  },
+  {
+    "id": 724,
+    "latin": "fīnis",
+    "part_of_speech": "noun",
+    "genitive": "fīnis",
+    "definition_es": "fin, frontera, territorio (pl. fīnēs)",
+    "status": "review"
+  },
+  {
+    "id": 725,
+    "latin": "cōnstituō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "establecer, decidir, fundar",
+    "status": "review"
+  },
+  {
+    "id": 726,
+    "latin": "sī",
+    "part_of_speech": "conjunction",
+    "genitive": null,
+    "definition_es": "si",
+    "status": "review"
+  },
+  {
+    "id": 727,
+    "latin": "condiciō",
+    "part_of_speech": "noun",
+    "genitive": "condiciōnis",
+    "definition_es": "condición, situación, propuesta",
+    "status": "review"
+  },
+  {
+    "id": 728,
+    "latin": "dīversus",
+    "part_of_speech": "adjective",
+    "genitive": null,
+    "definition_es": "diferente, opuesto, apartado",
+    "status": "review"
+  },
+  {
+    "id": 729,
+    "latin": "sapiō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "saber, tener buen juicio, ser sabio",
+    "status": "review"
+  },
+  {
+    "id": 730,
+    "latin": "vērus",
+    "part_of_speech": "adjective",
+    "genitive": null,
+    "definition_es": "verdadero, real, auténtico",
+    "status": "review"
+  },
+  {
+    "id": 731,
+    "latin": "dīcō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "decir (dīcendus = que debe ser dicho)",
+    "status": "review"
+  },
+  {
+    "id": 733,
+    "latin": "clārus",
+    "part_of_speech": "adjective",
+    "genitive": null,
+    "definition_es": "claro, ilustre, famoso",
+    "status": "review"
+  },
+  {
+    "id": 734,
+    "latin": "commentārius",
+    "part_of_speech": "noun",
+    "genitive": "commentāriī",
+    "definition_es": "comentario, memoria, cuaderno",
+    "status": "review"
+  },
+  {
+    "id": 735,
+    "latin": "Gallus",
+    "part_of_speech": "adjective",
+    "genitive": null,
+    "definition_es": "galo, de la Galia; (sust.) Gallo",
+    "status": "review"
+  },
+  {
+    "id": 736,
+    "latin": "viciō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "vivir, habitar",
+    "status": "review"
+  },
+  {
+    "id": 737,
+    "latin": "habitō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "habitar, vivir, residir",
+    "status": "review"
+  },
+  {
+    "id": 739,
+    "latin": "Lāvīnia",
+    "part_of_speech": "proper_noun",
+    "genitive": "Lāvīniae",
+    "definition_es": "Lavinia (hija del rey Latino)",
+    "status": "review"
+  },
+  {
+    "id": 740,
+    "latin": "multum",
+    "part_of_speech": "adverb",
+    "genitive": null,
+    "definition_es": "mucho",
+    "status": "review"
+  },
+  {
+    "id": 741,
+    "latin": "iactō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "arrojar, agitar, sacudir (iactātus = agitado)",
+    "status": "review"
+  }
+]

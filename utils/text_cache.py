@@ -17,7 +17,7 @@ def get_text_analysis_from_cache(session, text_id: int):
     links = session.exec(
         select(TextWordLink)
         .where(TextWordLink.text_id == text_id)
-        .order_by(TextWordLink.position_in_sentence)
+        .order_by(TextWordLink.sentence_number, TextWordLink.position_in_sentence)
     ).all()
     
     if not links:

@@ -1,0 +1,363 @@
+[
+    {
+        "id": 265,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "sujeto",
+                "correct_role": "ablativo_absoluto",
+                "is_correct": false
+            },
+            {
+                "idx": 1,
+                "current_role": "ablativo_absoluto",
+                "correct_role": "ablativo_absoluto",
+                "is_correct": true
+            },
+            {
+                "idx": 3,
+                "current_role": "sujeto",
+                "correct_role": "sujeto",
+                "is_correct": true
+            },
+            {
+                "idx": 4,
+                "current_role": "predicado",
+                "correct_role": "predicado",
+                "is_correct": true
+            }
+        ],
+        "notes": "Caesare duce = ablativo absoluto."
+    },
+    {
+        "id": 266,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "sujeto",
+                "correct_role": "ablativo_absoluto",
+                "is_correct": false
+            },
+            {
+                "idx": 1,
+                "current_role": "ablativo_absoluto",
+                "correct_role": "ablativo_absoluto",
+                "is_correct": true
+            }
+        ],
+        "notes": "Me tacente = ablativo absoluto."
+    },
+    {
+        "id": 267,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "sujeto",
+                "correct_role": "ablativo_absoluto",
+                "is_correct": false
+            },
+            {
+                "idx": 2,
+                "current_role": "ablativo_absoluto",
+                "correct_role": "ablativo_absoluto",
+                "is_correct": true
+            }
+        ],
+        "notes": "His rebus cognitis = ablativo absoluto."
+    },
+    {
+        "id": 268,
+        "corrections": [],
+        "notes": "Todo correcto. Vivo patre = ablativo absoluto."
+    },
+    {
+        "id": 269,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "sujeto",
+                "correct_role": "ablativo_absoluto",
+                "is_correct": false
+            },
+            {
+                "idx": 1,
+                "current_role": "ablativo_absoluto",
+                "correct_role": "ablativo_absoluto",
+                "is_correct": true
+            }
+        ],
+        "notes": "Romanis pugnantibus = ablativo absoluto (dativo)."
+    },
+    {
+        "id": 270,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "sujeto",
+                "correct_role": "ablativo_absoluto",
+                "is_correct": false
+            },
+            {
+                "idx": 1,
+                "current_role": "ablativo_absoluto",
+                "correct_role": "ablativo_absoluto",
+                "is_correct": true
+            },
+            {
+                "idx": 6,
+                "current_role": "cópula",
+                "correct_role": "auxiliar",
+                "is_correct": false
+            }
+        ],
+        "notes": "Caesare mortuo = ablativo absoluto. est = auxiliar de pasiva."
+    },
+    {
+        "id": 271,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "sujeto",
+                "correct_role": "ablativo_absoluto",
+                "is_correct": false
+            },
+            {
+                "idx": 1,
+                "current_role": "ablativo_absoluto",
+                "correct_role": "ablativo_absoluto",
+                "is_correct": true
+            }
+        ],
+        "notes": "Omnibus audientibus = ablativo absoluto (dativo)."
+    },
+    {
+        "id": 272,
+        "corrections": [],
+        "notes": "Todo correcto. Ars amandi = gerundivo genitivo adjetival."
+    },
+    {
+        "id": 273,
+        "corrections": [],
+        "notes": "Paratus + ad + gerundio = construcción correcta."
+    },
+    {
+        "id": 274,
+        "corrections": [],
+        "notes": "Gerundio en ablativo de modo."
+    },
+    {
+        "id": 275,
+        "corrections": [],
+        "notes": "Cupidus + gerundivo genitivo = correcto."
+    },
+    {
+        "id": 276,
+        "corrections": [],
+        "notes": "Gerundivo de finalidad con ad."
+    },
+    {
+        "id": 277,
+        "corrections": [],
+        "notes": "Tempus + gerundivo genitivo predicativo."
+    },
+    {
+        "id": 278,
+        "corrections": [],
+        "notes": "Studiorum causa = complemento circunstancial de causa."
+    },
+    {
+        "id": 279,
+        "corrections": [],
+        "notes": "Gerundivo de obligación."
+    },
+    {
+        "id": 280,
+        "corrections": [],
+        "notes": "Gerundivo de obligación."
+    },
+    {
+        "id": 281,
+        "corrections": [],
+        "notes": "Peritus + gerundivo genitivo."
+    },
+    {
+        "id": 282,
+        "corrections": [],
+        "notes": "Gerundivo de obligación."
+    },
+    {
+        "id": 283,
+        "corrections": [],
+        "notes": "Gerundivo de obligación."
+    },
+    {
+        "id": 284,
+        "corrections": [],
+        "notes": "Gerundivo de obligación."
+    },
+    {
+        "id": 285,
+        "corrections": [
+            {
+                "idx": 2,
+                "current_role": "cópula",
+                "correct_role": "auxiliar",
+                "is_correct": false
+            }
+        ],
+        "notes": "Participio futuro activo + sum = futuro próximo; est es auxiliar."
+    },
+    {
+        "id": 286,
+        "corrections": [
+            {
+                "idx": 2,
+                "current_role": "cópula",
+                "correct_role": "auxiliar",
+                "is_correct": false
+            }
+        ],
+        "notes": "Perífrasis de futuro anterior."
+    },
+    {
+        "id": 287,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "sujeto",
+                "correct_role": "objeto_directo",
+                "is_correct": false
+            }
+        ],
+        "notes": "Dei = acusativo (objeto de colo)."
+    },
+    {
+        "id": 288,
+        "corrections": [],
+        "notes": "Correcto."
+    },
+    {
+        "id": 289,
+        "corrections": [],
+        "notes": "Gerundivo de obligación."
+    },
+    {
+        "id": 290,
+        "corrections": [],
+        "notes": "Gerundivo de obligación."
+    },
+    {
+        "id": 291,
+        "corrections": [],
+        "notes": "Impersonal con dativo de interés."
+    },
+    {
+        "id": 292,
+        "corrections": [],
+        "notes": "Coordinación asindética + et…et."
+    },
+    {
+        "id": 293,
+        "corrections": [],
+        "notes": "Correcto."
+    },
+    {
+        "id": 294,
+        "corrections": [],
+        "notes": "Infinitivos en función de sujeto."
+    },
+    {
+        "id": 295,
+        "corrections": [],
+        "notes": "Oración temporal con cum + pluscuamperfecto de subjuntivo."
+    },
+    {
+        "id": 296,
+        "corrections": [
+            {
+                "idx": 3,
+                "current_role": "cópula",
+                "correct_role": "auxiliar",
+                "is_correct": false
+            }
+        ],
+        "notes": "est = auxiliar de pasiva perifrástica."
+    },
+    {
+        "id": 297,
+        "corrections": [],
+        "notes": "Dum + indicativo presente = mientras."
+    },
+    {
+        "id": 298,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "conjunción_subordinante",
+                "correct_role": "oración_adverbial",
+                "is_correct": false
+            }
+        ],
+        "notes": "Quod causal (con indicativo)."
+    },
+    {
+        "id": 299,
+        "corrections": [],
+        "notes": "quod causal + subjuntivo (oblicuo)."
+    },
+    {
+        "id": 300,
+        "corrections": [],
+        "notes": "Correcto."
+    },
+    {
+        "id": 301,
+        "corrections": [],
+        "notes": "ne + subjuntivo prohibitivo."
+    },
+    {
+        "id": 302,
+        "corrections": [],
+        "notes": "ut final."
+    },
+    {
+        "id": 303,
+        "corrections": [],
+        "notes": "Consecutiva."
+    },
+    {
+        "id": 304,
+        "corrections": [],
+        "notes": "ut final."
+    },
+    {
+        "id": 305,
+        "corrections": [],
+        "notes": "ne + subjuntivo de finalidad negativa."
+    },
+    {
+        "id": 306,
+        "corrections": [],
+        "notes": "timeo + ne = completiva de temor."
+    },
+    {
+        "id": 307,
+        "corrections": [],
+        "notes": "Consecutiva."
+    },
+    {
+        "id": 308,
+        "corrections": [],
+        "notes": "ut final."
+    },
+    {
+        "id": 309,
+        "corrections": [],
+        "notes": "Consecutiva."
+    },
+    {
+        "id": 310,
+        "corrections": [],
+        "notes": "Condicional real."
+    }
+]

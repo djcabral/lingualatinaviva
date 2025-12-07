@@ -1,0 +1,82 @@
+[
+  {
+    "id": 420,
+    "latin": "infernus",
+    "part_of_speech": "adjective",
+    "genitive": null,
+    "definition_es": "infernal, de abajo, del inframundo; (sustantivado) infierno",
+    "status": "active"
+  },
+  {
+    "id": 421,
+    "latin": "monastērium",
+    "part_of_speech": "noun",
+    "genitive": "monastēriī",
+    "definition_es": "monasterio, cenobio",
+    "status": "active"
+  },
+  {
+    "id": 422,
+    "latin": "abbās",
+    "part_of_speech": "noun",
+    "genitive": "abbātis",
+    "definition_es": "abad",
+    "status": "active"
+  },
+  {
+    "id": 423,
+    "latin": "ōrātiō",
+    "part_of_speech": "noun",
+    "genitive": "ōrātiōnis",
+    "definition_es": "oración, discurso, plegaria",
+    "status": "active"
+  },
+  {
+    "id": 424,
+    "latin": "missa",
+    "part_of_speech": "noun",
+    "genitive": "missae",
+    "definition_es": "misa, envío, despido (origen de la misa cristiana: «Ite, missa est»)",
+    "status": "active"
+  },
+  {
+    "id": 425,
+    "latin": "saeculum",
+    "part_of_speech": "noun",
+    "genitive": "saeculī",
+    "definition_es": "siglo, generación, época, mundo, era",
+    "status": "active"
+  },
+  {
+    "id": 426,
+    "latin": "āmen",
+    "part_of_speech": "adverb",
+    "genitive": null,
+    "definition_es": "así sea, verdaderamente, amén (préstamo del hebreo)",
+    "status": "active"
+  },
+  {
+    "id": 427,
+    "latin": "spīritus",
+    "part_of_speech": "noun",
+    "genitive": "spīritūs",
+    "definition_es": "aliento, soplo, espíritu; Espíritu Santo",
+    "status": "active"
+  },
+  {
+    "id": 428,
+    "latin": "sanctus",
+    "part_of_speech": "adjective",
+    "genitive": null,
+    "definition_es": "santo, sagrado, consagrado",
+    "status": "active"
+  },
+  {
+    "id": 429,
+    "latin": "pānis",
+    "part_of_speech": "noun",
+    "genitive": "pānis",
+    "definition_es": "pan",
+    "status": "active"
+  }
+]

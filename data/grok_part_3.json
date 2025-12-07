@@ -1,0 +1,270 @@
+[
+    {
+        "id": 481,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "complemento_predicativo",
+                "correct_role": "aposición",
+                "is_correct": false
+            },
+            {
+                "idx": 3,
+                "current_role": "cópula",
+                "correct_role": "cópula",
+                "is_correct": true
+            }
+        ],
+        "notes": "rex deorum = aposición explicativa del sujeto Iuppiter."
+    },
+    {
+        "id": 482,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "complemento_predicativo",
+                "correct_role": "aposición",
+                "is_correct": false
+            }
+        ],
+        "notes": "rēgīna deōrum = aposición explicativa."
+    },
+    {
+        "id": 483,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "complemento_predicativo",
+                "correct_role": "aposición",
+                "is_correct": false
+            },
+            {
+                "idx": 2,
+                "current_role": "complemento_del_nombre",
+                "correct_role": "complemento_del_nombre",
+                "is_correct": true
+            }
+        ],
+        "notes": "deus bellī = aposición."
+    },
+    {
+        "id": 484,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "complemento_predicativo",
+                "correct_role": "aposición",
+                "is_correct": false
+            }
+        ],
+        "notes": "dea amōris = aposición."
+    },
+    {
+        "id": 485,
+        "corrections": [],
+        "notes": "Todo correcto."
+    },
+    {
+        "id": 486,
+        "corrections": [],
+        "notes": "Correcto."
+    },
+    {
+        "id": 487,
+        "corrections": [],
+        "notes": "Correcto."
+    },
+    {
+        "id": 488,
+        "corrections": [],
+        "notes": "Correcto."
+    },
+    {
+        "id": 489,
+        "corrections": [],
+        "notes": "Correcto."
+    },
+    {
+        "id": 490,
+        "corrections": [],
+        "notes": "Post cēnam = complemento circunstancial temporal."
+    },
+    {
+        "id": 491,
+        "corrections": [],
+        "notes": "cum patre = complemento circunstancial de compañía."
+    },
+    {
+        "id": 492,
+        "corrections": [],
+        "notes": "Correcto."
+    },
+    {
+        "id": 493,
+        "corrections": [],
+        "notes": "Correcto."
+    },
+    {
+        "id": 494,
+        "corrections": [],
+        "notes": "Correcto."
+    },
+    {
+        "id": 495,
+        "corrections": [],
+        "notes": "Correcto."
+    },
+    {
+        "id": 496,
+        "corrections": [],
+        "notes": "Correcto."
+    },
+    {
+        "id": 497,
+        "corrections": [],
+        "notes": "Enumeración asindética con coma."
+    },
+    {
+        "id": 498,
+        "corrections": [],
+        "notes": "Vēre = ablativo temporal."
+    },
+    {
+        "id": 499,
+        "corrections": [],
+        "notes": "Correcto."
+    },
+    {
+        "id": 500,
+        "corrections": [],
+        "notes": "Correcto."
+    },
+    {
+        "id": 501,
+        "corrections": [],
+        "notes": "Correcto."
+    },
+    {
+        "id": 502,
+        "corrections": [],
+        "notes": "Correcto."
+    },
+    {
+        "id": 503,
+        "corrections": [],
+        "notes": "Correcto (coordinación con et)."
+    },
+    {
+        "id": 504,
+        "corrections": [],
+        "notes": "Correcto."
+    },
+    {
+        "id": 505,
+        "corrections": [],
+        "notes": "pārent + dativo = correcto."
+    },
+    {
+        "id": 506,
+        "corrections": [
+            {
+                "idx": 3,
+                "current_role": "auxiliar",
+                "correct_role": "cópula",
+                "is_correct": false
+            }
+        ],
+        "notes": "Pasiva perifrástica con est = cópula."
+    },
+    {
+        "id": 507,
+        "corrections": [],
+        "notes": "Salūtem dīcit + dativo = fórmula epistolar clásica."
+    },
+    {
+        "id": 508,
+        "corrections": [],
+        "notes": "Pregunta directa."
+    },
+    {
+        "id": 509,
+        "corrections": [],
+        "notes": "Correcto."
+    },
+    {
+        "id": 510,
+        "corrections": [],
+        "notes": "Dos oraciones independientes."
+    },
+    {
+        "id": 511,
+        "corrections": [],
+        "notes": "Imperativo + vocativo."
+    },
+    {
+        "id": 512,
+        "corrections": [],
+        "notes": "Correcto."
+    },
+    {
+        "id": 513,
+        "corrections": [],
+        "notes": "Correcto."
+    },
+    {
+        "id": 514,
+        "corrections": [],
+        "notes": "Correcto."
+    },
+    {
+        "id": 515,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "complemento_predicativo",
+                "correct_role": "aposición",
+                "is_correct": false
+            }
+        ],
+        "notes": "Roma = aposición explicativa."
+    },
+    {
+        "id": 516,
+        "corrections": [
+            {
+                "idx": 2,
+                "current_role": "complemento_predicativo",
+                "correct_role": "aposición",
+                "is_correct": false
+            }
+        ],
+        "notes": "prīmus rēx Rōmānōrum = aposición."
+    },
+    {
+        "id": 517,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "complemento_predicativo",
+                "correct_role": "aposición",
+                "is_correct": false
+            }
+        ],
+        "notes": "dux Carthāginiēnsium = aposición."
+    },
+    {
+        "id": 518,
+        "corrections": [],
+        "notes": "cum + ablativo de instrumento."
+    },
+    {
+        "id": 519,
+        "corrections": [],
+        "notes": "Correcto."
+    },
+    {
+        "id": 520,
+        "corrections": [],
+        "notes": "Correcto."
+    }
+]

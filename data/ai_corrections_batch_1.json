@@ -1,0 +1,629 @@
+[
+    {
+        "id": 1,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "predicado",
+                "correct_role": "predicado",
+                "is_correct": true
+            },
+            {
+                "idx": 1,
+                "current_role": "conjunción_coordinante",
+                "correct_role": "conjunción_coordinante",
+                "is_correct": true
+            },
+            {
+                "idx": 2,
+                "current_role": "elemento_coordinado",
+                "correct_role": "elemento_coordinado",
+                "is_correct": true
+            },
+            {
+                "idx": 3,
+                "current_role": "puntuación",
+                "correct_role": "puntuación",
+                "is_correct": true
+            }
+        ],
+        "notes": "Análisis correcto. Dos infinitivos con valor exhortativo/imperativo coordinados disyuntivamente."
+    },
+    {
+        "id": 2,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "predicado",
+                "correct_role": "predicado",
+                "is_correct": true
+            },
+            {
+                "idx": 1,
+                "current_role": "puntuación",
+                "correct_role": "puntuación",
+                "is_correct": true
+            },
+            {
+                "idx": 2,
+                "current_role": "complemento_circunstancial",
+                "correct_role": "modificador_adverbial",
+                "is_correct": false
+            },
+            {
+                "idx": 3,
+                "current_role": "cópula",
+                "correct_role": "cópula",
+                "is_correct": true
+            },
+            {
+                "idx": 4,
+                "current_role": "puntuación",
+                "correct_role": "puntuación",
+                "is_correct": true
+            }
+        ],
+        "notes": "ergo es adverbio ilativo (por tanto, luego), no complemento circunstancial → modificador_adverbial."
+    },
+    {
+        "id": 3,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "predicado",
+                "correct_role": "predicado",
+                "is_correct": true
+            },
+            {
+                "idx": 1,
+                "current_role": "sujeto",
+                "correct_role": "sujeto",
+                "is_correct": true,
+                "note": "te es sujeto lógico de la subordinada completiva de infinitivo"
+            },
+            {
+                "idx": 2,
+                "current_role": "oración_completiva",
+                "correct_role": "oración_completiva",
+                "is_correct": true
+            },
+            {
+                "idx": 3,
+                "current_role": "puntuación",
+                "correct_role": "puntuación",
+                "is_correct": true
+            }
+        ],
+        "notes": "AcI clásico (dico + acusativo + infinitivo). Análisis correcto."
+    },
+    {
+        "id": 4,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "predicado",
+                "correct_role": "predicado",
+                "is_correct": true
+            },
+            {
+                "idx": 1,
+                "current_role": "conjunción_subordinante",
+                "correct_role": "conjunción_subordinante",
+                "is_correct": true
+            },
+            {
+                "idx": 2,
+                "current_role": "oración_completiva",
+                "correct_role": "oración_completiva",
+                "is_correct": true
+            },
+            {
+                "idx": 3,
+                "current_role": "puntuación",
+                "correct_role": "puntuación",
+                "is_correct": true
+            }
+        ],
+        "notes": "Subordinada completiva con ne (temor) en subjuntivo. Todo correcto."
+    },
+    {
+        "id": 5,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "conjunción_subordinante",
+                "correct_role": "conjunción_subordinante",
+                "is_correct": true
+            },
+            {
+                "idx": 1,
+                "current_role": "oración_adverbial",
+                "correct_role": "oración_adverbial",
+                "is_correct": true
+            },
+            {
+                "idx": 2,
+                "current_role": "objeto_directo",
+                "correct_role": "objeto_directo",
+                "is_correct": true
+            },
+            {
+                "idx": 3,
+                "current_role": "puntuación",
+                "correct_role": "puntuación",
+                "is_correct": true
+            },
+            {
+                "idx": 4,
+                "current_role": "predicado",
+                "correct_role": "predicado",
+                "is_correct": true
+            },
+            {
+                "idx": 5,
+                "current_role": "objeto_directo",
+                "correct_role": "objeto_directo",
+                "is_correct": true
+            },
+            {
+                "idx": 6,
+                "current_role": "puntuación",
+                "correct_role": "puntuación",
+                "is_correct": true
+            }
+        ],
+        "notes": "Oración condicional con prótasis (si vis pacem) y apódosis imperativa. Todo correcto."
+    },
+    {
+        "id": 6,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "sujeto",
+                "correct_role": "sujeto",
+                "is_correct": true
+            },
+            {
+                "idx": 1,
+                "current_role": "puntuación",
+                "correct_role": "puntuación",
+                "is_correct": true
+            },
+            {
+                "idx": 2,
+                "current_role": "objeto_directo",
+                "correct_role": "objeto_directo",
+                "is_correct": true
+            },
+            {
+                "idx": 3,
+                "current_role": "oración_de_relativo",
+                "correct_role": "oración_de_relativo",
+                "is_correct": true
+            },
+            {
+                "idx": 4,
+                "current_role": "puntuación",
+                "correct_role": "puntuación",
+                "is_correct": true
+            },
+            {
+                "idx": 5,
+                "current_role": "sujeto",
+                "correct_role": "sujeto",
+                "is_correct": false,
+                "note": "amicus es el sujeto de la principal, no de la relativa"
+            },
+            {
+                "idx": 6,
+                "current_role": "modificador_adjetival",
+                "correct_role": "determinante",
+                "is_correct": false
+            },
+            {
+                "idx": 7,
+                "current_role": "cópula",
+                "correct_role": "cópula",
+                "is_correct": true
+            },
+            {
+                "idx": 8,
+                "current_role": "puntuación",
+                "correct_role": "puntuación",
+                "is_correct": true
+            }
+        ],
+        "notes": "Correcciones: amicus es el sujeto real (nominativo). meus es posesivo → determinante."
+    },
+    {
+        "id": 7,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "predicado",
+                "correct_role": "predicado",
+                "is_correct": true
+            },
+            {
+                "idx": 1,
+                "current_role": "sujeto",
+                "correct_role": "sujeto",
+                "is_correct": true,
+                "note": "se es sujeto lógico del infinitivo (AcI)"
+            },
+            {
+                "idx": 2,
+                "current_role": "complemento_predicativo",
+                "correct_role": "complemento_predicativo",
+                "is_correct": true
+            },
+            {
+                "idx": 3,
+                "current_role": "cópula",
+                "correct_role": "cópula",
+                "is_correct": true
+            },
+            {
+                "idx": 4,
+                "current_role": "puntuación",
+                "correct_role": "puntuación",
+                "is_correct": true
+            }
+        ],
+        "notes": "AcI con verbo copulativo. Análisis correcto."
+    },
+    {
+        "id": 58,
+        "corrections": [
+            {
+                "idx": 0,
+                "is_correct": true
+            },
+            {
+                "idx": 1,
+                "is_correct": true
+            },
+            {
+                "idx": 2,
+                "is_correct": true
+            },
+            {
+                "idx": 3,
+                "is_correct": true
+            }
+        ],
+        "notes": "Oración transitiva simple. Todo correcto."
+    },
+    {
+        "id": 59,
+        "corrections": [
+            {
+                "idx": 0,
+                "is_correct": true
+            },
+            {
+                "idx": 1,
+                "is_correct": true
+            },
+            {
+                "idx": 2,
+                "is_correct": true
+            },
+            {
+                "idx": 3,
+                "is_correct": true
+            }
+        ],
+        "notes": "Correcto."
+    },
+    {
+        "id": 60,
+        "corrections": [
+            {
+                "idx": 0,
+                "is_correct": true
+            },
+            {
+                "idx": 1,
+                "is_correct": true
+            },
+            {
+                "idx": 2,
+                "is_correct": true
+            },
+            {
+                "idx": 3,
+                "is_correct": true
+            }
+        ],
+        "notes": "Correcto."
+    },
+    {
+        "id": 61,
+        "corrections": [
+            {
+                "idx": 0,
+                "is_correct": true
+            },
+            {
+                "idx": 1,
+                "is_correct": true
+            },
+            {
+                "idx": 2,
+                "is_correct": true
+            },
+            {
+                "idx": 3,
+                "is_correct": true
+            }
+        ],
+        "notes": "Correcto."
+    },
+    {
+        "id": 62,
+        "corrections": [
+            {
+                "idx": 0,
+                "is_correct": true
+            },
+            {
+                "idx": 1,
+                "current_role": "modificador_adjetival",
+                "correct_role": "modificador_adjetival",
+                "is_correct": true
+            },
+            {
+                "idx": 2,
+                "is_correct": true
+            },
+            {
+                "idx": 3,
+                "is_correct": true
+            }
+        ],
+        "notes": "boni modifica a pueri → modificador_adjetival (no nsubj). Correcto."
+    },
+    {
+        "id": 63,
+        "corrections": [
+            {
+                "idx": 0,
+                "is_correct": true
+            },
+            {
+                "idx": 1,
+                "current_role": "objeto_indirecto",
+                "correct_role": "objeto_indirecto",
+                "is_correct": false,
+                "note": "puellae es dativo, pero aquí es complemento_del_nombre (genitivo posesivo implícito)"
+            },
+            {
+                "idx": 2,
+                "is_correct": true
+            },
+            {
+                "idx": 3,
+                "is_correct": true
+            },
+            {
+                "idx": 4,
+                "is_correct": true
+            }
+        ],
+        "notes": "puellae es genitivo → complemento_del_nombre (la rosa de la niña)."
+    },
+    {
+        "id": 64,
+        "corrections": [
+            {
+                "idx": 0,
+                "is_correct": true
+            },
+            {
+                "idx": 1,
+                "is_correct": true
+            },
+            {
+                "idx": 2,
+                "is_correct": true
+            },
+            {
+                "idx": 3,
+                "is_correct": true
+            },
+            {
+                "idx": 4,
+                "is_correct": true
+            }
+        ],
+        "notes": "Correcto (discipulis dativo = objeto_indirecto)."
+    },
+    {
+        "id": 65,
+        "corrections": [
+            {
+                "idx": 0,
+                "is_correct": true
+            },
+            {
+                "idx": 1,
+                "is_correct": true
+            },
+            {
+                "idx": 2,
+                "is_correct": true
+            },
+            {
+                "idx": 3,
+                "is_correct": true
+            }
+        ],
+        "notes": "Correcto."
+    },
+    {
+        "id": 66,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "objeto_indirecto",
+                "correct_role": "objeto_indirecto",
+                "is_correct": true,
+                "note": "dativo de posesivo"
+            },
+            {
+                "idx": 1,
+                "is_correct": true
+            },
+            {
+                "idx": 2,
+                "current_role": "sujeto",
+                "correct_role": "sujeto",
+                "is_correct": true
+            },
+            {
+                "idx": 3,
+                "is_correct": true
+            }
+        ],
+        "notes": "Construcción dativo + est + nominativo (posesión). Correcto."
+    },
+    {
+        "id": 67,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "objeto_indirecto",
+                "correct_role": "objeto_indirecto",
+                "is_correct": true
+            },
+            {
+                "idx": 1,
+                "is_correct": true
+            },
+            {
+                "idx": 2,
+                "is_correct": true
+            },
+            {
+                "idx": 3,
+                "is_correct": true
+            },
+            {
+                "idx": 4,
+                "is_correct": true
+            }
+        ],
+        "notes": "Correcto."
+    },
+    {
+        "id": 68,
+        "corrections": [
+            {
+                "idx": 0,
+                "is_correct": true
+            },
+            {
+                "idx": 1,
+                "is_correct": true
+            },
+            {
+                "idx": 2,
+                "current_role": "complemento_predicativo",
+                "correct_role": "complemento_predicativo",
+                "is_correct": true
+            },
+            {
+                "idx": 3,
+                "is_correct": true
+            },
+            {
+                "idx": 4,
+                "is_correct": true
+            }
+        ],
+        "notes": "Correcto."
+    },
+    {
+        "id": 69,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "sujeto",
+                "correct_role": "sujeto",
+                "is_correct": true,
+                "note": "Liber es el sujeto"
+            },
+            {
+                "idx": 1,
+                "current_role": "complemento_del_nombre",
+                "correct_role": "complemento_del_nombre",
+                "is_correct": true
+            },
+            {
+                "idx": 2,
+                "is_correct": true
+            },
+            {
+                "idx": 3,
+                "is_correct": true
+            },
+            {
+                "idx": 4,
+                "is_correct": true
+            }
+        ],
+        "notes": "Correcto."
+    },
+    {
+        "id": 70,
+        "corrections": [
+            {
+                "idx": 0,
+                "is_correct": true
+            },
+            {
+                "idx": 1,
+                "is_correct": true
+            },
+            {
+                "idx": 2,
+                "is_correct": true
+            },
+            {
+                "idx": 3,
+                "is_correct": true
+            },
+            {
+                "idx": 4,
+                "is_correct": true
+            }
+        ],
+        "notes": "Correcto."
+    },
+    {
+        "id": 71,
+        "corrections": [
+            {
+                "idx": 0,
+                "current_role": "sujeto",
+                "correct_role": "sujeto",
+                "is_correct": true,
+                "note": "Milites nominativo plural"
+            },
+            {
+                "idx": 1,
+                "is_correct": true
+            },
+            {
+                "idx": 2,
+                "is_correct": true
+            },
+            {
+                "idx": 3,
+                "is_correct": true
+            }
+        ],
+        "notes": "Error en el JSON original: Milites está en nominativo, no acusativo."
+    }
+]

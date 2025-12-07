@@ -1,0 +1,242 @@
+[
+    {
+        "id": 521,
+        "corrections": [],
+        "notes": "Todo correcto."
+    },
+    {
+        "id": 522,
+        "corrections": [],
+        "notes": "verba facere = locución habitual para «hablar»."
+    },
+    {
+        "id": 523,
+        "corrections": [],
+        "notes": "Correcto."
+    },
+    {
+        "id": 524,
+        "corrections": [],
+        "notes": "Coordinación disyuntiva implícita."
+    },
+    {
+        "id": 525,
+        "corrections": [],
+        "notes": "Sic erat = construcción copulativa correcta."
+    },
+    {
+        "id": 526,
+        "corrections": [],
+        "notes": "Ablativo de separación sin preposición (ciudad (Troia)."
+    },
+    {
+        "id": 527,
+        "corrections": [],
+        "notes": "per + acusativo = movimiento a través de."
+    },
+    {
+        "id": 528,
+        "corrections": [],
+        "notes": "ad + acusativo = dirección."
+    },
+    {
+        "id": 529,
+        "corrections": [],
+        "notes": "Correcto."
+    },
+    {
+        "id": 530,
+        "corrections": [
+            {
+                "idx": 3,
+                "current_role": "predicado",
+                "correct_role": true
+            }
+        ],
+        "notes": "oriundus ab + ablativo = «descender de». Todo correcto."
+    },
+    {
+        "id": 531,
+        "corrections": [],
+        "notes": "Pasiva perifrástica. Todo correcto."
+    },
+    {
+        "id": 532,
+        "corrections": [
+            {
+                "idx": 5,
+                "current_role": "determinante",
+                "correct_role": "modificador_adjetival",
+                "is_correct": false
+            },
+            {
+                "idx": 6,
+                "current_role": "modificador_adjetival",
+                "correct_role": "sujeto",
+                "is_correct": false
+            }
+        ],
+        "notes": "Tres oraciones coordinadas implícitamente. Los sujetos son Belgae, Aquitani, Celtae."
+    },
+    {
+        "id": 533,
+        "corrections": [],
+        "notes": "Ablativos de diferencia."
+    },
+    {
+        "id": 534,
+        "corrections": [
+            {
+                "idx": 14,
+                "current_role": "complemento_predicativo",
+                "correct_role": "complemento_predicativo",
+                "is_correct": true
+            }
+        ],
+        "notes": "Definición clásica de Cicerón. Todo correcto."
+    },
+    {
+        "id": 535,
+        "corrections": [],
+        "notes": "Sine + ablativo = complemento circunstancial negativo."
+    },
+    {
+        "id": 536,
+        "corrections": [
+            {
+                "idx": 1,
+                "current_role": "aposición",
+                "correct_role": "aposición",
+                "is_correct": true
+            }
+        ],
+        "notes": "rēx = aposición explicativa."
+    },
+    {
+        "id": 537,
+        "corrections": [],
+        "notes": "Correcto."
+    },
+    {
+        "id": 538,
+        "corrections": [],
+        "notes": "dum + indicativo presente histórico = «mientras»."
+    },
+    {
+        "id": 539,
+        "corrections": [],
+        "notes": "in + acusativo = movimiento hacia."
+    },
+    {
+        "id": 540,
+        "corrections": [],
+        "notes": "AcI correcto."
+    },
+    {
+        "id": 541,
+        "corrections": [],
+        "notes": "Correcto."
+    },
+    {
+        "id": 542,
+        "corrections": [],
+        "notes": "in senātū = lugar donde."
+    },
+    {
+        "id": 543,
+        "corrections": [
+            {
+                "idx": 5,
+                "current_role": "vocativo",
+                "correct_role": "vocativo",
+                "is_correct": true
+            }
+        ],
+        "notes": "Célebre exordio de la Primera Catilinaria."
+    },
+    {
+        "id": 544,
+        "corrections": [],
+        "notes": "Cita cerrada (solo puntuación)."
+    },
+    {
+        "id": 545,
+        "corrections": [],
+        "notes": "Metáfora militar del amor (Ovidio)."
+    },
+    {
+        "id": 546,
+        "corrections": [],
+        "notes": "Correcto."
+    },
+    {
+        "id": 547,
+        "corrections": [],
+        "notes": "Paralelismo anafórico."
+    },
+    {
+        "id": 548,
+        "corrections": [],
+        "notes": "Sentencia célebre de Séneca."
+    },
+    {
+        "id": 549,
+        "corrections": [],
+        "notes": "Correcto."
+    },
+    {
+        "id": 550,
+        "corrections": [],
+        "notes": "Ablativo absoluto + trāns + acusativo."
+    },
+    {
+        "id": 551,
+        "corrections": [],
+        "notes": "Ablativo absoluto + in + acusativo."
+    },
+    {
+        "id": 552,
+        "corrections": [],
+        "notes": "Correcto."
+    },
+    {
+        "id": 553,
+        "corrections": [],
+        "notes": "Ablativo absoluto."
+    },
+    {
+        "id": 554,
+        "corrections": [],
+        "notes": "Correcto."
+    },
+    {
+        "id": 555,
+        "corrections": [],
+        "notes": "Ablativo absoluto (senātōribus convocātīs)."
+    },
+    {
+        "id": 556,
+        "corrections": [],
+        "notes": "Correcto."
+    },
+    {
+        "id": 557,
+        "corrections": [],
+        "notes": "Relativa explicativa como sujeto."
+    },
+    {
+        "id": 558,
+        "corrections": [],
+        "notes": "Gerundivo impersonal de obligación + cum + ablativo."
+    },
+    {
+        "id": 559,
+        "corrections": [],
+        "notes": "Relativa con antecedente incorporado."
+    },
+    {
+        "id": 560,
+        "corrections": [],
+        "notes": "Perífrasis de futuro próximo."
+    }
+]

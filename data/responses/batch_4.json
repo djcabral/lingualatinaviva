@@ -1,0 +1,82 @@
+[
+  {
+    "id": 390,
+    "latin": "senex",
+    "part_of_speech": "noun",
+    "genitive": "senis",
+    "definition_es": "anciano, viejo",
+    "status": "active"
+  },
+  {
+    "id": 391,
+    "latin": "cānō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "cantar, tocar un instrumento; profetizar, presagiar",
+    "status": "active"
+  },
+  {
+    "id": 392,
+    "latin": "ōra",
+    "part_of_speech": "noun",
+    "genitive": "ōrae",
+    "definition_es": "costa, orilla, litoral; región costera",
+    "status": "active"
+  },
+  {
+    "id": 393,
+    "latin": "fātum",
+    "part_of_speech": "noun",
+    "genitive": "fātī",
+    "definition_es": "destino, hado, fatalidad; (en plural fāta) oráculos",
+    "status": "active"
+  },
+  {
+    "id": 394,
+    "latin": "profugus",
+    "part_of_speech": "adjective",
+    "genitive": null,
+    "definition_es": "exiliado, fugitivo, errante",
+    "status": "active"
+  },
+  {
+    "id": 395,
+    "latin": "lītus",
+    "part_of_speech": "noun",
+    "genitive": "lītoris",
+    "definition_es": "playa, orilla del mar, litoral",
+    "status": "active"
+  },
+  {
+    "id": 396,
+    "latin": "arma",
+    "part_of_speech": "noun",
+    "genitive": "armōrum",
+    "definition_es": "armas, armamento, equipo militar (normalmente en plural)",
+    "status": "active"
+  },
+  {
+    "id": 397,
+    "latin": "altum",
+    "part_of_speech": "noun",
+    "genitive": "altī",
+    "definition_es": "alta mar, lo profundo del mar; altura, cielo",
+    "status": "active"
+  },
+  {
+    "id": 398,
+    "latin": "moenia",
+    "part_of_speech": "noun",
+    "genitive": "moenium",
+    "definition_es": "murallas, fortificaciones, defensas de una ciudad (siempre en plural)",
+    "status": "active"
+  },
+  {
+    "id": 399,
+    "latin": "nūmen",
+    "part_of_speech": "noun",
+    "genitive": "nūminis",
+    "definition_es": "divinidad, poder divino, voluntad de los dioses; majestad divina",
+    "status": "active"
+  }
+]

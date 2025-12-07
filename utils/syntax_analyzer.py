@@ -282,13 +282,34 @@ class LatinSyntaxAnalyzer:
             # o modificaremos el SVG resultante.
             # Mejor opción: Crear un diccionario manual para displacy
             
+            # Mapa de POS tags a español (abreviado para el árbol)
+            pos_map = {
+                "NOUN": "Sust.",
+                "VERB": "Verbo",
+                "ADJ": "Adj.",
+                "ADV": "Adv.",
+                "PRON": "Pron.",
+                "DET": "Det.",
+                "ADP": "Prep.",
+                "CCONJ": "Conj.",
+                "SCONJ": "Conj.",
+                "NUM": "Num.",
+                "PART": "Part.",
+                "INTJ": "Interj.",
+                "PROPN": "N.Prop.",
+                "AUX": "Aux.",
+                "PUNCT": "Punt.",
+                "X": "Otro"
+            }
+            
             words = []
             arcs = []
             
             for token in doc:
+                pos_es = pos_map.get(token.pos_, token.pos_)
                 words.append({
                     "text": token.text,
-                    "tag": token.pos_
+                    "tag": pos_es
                 })
                 
                 if token.dep_ != "ROOT":

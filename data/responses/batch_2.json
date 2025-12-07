@@ -1,0 +1,82 @@
+[
+  {
+    "id": 369,
+    "latin": "ēlūdō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "burlar, eludir, engañar, escapar jugando",
+    "status": "active"
+  },
+  {
+    "id": 370,
+    "latin": "audācia",
+    "part_of_speech": "noun",
+    "genitive": "audāciae",
+    "definition_es": "audacia, osadía, atrevimiento",
+    "status": "active"
+  },
+  {
+    "id": 371,
+    "latin": "cōnsul",
+    "part_of_speech": "noun",
+    "genitive": "cōnsulis",
+    "definition_es": "cónsul",
+    "status": "active"
+  },
+  {
+    "id": 372,
+    "latin": "rēs pūblica",
+    "part_of_speech": "noun",
+    "genitive": "reī pūblicae",
+    "definition_es": "república, Estado, cosa pública",
+    "status": "active"
+  },
+  {
+    "id": 373,
+    "latin": "mōs",
+    "part_of_speech": "noun",
+    "genitive": "mōris",
+    "definition_es": "costumbre, carácter; (en plural mōrēs) costumbres, moral",
+    "status": "active"
+  },
+  {
+    "id": 374,
+    "latin": "tempus",
+    "part_of_speech": "noun",
+    "genitive": "temporis",
+    "definition_es": "tiempo, momento, ocasión, época",
+    "status": "active"
+  },
+  {
+    "id": 375,
+    "latin": "ingenium",
+    "part_of_speech": "noun",
+    "genitive": "ingeniī",
+    "definition_es": "carácter, talento, ingenio, inteligencia",
+    "status": "active"
+  },
+  {
+    "id": 376,
+    "latin": "prāvus",
+    "part_of_speech": "adjective",
+    "genitive": null,
+    "definition_es": "torcido, malo, perverso, depravado",
+    "status": "active"
+  },
+  {
+    "id": 377,
+    "latin": "inēdia",
+    "part_of_speech": "noun",
+    "genitive": "inēdiae",
+    "definition_es": "hambre, ayuno, muerte por inanición",
+    "status": "active"
+  },
+  {
+    "id": 378,
+    "latin": "algor",
+    "part_of_speech": "noun",
+    "genitive": "algōris",
+    "definition_es": "frío intenso, escalofrío",
+    "status": "active"
+  }
+]

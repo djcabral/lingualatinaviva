@@ -12,7 +12,14 @@ import sys
 from typing import List, Dict, Optional, Any
 
 # Intentar importar pycollatinus, manejar error si no está instalado
+# Intentar importar pycollatinus, manejar error si no está instalado
 try:
+    # Parche para compatibilidad con Python 3.10+ (pycollatinus usa collections.Callable)
+    import collections
+    import collections.abc
+    if not hasattr(collections, 'Callable'):
+        collections.Callable = collections.abc.Callable
+
     from pycollatinus import Lemmatiseur
     PYCOLLATINUS_AVAILABLE = True
 except ImportError:

@@ -1,0 +1,82 @@
+[
+  {
+    "id": 400,
+    "latin": "carpō",
+    "part_of_speech": "verb",
+    "genitive": null,
+    "definition_es": "coger, arrancar, recolectar; disfrutar, aprovechar (el tiempo)",
+    "status": "active"
+  },
+  {
+    "id": 401,
+    "latin": "crēdulus",
+    "part_of_speech": "adjective",
+    "genitive": null,
+    "definition_es": "crédulo, confiado, que cree fácilmente",
+    "status": "active"
+  },
+  {
+    "id": 402,
+    "latin": "posterus",
+    "part_of_speech": "adjective",
+    "genitive": null,
+    "definition_es": "posterior, siguiente, futuro",
+    "status": "active"
+  },
+  {
+    "id": 403,
+    "latin": "aetās",
+    "part_of_speech": "noun",
+    "genitive": "aetātis",
+    "definition_es": "edad, época, generación, tiempo de vida",
+    "status": "active"
+  },
+  {
+    "id": 404,
+    "latin": "vīnum",
+    "part_of_speech": "noun",
+    "genitive": "vīnī",
+    "definition_es": "vino",
+    "status": "active"
+  },
+  {
+    "id": 405,
+    "latin": "hiems",
+    "part_of_speech": "noun",
+    "genitive": "hiemis",
+    "definition_es": "invierno, tempestad, frío",
+    "status": "active"
+  },
+  {
+    "id": 406,
+    "latin": "nāvis",
+    "part_of_speech": "noun",
+    "genitive": "nāvis",
+    "definition_es": "nave, barco",
+    "status": "active"
+  },
+  {
+    "id": 407,
+    "latin": "aureus",
+    "part_of_speech": "adjective",
+    "genitive": null,
+    "definition_es": "de oro, dorado, áureo",
+    "status": "active"
+  },
+  {
+    "id": 408,
+    "latin": "īra",
+    "part_of_speech": "noun",
+    "genitive": "īrae",
+    "definition_es": "ira, cólera, enojo",
+    "status": "active"
+  },
+  {
+    "id": 409,
+    "latin": "saevus",
+    "part_of_speech": "adjective",
+    "genitive": null,
+    "definition_es": "cruel, feroz, salvaje, encarnizado",
+    "status": "active"
+  }
+]

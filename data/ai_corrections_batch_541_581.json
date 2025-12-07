@@ -1,0 +1,92 @@
+{
+    "543": {
+        "1": "modificador_adverbial"
+    },
+    "546": {
+        "1": "complemento_obligatorio"
+    },
+    "547": {
+        "1": "modificador_adjetival"
+    },
+    "548": {
+        "10": "complemento_predicativo",
+        "11": "cópula"
+    },
+    "549": {
+        "9": "oración_completiva"
+    },
+    "550": {
+        "2": "ablativo_absoluto",
+        "1": "sujeto",
+        "0": "modificador_adjetival"
+    },
+    "551": {
+        "4": "ablativo_absoluto",
+        "2": "sujeto"
+    },
+    "553": {
+        "1": "ablativo_absoluto"
+    },
+    "555": {
+        "3": "ablativo_absoluto",
+        "2": "sujeto"
+    },
+    "558": {
+        "0": "cópula"
+    },
+    "559": {
+        "6": "oración_completiva"
+    },
+    "560": {
+        "3": "cópula"
+    },
+    "561": {
+        "2": "cópula"
+    },
+    "562": {
+        "2": "cópula"
+    },
+    "563": {
+        "2": "cópula",
+        "3": "objeto_indirecto"
+    },
+    "564": {
+        "9": "oración_completiva"
+    },
+    "568": {
+        "1": "sujeto",
+        "3": "complemento_predicativo"
+    },
+    "574": {
+        "2": "cópula"
+    },
+    "575": {
+        "1": "complemento_predicativo",
+        "5": "cópula"
+    },
+    "576": {
+        "5": "predicado",
+        "6": "cópula",
+        "2": "complemento_predicativo",
+        "1": "sujeto",
+        "3": "cópula"
+    },
+    "577": {
+        "5": "complemento_predicativo",
+        "6": "cópula"
+    },
+    "578": {
+        "2": "objeto_directo"
+    },
+    "580": {
+        "3": "predicado",
+        "0": "objeto_directo",
+        "1": "objeto_directo",
+        "10": "complemento_circunstancial"
+    },
+    "581": {
+        "4": "predicado",
+        "0": "modificador_adverbial",
+        "1": "sujeto"
+    }
+}
