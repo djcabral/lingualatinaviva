@@ -809,34 +809,41 @@ if section == "Vocabulario":
     # --- Tab: List ---
     with vocab_tabs[6]:
         st.markdown("### Lista de Vocabulario")
-        with st.spinner("⏳ Cargando vocabulario..."):
-            with get_session() as session:
-                words = session.exec(select(Word)).all()
-                if words:
-                    # Filter
-                    filter_text = st.text_input("🔍 Buscar palabra", "")
-                    filtered_words = [w for w in words if filter_text.lower() in w.latin.lower() or filter_text.lower() in w.translation.lower()] if filter_text else words
-                    
-                    data = []
-                    for w in filtered_words:
-                        data.append({
-                            "ID": w.id,
-                            "Latín": w.latin,
-                            "Traducción": w.translation,
-                            "Tipo": w.part_of_speech,
-                            "Nivel": w.level
-                        })
-                    st.dataframe(
-                        data, 
-                        column_config={
-                            "id": None,
-                            "author_id": None,
-                            "irregular_forms": st.column_config.TextColumn("Irregular", help="Formas irregulares JSON"),
-                        },
-                        width='stretch'
-                    )
-                else:
-                    st.info("No hay palabras.")
+        
+        # Cache words in session state
+        if 'vocab_list_cache' not in st.session_state:
+            with st.spinner("⏳ Cargando vocabulario..."):
+                with get_session() as session:
+                    words = session.exec(select(Word)).all()
+                    st.session_state.vocab_list_cache = words
+        else:
+            words = st.session_state.vocab_list_cache
+        
+        if words:
+            # Filter
+            filter_text = st.text_input("🔍 Buscar palabra", "")
+            filtered_words = [w for w in words if filter_text.lower() in w.latin.lower() or filter_text.lower() in w.translation.lower()] if filter_text else words
+            
+            data = []
+            for w in filtered_words:
+                data.append({
+                    "ID": w.id,
+                    "Latín": w.latin,
+                    "Traducción": w.translation,
+                    "Tipo": w.part_of_speech,
+                    "Nivel": w.level
+                })
+            st.dataframe(
+                data, 
+                column_config={
+                    "id": None,
+                    "author_id": None,
+                    "irregular_forms": st.column_config.TextColumn("Irregular", help="Formas irregulares JSON"),
+                },
+                width='stretch'
+            )
+        else:
+            st.info("No hay palabras.")
     
     # --- Tab: Help ---
     with vocab_tabs[7]:
@@ -1116,13 +1123,20 @@ elif section == "Textos":
 
     with text_tabs[1]:
         st.markdown("### Textos Existentes")
-        with st.spinner("⏳ Cargando textos..."):
-            with get_session() as session:
-                texts = session.exec(select(Text)).all()
-                for t in texts:
-                    with st.expander(f"{t.title} (Nivel {t.difficulty})"):
-                        st.write(t.content[:200] + "...")
-                        st.caption(f"Autor: {t.author if t.author else 'Desconocido'}")
+        
+        # Cache texts in session state
+        if 'texts_list_cache' not in st.session_state:
+            with st.spinner("⏳ Cargando textos..."):
+                with get_session() as session:
+                    texts = session.exec(select(Text)).all()
+                    st.session_state.texts_list_cache = texts
+        else:
+            texts = st.session_state.texts_list_cache
+        
+        for t in texts:
+            with st.expander(f"{t.title} (Nivel {t.difficulty})"):
+                st.write(t.content[:200] + "...")
+                st.caption(f"Autor: {t.author if t.author else 'Desconocido'}")
 
     # --- Import Tab ---
     with text_tabs[2]:
@@ -1371,96 +1385,101 @@ elif section == "Lecciones":
     with lesson_tabs[1]:
         st.markdown("### Lecciones Existentes")
         
-        with st.spinner("⏳ Cargando lecciones..."):
-            with get_session() as session:
-                lessons = session.exec(
-                    select(Lesson).order_by(Lesson.lesson_number)
-                ).all()
+        # Cache lessons in session state
+        if 'lessons_list_cache' not in st.session_state:
+            with st.spinner("⏳ Cargando lecciones..."):
+                with get_session() as session:
+                    lessons = session.exec(
+                        select(Lesson).order_by(Lesson.lesson_number)
+                    ).all()
+                    st.session_state.lessons_list_cache = lessons
+        else:
+            lessons = st.session_state.lessons_list_cache
+        
+        if not lessons:
+            st.info("📭 No hay lecciones en la base de datos aún. Crea la primera usando la pestaña anterior.")
+        else:
+            st.markdown(f"**Total de lecciones:** {len(lessons)}")
             
-            if not lessons:
-                st.info("📭 No hay lecciones en la base de datos aún. Crea la primera usando la pestaña anterior.")
-            else:
-                st.markdown(f"**Total de lecciones:** {len(lessons)}")
+            # Create DataFrame for display
+            lesson_data = []
+            for lesson in lessons:
+                lesson_data.append({
+                    "Nº": lesson.lesson_number,
+                    "Título": lesson.title,
+                    "Nivel": lesson.level.upper(),
+                    "Publicada": "✅" if lesson.is_published else "❌",
+                    "Creada": lesson.created_at.strftime("%Y-%m-%d") if lesson.created_at else "N/A"
+                })
+            
+            df = pd.DataFrame(lesson_data)
+            st.dataframe(df, width="stretch", hide_index=True)
+            
+            st.markdown("---")
+            st.markdown("### Editar / Eliminar Lección")
+            
+            selected_lesson_num = st.selectbox(
+                "Seleccionar lección",
+                [l.lesson_number for l in lessons],
+                format_func=lambda x: f"Lección {x}: {next(l.title for l in lessons if l.lesson_number == x)}"
+            )
+            
+            selected_lesson = next((l for l in lessons if l.lesson_number == selected_lesson_num), None)
+            
+            if selected_lesson:
+                edit_col, delete_col = st.columns([3, 1])
                 
-                # Create DataFrame for display
-                lesson_data = []
-                for lesson in lessons:
-                    lesson_data.append({
-                        "Nº": lesson.lesson_number,
-                        "Título": lesson.title,
-                        "Nivel": lesson.level.upper(),
-                        "Publicada": "✅" if lesson.is_published else "❌",
-                        "Creada": lesson.created_at.strftime("%Y-%m-%d") if lesson.created_at else "N/A"
-                    })
-                
-                df = pd.DataFrame(lesson_data)
-                st.dataframe(df, width="stretch", hide_index=True)
-                
-                st.markdown("---")
-                st.markdown("### Editar / Eliminar Lección")
-                
-                selected_lesson_num = st.selectbox(
-                    "Seleccionar lección",
-                    [l.lesson_number for l in lessons],
-                    format_func=lambda x: f"Lección {x}: {next(l.title for l in lessons if l.lesson_number == x)}"
-                )
-                
-                selected_lesson = next((l for l in lessons if l.lesson_number == selected_lesson_num), None)
-                
-                if selected_lesson:
-                    edit_col, delete_col = st.columns([3, 1])
-                    
-                    with edit_col:
-                        with st.expander("✏️ Editar Lección", expanded=False):
-                            edit_title = st.text_input("Título", value=selected_lesson.title, key="edit_title")
-                            edit_level = st.selectbox("Nivel", ["basico", "avanzado", "experto"], 
+                with edit_col:
+                    with st.expander("✏️ Editar Lección", expanded=False):
+                        edit_title = st.text_input("Título", value=selected_lesson.title, key="edit_title")
+                        edit_level = st.selectbox("Nivel", ["basico", "avanzado", "experto"], 
                                                      index=["basico", "avanzado", "experto"].index(selected_lesson.level),
                                                      key="edit_level")
-                            edit_content = st.text_area("Contenido", value=selected_lesson.content_markdown, 
-                                                       height=300, key="edit_content")
-                            edit_image = st.text_input("Ruta de Imagen", value=selected_lesson.image_path or "", 
-                                                      key="edit_image")
-                            edit_published = st.checkbox("Publicada", value=selected_lesson.is_published, 
-                                                        key="edit_published")
-                            
-                            if st.button("💾 Guardar Cambios", type="primary", key="save_edit"):
+                        edit_content = st.text_area("Contenido", value=selected_lesson.content_markdown, 
+                                                   height=300, key="edit_content")
+                        edit_image = st.text_input("Ruta de Imagen", value=selected_lesson.image_path or "", 
+                                                  key="edit_image")
+                        edit_published = st.checkbox("Publicada", value=selected_lesson.is_published, 
+                                                    key="edit_published")
+                        
+                        if st.button("💾 Guardar Cambios", type="primary", key="save_edit"):
+                            try:
+                                with get_session() as session:
+                                    lesson_to_update = session.get(Lesson, selected_lesson.id)
+                                    lesson_to_update.title = edit_title
+                                    lesson_to_update.level = edit_level
+                                    lesson_to_update.content_markdown = edit_content
+                                    lesson_to_update.image_path = edit_image if edit_image else None
+                                    lesson_to_update.is_published = edit_published
+                                    from datetime import datetime
+                                    lesson_to_update.updated_at = datetime.utcnow()
+                                    session.commit()
+                                    st.success("✅ Lección actualizada correctamente")
+                                    st.rerun()
+                            except Exception as e:
+                                st.error(f"❌ Error al actualizar: {str(e)}")
+                
+                with delete_col:
+                    with st.expander("🗑️ Eliminar", expanded=False):
+                        st.warning(f"⚠️ **Peligro:** Eliminar Lección {selected_lesson.lesson_number}")
+                        confirm_delete = st.text_input(
+                            "Escribe el número de lección para confirmar",
+                            key="confirm_delete"
+                        )
+                        
+                        if st.button("🗑️ ELIMINAR", type="secondary", key="delete_btn"):
+                            if confirm_delete == str(selected_lesson.lesson_number):
                                 try:
                                     with get_session() as session:
-                                        lesson_to_update = session.get(Lesson, selected_lesson.id)
-                                        lesson_to_update.title = edit_title
-                                        lesson_to_update.level = edit_level
-                                        lesson_to_update.content_markdown = edit_content
-                                        lesson_to_update.image_path = edit_image if edit_image else None
-                                        lesson_to_update.is_published = edit_published
-                                        from datetime import datetime
-                                        lesson_to_update.updated_at = datetime.utcnow()
+                                        lesson_to_delete = session.get(Lesson, selected_lesson.id)
+                                        session.delete(lesson_to_delete)
                                         session.commit()
-                                        st.success("✅ Lección actualizada correctamente")
+                                        st.success("✅ Lección eliminada")
                                         st.rerun()
                                 except Exception as e:
-                                    st.error(f"❌ Error al actualizar: {str(e)}")
-                    
-                    with delete_col:
-                        with st.expander("🗑️ Eliminar", expanded=False):
-                            st.warning(f"⚠️ **Peligro:** Eliminar Lección {selected_lesson.lesson_number}")
-                            confirm_delete = st.text_input(
-                                "Escribe el número de lección para confirmar",
-                                key="confirm_delete"
-                            )
-                            
-                            if st.button("🗑️ ELIMINAR", type="secondary", key="delete_btn"):
-                                if confirm_delete == str(selected_lesson.lesson_number):
-                                    try:
-                                        with get_session() as session:
-                                            lesson_to_delete = session.get(Lesson, selected_lesson.id)
-                                            session.delete(lesson_to_delete)
-                                            session.commit()
-                                            st.success("✅ Lección eliminada")
-                                            st.rerun()
-                                    except Exception as e:
-                                        st.error(f"❌ Error: {str(e)}")
-                                else:
-                                    st.error("❌ Número incorrecto. No se eliminó la lección.")
+                                    st.error(f"❌ Error: {str(e)}")
+                            else:
+                                st.error("❌ Número incorrecto. No se eliminó la lección.")
 
 
 # --- SECTION: EXERCISES ---
@@ -2115,22 +2134,27 @@ elif section == "Usuario":
 elif section == "Estadísticas":
     st.markdown("## 📋 Estadísticas del Corpus")
     
-    with st.spinner("⏳ Calculando estadísticas..."):
-        with get_session() as session:
-            all_words = session.exec(select(Word)).all()
-            texts = session.exec(select(Text)).all()
-            
-            col1, col2, col3 = st.columns(3)
-            col1.metric("Total Palabras", len(all_words))
-            col2.metric("Total Textos", len(texts))
-            
-            # Breakdown
-            pos_counts = {}
-            for w in all_words:
-                pos_counts[w.part_of_speech] = pos_counts.get(w.part_of_speech, 0) + 1
-            
-            st.markdown("### Distribución por Tipo")
-            st.bar_chart(pos_counts)
+    # Cache stats in session state
+    if 'stats_cache' not in st.session_state:
+        with st.spinner("⏳ Calculando estadísticas..."):
+            with get_session() as session:
+                all_words = session.exec(select(Word)).all()
+                texts = session.exec(select(Text)).all()
+                st.session_state.stats_cache = (all_words, texts)
+    else:
+        all_words, texts = st.session_state.stats_cache
+    
+    col1, col2, col3 = st.columns(3)
+    col1.metric("Total Palabras", len(all_words))
+    col2.metric("Total Textos", len(texts))
+    
+    # Breakdown
+    pos_counts = {}
+    for w in all_words:
+        pos_counts[w.part_of_speech] = pos_counts.get(w.part_of_speech, 0) + 1
+    
+    st.markdown("### Distribución por Tipo")
+    st.bar_chart(pos_counts)
 
 
 # --- SECTION: REQUISITOS DE LECCIÓN ---
@@ -2149,19 +2173,25 @@ if section == "Requisitos de Lección":
         format_func=lambda x: f"Lección {x}"
     )
     
-    with get_session() as session:
-        # Obtener requisitos existentes para esta lección
+    # Cache requirements in session state
+    cache_key = f'requirements_lesson_{lesson_number}'
+    if cache_key not in st.session_state:
         with st.spinner("⏳ Cargando requisitos..."):
-            requirements = session.exec(
-                select(LessonRequirement)
-                .where(LessonRequirement.lesson_number == lesson_number)
-                .order_by(LessonRequirement.id)
-            ).all()
-        
-        st.markdown(f"### Requisitos para Lección {lesson_number}")
-        
-        if requirements:
-            # Mostrar requisitos existentes
+            with get_session() as session:
+                requirements = session.exec(
+                    select(LessonRequirement)
+                    .where(LessonRequirement.lesson_number == lesson_number)
+                    .order_by(LessonRequirement.id)
+                ).all()
+                st.session_state[cache_key] = requirements
+    else:
+        requirements = st.session_state[cache_key]
+    
+    st.markdown(f"### Requisitos para Lección {lesson_number}")
+    
+    if requirements:
+        # Mostrar requisitos existentes
+        with get_session() as session:
             for req in requirements:
                 with st.expander(
                     f"{'✅ ' if req.is_required else '⭐ '}{req.description or req.requirement_type}",
@@ -2256,9 +2286,9 @@ if section == "Requisitos de Lección":
             col1.metric("Requisitos Obligatorios", required_count)
             col2.metric("Requisitos Opcionales", optional_count)
             col3.metric("Peso Total", f"{total_weight:.1f}")
-        
-        else:
-            st.warning(f"No hay requisitos definidos para la Lección {lesson_number}")
+    
+    else:
+        st.warning(f"No hay requisitos definidos para la Lección {lesson_number}")
         
         # Formulario para agregar nuevo requisito
         st.markdown("---")
