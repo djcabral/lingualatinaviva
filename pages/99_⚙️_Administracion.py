@@ -1491,6 +1491,8 @@ elif section == "Ejercicios":
                     
                     st.success(f"✅ Archivo guardado como: {filename}")
                     st.balloons()
+        except json.JSONDecodeError:
+            st.error("❌ El archivo no es un JSON válido")
                     
     st.markdown("---")
     st.markdown("### 📂 Archivos Existentes")
