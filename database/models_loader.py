@@ -1,5 +1,5 @@
 """
-Database Models Loader with Streamlit Cache Support
+Database Models Loader with Simple Caching
 
 This module provides cached model loading to prevent SQLAlchemy
 'Multiple classes found' errors during Streamlit hot-reloads.
@@ -9,7 +9,6 @@ even when the application code is reloaded.
 """
 
 import logging
-import sys
 
 logger = logging.getLogger(__name__)
 
@@ -54,16 +53,3 @@ def get_models():
     except Exception as e:
         logger.error(f"✗ Failed to import models: {e}")
         raise
-else:
-    # Non-Streamlit fallback
-    _models_cache = None
-    
-    def get_models():
-        """
-        Get database models with manual caching (non-Streamlit version).
-        Returns dict with 'models', 'integration_models', 'syntax_models'.
-        """
-        global _models_cache
-        if _models_cache is None:
-            _models_cache = _import_models_impl()
-        return _models_cache

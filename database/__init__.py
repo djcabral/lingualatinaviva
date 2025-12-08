@@ -16,55 +16,59 @@ CRITICAL: This ensures models are only registered once in SQLAlchemy's global re
 """
 
 import logging
+import sys
 
 logger = logging.getLogger(__name__)
 
 logger.debug("Initializing database package...")
 
-# CRITICAL: Use cached loader to prevent duplicate model registration
-from database.models_loader import get_models
+# Check if models are already loaded to prevent re-registration
+if 'database.models' not in sys.modules:
+    # Import models directly (only happens once)
+    from database import models
+    from database import integration_models
+    from database import syntax_models
+else:
+    # Models already imported, get references
+    models = sys.modules['database.models']
+    integration_models = sys.modules['database.integration_models']
+    syntax_models = sys.modules['database.syntax_models']
 
-# Get models from cache (will only import once per session)
-_models_dict = get_models()
-models_module = _models_dict['models']
-integration_models_module = _models_dict['integration_models']
-syntax_models_module = _models_dict['syntax_models']
-
-# Re-export core models from cached modules
-Word = models_module.Word
-Author = models_module.Author
-ReviewLog = models_module.ReviewLog
-UserProfile = models_module.UserProfile
-Text = models_module.Text
-TextWordLink = models_module.TextWordLink
-WordFrequency = models_module.WordFrequency
-SyntaxPattern = models_module.SyntaxPattern
-InflectedForm = models_module.InflectedForm
-Challenge = models_module.Challenge
-UserChallengeProgress = models_module.UserChallengeProgress
-Lesson = models_module.Lesson
-Feedback = models_module.Feedback
-SystemSetting = models_module.SystemSetting
+# Re-export core models
+Word = models.Word
+Author = models.Author
+ReviewLog = models.ReviewLog
+UserProfile = models.UserProfile
+Text = models.Text
+TextWordLink = models.TextWordLink
+WordFrequency = models.WordFrequency
+SyntaxPattern = models.SyntaxPattern
+InflectedForm = models.InflectedForm
+Challenge = models.Challenge
+UserChallengeProgress = models.UserChallengeProgress
+Lesson = models.Lesson
+Feedback = models.Feedback
+SystemSetting = models.SystemSetting
 
 # Integration models (learning progress system)
-LessonProgress = integration_models_module.LessonProgress
-LessonVocabulary = integration_models_module.LessonVocabulary
-UserVocabularyProgress = integration_models_module.UserVocabularyProgress
-ExerciseAttempt = integration_models_module.ExerciseAttempt
-ReadingProgress = integration_models_module.ReadingProgress
-SyntaxAnalysisProgress = integration_models_module.SyntaxAnalysisProgress
-UserProgressSummary = integration_models_module.UserProgressSummary
-UnlockCondition = integration_models_module.UnlockCondition
-Recommendation = integration_models_module.Recommendation
-LessonRequirement = integration_models_module.LessonRequirement
-UserLessonProgress = integration_models_module.UserLessonProgress
+LessonProgress = integration_models.LessonProgress
+LessonVocabulary = integration_models.LessonVocabulary
+UserVocabularyProgress = integration_models.UserVocabularyProgress
+ExerciseAttempt = integration_models.ExerciseAttempt
+ReadingProgress = integration_models.ReadingProgress
+SyntaxAnalysisProgress = integration_models.SyntaxAnalysisProgress
+UserProgressSummary = integration_models.UserProgressSummary
+UnlockCondition = integration_models.UnlockCondition
+Recommendation = integration_models.Recommendation
+LessonRequirement = integration_models.LessonRequirement
+UserLessonProgress = integration_models.UserLessonProgress
 
 # Syntax analysis models
-SentenceAnalysis = syntax_models_module.SentenceAnalysis
-SyntaxCategory = syntax_models_module.SyntaxCategory
-SentenceCategoryLink = syntax_models_module.SentenceCategoryLink
-TokenAnnotation = syntax_models_module.TokenAnnotation
-SentenceStructure = syntax_models_module.SentenceStructure
+SentenceAnalysis = syntax_models.SentenceAnalysis
+SyntaxCategory = syntax_models.SyntaxCategory
+SentenceCategoryLink = syntax_models.SentenceCategoryLink
+TokenAnnotation = syntax_models.TokenAnnotation
+SentenceStructure = syntax_models.SentenceStructure
 
 # Connection utilities
 from database.connection import (

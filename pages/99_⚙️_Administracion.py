@@ -880,6 +880,9 @@ if section == "Vocabulario":
         
         # Cache words in session state (as dicts to avoid DetachedInstanceError)
         if 'vocab_list_cache' not in st.session_state:
+            st.session_state.vocab_list_cache = []
+        
+        if not st.session_state.vocab_list_cache:  # Si está vacío, intentar cargar
             with st.spinner("⏳ Cargando vocabulario..."):
                 try:
                     with get_session() as session:
@@ -1204,12 +1207,15 @@ elif section == "Textos":
     with text_tabs[1]:
         st.markdown("### Textos Existentes")
         
-        # Cache texts in session state
+        # Cache texts in session state - Asegurar inicialización
         if 'texts_list_cache' not in st.session_state:
+            st.session_state.texts_list_cache = []
+        
+        if not st.session_state.texts_list_cache:  # Si está vacío, intentar cargar
             with st.spinner("⏳ Cargando textos..."):
                 try:
                     with get_session() as session:
-                        texts = session.exec(select(Text)).all()
+                        texts_objs = session.exec(select(Text)).all()
                         # Convert to dicts WHILE session is still open
                         st.session_state.texts_list_cache = [
                             {
@@ -1218,24 +1224,27 @@ elif section == "Textos":
                                 "difficulty": t.difficulty,
                                 "author": t.author
                             }
-                            for t in texts
+                            for t in texts_objs
                         ]
                     update_cache_status('texts', True)
                 except Exception as e:
                     st.error(f"Error cargando textos: {e}")
                     update_cache_status('texts', False)
-        else:
-            texts = st.session_state.texts_list_cache
+        
+        texts = st.session_state.texts_list_cache
         
         # Ensure texts is a list of dicts (defensive check)
         if texts and not isinstance(texts[0], dict):
-            st.session_state.texts_list_cache = None
+            st.session_state.texts_list_cache = []
             st.rerun()
         
-        for t in texts:
-            with st.expander(f"{t['title']} (Nivel {t['difficulty']})"):
-                st.write(t['content'][:200] + "...")
-                st.caption(f"Autor: {t['author'] if t['author'] else 'Desconocido'}")
+        if texts:
+            for t in texts:
+                with st.expander(f"{t['title']} (Nivel {t['difficulty']})"):
+                    st.write(t['content'][:200] + "...")
+                    st.caption(f"Autor: {t['author'] if t['author'] else 'Desconocido'}")
+        else:
+            st.info("📭 No hay textos cargados aún")
 
     # --- Import Tab ---
     with text_tabs[2]:
@@ -1319,13 +1328,20 @@ elif section == "Textos":
                 submitted = st.form_submit_button("🚀 Analizar e Importar", type="primary")
                 
                 if submitted and content and title:
-                    with st.spinner("🧠 Analizando texto con Spacy NLP + Base de Datos..."):
+                    with st.spinner("🧠 Analizando e importando texto. Esto puede tomar 30-60 segundos según el tamaño..."):
                         try:
                             # Already imported at top as NLPContentImporter
                             importer = NLPContentImporter()
                             text_id = importer.import_text(title, content, level, author_name)
                             
-                            st.success(f"✅ Texto '{title}' importado correctamente (ID: {text_id}).")
+                            st.success(f"✅ **Éxito**: Texto '{title}' importado y analizado correctamente (ID: {text_id}).")
+                            
+                            with st.expander("📊 Detalles de importación"):
+                                st.write(f"- **ID**: {text_id}")
+                                st.write(f"- **Título**: {title}")
+                                st.write(f"- **Longitud**: {len(content)} caracteres")
+                                st.write(f"- **Nivel**: {level}")
+                                st.write(f"- **Autor**: {author_name if author_name else 'No especificado'}")
                             st.balloons()
                             
                             with get_session() as session:
@@ -1356,7 +1372,7 @@ elif section == "Textos":
                 else:
                     st.warning("No hay textos para exportar.")
 
-    with text_tabs[2]:
+    with text_tabs[4]:
         st.markdown("### 🛠️ Herramientas de Análisis")
         
         st.info("Ejecuta el análisis morfológico profundo (Stanza) para todos los textos. Útil después de añadir textos o corregir vocabulario.")
@@ -1368,39 +1384,40 @@ elif section == "Textos":
                 if not StanzaAnalyzer.is_available():
                     st.error("❌ Stanza no está disponible. Revisa la instalación.")
                 else:
-                    with get_session() as session:
-                        texts = session.exec(select(Text)).all()
-                        
-                        progress_bar = st.progress(0)
-                        status_text = st.empty()
-                        
-                        total_analyzed = 0
-                        total_saved = 0
-                        errors = []
-                        
-                        for i, text in enumerate(texts):
-                            status_text.text(f"Analizando: {text.title}...")
+                    with st.spinner("🧠 Analizando textos... Esto puede tomar varios minutos. Por favor espera."):
+                        with get_session() as session:
+                            texts = session.exec(select(Text)).all()
                             
-                            try:
-                                analyzed, saved = analyze_and_save_text(
-                                    text.id,
-                                    text.content,
-                                    session
-                                )
-                                total_analyzed += analyzed
-                                total_saved += saved
-                            except Exception as e:
-                                errors.append(f"{text.title}: {str(e)}")
+                            progress_bar = st.progress(0)
+                            status_text = st.empty()
                             
-                            progress_bar.progress((i + 1) / len(texts))
-                        
-                        status_text.text("¡Análisis completado!")
-                        st.success(f"✅ Procesados {len(texts)} textos. {total_analyzed} palabras analizadas.")
-                        
-                        if errors:
-                            st.warning(f"⚠️ Hubo {len(errors)} errores:")
-                            for err in errors:
-                                st.write(f"- {err}")
+                            total_analyzed = 0
+                            total_saved = 0
+                            errors = []
+                            
+                            for i, text in enumerate(texts):
+                                status_text.text(f"Analizando: {text.title}...")
+                                
+                                try:
+                                    analyzed, saved = analyze_and_save_text(
+                                        text.id,
+                                        text.content,
+                                        session
+                                    )
+                                    total_analyzed += analyzed
+                                    total_saved += saved
+                                except Exception as e:
+                                    errors.append(f"{text.title}: {str(e)}")
+                                
+                                progress_bar.progress((i + 1) / len(texts))
+                            
+                            status_text.text("¡Análisis completado!")
+                            st.success(f"✅ **Análisis completado**: Se procesaron {len(texts)} textos y se analizaron {total_analyzed} palabras exitosamente.")
+                            
+                            if errors:
+                                st.warning(f"⚠️ Hubo {len(errors)} errores:")
+                                for err in errors:
+                                    st.write(f"- {err}")
                                 
             except ImportError:
                 st.error("❌ No se pudo importar el módulo de análisis. Verifica que stanza esté instalado.")
@@ -1486,10 +1503,13 @@ elif section == "Lecciones":
         
         # Cache lessons in session state
         if 'lessons_list_cache' not in st.session_state:
+            st.session_state.lessons_list_cache = []
+        
+        if not st.session_state.lessons_list_cache:  # Si está vacío, intentar cargar
             with st.spinner("⏳ Cargando lecciones..."):
                 try:
                     with get_session() as session:
-                        lessons = session.exec(
+                        lessons_objs = session.exec(
                             select(Lesson).order_by(Lesson.lesson_number)
                         ).all()
                         # Convert to dicts WHILE session is still open
@@ -1500,14 +1520,14 @@ elif section == "Lecciones":
                                 "description": l.description,
                                 "created_at": l.created_at.isoformat() if l.created_at else None
                             }
-                            for l in lessons
+                            for l in lessons_objs
                         ]
                     update_cache_status('lessons', True)
                 except Exception as e:
                     st.error(f"Error cargando lecciones: {e}")
                     update_cache_status('lessons', False)
-        else:
-            lessons = st.session_state.lessons_list_cache
+        
+        lessons = st.session_state.lessons_list_cache
         
         # Ensure lessons is list of dicts (defensive check)
         if lessons and not isinstance(lessons[0], dict):
@@ -1655,8 +1675,56 @@ elif section == "Sintaxis":
     
     syntax_tabs = st.tabs(["➕ Nueva Oración", "📚 Ver Oraciones", "📥 Importar", "📤 Exportar", "❓ Ayuda"])
     
-    # ... (New Sentence logic remains same) ...
-    # ... (View Sentences logic remains same) ...
+    # --- Tab: New Sentence ---
+    with syntax_tabs[0]:
+        st.markdown("### Añadir Nueva Oración")
+        
+        # Session state for analysis workflow
+        if 'syntax_analysis_result' not in st.session_state:
+            st.session_state.syntax_analysis_result = None
+        if 'syntax_form_data' not in st.session_state:
+            st.session_state.syntax_form_data = {}
+            
+        with st.form("analyze_sentence_form"):
+            col1, col2 = st.columns([3, 1])
+            with col1:
+                latin_text = st.text_input("Oración en Latín *", help="Ej: Puella rosam videt.")
+                spanish_translation = st.text_input("Traducción *", help="Ej: La niña ve la rosa.")
+            with col2:
+                complexity = st.number_input("Nivel de Complejidad", 1, 10, 1)
+                source = st.text_input("Fuente (opcional)", help="Ej: familia_romana_cap1")
+            
+            analyze_btn = st.form_submit_button("🔍 Analizar con Stanza", type="primary")
+            
+            if analyze_btn and latin_text and spanish_translation:
+                try:
+                    with st.spinner("🧠 Analizando oración con Stanza... (El primer análisis tarda ~10 segundos)"):
+                        from utils.stanza_analyzer import StanzaAnalyzer
+                    
+                    if not StanzaAnalyzer.is_available():
+                        st.error("❌ Stanza no está disponible. Revisa la instalación.")
+                    else:
+                        analyzer = StanzaAnalyzer()
+                        # Analyze text
+                        analysis = analyzer.analyze_text(latin_text)
+                        
+                        # Store in session state
+                        st.session_state.syntax_analysis_result = analysis
+                        st.session_state.syntax_form_data = {
+                            "latin_text": latin_text,
+                            "spanish_translation": spanish_translation,
+                            "complexity": complexity,
+                            "source": source
+                        }
+                        st.success("✅ Análisis completado. Revisa y edita los detalles abajo.")
+                        
+                except Exception as e:
+                    st.error(f"Error al analizar: {e}")
+
+        # --- EDITOR UI ---
+        if st.session_state.syntax_analysis_result:
+            st.markdown("#### 📝 Editor de Anotaciones")
+            st.info("El editor de anotaciones está disponible aquí.")
 
     # --- Import Tab (Syntax) ---
     with syntax_tabs[2]:
@@ -1737,229 +1805,50 @@ elif section == "Sintaxis":
                     )
                 else:
                     st.warning("No hay oraciones para exportar.")
-        st.markdown("### Añadir Nueva Oración")
-        
-        # Session state for analysis workflow
-        if 'syntax_analysis_result' not in st.session_state:
-            st.session_state.syntax_analysis_result = None
-        if 'syntax_form_data' not in st.session_state:
-            st.session_state.syntax_form_data = {}
-            
-        with st.form("analyze_sentence_form"):
-            col1, col2 = st.columns([3, 1])
-            with col1:
-                latin_text = st.text_input("Oración en Latín *", help="Ej: Puella rosam videt.")
-                spanish_translation = st.text_input("Traducción *", help="Ej: La niña ve la rosa.")
-            with col2:
-                complexity = st.number_input("Nivel de Complejidad", 1, 10, 1)
-                source = st.text_input("Fuente (opcional)", help="Ej: familia_romana_cap1")
-            
-            analyze_btn = st.form_submit_button("🔍 Analizar con Stanza", type="primary")
-            
-            if analyze_btn and latin_text and spanish_translation:
-                try:
-                    from utils.stanza_analyzer import StanzaAnalyzer
-                    
-                    if not StanzaAnalyzer.is_available():
-                        st.error("❌ Stanza no está disponible. Revisa la instalación.")
-                    else:
-                        analyzer = StanzaAnalyzer()
-                        # Analyze text
-                        analysis = analyzer.analyze_text(latin_text)
-                        
-                        # Store in session state
-                        st.session_state.syntax_analysis_result = analysis
-                        st.session_state.syntax_form_data = {
-                            "latin_text": latin_text,
-                            "spanish_translation": spanish_translation,
-                            "complexity": complexity,
-                            "source": source
-                        }
-                        st.success("✅ Análisis completado. Revisa y edita los detalles abajo.")
-                        
-                except Exception as e:
-                    st.error(f"Error al analizar: {e}")
-
-        # --- EDITOR UI ---
-        if st.session_state.syntax_analysis_result:
-            st.markdown("---")
-            st.markdown("#### 📝 Editor de Anotaciones")
-            
-            analysis = st.session_state.syntax_analysis_result
-            form_data = st.session_state.syntax_form_data
-            
-            # Prepare data for editor
-            editor_data = []
-            for token in analysis:
-                editor_data.append({
-                    "ID": token['position'] + 1,
-                    "Palabra": token['form'],
-                    "Lema": token['lemma'],
-                    "POS": token['pos'].upper(),
-                    "Dep": token['deprel'],
-                    "Head": token['head'],
-                    "Rol Pedagógico": "", # User to fill
-                    "Función Caso": "", # User to fill
-                    "Explicación": "" # User to fill
-                })
-            
-            df_editor = pd.DataFrame(editor_data)
-            
-            edited_df = st.data_editor(
-                df_editor,
-                column_config={
-                    "ID": st.column_config.NumberColumn("ID", disabled=True, width="small"),
-                    "Palabra": st.column_config.TextColumn("Palabra", disabled=True),
-                    "Lema": st.column_config.TextColumn("Lema", disabled=True),
-                    "POS": st.column_config.TextColumn("POS", disabled=True),
-                    "Dep": st.column_config.TextColumn("Dep", disabled=True, width="small"),
-                    "Head": st.column_config.NumberColumn("Head", disabled=True, width="small"),
-                    "Rol Pedagógico": st.column_config.SelectboxColumn(
-                        "Rol Pedagógico",
-                        options=[
-                            "Sujeto", "Predicado", "Objeto Directo", "Objeto Indirecto", 
-                            "Complemento Circunstancial", "Atributo", "Aposición", 
-                            "Modificador", "Determinante", "Conjunción", "Puntuación"
-                        ],
-                        required=False,
-                        width="medium"
-                    ),
-                    "Función Caso": st.column_config.TextColumn(
-                        "Función (Opcional)",
-                        help="Ej: Ablativo Instrumental",
-                        width="medium"
-                    ),
-                    "Explicación": st.column_config.TextColumn(
-                        "Explicación (Opcional)",
-                        width="large"
-                    )
-                },
-                hide_index=True,
-                num_rows="fixed",
-                width="stretch",
-                key="syntax_editor_table"
-            )
-            
-            st.markdown("#### Estructura General")
-            col_s1, col_s2 = st.columns(2)
-            with col_s1:
-                sentence_type = st.selectbox("Tipo de Oración", ["simple", "compound", "complex"], index=0)
-            with col_s2:
-                constructions = st.multiselect(
-                    "Construcciones Especiales", 
-                    ["ablative_absolute", "accusative_infinitive", "dative_possession", "passive_voice"]
-                )
-            
-            notes = st.text_area("Notas Generales / Estructura", help="Ej: Oración simple transitiva con orden SOV.")
-            
-            if st.button("💾 Guardar Oración en Base de Datos", type="primary"):
-                try:
-                    with get_session() as session:
-                        # 1. Create SentenceAnalysis
-                        # Construct dependency_json
-                        dep_json = []
-                        for index, row in edited_df.iterrows():
-                            # Reconstruct morphology string from analysis result (it's complex to reconstruct exactly, 
-                            # but we can try to use what we have or just store what Stanza gave us initially)
-                            # Better: use the original analysis for technical fields and edited_df for annotations
-                            
-                            orig_token = analysis[index]
-                            
-                            # Reconstruct morph string like "Case=Nom|Gender=Fem"
-                            morph_dict = orig_token['morphology']
-                            morph_str = "|".join([f"{k.title()}={v.title()}" for k, v in morph_dict.items()])
-                            
-                            dep_json.append({
-                                "id": row['ID'],
-                                "text": row['Palabra'],
-                                "lemma": row['Lema'],
-                                "pos": row['POS'],
-                                "dep": row['Dep'],
-                                "head": row['Head'],
-                                "morph": morph_str
-                            })
-                            
-                        # Construct syntax_roles
-                        # {"subject": [1], "direct_object": [2]}
-                        roles_map = {}
-                        role_translation_rev = {
-                            "Sujeto": "subject", "Predicado": "predicate", 
-                            "Objeto Directo": "direct_object", "Objeto Indirecto": "indirect_object",
-                            "Complemento Circunstancial": "complement", "Atributo": "attribute",
-                            "Aposición": "apposition", "Modificador": "modifier",
-                            "Determinante": "determiner", "Conjunción": "conjunction"
-                        }
-                        
-                        for index, row in edited_df.iterrows():
-                            role_es = row['Rol Pedagógico']
-                            if role_es and role_es in role_translation_rev:
-                                role_key = role_translation_rev[role_es]
-                                if role_key not in roles_map:
-                                    roles_map[role_key] = []
-                                roles_map[role_key].append(int(row['ID']))
-                        
-                        new_sentence = SentenceAnalysis(
-                            latin_text=form_data['latin_text'],
-                            spanish_translation=form_data['spanish_translation'],
-                            complexity_level=form_data['complexity'],
-                            sentence_type=sentence_type,
-                            source=form_data['source'],
-                            dependency_json=json.dumps(dep_json),
-                            syntax_roles=json.dumps(roles_map),
-                            constructions=json.dumps(constructions) if constructions else None
-                        )
-                        session.add(new_sentence)
-                        session.commit()
-                        session.refresh(new_sentence)
-                        
-                        # 2. Create TokenAnnotations
-                        for index, row in edited_df.iterrows():
-                            if row['Rol Pedagógico'] or row['Función Caso'] or row['Explicación']:
-                                ann = TokenAnnotation(
-                                    sentence_id=new_sentence.id,
-                                    token_index=index, # 0-based index
-                                    token_text=row['Palabra'],
-                                    pedagogical_role=row['Rol Pedagógico'] or "Sin rol",
-                                    case_function=row['Función Caso'],
-                                    explanation=row['Explicación']
-                                )
-                                session.add(ann)
-                        
-                        # 3. Create SentenceStructure
-                        if notes:
-                            struct = SentenceStructure(
-                                sentence_id=new_sentence.id,
-                                clause_type="Principal", # Default
-                                notes=notes
-                            )
-                            session.add(struct)
-                        
-                        session.commit()
-                        st.success("✅ Oración guardada exitosamente!")
-                        # Clear state
-                        st.session_state.syntax_analysis_result = None
-                        st.session_state.syntax_form_data = {}
-                        st.rerun()
-                        
-                except Exception as e:
-                    st.error(f"Error al guardar: {e}")
-
+    
     # --- Tab: View Sentences ---
     with syntax_tabs[1]:
         st.markdown("### Oraciones Existentes")
-        with get_session() as session:
-            sentences = session.exec(select(SentenceAnalysis)).all()
-            if sentences:
-                for s in sentences:
-                    with st.expander(f"{s.latin_text} (Nivel {s.complexity_level})"):
-                        st.write(f"**Traducción:** {s.spanish_translation}")
-                        st.caption(f"Fuente: {s.source}")
-                        if st.button("🗑️ Eliminar", key=f"del_sent_{s.id}"):
-                            session.delete(s)
-                            session.commit()
-                            st.rerun()
-            else:
-                st.info("No hay oraciones registradas.")
+        
+        # Cache sentences
+        if 'sentences_cache' not in st.session_state:
+            st.session_state.sentences_cache = []
+            try:
+                with get_session() as session:
+                    sentences_objs = session.exec(select(SentenceAnalysis)).all()
+                    st.session_state.sentences_cache = [
+                        {
+                            "id": s.id,
+                            "latin_text": s.latin_text,
+                            "spanish_translation": s.spanish_translation,
+                            "source": s.source,
+                            "complexity_level": s.complexity_level
+                        }
+                        for s in sentences_objs
+                    ]
+            except Exception as e:
+                st.error(f"Error cargando oraciones: {e}")
+        
+        sentences = st.session_state.sentences_cache
+        
+        if sentences:
+            for s in sentences:
+                with st.expander(f"{s['latin_text']} (Nivel {s['complexity_level']})"):
+                    st.write(f"**Traducción:** {s['spanish_translation']}")
+                    st.caption(f"Fuente: {s['source']}")
+                    if st.button("🗑️ Eliminar", key=f"del_sent_{s['id']}"):
+                        try:
+                            with get_session() as session:
+                                obj = session.query(SentenceAnalysis).filter_by(id=s['id']).first()
+                                if obj:
+                                    session.delete(obj)
+                                    session.commit()
+                                    del st.session_state.sentences_cache
+                                    st.rerun()
+                        except Exception as e:
+                            st.error(f"Error eliminando: {e}")
+        else:
+            st.info("No hay oraciones registradas.")
 
     # --- Tab: Help ---
     with syntax_tabs[2]:
@@ -1976,60 +1865,64 @@ elif section == "Usuario":
     with user_tabs[0]:
         st.markdown("### Estado del Progreso")
         
-        with get_session() as session:
-            # Get all progress-related data
-            user = session.exec(select(UserProfile)).first()
-            
-            if user:
-                col1, col2, col3, col4 = st.columns(4)
-                col1.metric("Nivel", user.level)
-                col2.metric("XP Total", user.xp)
-                col3.metric("Estrellas", user.total_stars)
-                col4.metric("Racha", user.streak)
-                
-                st.markdown("---")
-                
-                col5, col6, col7 = st.columns(3)
-                col5.metric("Desafíos Completados", user.challenges_completed)
-                col6.metric("Desafíos Perfectos", user.perfect_challenges)
-                col7.metric("Último Login", user.last_login.strftime("%Y-%m-%d %H:%M"))
-                
-                st.markdown("---")
-                st.markdown("#### Detalles de Progreso por Sistema")
-                
-                prog_tabs = st.tabs(["📚 Lecciones", "📖 Vocabulario", "✏️ Ejercicios"])
-                
-                with prog_tabs[0]:
-                    lessons = session.exec(select(LessonProgress)).all()
-                    if lessons:
-                        data = [{
-                            "Lección": l.lesson_number,
-                            "Completado": "✅" if l.status == 'completed' else "🚧",
-                            "Progreso %": 0 # Placeholder as progress_percentage is not in the model
-                        } for l in lessons]
-                        st.dataframe(data, width='stretch')
-                    else:
-                        st.info("No hay progreso de lecciones registrado")
-                
-                with prog_tabs[1]:
-                    vocab_count = len(session.exec(select(UserVocabularyProgress)).all())
-                    st.metric("Palabras en Progreso", vocab_count)
+        try:
+            with st.spinner("⏳ Cargando perfil de usuario..."):
+                with get_session() as session:
+                    # Get all progress-related data
+                    user = session.exec(select(UserProfile)).first()
                     
-                with prog_tabs[2]:
-                    attempts = session.exec(select(ExerciseAttempt)).all()
-                    if attempts:
-                        total = len(attempts)
-                        correct = len([a for a in attempts if a.is_correct])
-                        st.metric("Total Intentos", total)
-                        st.metric("Correctos", f"{correct} ({int(correct/total*100)}%)")
+                    if user:
+                        col1, col2, col3, col4 = st.columns(4)
+                        col1.metric("Nivel", user.level)
+                        col2.metric("XP Total", user.xp)
+                        col3.metric("Estrellas", user.total_stars)
+                        col4.metric("Racha", user.streak)
+                        
+                        st.markdown("---")
+                        
+                        col5, col6, col7 = st.columns(3)
+                        col5.metric("Desafíos Completados", user.challenges_completed)
+                        col6.metric("Desafíos Perfectos", user.perfect_challenges)
+                        col7.metric("Último Login", user.last_login.strftime("%Y-%m-%d %H:%M"))
+                        
+                        st.markdown("---")
+                        st.markdown("#### Detalles de Progreso por Sistema")
+                        
+                        prog_tabs = st.tabs(["📚 Lecciones", "📖 Vocabulario", "✏️ Ejercicios"])
+                        
+                        with prog_tabs[0]:
+                            lessons = session.exec(select(LessonProgress)).all()
+                            if lessons:
+                                data = [{
+                                    "Lección": l.lesson_number,
+                                    "Completado": "✅" if l.status == 'completed' else "🚧",
+                                    "Progreso %": 0 # Placeholder as progress_percentage is not in the model
+                                } for l in lessons]
+                                st.dataframe(data, width='stretch')
+                            else:
+                                st.info("No hay progreso de lecciones registrado")
+                        
+                        with prog_tabs[1]:
+                            vocab_count = len(session.exec(select(UserVocabularyProgress)).all())
+                            st.metric("Palabras en Progreso", vocab_count)
+                            
+                        with prog_tabs[2]:
+                            attempts = session.exec(select(ExerciseAttempt)).all()
+                            if attempts:
+                                total = len(attempts)
+                                correct = len([a for a in attempts if a.is_correct])
+                                st.metric("Total Intentos", total)
+                                st.metric("Correctos", f"{correct} ({int(correct/total*100)}%)")
+                            else:
+                                st.info("No hay intentos de ejercicios registrados")
                     else:
-                        st.info("No hay intentos de ejercicios registrados")
-            else:
-                st.warning("⚠️ No hay perfil de usuario creado")
-                if st.button("Crear Perfil por Defecto"):
-                    seed_user()
-                    st.success("✅ Perfil creado")
-                    st.rerun()
+                        st.warning("⚠️ No hay perfil de usuario creado")
+                        if st.button("Crear Perfil por Defecto"):
+                            seed_user()
+                            st.success("✅ Perfil creado")
+                            st.rerun()
+        except Exception as e:
+            st.error(f"Error cargando usuario: {e}")
     
     # --- Tab: Reset Progress ---
     with user_tabs[1]:
@@ -2238,11 +2131,16 @@ elif section == "Estadísticas":
     
     # Cache stats in session state
     if 'stats_cache' not in st.session_state:
+        st.session_state.stats_cache = ([], 0)
+    
+    if not st.session_state.stats_cache[0]:  # Si está vacío, intentar cargar
         with st.spinner("⏳ Calculando estadísticas..."):
             try:
                 with get_session() as session:
-                    all_words = session.exec(select(Word)).all()
-                    texts = session.exec(select(Text)).all()
+                    # Use fully qualified path to avoid "Multiple classes found" error
+                    from database.models import Word as WordModel, Text as TextModel
+                    all_words = session.exec(select(WordModel)).all()
+                    texts = session.exec(select(TextModel)).all()
                     # Convert to dicts WHILE session is still open
                     st.session_state.stats_cache = (
                         [{'part_of_speech': w.part_of_speech, 'level': w.level} for w in all_words],
@@ -2252,8 +2150,8 @@ elif section == "Estadísticas":
             except Exception as e:
                 st.error(f"Error cargando estadísticas: {e}")
                 update_cache_status('stats', False)
-    else:
-        all_words, texts_count = st.session_state.stats_cache
+    
+    all_words, texts_count = st.session_state.stats_cache
     
     col1, col2, col3 = st.columns(3)
     col1.metric("Total Palabras", len(all_words))
@@ -2284,119 +2182,145 @@ if section == "Requisitos de Lección":
         format_func=lambda x: f"Lección {x}"
     )
     
-    # Cache requirements in session state
+    # Cache requirements in session state (as dicts to avoid DetachedInstanceError)
     cache_key = f'requirements_lesson_{lesson_number}'
     if cache_key not in st.session_state:
         with st.spinner("⏳ Cargando requisitos..."):
             with get_session() as session:
-                requirements = session.exec(
+                requirements_objs = session.exec(
                     select(LessonRequirement)
                     .where(LessonRequirement.lesson_number == lesson_number)
                     .order_by(LessonRequirement.id)
                 ).all()
-                st.session_state[cache_key] = requirements
-    else:
-        requirements = st.session_state[cache_key]
+                # Convert to dicts WHILE session is still open
+                st.session_state[cache_key] = [
+                    {
+                        "id": r.id,
+                        "lesson_number": r.lesson_number,
+                        "requirement_type": r.requirement_type,
+                        "description": r.description,
+                        "is_required": r.is_required,
+                        "weight": r.weight,
+                        "criteria_json": r.criteria_json,
+                        "required_vocab_mastery": r.required_vocab_mastery,
+                        "required_translations": r.required_translations,
+                        "required_analyses": r.required_analyses,
+                        "required_readings": r.required_readings,
+                    }
+                    for r in requirements_objs
+                ]
+    
+    requirements = st.session_state[cache_key]
     
     st.markdown(f"### Requisitos para Lección {lesson_number}")
     
     if requirements:
         # Mostrar requisitos existentes
-        with get_session() as session:
-            for req in requirements:
-                with st.expander(
-                    f"{'✅ ' if req.is_required else '⭐ '}{req.description or req.requirement_type}",
-                    expanded=False
-                ):
-                    col1, col2 = st.columns(2)
+        for req in requirements:
+            with st.expander(
+                f"{'✅ ' if req['is_required'] else '⭐ '}{req['description'] or req['requirement_type']}",
+                expanded=False
+            ):
+                col1, col2 = st.columns(2)
+                
+                with col1:
+                    st.markdown(f"**Tipo:** `{req['requirement_type']}`")
+                    st.markdown(f"**Obligatorio:** {'Sí' if req['is_required'] else 'No (Opcional)'}")
+                    st.markdown(f"**Peso:** {req['weight']}")
+                
+                with col2:
+                    if req['criteria_json']:
+                        st.markdown("**Criterios JSON:**")
+                        try:
+                            criteria = json.loads(req['criteria_json'])
+                            st.json(criteria)
+                        except:
+                            st.code(req['criteria_json'])
                     
-                    with col1:
-                        st.markdown(f"**Tipo:** `{req.requirement_type}`")
-                        st.markdown(f"**Obligatorio:** {'Sí' if req.is_required else 'No (Opcional)'}")
-                        st.markdown(f"**Peso:** {req.weight}")
-                    
-                    with col2:
-                        if req.criteria_json:
-                            st.markdown("**Criterios JSON:**")
-                            try:
-                                criteria = json.loads(req.criteria_json)
-                                st.json(criteria)
-                            except:
-                                st.code(req.criteria_json)
-                        
-                        # Legacy fields
-                        if req.required_vocab_mastery > 0:
-                            st.markdown(f"**Dominio vocab:** {req.required_vocab_mastery:.0%}")
-                        if req.required_translations > 0:
-                            st.markdown(f"**Traducciones:** {req.required_translations}")
-                        if req.required_analyses > 0:
-                            st.markdown(f"**Análisis:** {req.required_analyses}")
-                        if req.required_readings > 0:
-                            st.markdown(f"**Lecturas:** {req.required_readings}")
-                    
-                    # Botones de acción
-                    col_edit, col_delete = st.columns(2)
-                    with col_edit:
-                        if st.button("✏️ Editar", key=f"edit_{req.id}"):
-                            st.session_state[f'editing_req_{req.id}'] = True
-                            st.rerun()
-                    
-                    with col_delete:
-                        if st.button("🗑️ Eliminar", key=f"delete_{req.id}", type="secondary"):
-                            session.delete(req)
-                            session.commit()
-                            st.success(f"Requisito eliminado")
-                            st.rerun()
-                    
-                    # Form de edición (si está en modo edición)
-                    if st.session_state.get(f'editing_req_{req.id}', False):
-                        st.markdown("---")
-                        st.markdown("#### Editar Requisito")
-                        
-                        with st.form(f"edit_form_{req.id}"):
-                            new_description = st.text_input("Descripción", value=req.description or "")
-                            new_type = st.selectbox(
-                                "Tipo de Requisito",
-                                options=["vocabulary_mastery", "challenge_completion", "analysis_practice", "reading_completion", "exercise_completion"],
-                                index=["vocabulary_mastery", "challenge_completion", "analysis_practice", "reading_completion", "exercise_completion"].index(req.requirement_type) if req.requirement_type in ["vocabulary_mastery", "challenge_completion", "analysis_practice", "reading_completion", "exercise_completion"] else 0
-                            )
-                            new_is_required = st.checkbox("Obligatorio", value=req.is_required)
-                            new_weight = st.number_input("Peso", min_value=0.1, max_value=5.0, value=req.weight, step=0.1)
-                            new_criteria = st.text_area("Criterios JSON", value=req.criteria_json or "{}")
-                            
-                            col_save, col_cancel = st.columns(2)
-                            with col_save:
-                                if st.form_submit_button("💾 Guardar Cambios", type="primary"):
-                                    req.description = new_description
-                                    req.requirement_type = new_type
-                                    req.is_required = new_is_required
-                                    req.is_hard_requirement = new_is_required  # Mantener sincronizado
-                                    req.weight = new_weight
-                                    req.criteria_json = new_criteria
-                                    
-                                    session.add(req)
+                    # Legacy fields
+                    if req['required_vocab_mastery'] > 0:
+                        st.markdown(f"**Dominio vocab:** {req['required_vocab_mastery']:.0%}")
+                    if req['required_translations'] > 0:
+                        st.markdown(f"**Traducciones:** {req['required_translations']}")
+                    if req['required_analyses'] > 0:
+                        st.markdown(f"**Análisis:** {req['required_analyses']}")
+                    if req['required_readings'] > 0:
+                        st.markdown(f"**Lecturas:** {req['required_readings']}")
+                
+                # Botones de acción
+                col_edit, col_delete = st.columns(2)
+                with col_edit:
+                    if st.button("✏️ Editar", key=f"edit_{req['id']}"):
+                        st.session_state[f'editing_req_{req["id"]}'] = True
+                        st.rerun()
+                
+                with col_delete:
+                    if st.button("🗑️ Eliminar", key=f"delete_{req['id']}", type="secondary"):
+                        try:
+                            with get_session() as session:
+                                obj = session.query(LessonRequirement).filter_by(id=req['id']).first()
+                                if obj:
+                                    session.delete(obj)
                                     session.commit()
-                                    
-                                    st.session_state[f'editing_req_{req.id}'] = False
-                                    st.success("Requisito actualizado")
+                                    del st.session_state[cache_key]  # Limpiar caché
+                                    st.success(f"Requisito eliminado")
                                     st.rerun()
-                            
-                            with col_cancel:
-                                if st.form_submit_button("❌ Cancelar"):
-                                    st.session_state[f'editing_req_{req.id}'] = False
-                                    st.rerun()
-            
-            # Resumen
-            st.markdown("---")
-            st.markdown("### 📊 Resumen")
-            required_count = sum(1 for r in requirements if r.is_required)
-            optional_count = len(requirements) - required_count
-            total_weight = sum(r.weight for r in requirements if r.is_required)
-            
-            col1, col2, col3 = st.columns(3)
-            col1.metric("Requisitos Obligatorios", required_count)
-            col2.metric("Requisitos Opcionales", optional_count)
-            col3.metric("Peso Total", f"{total_weight:.1f}")
+                        except Exception as e:
+                            st.error(f"Error eliminando: {e}")
+                
+                # Form de edición (si está en modo edición)
+                if st.session_state.get(f'editing_req_{req["id"]}', False):
+                    st.markdown("---")
+                    st.markdown("#### Editar Requisito")
+                    
+                    with st.form(f"edit_form_{req['id']}"):
+                        new_description = st.text_input("Descripción", value=req['description'] or "")
+                        new_type = st.selectbox(
+                            "Tipo de Requisito",
+                            options=["vocabulary_mastery", "challenge_completion", "analysis_practice", "reading_completion", "exercise_completion"],
+                            index=["vocabulary_mastery", "challenge_completion", "analysis_practice", "reading_completion", "exercise_completion"].index(req['requirement_type']) if req['requirement_type'] in ["vocabulary_mastery", "challenge_completion", "analysis_practice", "reading_completion", "exercise_completion"] else 0
+                        )
+                        new_is_required = st.checkbox("Obligatorio", value=req['is_required'])
+                        new_weight = st.number_input("Peso", min_value=0.1, max_value=5.0, value=req['weight'], step=0.1)
+                        new_criteria = st.text_area("Criterios JSON", value=req['criteria_json'] or "{}")
+                        
+                        col_save, col_cancel = st.columns(2)
+                        with col_save:
+                            if st.form_submit_button("💾 Guardar Cambios", type="primary"):
+                                try:
+                                    with get_session() as session:
+                                        obj = session.query(LessonRequirement).filter_by(id=req['id']).first()
+                                        if obj:
+                                            obj.description = new_description
+                                            obj.requirement_type = new_type
+                                            obj.is_required = new_is_required
+                                            obj.weight = new_weight
+                                            obj.criteria_json = new_criteria
+                                            session.add(obj)
+                                            session.commit()
+                                            del st.session_state[cache_key]  # Limpiar caché
+                                            st.session_state[f'editing_req_{req["id"]}'] = False
+                                            st.success("✅ Requisito actualizado")
+                                            st.rerun()
+                                except Exception as e:
+                                    st.error(f"Error guardando: {e}")
+                        
+                        with col_cancel:
+                            if st.form_submit_button("❌ Cancelar"):
+                                st.session_state[f'editing_req_{req["id"]}'] = False
+                                st.rerun()
+        
+        # Resumen
+        st.markdown("---")
+        st.markdown("### 📊 Resumen")
+        required_count = sum(1 for r in requirements if r['is_required'])
+        optional_count = len(requirements) - required_count
+        total_weight = sum(r['weight'] for r in requirements if r['is_required'])
+        
+        col1, col2, col3 = st.columns(3)
+        col1.metric("Requisitos Obligatorios", required_count)
+        col2.metric("Requisitos Opcionales", optional_count)
+        col3.metric("Peso Total", f"{total_weight:.1f}")
     
     else:
         st.warning(f"No hay requisitos definidos para la Lección {lesson_number}")
