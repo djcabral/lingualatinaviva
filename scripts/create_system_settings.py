@@ -7,7 +7,7 @@ from datetime import datetime
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from database.connection import engine, get_session
-from database.models import SystemSetting
+from database import SystemSetting
 
 def create_settings_table():
     print("Creating SystemSetting table...")

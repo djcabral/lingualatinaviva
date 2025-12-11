@@ -12,7 +12,7 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 
 from database.connection import get_session
-from database.models import Text
+from database import Text
 
 def seed_readings():
     """Seed reading texts for all 30 lessons"""

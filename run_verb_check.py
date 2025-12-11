@@ -7,7 +7,7 @@ from sqlmodel import select
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__))))
 
 from database.connection import get_session
-from database.models import Word
+from database import Word
 
 def check_verbs():
     with get_session() as session:

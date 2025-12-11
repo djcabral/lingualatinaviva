@@ -6,7 +6,7 @@ from sqlmodel import select, func
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from database.connection import get_session
-from database.models import Challenge, UserChallengeProgress
+from database import Challenge, UserChallengeProgress
 
 def check_challenges():
     with get_session() as session:

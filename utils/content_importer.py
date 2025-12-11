@@ -5,8 +5,7 @@ from typing import List, Dict, Optional, Tuple
 from sqlmodel import select
 
 from database.connection import get_session
-from database.models import Text, Word, TextWordLink, InflectedForm, Author
-from database import SentenceAnalysis
+from database import Text, Word, TextWordLink, InflectedForm, Author, SentenceAnalysis
 from utils.nlp_engine import nlp_engine, LatinNLP
 from utils.latin_logic import LatinMorphology
 

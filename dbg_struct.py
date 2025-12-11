@@ -6,7 +6,7 @@ from sqlmodel import select
 sys.path.append(os.getcwd())
 
 from database.connection import get_session
-from database.models import Text, TextWordLink
+from database import Text, TextWordLink
 
 def debug_structure(text_id=1):
     with get_session() as session:

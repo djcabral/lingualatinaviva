@@ -6,7 +6,7 @@ from sqlmodel import SQLModel
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from database.connection import engine
-from database.models import Feedback
+from database import Feedback
 
 def create_feedback_table():
     print("Creating Feedback table...")

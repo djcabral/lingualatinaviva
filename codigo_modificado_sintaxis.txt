@@ -1,0 +1,23 @@
+
+# Código original (líneas 1716-1725):
+
+            if analyze_btn and latin_text and spanish_translation:
+                try:
+                    with st.spinner("🧠 Analizando oración con Stanza... (El primer análisis tarda ~10 segundos)"):
+                        from utils.stanza_analyzer import StanzaAnalyzer
+
+                    if not StanzaAnalyzer.is_available():
+                        st.error("❌ Stanza no está disponible. Revisa la instalación.")
+                    else:
+                        analyzer = StanzaAnalyzer()
+
+# Código modificado (reemplazar las líneas anteriores por este):
+
+            if analyze_btn and latin_text and spanish_translation:
+                try:
+                    # Inicializar Stanza con spinner si es necesario
+                    analyzer, available = initialize_stanza_with_spinner()
+
+                    if not available:
+                        st.error("❌ Stanza no está disponible. Revisa la instalación.")
+                    else:

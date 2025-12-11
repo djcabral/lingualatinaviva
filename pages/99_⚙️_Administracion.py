@@ -27,6 +27,8 @@ from utils.i18n import get_text
 from utils.ui_helpers import load_css
 from utils.text_utils import normalize_latin
 from utils.content_importer import ContentImporter as NLPContentImporter
+from utils.stanza_spinner import initialize_stanza_with_spinner
+from utils.stanza_spinner import initialize_stanza_with_spinner
 
 st.set_page_config(page_title="Admin", page_icon="⚙️", layout="wide")
 
@@ -74,6 +76,23 @@ with st.sidebar:
     if st.button("🔒 Cerrar Sesión"):
         st.session_state.is_admin = False
         st.rerun()
+
+# ===== LOADING INDICATOR FOR ADMIN PANEL =====
+# Initialize counter for loading message display
+if 'admin_load_counter' not in st.session_state:
+    st.session_state.admin_load_counter = 0
+
+# Show loading message only on first render (counter = 0)
+if st.session_state.admin_load_counter == 0:
+    loading_container = st.container()
+    with loading_container:
+        st.info("⏳ **Cargando panel de administración...**\n\nPor favor espera mientras se inicializan los módulos.", icon="⌛")
+    
+    # Increment counter so message only shows once
+    st.session_state.admin_load_counter = 1
+    
+    # Trigger a rerun to show the rest of content
+    st.rerun()
 
 # Importar módulo de catalogación (si está disponible)
 try:
@@ -1698,13 +1717,12 @@ elif section == "Sintaxis":
             
             if analyze_btn and latin_text and spanish_translation:
                 try:
-                    with st.spinner("🧠 Analizando oración con Stanza... (El primer análisis tarda ~10 segundos)"):
-                        from utils.stanza_analyzer import StanzaAnalyzer
+                    # Inicializar Stanza con spinner si es necesario
+                    analyzer, available = initialize_stanza_with_spinner()
                     
-                    if not StanzaAnalyzer.is_available():
+                    if not available:
                         st.error("❌ Stanza no está disponible. Revisa la instalación.")
                     else:
-                        analyzer = StanzaAnalyzer()
                         # Analyze text
                         analysis = analyzer.analyze_text(latin_text)
                         
@@ -2138,7 +2156,7 @@ elif section == "Estadísticas":
             try:
                 with get_session() as session:
                     # Use fully qualified path to avoid "Multiple classes found" error
-                    from database.models import Word as WordModel, Text as TextModel
+                    from database import Word as WordModel, Text as TextModel
                     all_words = session.exec(select(WordModel)).all()
                     texts = session.exec(select(TextModel)).all()
                     # Convert to dicts WHILE session is still open
