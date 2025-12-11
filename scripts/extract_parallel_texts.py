@@ -240,7 +240,7 @@ if __name__ == "__main__":
     print("   - Especifica el idioma de cada obra")
     print()
     print("4. **Ejecuta:**")
-    print("   python scripts/extract_parallel_texts.py")
+    print("   python scripts//home/diego/Projects/latin-python/test_debug_scripts/extract_parallel_texts.py")
     print()
     print("5. **Resultado:**")
     print("   data/corpus/mixed_multilingual.json")

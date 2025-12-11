@@ -6,7 +6,7 @@ Este script inserta desafíos de ejemplo para los nuevos tipos interactivos:
 - match_pairs (Parejas)
 
 Uso:
-    python scripts/create_puzzle_challenges.py
+    python scripts//home/diego/Projects/latin-python/test_debug_scripts/create_puzzle_challenges.py
 """
 
 from database.connection import get_session

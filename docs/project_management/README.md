@@ -91,3 +91,4 @@ Para contribuir al desarrollo:
 ## Licencia
 
 Este proyecto está licenciado bajo GPL-3.0. Ver el archivo `LICENSE` para más detalles.
+

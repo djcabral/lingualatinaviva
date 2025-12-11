@@ -1,0 +1,25 @@
+# Refactored Application Requirements
+
+# Core dependencies
+sqlmodel>=0.0.8
+streamlit>=1.21.0
+textual>=0.15.0
+
+# Database
+sqlalchemy>=1.4.0,<2.0.0
+sqlite3
+
+# Utilities
+typing_extensions>=4.0.0
+python-dateutil>=2.8.0
+
+# Development dependencies
+pytest>=7.0.0
+pytest-cov>=4.0.0
+black>=23.0.0
+flake8>=6.0.0
+mypy>=1.0.0
+
+# Optional dependencies for enhanced features
+requests>=2.28.0  # For external API calls
+cachetools>=5.3.0  # For caching mechanisms

@@ -150,4 +150,4 @@ if __name__ == "__main__":
         consolidate_duplicates(dry_run=False)
     else:
         consolidate_duplicates(dry_run=True)
-        print("\n💡 To apply changes, run: python scripts/consolidate_word_duplicates.py --live")
+        print("\n💡 To apply changes, run: python scripts//home/diego/Projects/latin-python/test_debug_scripts/consolidate_word_duplicates.py --live")
