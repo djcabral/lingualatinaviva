@@ -15,7 +15,7 @@ from datetime import datetime
 from sqlmodel import Session, select
 # Import from database package to avoid duplicate registration
 from database import UserProfile, Word, ReviewLog
-from database.models import UserLessonProgressV2V2
+from database.models import UserLessonProgressV2
 import logging
 
 logger = logging.getLogger(__name__)
