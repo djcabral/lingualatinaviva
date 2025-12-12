@@ -2,7 +2,7 @@
 Progression Engine - Sistema de progresión orgánica de lecciones
 
 Inspirado en el learningEngine.ts del proyecto TSX.
-Implementa un flujo pedagógico de 5 pasos que se desbloque an secuencialmente:
+Implementa un flujo pedagógico de 5 pasos que se desbloquean secuencialmente:
 
 1. GRAMÁTICA (Teoría) → 2. VOCABULARIO (50%) → 3. EJERCICIOS (3x) → 4. LECTURA → 5. DESAFÍO
 
@@ -13,7 +13,9 @@ desbloqueando cada paso solo cuando completa el anterior.
 from typing import Dict, List, Optional, Tuple
 from datetime import datetime
 from sqlmodel import Session, select
-from database.models import UserLessonProgress, UserProfile, Word, ReviewLog
+# Import from database package to avoid duplicate registration
+from database import UserProfile, Word, ReviewLog
+from database.models import UserLessonProgressV2V2
 import logging
 
 logger = logging.getLogger(__name__)
@@ -53,15 +55,15 @@ def get_lesson_status(session: Session, user_id: int, lesson_id: int) -> Dict:
     """
     # Obtener o crear progreso de lección
     progress = session.exec(
-        select(UserLessonProgress).where(
-            UserLessonProgress.user_id == user_id,
-            UserLessonProgress.lesson_id == lesson_id
+        select(UserLessonProgressV2).where(
+            UserLessonProgressV2.user_id == user_id,
+            UserLessonProgressV2.lesson_id == lesson_id
         )
     ).first()
     
     if not progress:
         # Crear registro nuevo
-        progress = UserLessonProgress(
+        progress = UserLessonProgressV2(
             user_id=user_id,
             lesson_id=lesson_id,
             theory_completed=False,
@@ -348,9 +350,9 @@ def get_overall_progress(session: Session, user_id: int, total_lessons: int = 30
     
     # Contar lecciones completadas (challenge passed)
     completed_lessons = session.exec(
-        select(UserLessonProgress).where(
-            UserLessonProgress.user_id == user_id,
-            UserLessonProgress.challenge_passed == True
+        select(UserLessonProgressV2).where(
+            UserLessonProgressV2.user_id == user_id,
+            UserLessonProgressV2.challenge_passed == True
         )
     ).all()
     
@@ -367,17 +369,17 @@ def get_overall_progress(session: Session, user_id: int, total_lessons: int = 30
     }
 
 
-def _get_or_create_progress(session: Session, user_id: int, lesson_id: int) -> UserLessonProgress:
+def _get_or_create_progress(session: Session, user_id: int, lesson_id: int) -> UserLessonProgressV2:
     """Obtiene o crea el registro de progreso de lección."""
     progress = session.exec(
-        select(UserLessonProgress).where(
-            UserLessonProgress.user_id == user_id,
-            UserLessonProgress.lesson_id == lesson_id
+        select(UserLessonProgressV2).where(
+            UserLessonProgressV2.user_id == user_id,
+            UserLessonProgressV2.lesson_id == lesson_id
         )
     ).first()
     
     if not progress:
-        progress = UserLessonProgress(
+        progress = UserLessonProgressV2(
             user_id=user_id,
             lesson_id=lesson_id
         )

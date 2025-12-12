@@ -115,12 +115,17 @@ class UserProfile(SQLModel, table=True):
     preferences_json: Optional[str] = None  # JSON: {"font_size": 1.3, "theme": "dark", ...}
 
 
-class UserLessonProgress(SQLModel, table=True):
+class UserLessonProgressV2(SQLModel, table=True):
     """
-    Progreso del usuario en el sistema de aprendizaje orgánico de 5 pasos.
+    Progreso del usuario en el sistema de aprendizaje orgánico de 5 pasos (V2).
     
     Flujo: TEORÍA → VOCABULARIO (50%) → EJERCICIOS (3x) → LECTURA → DESAFÍO
+    
+    Nota: Este modelo es distinto a integration_models.UserLessonProgress
+    que está vinculado a LessonRequirement. Este modelo V2 implementa
+    el sistema de progresión orgánica de 5 pasos.
     """
+    __tablename__ = "user_lesson_progress_v2"
     __table_args__ = {'extend_existing': True}
     
     id: Optional[int] = Field(default=None, primary_key=True)
