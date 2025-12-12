@@ -3,14 +3,16 @@ import sys
 import os
 
 # Add paths for imports
-# Add paths for imports
 current_dir = os.path.dirname(__file__)
 if current_dir not in sys.path:
     sys.path.append(current_dir)
 
-from database.connection import init_db
+from database.connection import init_db, get_session
 from utils.i18n import get_text
 from utils.ui_helpers import load_css
+from utils.progression_engine import get_lesson_status, get_next_step_recommendation, get_overall_progress
+from database import UserProfile
+from sqlmodel import select
 
 # Page configuration
 st.set_page_config(
@@ -26,14 +28,13 @@ load_css()
 # Initialize database
 init_db()
 
-# Load and apply global font size preference
-# Global font size is now handled by render_sidebar_config in the sidebar
-
 # Initialize session state
 if 'language' not in st.session_state:
     st.session_state.language = 'es'
 if 'first_visit' not in st.session_state:
     st.session_state.first_visit = True
+if 'user_id' not in st.session_state:
+    st.session_state.user_id = 1  # Default user
 
 # Splash screen for first visit
 if st.session_state.first_visit:
@@ -71,11 +72,11 @@ if st.session_state.first_visit:
     
     col1, col2, col3 = st.columns([1, 1, 1])
     with col2:
-        if st.button("✨ Ingredere (Entrar)", width='stretch'):
+        if st.button("✨ Ingredere (Entrar)", use_container_width=True):
             st.session_state.first_visit = False
             st.rerun()
 else:
-    # Main navigation
+    # Main navigation sidebar
     st.sidebar.markdown(
         """
         <h1 style='text-align: center; font-family: "Cinzel", serif;'>
@@ -87,136 +88,248 @@ else:
     
     st.sidebar.markdown("---")
     
-    # Global Config (Font Size)
+    # Global Config
     from utils.ui_helpers import render_sidebar_config
     render_sidebar_config()
     
-    st.sidebar.info(
-        """
-        **Navigatio**: Usa el menú de la izquierda para explorar los módulos.
-        
-        **Módulos Disponibles:**
-        - 🏠 Home (Hodie)
-        - 🎴 Vocabularium
-        - 📜 Declinatio
-        - ⚔️ Conjugatio
-        - 🔍 Analysis
-        - 📖 Lectio
-        - ⚙️ Admin
-        """
-    )
-    
-    # Global font size control moved to sidebar footer (utils/ui.py)
-    
-    # Main content
-    st.markdown(
-        """
-        <div style='text-align: center; padding: 50px 0;'>
-            <h1 style='font-family: "Cinzel", serif; font-size: 3em;'>
-                Ave, Discipule!
-            </h1>
-            <p style='font-family: "Cardo", serif; font-size: 1.5em; font-style: italic;'>
-                Elige un módulo del menú lateral para comenzar tu práctica diaria.
-            </p>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-    
-    # Introduction section
-    st.markdown("---")
-    
-    col1, col2 = st.columns([2, 1])
-    
-    with col1:
-        st.markdown("### 🎯 ¿Qué es Lingua Latina Viva?")
-        st.markdown("""
-        **Lingua Latina Viva** es un organismo vivo de aprendizaje, estructurado en cuatro pilares fundamentales para cultivar la fluidez real:
-        
-        ### 1. 📘 Lección (Fundamento)
-        La base teórica y la inmersión textual.
-        *   **Curso y Lecturas**: Progresión graduada desde oraciones simples hasta textos auténticos.
-        *   **Gramática**: Referencia constante de las reglas del juego.
-        
-        ### 2. 🧠 Memorización (Adquisición)
-        La interiorización de los bloques de construcción.
-        *   **Vocabulario SRS**: Sistema inteligente para retener palabras a largo plazo.
-        *   **Diccionario**: Herramienta de consulta rápida.
-        
-        ### 3. ⚔️ Práctica (Automatización)
-        El gimnasio mental para ganar velocidad y precisión.
-        *   **Declinaciones y Conjugaciones**: Ejercicios intensivos de morfología.
-        *   **Aventura y Desafíos**: Gamificación para poner a prueba tus habilidades.
-        
-        ### 4. 🔍 Análisis (Comprensión Profunda)
-        La disección de la lengua para entender su lógica interna.
-        *   **Sintaxis**: Visualización de la estructura de las oraciones.
-        *   **Analizador**: Herramienta para desglosar cualquier palabra.
-        
-        ---
-        **Metodología**: Inspirada en la tradición humanista y el método natural, buscamos que *vivas* la lengua, no solo que la estudies.
-        """)
-        
-        st.markdown("### 🚀 Comienza Ahora")
-        st.success("👈 Selecciona un módulo del menú lateral para comenzar tu práctica diaria.")
-    
-    st.markdown("---")
-    
-    # Quick stats overview
-    from database.connection import get_session
-    from sqlmodel import select, func
-    # Import through a function to avoid duplicate registration
-    from database import UserProfile, Word
+    # ======================================================================
+    # DASHBOARD DE PROGRESO VISUAL
+    # ======================================================================
     
     with get_session() as session:
-        user = session.exec(select(UserProfile)).first()
-        if user:
-            col1, col2, col3, col4 = st.columns(4)
-            
-            with col1:
-                st.markdown(
-                    f"""
-                    <div class="stat-box">
-                        <div class="stat-value">{user.level}</div>
-                        <div class="stat-label">Nivel</div>
+        user_id = st.session_state.user_id
+        
+        # Obtener perfil de usuario
+        user_profile = session.exec(select(UserProfile).where(UserProfile.id == user_id)).first()
+        if not user_profile:
+            # Crear usuario por defecto si no existe
+            user_profile = UserProfile(id=user_id, username="Discipulus", level=1, xp=0, streak=0)
+            session.add(user_profile)
+            session.commit()
+            session.refresh(user_profile)
+        
+        # Obtener progreso general
+        overall_progress = get_overall_progress(session, user_id, total_lessons=30)
+        current_lesson = overall_progress['current_lesson']
+        lessons_completed = overall_progress['lessons_completed']
+        total_progress_pct = int(overall_progress['total_progress'] * 100)
+        
+        # Header con estadísticas generales
+        st.markdown(
+            f"""
+            <div style='text-align: center; padding: 30px 0 20px 0;'>
+                <h1 style='font-family: "Cinzel", serif; font-size: 2.5em; margin-bottom: 10px;'>
+                    🏛️ Tu Iter per Latinam
+                </h1>
+                <p style='font-family: "Cardo", serif; font-size: 1.2em; color: #666; font-style: italic;'>
+                    Lección {current_lesson} de 30 • {lessons_completed} completadas
+                </p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+        
+        # Barra de progreso global
+        st.markdown("---")
+        col1, col2, col3 = st.columns([1, 3, 1])
+        with col2:
+            st.markdown(
+                f"""
+                <div style='text-align: center; margin-bottom: 30px;'>
+                    <div style='font-size: 0.9em; color: #666; margin-bottom: 8px;'>Progreso General: {total_progress_pct}%</div>
+                    <div style='width: 100%; background-color: #e0e0e0; border-radius: 10px; height: 20px; overflow: hidden;'>
+                        <div style='width: {total_progress_pct}%; background: linear-gradient(90deg, #8B4513, #A0522D); height: 100%; transition: width 0.5s ease;'></div>
                     </div>
-                    """,
-                    unsafe_allow_html=True
-                )
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+        
+        # Estadísticas rápidas
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            st.metric("📊 Nivel", user_profile.level)
+        with col2:
+            st.metric("⭐ XP", f"{user_profile.xp:,}")
+        with col3:
+            st.metric("🔥 Racha", f"{user_profile.streak} días")
+        with col4:
+            st.metric("✅ Completadas", f"{lessons_completed}/30")
+        
+        st.markdown("---")
+        
+        # Obtener recomendación para la lección actual
+        recommendation = get_next_step_recommendation(session, user_id, current_lesson)
+        
+        if recommendation:
+            # Banner de recomendación destacado
+            priority_colors = {
+                'high': '#8B4513',
+                'medium': '#D2691E',
+                'low': '#DEB887'
+            }
+            color = priority_colors.get(recommendation['priority'], '#8B4513')
             
-            with col2:
-                st.markdown(
-                    f"""
-                    <div class="stat-box">
-                        <div class="stat-value">{user.streak}</div>
-                        <div class="stat-label">Racha (días)</div>
+            st.markdown(
+                f"""
+                <div style='background: linear-gradient(135deg, {color}15, {color}25);
+                            border-left: 5px solid {color};
+                            padding: 20px;
+                            border-radius: 10px;
+                            margin-bottom: 30px;'>
+                    <div style='font-size: 1.3em; font-weight: bold; color: {color}; margin-bottom: 10px;'>
+                        🎯 {recommendation['title']}
                     </div>
-                    """,
-                    unsafe_allow_html=True
-                )
+                    <div style='font-size: 1.1em; color: #333;'>
+                        {recommendation['message']}
+                    </div>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+        else:
+            # Lección completada
+            st.success(f"🏆 ¡Felicitaciones! Completaste la Lección {current_lesson}. Avanza a la siguiente lección.")
+        
+        # Mapa de lecciones (grid de cards)
+        st.markdown("### 📚 Mapa de Lecciones")
+        st.markdown("<br>", unsafe_allow_html=True)
+        
+        # Configuración de lecciones (primeras 10 para demostración)
+        LESSON_TITLES = {
+            1: "Primera Declinación",
+            2: "El Sujeto (Nominativo)",
+            3: "Segunda Declinación",
+            4: "El Complemento (Acusativo)",
+            5: "Presente Indicativo (1ª y 2ª)",
+            6: "La Posesión (Genitivo)",
+            7: "El Destinatario (Dativo)",
+            8: "El Complemento Circunstancial (Ablativo)",
+            9: "Tercera Declinación (Consonántica)",
+            10: "Imperfecto Indicativo",
+            11: "Presente Indicativo (3ª y 4ª)",
+            12: "Tercera Declinación (Vocálica)",
+            13: "Pronombres Personales",
+            14: "Futuro Imperfecto",
+            15: "Adjetivos de 1ª y 2ª",
+            16: "Perfecto Indicativo",
+            17: "Adjetivos de 3ª",
+            18: "Pluscuamperfecto Indicativo",
+            19: "Pronombres y Adjetivos Demostrativos",
+            20: "Futuro Perfecto",
+            21: "Participios",
+            22: "Ablativo Absoluto",
+            23: "Pronombres Relativos",
+            24: "Subordinadas Adjetivas",
+            25: "Subjuntivo Presente e Imperfecto",
+            26: "Subordinadas Sustantivas",
+            27: "Oraciones Condicionales",
+            28: "Subordinadas Adjetivas Avanzadas",
+            29: "Estilo Indirecto",
+            30: "Métrica y Síntesis"
+        }
+        
+        # Crear grid de lecciones (5 columnas)
+        num_cols = 5
+        total_lessons = 30
+        
+        for row_start in range(1, total_lessons + 1, num_cols):
+            cols = st.columns(num_cols)
+            for i, col in enumerate(cols):
+                lesson_num = row_start + i
+                if lesson_num > total_lessons:
+                    break
+                
+                with col:
+                    # Obtener estado de la lección
+                    lesson_status = get_lesson_status(session, user_id, lesson_num)
+                    overall = lesson_status['overall_progress']
+                    
+                    # Determinar estado visual
+                    is_current = (lesson_num == current_lesson)
+                    is_completed = (overall >= 1.0)
+                    is_locked = (lesson_num > current_lesson)
+                    
+                    # Colores según estado
+                    if is_completed:
+                        border_color = "#28a745"
+                        bg_color = "#28a74515"
+                        icon = "✅"
+                        status_text = "Completada"
+                    elif is_current:
+                        border_color = "#fd7e14"
+                        bg_color = "#fd7e1415"
+                        icon = "🔄"
+                        status_text = f"{int(overall * 100)}%"
+                    elif is_locked:
+                        border_color = "#adb5bd"
+                        bg_color = "#f8f9fa"
+                        icon = "🔒"
+                        status_text = "Bloqueada"
+                    else:
+                        border_color = "#007bff"
+                        bg_color = "#007bff15"
+                        icon = "📘"
+                        status_text = "Disponible"
+                    
+                    # Renderizar card
+                    lesson_title = LESSON_TITLES.get(lesson_num, f"Lección {lesson_num}")
+                    
+                    st.markdown(
+                        f"""
+                        <div style='border: 2px solid {border_color};
+                                    background: {bg_color};
+                                    border-radius: 10px;
+                                    padding: 15px;
+                                    margin-bottom: 15px;
+                                    min-height: 140px;
+                                    transition: transform 0.2s;
+                                    cursor: pointer;'
+                             onmouseover="this.style.transform='scale(1.05)'"
+                             onmouseout="this.style.transform='scale(1)'">
+                            <div style='text-align: center;'>
+                                <div style='font-size: 2em; margin-bottom: 5px;'>{icon}</div>
+                                <div style='font-weight: bold; font-size: 1.1em; margin-bottom: 5px;'>L{lesson_num}</div>
+                                <div style='font-size: 0.85em; color: #666; margin-bottom: 8px; height: 35px;'>{lesson_title}</div>
+                                <div style='font-size: 0.8em; font-weight: bold; color: {border_color};'>{status_text}</div>
+                            </div>
+                        </div>
+                        """,
+                        unsafe_allow_html=True
+                    )
+        
+        st.markdown("---")
+        
+        # Sección de ayuda rápida
+        st.markdown("### 💡 ¿Cómo funciona?")
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.info("""
+            **Sistema de Progresión Orgánica:**
             
-            with col3:
-                st.markdown(
-                    f"""
-                    <div class="stat-box">
-                        <div class="stat-value">{user.xp}</div>
-                        <div class="stat-label">PE</div>
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
+            Cada lección tiene 5 pasos que debes completar en orden:
             
-            with col4:
-                word_count = session.exec(select(func.count(Word.id))).one()
-                st.markdown(
-                    f"""
-                    <div class="stat-box">
-                        <div class="stat-value">{word_count}</div>
-                        <div class="stat-label">Vocabula</div>
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
+            1. 📖 **Teoría**: Lee el contenido
+            2. 🧠 **Vocabulario**: Domina el 50% de las palabras
+            3. ✍️ **Ejercicios**: Completa 3 sesiones de práctica
+            4. 📜 **Lectura**: Lee textos auténticos
+            5. 🏆 **Desafío**: Supera el examen final
+            
+            Solo podrás avanzar al siguiente paso cuando completes el anterior.
+            """)
+        
+        with col2:
+            st.success("""
+            **Navegación:**
+            
+            - 📚 **Curso**: Ve al módulo de lecciones para estudiar teoría
+            - 🧠 **Memorización**: Practica vocabulario con flashcards SRS
+            - ⚔️ **Práctica**: Completa ejercicios y desafíos
+            - 📖 **Lecturas**: Lee textos latinos auténticos
+            
+            Usa el menú lateral para navegar entre módulos.
+            """)
 
     # Render sidebar footer
     from utils.ui import render_sidebar_footer
