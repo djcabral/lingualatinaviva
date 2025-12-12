@@ -114,6 +114,43 @@ class UserProfile(SQLModel, table=True):
     # Preferencias de usuario
     preferences_json: Optional[str] = None  # JSON: {"font_size": 1.3, "theme": "dark", ...}
 
+
+class UserLessonProgress(SQLModel, table=True):
+    """
+    Progreso del usuario en el sistema de aprendizaje orgánico de 5 pasos.
+    
+    Flujo: TEORÍA → VOCABULARIO (50%) → EJERCICIOS (3x) → LECTURA → DESAFÍO
+    """
+    __table_args__ = {'extend_existing': True}
+    
+    id: Optional[int] = Field(default=None, primary_key=True)
+    user_id: int = Field(default=1, index=True)
+    lesson_id: int = Field(index=True)
+    
+    # Paso 1: Teoría
+    theory_completed: bool = Field(default=False)
+    theory_completed_at: Optional[datetime] = None
+    
+    # Paso 2: Vocabulario (mastery basado en ReviewLog)
+    vocab_mastery: float = Field(default=0.0)  # 0.0 - 1.0 (50% para desbloquear ejercicios)
+    
+    # Paso 3: Ejercicios
+    exercises_count: int = Field(default=0)  # Número de sesiones completadas (3 para desbloquear lectura)
+    
+    # Paso 4: Lectura
+    reading_completed: bool = Field(default=False)
+    reading_completed_at: Optional[datetime] = None
+    
+    # Paso 5: Desafío Final
+    challenge_passed: bool = Field(default=False)
+    challenge_stars: int = Field(default=0)  # 0-3
+    challenge_passed_at: Optional[datetime] = None
+    
+    # Metadatos
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+
 class Text(SQLModel, table=True):
     """Texto latino para lectura progresiva"""
     __table_args__ = {'extend_existing': True}
