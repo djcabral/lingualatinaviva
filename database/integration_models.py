@@ -327,8 +327,9 @@ class LessonRequirement(SQLModel, table=True):
     weight: float = Field(default=1.0)  # Peso en el cálculo de % de completitud
     description: Optional[str] = None  # Descripción legible del requisito
     
-    # Relación
-    progress: List["UserLessonProgress"] = Relationship(back_populates="requirement")
+    # Relación (usa path completamente calificado para evitar ambigüedad con models.UserLessonProgressV2)
+    progress: List["database.integration_models.UserLessonProgress"] = Relationship(back_populates="requirement")
+
 
 
 class UserLessonProgress(SQLModel, table=True):
@@ -357,7 +358,7 @@ class UserLessonProgress(SQLModel, table=True):
     completed_at: Optional[datetime] = None
     
     # Relación
-    requirement: Optional["LessonRequirement"] = Relationship(back_populates="progress")
+    requirement: Optional["database.integration_models.LessonRequirement"] = Relationship(back_populates="progress")
 
 
 # Helper functions moved to database/utils.py

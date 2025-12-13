@@ -66,10 +66,17 @@ def get_all_exercise_types(lesson_number: int) -> Dict[str, List[Dict]]:
     if not data or "exercises" not in data:
         return {}
     
+    # Tipos de ejercicios soportados
     result = {
         "multiple_choice": [],
         "sentence_completion": [],
-        "vocabulary_match": []
+        "vocabulary_match": [],
+        "translation_latin_spanish": [],
+        "translation_spanish_latin": [],
+        "morphology_analysis": [],
+        "sentence_builder": [],
+        "transformation": [],
+        "pattern_recognition": []
     }
     
     for ex in data["exercises"]:
@@ -78,3 +85,4 @@ def get_all_exercise_types(lesson_number: int) -> Dict[str, List[Dict]]:
             result[ex_type].append(ex)
     
     return result
+

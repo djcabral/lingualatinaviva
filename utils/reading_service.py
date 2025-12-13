@@ -25,8 +25,9 @@ class ReadingService:
         # Asumimos que los textos están creados en orden de dificultad
         # Lección 5 -> Texto 1, Lección 10 -> Texto 2, etc.
         
-        # Lógica provisional: buscar texto con dificultad similar a la lección / 2
-        target_difficulty = max(1, lesson_number // 2)
+        # Lógica mejorada: Intenta buscar por ID de lección o dificultad 1:1
+        # Si no existe, busca el último disponible.
+        target_difficulty = lesson_number
         
         statement = select(Text).where(Text.difficulty == target_difficulty).order_by(Text.id)
         text = self.session.exec(statement).first()
@@ -71,17 +72,23 @@ class ReadingService:
             # O un componente custom si fuera necesario.
             
             latin_form = link.form or word.latin
-            definition = word.definition_es or word.translation
+            definition = (word.definition_es or word.translation).replace('"', '&quot;')
             pos = word.part_of_speech
             
-            tooltip_html = f"""<span class="word-tooltip" title="{definition} ({pos})">{latin_form}</span>"""
+            tooltip_html = f'<span class="tooltip-word" title="{definition} ({pos})">{latin_form}</span>'
             
             # Reemplazo seguro (solo palabras completas)
-            # Esto es frágil con regex simple, pero servirá para el prototipo.
-            # En producción usaríamos un tokenizador real.
+            # Nota: \b no funciona bien con Unicode (macrones). Usamos lookahead/lookbehind.
             import re
-            pattern = re.compile(r'\b' + re.escape(latin_form) + r'\b', re.IGNORECASE)
-            enriched_content = pattern.sub(tooltip_html, enriched_content)
+            # Patrón que usa límites explícitos compatibles con Unicode
+            # (?<![\\w\\u0100-\\u017F]) = no precedido por letra/macrón
+            # (?![\\w\\u0100-\\u017F]) = no seguido por letra/macrón
+            escaped_form = re.escape(latin_form)
+            pattern = re.compile(
+                r'(?<![a-zA-ZāēīōūĀĒĪŌŪ])' + escaped_form + r'(?![a-zA-ZāēīōūĀĒĪŌŪ])',
+                re.IGNORECASE
+            )
+            enriched_content = pattern.sub(tooltip_html, enriched_content, count=1)
             
         return enriched_content
 

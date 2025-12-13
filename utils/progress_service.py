@@ -165,6 +165,38 @@ def record_exercise_attempt(
             user.xp = (user.xp or 0) + xp_earned
             session.add(user)
     
+    
+    # 3. Update V2 Lesson Progress (Gamification)
+    if is_correct:
+        from database import UserLessonProgressV2, Lesson
+        
+        # Get Lesson ID
+        lesson = session.exec(select(Lesson).where(Lesson.lesson_number == lesson_number)).first()
+        
+        if lesson:
+            # Get or create progress V2
+            prog_v2 = session.exec(
+                select(UserLessonProgressV2)
+                .where(
+                    UserLessonProgressV2.user_id == user_id,
+                    UserLessonProgressV2.lesson_id == lesson.id
+                )
+            ).first()
+            
+            if not prog_v2:
+                prog_v2 = UserLessonProgressV2(
+                    user_id=user_id,
+                    lesson_id=lesson.id,
+                    theory_completed=False,
+                    exercises_count=0,
+                    challenge_passed=False
+                )
+                session.add(prog_v2)
+                
+            # Update count
+            prog_v2.exercises_count += 1
+            session.add(prog_v2)
+            
     session.commit()
 
 

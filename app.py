@@ -275,28 +275,33 @@ else:
                     # Renderizar card
                     lesson_title = LESSON_TITLES.get(lesson_num, f"Lección {lesson_num}")
                     
-                    st.markdown(
-                        f"""
-                        <div style='border: 2px solid {border_color};
-                                    background: {bg_color};
-                                    border-radius: 10px;
-                                    padding: 15px;
-                                    margin-bottom: 15px;
-                                    min-height: 140px;
-                                    transition: transform 0.2s;
-                                    cursor: pointer;'
-                             onmouseover="this.style.transform='scale(1.05)'"
-                             onmouseout="this.style.transform='scale(1)'">
-                            <div style='text-align: center;'>
-                                <div style='font-size: 2em; margin-bottom: 5px;'>{icon}</div>
-                                <div style='font-weight: bold; font-size: 1.1em; margin-bottom: 5px;'>L{lesson_num}</div>
-                                <div style='font-size: 0.85em; color: #666; margin-bottom: 8px; height: 35px;'>{lesson_title}</div>
-                                <div style='font-size: 0.8em; font-weight: bold; color: {border_color};'>{status_text}</div>
-                            </div>
-                        </div>
-                        """,
-                        unsafe_allow_html=True
-                    )
+                    if is_current:
+                        st.markdown(f"**📍 ACTUAL**")
+                    
+                    # Use a native Streamlit button for interactivity
+                    # Formatting the label to be informative
+                    btn_label = f"{icon} L{lesson_num}\n{lesson_title}"
+                    
+                    if st.button(
+                        btn_label, 
+                        key=f"nav_l{lesson_num}", 
+                        disabled=is_locked, 
+                        use_container_width=True,
+                        type="primary" if is_current else "secondary",
+                        help=f"Estado: {status_text}"
+                    ):
+                        st.session_state.current_lesson = f"l{lesson_num}"
+                        st.switch_page("pages/02_📘_Lecciones.py")
+                    
+                    # Small status indicator below button
+                    if is_completed:
+                         st.caption(f"✅ Completada")
+                    elif is_current:
+                         st.caption(f"🔄 En progreso: {int(overall * 100)}%")
+                    elif is_locked:
+                         st.caption("🔒 Bloqueada")
+                    else:
+                         st.caption("📘 Disponible")
         
         st.markdown("---")
         

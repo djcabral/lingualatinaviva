@@ -49,6 +49,7 @@ UserChallengeProgress = models.UserChallengeProgress
 Lesson = models.Lesson
 Feedback = models.Feedback
 SystemSetting = models.SystemSetting
+UserLessonProgressV2 = models.UserLessonProgressV2  # This is in models.py
 
 # Integration models (learning progress system)
 LessonProgress = integration_models.LessonProgress
@@ -100,6 +101,7 @@ __all__ = [
     'Lesson',
     'Feedback',
     'SystemSetting',
+    'UserLessonProgressV2',
     
     # Integration models
     'LessonProgress',

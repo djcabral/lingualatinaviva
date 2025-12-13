@@ -337,8 +337,42 @@ def render_paradigm_tables(paradigm_data):
                         title = key.replace("Participio ", "")
                         
                         with st.expander(f"Participio {title}", expanded=False):
-                            # Organizar por Caso y Número
-                            # Estructura: data[Caso][Numero] = [formas]
+                            # Estructura temporal: temp_data[Caso][Numero] = {forma: {generos}}
+                            temp_data = {
+                                "Nominativo": {"Singular": {}, "Plural": {}},
+                                "Genitivo": {"Singular": {}, "Plural": {}},
+                                "Dativo": {"Singular": {}, "Plural": {}},
+                                "Acusativo": {"Singular": {}, "Plural": {}},
+                                "Ablativo": {"Singular": {}, "Plural": {}},
+                                "Vocativo": {"Singular": {}, "Plural": {}}
+                            }
+                            
+                            for f in forms:
+                                text = f.split(" (")[0]
+                                morph = f.split(" (")[1].replace(")", "")
+                                
+                                case = None
+                                for c in temp_data.keys():
+                                    if c in morph:
+                                        case = c
+                                        break
+                                
+                                number = "Singular" if "Singular" in morph else "Plural" if "Plural" in morph else None
+                                
+                                if case and number:
+                                    # Identificar género
+                                    gender = None
+                                    if "Masculino" in morph: gender = "m"
+                                    elif "Femenino" in morph: gender = "f"
+                                    elif "Neutro" in morph: gender = "n"
+                                    
+                                    if text not in temp_data[case][number]:
+                                        temp_data[case][number][text] = set()
+                                    
+                                    if gender:
+                                        temp_data[case][number][text].add(gender)
+
+                            # Procesar temp_data para generar strings finales
                             data = {
                                 "Nominativo": {"Singular": [], "Plural": []},
                                 "Genitivo": {"Singular": [], "Plural": []},
@@ -347,29 +381,25 @@ def render_paradigm_tables(paradigm_data):
                                 "Ablativo": {"Singular": [], "Plural": []},
                                 "Vocativo": {"Singular": [], "Plural": []}
                             }
-                            
-                            for f in forms:
-                                text = f.split(" (")[0]
-                                morph = f.split(" (")[1].replace(")", "")
-                                
-                                case = None
-                                for c in data.keys():
-                                    if c in morph:
-                                        case = c
-                                        break
-                                
-                                number = "Singular" if "Singular" in morph else "Plural" if "Plural" in morph else None
-                                
-                                if case and number:
-                                    # Añadir género si es relevante para distinguir
-                                    gender = ""
-                                    if "Masculino" in morph: gender = "(m)"
-                                    elif "Femenino" in morph: gender = "(f)"
-                                    elif "Neutro" in morph: gender = "(n)"
-                                    
-                                    # Evitar duplicados exactos
-                                    entry = f"{text} {gender}".strip()
-                                    if entry not in data[case][number]:
+
+                            for case in temp_data:
+                                for number in temp_data[case]:
+                                    for text, genders in temp_data[case][number].items():
+                                        # Si tiene los 3 géneros (m, f, n), no poner etiqueta
+                                        if len(genders) >= 3: 
+                                            entry = text
+                                        elif not genders: # Sin género especificado
+                                            entry = text
+                                        else:
+                                            # Ordenar géneros m, f, n
+                                            sorted_genders = []
+                                            if 'm' in genders: sorted_genders.append('m')
+                                            if 'f' in genders: sorted_genders.append('f')
+                                            if 'n' in genders: sorted_genders.append('n')
+                                            
+                                            g_str = "/".join(sorted_genders)
+                                            entry = f"{text} ({g_str})"
+                                        
                                         data[case][number].append(entry)
                             
                             # Construir tabla

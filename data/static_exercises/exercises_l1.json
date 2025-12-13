@@ -1,0 +1,291 @@
+{
+    "lesson": 1,
+    "topic": "Primeros Pasos",
+    "exercises": [
+        {
+            "type": "vocabulary_match",
+            "instructions": "Empareja las palabras latinas con su traducción al español",
+            "pairs": [
+                {
+                    "latin": "rosa",
+                    "spanish": "rosa"
+                },
+                {
+                    "latin": "puella",
+                    "spanish": "niña"
+                },
+                {
+                    "latin": "aqua",
+                    "spanish": "agua"
+                },
+                {
+                    "latin": "terra",
+                    "spanish": "tierra"
+                },
+                {
+                    "latin": "dominus",
+                    "spanish": "señor"
+                }
+            ]
+        },
+        {
+            "type": "multiple_choice",
+            "question": "¿Cuál es el nominativo singular de 'rosa'?",
+            "options": [
+                "rosa",
+                "rosae",
+                "rosam",
+                "rosarum"
+            ],
+            "correct": 0,
+            "explanation": "El nominativo singular de 'rosa' es 'rosa' (1ª declinación femenino)"
+        },
+        {
+            "type": "multiple_choice",
+            "question": "¿Qué significa 'magnus' en español?",
+            "options": [
+                "pequeño",
+                "grande",
+                "bueno",
+                "malo"
+            ],
+            "correct": 1,
+            "explanation": "'Magnus' significa 'grande' en español"
+        },
+        {
+            "type": "sentence_completion",
+            "instructions": "Completa la oración con la palabra correcta",
+            "sentence": "Puella [___] videt.",
+            "options": [
+                "rosa",
+                "rosam",
+                "rosae",
+                "rosas"
+            ],
+            "correct": 1,
+            "translation": "La niña ve una rosa.",
+            "explanation": "'rosam' es el acusativo singular (objeto directo)"
+        },
+        {
+            "type": "translation_latin_spanish",
+            "latin": "Puella aquam portat",
+            "expected_spanish": "La niña lleva agua",
+            "hints": {
+                "puella": "sujeto nominativo femenino singular",
+                "aquam": "objeto directo acusativo",
+                "portat": "verbo 3ª persona singular presente 'llevar'"
+            }
+        },
+        {
+            "type": "translation_latin_spanish",
+            "latin": "Dominus est bonus",
+            "expected_spanish": "El señor es bueno",
+            "hints": {
+                "dominus": "sujeto nominativo masculino",
+                "est": "verbo 'ser/estar' 3ª persona singular",
+                "bonus": "adjetivo 'bueno' nominativo masculino"
+            }
+        },
+        {
+            "type": "translation_spanish_latin",
+            "spanish": "La tierra es grande",
+            "expected_latin": "Terra est magna",
+            "word_bank": [
+                "terra",
+                "terram",
+                "est",
+                "sum",
+                "magna",
+                "magnus"
+            ],
+            "morphology_hints": true,
+            "explanation": "Terra (nom sg) + est (3ª sg) + magna (nom sg fem)"
+        },
+        {
+            "type": "morphology_analysis",
+            "form": "aquam",
+            "expected": {
+                "case": "acusativo",
+                "number": "singular",
+                "gender": "femenino",
+                "syntactic_function": "objeto_directo"
+            },
+            "hint": "Observa la terminación -am"
+        },
+        {
+            "type": "morphology_analysis",
+            "form": "domini",
+            "expected": {
+                "case": "genitivo",
+                "number": "singular",
+                "gender": "masculino",
+                "syntactic_function": "complemento_del_nombre"
+            },
+            "hint": "Terminación -i en sustantivo masculino 2ª declinación"
+        },
+        {
+            "type": "vocabulary_match",
+            "instructions": "Empareja los verbos con su traducción",
+            "pairs": [
+                {
+                    "latin": "amo",
+                    "spanish": "amar"
+                },
+                {
+                    "latin": "voco",
+                    "spanish": "llamar"
+                },
+                {
+                    "latin": "sum",
+                    "spanish": "ser/estar"
+                },
+                {
+                    "latin": "porto",
+                    "spanish": "llevar"
+                }
+            ]
+        },
+        {
+            "type": "sentence_completion",
+            "instructions": "Completa con la forma correcta del verbo 'sum' (ser/estar)",
+            "sentence": "Puella [___] bona.",
+            "options": [
+                "sum",
+                "es",
+                "est",
+                "sunt"
+            ],
+            "correct": 2,
+            "translation": "La niña es buena.",
+            "explanation": "'est' es la 3ª persona singular de 'sum'"
+        },
+        {
+            "type": "multiple_choice",
+            "question": "¿Cuál es la función sintáctica de 'puellam' en 'Dominus puellam vocat'?",
+            "options": [
+                "sujeto",
+                "objeto directo",
+                "complemento del nombre",
+                "predicado"
+            ],
+            "correct": 1,
+            "explanation": "'puellam' está en acusativo, por lo que es el objeto directo del verbo 'vocat'"
+        },
+        {
+            "type": "sentence_builder",
+            "instructions": "Ordena las palabras para formar una oración correcta",
+            "words": [
+                "puella",
+                "rosam",
+                "amat"
+            ],
+            "expected_order": [
+                "puella",
+                "rosam",
+                "amat"
+            ],
+            "translation": "La niña ama una rosa",
+            "explanation": "Orden típico: Sujeto + Objeto + Verbo (aunque el latín es flexible)"
+        },
+        {
+            "type": "translation_spanish_latin",
+            "spanish": "El amigo es bueno",
+            "expected_latin": "Amicus est bonus",
+            "word_bank": [
+                "amicus",
+                "amicum",
+                "est",
+                "bonus",
+                "bona"
+            ],
+            "morphology_hints": true
+        },
+        {
+            "type": "transformation",
+            "instructions": "Cambia 'puella' (niña) a 'puellae' (niñas) y ajusta la oración",
+            "sentence": "Puella rosam amat",
+            "transformation": "plural_subject",
+            "expected": "Puellae rosam amant",
+            "explanation": "El verbo debe cambiar de 'amat' (3ª sg) a 'amant' (3ª pl)"
+        },
+        {
+            "type": "vocabulary_match",
+            "instructions": "Empareja conjunciones y preposiciones",
+            "pairs": [
+                {
+                    "latin": "et",
+                    "spanish": "y"
+                },
+                {
+                    "latin": "sed",
+                    "spanish": "pero"
+                },
+                {
+                    "latin": "in",
+                    "spanish": "en"
+                },
+                {
+                    "latin": "cum",
+                    "spanish": "con"
+                }
+            ]
+        },
+        {
+            "type": "translation_latin_spanish",
+            "latin": "Servus et dominus sunt amici",
+            "expected_spanish": "El esclavo y el señor son amigos",
+            "hints": {
+                "servus": "esclavo (nominativo)",
+                "et": "conjunción 'y'",
+                "dominus": "señor (nominativo)",
+                "sunt": "verbo 'ser' 3ª plural",
+                "amici": "amigos (nominativo plural)"
+            }
+        },
+        {
+            "type": "multiple_choice",
+            "question": "¿Qué tipo de sustantivo es 'dominus'?",
+            "options": [
+                "1ª declinación femenino",
+                "2ª declinación masculino",
+                "2ª declinación neutro",
+                "3ª declinación"
+            ],
+            "correct": 1,
+            "explanation": "'dominus' es un sustantivo de la 2ª declinación masculina (-us)"
+        },
+        {
+            "type": "pattern_recognition",
+            "text": "Puella rosam amat. Dominus terram amat.",
+            "pattern": "acusativo_objeto_directo",
+            "expected_identification": "rosam, terram",
+            "hint": "Busca las palabras en acusativo (terminación -am) que funcionan como objeto directo",
+            "explanation": "Tanto 'rosam' como 'terram' están en acusativo y son objetos directos de 'amat'"
+        },
+        {
+            "type": "sentence_completion",
+            "instructions": "Completa con el adjetivo correcto que concuerde con el sustantivo",
+            "sentence": "Terra [___] est.",
+            "options": [
+                "magnus",
+                "magna",
+                "magnum",
+                "magni"
+            ],
+            "correct": 1,
+            "translation": "La tierra es grande.",
+            "explanation": "'magna' concuerda con 'terra' (femenino singular nominativo)"
+        },
+        {
+            "type": "translation_latin_spanish",
+            "latin": "Femina bonam aquam habet",
+            "expected_spanish": "La mujer tiene agua buena",
+            "hints": {
+                "femina": "mujer (nominativo)",
+                "bonam": "buena (acusativo femenino, concuerda con aquam)",
+                "aquam": "agua (acusativo objeto directo)",
+                "habet": "tiene (3ª persona singular)"
+            }
+        }
+    ]
+}

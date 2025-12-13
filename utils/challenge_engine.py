@@ -283,20 +283,20 @@ class ChallengeEngine:
                 select(Word).where(Word.latin == word_latin)
             ).first()
         
-        if not word:
-            return (0.0, [f"Palabra '{word_latin}' no encontrada en BD"], {})
-        
-        # Generar formas correctas usando LatinMorphology
-        correct_forms = LatinMorphology.decline_noun(
-            word.latin,
-            word.declension,
-            word.gender,
-            word.genitive,
-            word.irregular_forms,
-            word.parisyllabic,
-            word.is_plurale_tantum,
-            word.is_singulare_tantum
-        )
+            if not word:
+                return (0.0, [f"Palabra '{word_latin}' no encontrada en BD"], {})
+            
+            # Generar formas correctas usando LatinMorphology
+            correct_forms = LatinMorphology.decline_noun(
+                word.latin,
+                word.declension,
+                word.gender,
+                word.genitive,
+                word.irregular_forms,
+                word.parisyllabic,
+                word.is_plurale_tantum,
+                word.is_singulare_tantum
+            )
         
         if not correct_forms:
             return (0.0, ["Error generando formas correctas"], {})
@@ -410,16 +410,16 @@ class ChallengeEngine:
                 )
             ).first()
         
-        if not verb:
-            return (0.0, [f"Verbo '{verb_latin}' no encontrado en BD"], {})
-        
-        # Generar formas correctas
-        correct_forms = LatinMorphology.conjugate_verb(
-            verb.latin,
-            verb.conjugation,
-            verb.principal_parts,
-            verb.irregular_forms
-        )
+            if not verb:
+                return (0.0, [f"Verbo '{verb_latin}' no encontrado en BD"], {})
+            
+            # Generar formas correctas
+            correct_forms = LatinMorphology.conjugate_verb(
+                verb.latin,
+                verb.conjugation,
+                verb.principal_parts,
+                verb.irregular_forms
+            )
         
         if not correct_forms:
             return (0.0, ["Error generando formas correctas"], {})

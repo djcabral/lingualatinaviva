@@ -15,6 +15,128 @@ from database import (
 from utils.progress_tracker import record_vocabulary_practice, record_exercise_attempt as tracker_record_attempt
 from utils.ui_components import render_progress_bar
 from utils.progress_service import record_exercise_attempt
+import time
+
+# ============================================================================
+# GAMIFICATION ENGINE (New)
+# ============================================================================
+
+def _init_game_session(session_key: str, total_items: int):
+    """Initializes the game session state if not present."""
+    if f"{session_key}_state" not in st.session_state:
+        st.session_state[f"{session_key}_state"] = "INTRO" # INTRO, PLAYING, FEEDBACK, VICTORY
+        st.session_state[f"{session_key}_score"] = 0
+        st.session_state[f"{session_key}_progress"] = 0
+        st.session_state[f"{session_key}_streak"] = 0
+        st.session_state[f"{session_key}_total"] = total_items
+        st.session_state[f"{session_key}_answers"] = {} # Store user answers
+
+def render_mission_intro(title: str, objective: str, xp_reward: int, on_start):
+    """Renders the pre-exercise mission card."""
+    st.markdown(
+        f"""
+        <div style='background: linear-gradient(135deg, #ffffff, #f0fdf4); 
+                    padding: 30px; border-radius: 15px; border: 2px solid #bbf7d0; 
+                    text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 20px;'>
+            <div style='font-size: 3rem; margin-bottom: 10px;'>📜</div>
+            <h2 style='color: #166534; margin: 0;'>Nueva Misión: {title}</h2>
+            <p style='font-size: 1.2rem; color: #374151; margin: 15px 0;'>{objective}</p>
+            <div style='background: #dcfce7; color: #15803d; display: inline-block; 
+                        padding: 5px 15px; border-radius: 20px; font-weight: bold; margin-bottom: 20px;'>
+                🏆 Recompensa: {xp_reward} XP
+            </div>
+            <br>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        if st.button("🚀 ¡Comenzar Misión!", type="primary", use_container_width=True, key=f"start_{title}"):
+            on_start()
+            st.rerun()
+
+def render_mission_hud(current: int, total: int, streak: int):
+    """Renders the persistent progress bar and stats."""
+    progress = current / total if total > 0 else 0
+    st.progress(progress)
+    
+    col1, col2 = st.columns([3, 1])
+    with col1:
+        st.caption(f"Progreso: {current}/{total}")
+    with col2:
+        if streak > 1:
+            st.markdown(f"🔥 **Racha: {streak}**")
+
+def render_juicy_feedback(is_correct: bool, explanation: str, correct_answer: str = None, on_continue=None, key: str = None):
+    """Renders the immediate feedback with style."""
+    
+    if is_correct:
+        bg_color = "#dcfce7" # Green-100
+        border_color = "#22c55e"
+        text_color = "#15803d"
+        title = random.choice(["¡Optime!", "¡Bene factum!", "¡Recte!", "¡Excellens!"])
+        icon = "🌟"
+    else:
+        bg_color = "#fee2e2" # Red-100
+        border_color = "#ef4444" 
+        text_color = "#b91c1c"
+        title = "Errare humanum est..."
+        icon = "⚠️"
+        
+    st.markdown(
+        f"""
+        <div style='background: {bg_color}; padding: 20px; border-radius: 12px; 
+                    border: 2px solid {border_color}; margin: 20px 0; animation: fadeIn 0.5s;'>
+            <div style='font-size: 1.5rem; font-weight: bold; color: {text_color}; display: flex; align-items: center; gap: 10px;'>
+                <span>{icon}</span> {title}
+            </div>
+            <div style='color: {text_color}; margin-top: 10px;'>
+                {explanation.replace('**', '<b>').replace('</b><b>', '</b>')}
+            </div>
+            {f"<div style='margin-top:10px; font-weight:bold;'>Respuesta correcta: {correct_answer}</div>" if not is_correct and correct_answer else ""}
+        </div>
+        """, 
+        unsafe_allow_html=True
+    )
+    
+    if on_continue:
+        # Use provided key or fallback to timestamp (less safe but OK if unique key provided usually)
+        btn_key = f"cont_{key}" if key else f"cont_{int(time.time())}"
+        if st.button("continuar ➡️", type="primary", key=btn_key):
+            on_continue()
+            st.rerun()
+
+def render_mission_victory(score: int, total: int, xp_earned: int, on_finish):
+    """Renders the summary screen."""
+    percentage = (score / total) * 100 if total > 0 else 0
+    
+    stars = "⭐"
+    if percentage > 50: stars += "⭐"
+    if percentage > 90: stars += "⭐"
+    
+    msg = "¡Misión Cumplida!" if percentage >= 60 else "Misión Finalizada"
+    
+    st.markdown(
+        f"""
+        <div style='text-align: center; padding: 40px; background: #fff; border-radius: 20px; border: 1px solid #e5e7eb;'>
+            <div style='font-size: 4rem; margin-bottom: 10px;'>{stars}</div>
+            <h1 style='color: #1e3a8a; margin: 0;'>{msg}</h1>
+            <p style='font-size: 1.5rem; color: #4b5563;'>Obtuviste {score}/{total} aciertos</p>
+            <div style='margin: 30px 0;'>
+                <span style='background: #fef08a; padding: 10px 20px; border-radius: 30px; font-weight: bold; color: #854d0e; font-size: 1.2rem;'>
+                    +{xp_earned} XP Ganados
+                </span>
+            </div>
+        </div>
+        """, 
+        unsafe_allow_html=True
+    )
+    
+    if st.button("🔙 Volver al Tablero", type="primary", use_container_width=True):
+        on_finish()
+        st.rerun()
+
 
 
 def render_vocabulary_widget(lesson_number: int, user_id: int = 1):
@@ -327,14 +449,44 @@ def render_translation_workshop(lesson_number: int, user_id: int = 1):
                 st.info(f"📝 Los ejercicios de traducción para la Lección {lesson_number} se agregarán próximamente.")
                 return
             
-            # Mostrar resumen
-            st.markdown(f"**{len(sentences)} oraciones** para practicar")
+            # Obtener oraciones ya completadas por el usuario
+            from database import ExerciseAttempt
+            attempts = session.exec(
+                select(ExerciseAttempt)
+                .where(
+                    ExerciseAttempt.user_id == user_id,
+                    ExerciseAttempt.lesson_number == lesson_number,
+                    ExerciseAttempt.exercise_type == "translation",
+                    ExerciseAttempt.is_correct == True
+                )
+            ).all()
             
+            # Extraer IDs de oraciones completadas (parseando exercise_config JSON)
+            import json
+            completed_ids = set()
+            for attempt in attempts:
+                try:
+                    config = json.loads(attempt.exercise_config)
+                    if "sentence_id" in config:
+                        completed_ids.add(config["sentence_id"])
+                except:
+                    pass
+            
+            # Mostrar resumen
+            completed_count = len([s for s in sentences if s.id in completed_ids])
+            st.markdown(f"**{len(sentences)} oraciones** para practicar ({completed_count} completadas)")
+            
+            # Función de formateo para el selector
+            def format_sentence_option(i):
+                s = sentences[i]
+                prefix = "✅ " if s.id in completed_ids else ""
+                return f"{prefix}Oración {i+1} (Nivel {s.complexity_level})"
+
             # Selector de oración
             sentence_idx = st.selectbox(
                 "Selecciona una oración:",
                 range(len(sentences)),
-                format_func=lambda i: f"Oración {i+1} (Nivel {sentences[i].complexity_level})",
+                format_func=format_sentence_option,
                 key=f"translation_selector_l{lesson_number}"
             )
             
@@ -424,7 +576,7 @@ def render_translation_workshop(lesson_number: int, user_id: int = 1):
             with col_eval1:
                 if st.button("🎯 Perfecta", key=f"eval_perfect_l{lesson_number}_{sentence_idx}"):
                     # Registrar como correcto
-                    record_exercise_attempt(
+                    tracker_record_attempt(
                         session, user_id, lesson_number,
                         "translation", 
                         {"sentence_id": sentence.id},
@@ -437,7 +589,7 @@ def render_translation_workshop(lesson_number: int, user_id: int = 1):
             with col_eval2:
                 if st.button("~📊 Aproximada", key=f"eval_close_l{lesson_number}_{sentence_idx}"):
                     # Registrar como parcialmente correcto (marcar como correcto)
-                    record_exercise_attempt(
+                    tracker_record_attempt(
                         session, user_id, lesson_number,
                         "translation",
                         {"sentence_id": sentence.id},
@@ -450,7 +602,7 @@ def render_translation_workshop(lesson_number: int, user_id: int = 1):
             with col_eval3:
                 if st.button("❌ Incorrecta", key=f"eval_wrong_l{lesson_number}_{sentence_idx}"):
                     # Registrar como incorrecto
-                    record_exercise_attempt(
+                    tracker_record_attempt(
                         session, user_id, lesson_number,
                         "translation",
                         {"sentence_id": sentence.id},
@@ -668,93 +820,142 @@ def render_vocabulary_match_exercise(exercises: list, lesson_number: int, user_i
         st.info("No hay suficiente vocabulario para generar ejercicios de emparejamiento.")
         return
     
-    st.markdown("#### 🔗 Empareja Latín con Español")
+    # 1. Initialize Session
+    key_prefix = f"vocab_match_l{lesson_number}_ex{exercise_index}_{key_suffix}"
     
-    # Inicializar estado - incluir exercise_index y key_suffix para evitar duplicados
-    key_prefix = f"vocab_match_l{lesson_number}_ex{exercise_index}_{key_suffix}" if key_suffix else f"vocab_match_l{lesson_number}_ex{exercise_index}"
-    if f"{key_prefix}_shuffled" not in st.session_state:
-        import random
+    if f"{key_prefix}_state" not in st.session_state:
+        _init_game_session(key_prefix, len(exercises))
+        # Initial Shuffle Setup
+        # Initial Shuffle Setup
         spanish_order = list(range(len(exercises)))
         random.shuffle(spanish_order)
-        st.session_state[f"{key_prefix}_shuffled"] = spanish_order
-        st.session_state[f"{key_prefix}_answers"] = {}
-        st.session_state[f"{key_prefix}_submitted"] = False
+        st.session_state[f"{key_prefix}_shuffled_indices"] = spanish_order
+        st.session_state[f"{key_prefix}_current_idx"] = 0
+
+    state = st.session_state[f"{key_prefix}_state"]
+    current_idx = st.session_state[f"{key_prefix}_current_idx"]
+    shuffled_indices = st.session_state[f"{key_prefix}_shuffled_indices"]
     
-    shuffled = st.session_state[f"{key_prefix}_shuffled"]
-    answers = st.session_state[f"{key_prefix}_answers"]
-    submitted = st.session_state[f"{key_prefix}_submitted"]
-    
-    # Crear opciones españolas mezcladas
-    spanish_options = [exercises[i]["spanish"] for i in shuffled]
-    
-    # Mostrar pares
-    for i, ex in enumerate(exercises):
-        col1, col2 = st.columns([1, 2])
+    # 2. Render State Machine
+    if state == "INTRO":
+        def start_mission():
+            st.session_state[f"{key_prefix}_state"] = "PLAYING"
+            
+        render_mission_intro(
+            title="Conexión de Vocabulario", 
+            objective=f"Empareja correctamente {len(exercises)} pares de palabras.",
+            xp_reward=10, 
+            on_start=start_mission
+        )
+
+    elif state == "PLAYING":
+        render_mission_hud(
+            current=current_idx, 
+            total=len(exercises), 
+            streak=st.session_state[f"{key_prefix}_streak"]
+        )
         
-        with col1:
-            # Mostrar palabra latina
-            if submitted:
-                correct_answer = ex["spanish"]
-                user_answer = answers.get(i, "")
-                if user_answer == correct_answer:
-                    st.markdown(f"✅ **{ex['latin']}**")
-                else:
-                    st.markdown(f"❌ **{ex['latin']}**")
+        # Get current question based on shuffled index
+        # We iterate through the exercises one by one in the shuffled order? 
+        # Or do we show ALL matches at once? 
+        # The previous implementation showed ALL matches at once.
+        # Gamified approach usually implies "One by one" flow for better "Juicy" feedback loop.
+        # Let's switch to One-by-One flow.
+        
+        ex_real_idx = shuffled_indices[current_idx]
+        ex = exercises[ex_real_idx]
+        
+        st.markdown(f"### ¿Qué significa **{ex['latin']}**?")
+        
+        # Generate options (Correct + 3 random distractors)
+        # We need options to be consistent during the question, so store them?
+        # For simplicity, let's regenerate or store. Storing is safer.
+        if f"{key_prefix}_opts_{current_idx}" not in st.session_state:
+            options = [ex['spanish']]
+            # Add distractors
+            potential_distractors = [e['spanish'] for i, e in enumerate(exercises) if i != ex_real_idx]
+            if len(potential_distractors) < 3:
+                # Not enough distinct items, just take what we have
+                options.extend(potential_distractors)
             else:
-                st.markdown(f"**{ex['latin']}**")
+                options.extend(random.sample(potential_distractors, 3))
+            random.shuffle(options)
+            st.session_state[f"{key_prefix}_opts_{current_idx}"] = options
+            
+        options = st.session_state[f"{key_prefix}_opts_{current_idx}"]
         
-        with col2:
-            if submitted:
-                correct_answer = ex["spanish"]
-                user_answer = answers.get(i, "")
-                if user_answer == correct_answer:
-                    st.success(f"{user_answer}")
-                else:
-                    st.error(f"Tu respuesta: {user_answer}")
-                    st.caption(f"Correcta: {correct_answer}")
+        # UI for Options
+        col1, col2 = st.columns(2)
+        for i, opt in enumerate(options):
+            # Split into 2 columns
+            with (col1 if i % 2 == 0 else col2):
+                if st.button(opt, key=f"{key_prefix}_opt_{current_idx}_{i}", use_container_width=True):
+                    # Check Answer
+                    is_correct = (opt == ex['spanish'])
+                    
+                    # Update State
+                    st.session_state[f"{key_prefix}_last_correct"] = is_correct
+                    st.session_state[f"{key_prefix}_last_explanation"] = f"**{ex['latin']}** significa **{ex['spanish']}**"
+                    st.session_state[f"{key_prefix}_last_answer"] = ex['spanish'] # Correct answer
+                    
+                    if is_correct:
+                        st.session_state[f"{key_prefix}_score"] += 1
+                        st.session_state[f"{key_prefix}_streak"] += 1
+                        # Record success attempt in DB background
+                        with get_session() as session:
+                             record_exercise_attempt(
+                                session,
+                                user_id, lesson_number, "vocab_match", True, opt, ex['spanish']
+                            )
+                    else:
+                        st.session_state[f"{key_prefix}_streak"] = 0
+                        # Record fail attempt
+                        with get_session() as session:
+                            record_exercise_attempt(
+                                session,
+                                user_id, lesson_number, "vocab_match", False, opt, ex['spanish']
+                            )
+                        
+                    st.session_state[f"{key_prefix}_state"] = "FEEDBACK"
+                    st.rerun()
+
+    elif state == "FEEDBACK":
+        render_mission_hud(
+            current=current_idx + 1, # Show as completed step
+            total=len(exercises), 
+            streak=st.session_state[f"{key_prefix}_streak"]
+        )
+        
+        def next_question():
+            # Advance index
+            new_idx = current_idx + 1
+            if new_idx >= len(exercises):
+                st.session_state[f"{key_prefix}_state"] = "VICTORY"
             else:
-                selected = st.selectbox(
-                    f"Selecciona traducción para '{ex['latin']}'",
-                    options=["-- Selecciona --"] + spanish_options,
-                    key=f"{key_prefix}_select_{i}",
-                    label_visibility="collapsed"
-                )
-                if selected != "-- Selecciona --":
-                    answers[i] = selected
-    
-    st.markdown("---")
-    
-    # Botones de acción
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        if not submitted:
-            if st.button("✅ Verificar Respuestas", key=f"{key_prefix}_submit", width="stretch"):
-                st.session_state[f"{key_prefix}_answers"] = answers
-                st.session_state[f"{key_prefix}_submitted"] = True
-                st.rerun()
-    
-    with col2:
-        if st.button("🔄 Nuevo Ejercicio", key=f"{key_prefix}_reset", width="stretch"):
-            # Limpiar estado
-            for key in list(st.session_state.keys()):
-                if key.startswith(key_prefix):
-                    del st.session_state[key]
-            st.rerun()
-    
-    # Mostrar puntuación si está enviado
-    if submitted:
-        correct_count = sum(1 for i, ex in enumerate(exercises) if answers.get(i) == ex["spanish"])
-        total = len(exercises)
-        pct = (correct_count / total) * 100 if total > 0 else 0
-        
-        st.markdown("---")
-        if pct >= 80:
-            st.success(f"🎉 ¡Excelente! {correct_count}/{total} correctas ({pct:.0f}%)")
-        elif pct >= 50:
-            st.warning(f"👍 ¡Bien! {correct_count}/{total} correctas ({pct:.0f}%)")
-        else:
-            st.error(f"📚 Sigue practicando. {correct_count}/{total} correctas ({pct:.0f}%)")
+                st.session_state[f"{key_prefix}_current_idx"] = new_idx
+                st.session_state[f"{key_prefix}_state"] = "PLAYING"
+                
+        render_juicy_feedback(
+            is_correct=st.session_state[f"{key_prefix}_last_correct"],
+            explanation=st.session_state[f"{key_prefix}_last_explanation"],
+            correct_answer=st.session_state[f"{key_prefix}_last_answer"],
+            on_continue=next_question,
+            key=f"{key_prefix}_{current_idx}"
+        )
+
+    elif state == "VICTORY":
+        def restart():
+            # Clear state to restart
+            keys_to_del = [k for k in st.session_state.keys() if k.startswith(key_prefix)]
+            for k in keys_to_del:
+                del st.session_state[k]
+                
+        render_mission_victory(
+            score=st.session_state[f"{key_prefix}_score"],
+            total=len(exercises),
+            xp_earned=10, # Reward logic
+            on_finish=restart
+        )
 
 
 def render_multiple_choice_exercise(questions: list, lesson_number: int, user_id: int = 1, key_suffix: str = ""):
@@ -879,3 +1080,876 @@ def render_sentence_completion_exercise(questions: list, lesson_number: int, use
                 st.caption(f"💡 {q['explanation']}")
         
         st.markdown("---")
+"""
+Learning Hub Widgets - NEW EXERCISE TYPES
+Widgets adicionales para ejercicios de traducción, morfología y reconocimiento de patrones.
+"""
+
+import streamlit as st
+from typing import List, Dict
+from difflib import SequenceMatcher
+
+
+def render_translation_latin_spanish_exercise(
+    exercise: Dict,
+    lesson_number: int,
+    exercise_index: int = 0,
+    user_id: int = 1,
+    key_suffix: str = ""
+):
+    """
+    Renderiza ejercicio de traducción Latín → Español con hints.
+    
+    Args:
+        exercise: Dict con 'latin', 'expected_spanish', 'hints'
+        lesson_number: Número de lección
+        exercise_index: Índice del ejercicio
+        user_id: ID del usuario
+        key_suffix: Sufijo para claves únicas
+    """
+    st.markdown("#### 📖 Traducción: Latín → Español")
+    
+    key_prefix = f"trans_ls_l{lesson_number}_ex{exercise_index}_{key_suffix}"
+    
+    # Mostrar texto latino
+    st.markdown(
+        f"""
+        <div style='background: linear-gradient(135deg, rgba(139,69,19,0.1), rgba(210,180,140,0.1));
+                    padding: 25px; border-radius: 10px; text-align: center; 
+                    border-left: 5px solid #8b4513; margin-bottom: 20px;'>
+            <div style='font-size: 1.8em; font-weight: bold; font-style: italic; color: #8b4513;'>
+                {exercise['latin']}
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+    
+    # Hints expandibles
+    if 'hints' in exercise and exercise['hints']:
+        with st.expander("💡 Ver pistas morfológicas"):
+            for word, hint in exercise['hints'].items():
+                st.markdown(f"- **{word}**: {hint}")
+    
+    # Área de traducción
+    user_translation = st.text_area(
+        "Tu traducción al español:",
+        height=80,
+        key=f"{key_prefix}_input",
+        placeholder="Escribe tu traducción aquí..."
+    )
+    
+    # Botón de verificación
+    if st.button("✅ Verificar", key=f"{key_prefix}_check"):
+        if user_translation.strip():
+            # Calcular similitud
+            expected = exercise['expected_spanish'].lower().strip()
+            user_input = user_translation.lower().strip()
+            similarity = SequenceMatcher(None, expected, user_input).ratio()
+            
+            if similarity >= 0.9:
+                st.success(f"✅ ¡Excelente! Tu traducción es correcta.")
+                st.balloons()
+            elif similarity >= 0.7:
+                st.warning(f"~📊 Muy cerca. Compara con la respuesta correcta.")
+                with st.expander("Ver respuesta correcta"):
+                    st.info(f"**Respuesta**: {exercise['expected_spanish']}")
+            else:
+                st.error(f"❌ Revisa tu traducción. Compara con la respuesta correcta.")
+                with st.expander("Ver respuesta correcta"):
+                    st.info(f"**Respuesta**: {exercise['expected_spanish']}")
+                    if 'explanation' in exercise:
+                        st.caption(f"💡 {exercise['explanation']}")
+        else:
+            st.warning("Escribe una traducción antes de verificar.")
+
+
+def render_translation_spanish_latin_exercise(
+    exercise: Dict,
+    lesson_number: int,
+    exercise_index: int = 0,
+    user_id: int = 1,
+    key_suffix: str = ""
+):
+    """
+    Renderiza ejercicio de traducción inversa Español → Latín con banco de palabras.
+    
+    Args:
+        exercise: Dict con 'spanish', 'expected_latin', 'word_bank', 'morphology_hints'
+        lesson_number: Número de lección
+        exercise_index: Índice del ejercicio
+        user_id: ID del usuario
+        key_suffix: Sufijo para claves únicas
+    """
+    st.markdown("#### 🔄 Traducción Inversa: Español → Latín")
+    
+    key_prefix = f"trans_sl_l{lesson_number}_ex{exercise_index}_{key_suffix}"
+    
+    # Mostrar texto español
+    st.markdown(
+        f"""
+        <div style='background: #e8f5e9; padding: 20px; border-radius: 10px; 
+                    border-left: 5px solid #4caf50; margin-bottom: 15px;'>
+            <div style='font-size: 1.5em; font-weight: bold; color: #2e7d32;'>
+                {exercise['spanish']}
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+    
+    # Banco de palabras
+    if 'word_bank' in exercise and exercise['word_bank']:
+        st.markdown("**Banco de palabras:**")
+        st.code(" | ".join(exercise['word_bank']))
+    
+    # Hints morfológicos
+    if exercise.get('morphology_hints', False):
+        with st.expander("🔍 Ayuda Morfológica"):
+            st.info("""
+            **Recuerda:**
+            - Sujeto: nominativo
+            - Objeto directo: acusativo
+            - Verbo: concuerda con el sujeto en persona y número
+            - Adjetivos: concuerdan en género, número y caso
+            """)
+    
+    # Área de traducción
+    user_latin = st.text_input(
+        "Tu traducción al latín:",
+        key=f"{key_prefix}_input",
+        placeholder="Escribe la oración en latín..."
+    )
+    
+    # Botón de verificación
+    if st.button("✅ Verificar", key=f"{key_prefix}_check"):
+        if user_latin.strip():
+            expected = exercise['expected_latin'].lower().strip()
+            user_input = user_latin.lower().strip()
+            
+            if user_input == expected:
+                st.success("✅ ¡Perfecto! Traducción correcta.")
+                st.balloons()
+            else:
+                # Calcular similitud
+                similarity = SequenceMatcher(None, expected, user_input).ratio()
+                if similarity >= 0.8:
+                    st.warning(f"~📊 Muy cerca. Revisa el orden o las formas.")
+                    st.info(f"**Respuesta esperada**: {exercise['expected_latin']}")
+                else:
+                    st.error(f"❌ Revisa tu traducción.")
+                    st.info(f"**Respuesta correcta**: {exercise['expected_latin']}")
+                    if 'explanation' in exercise:
+                        st.caption(f"💡 {exercise['explanation']}")
+        else:
+            st.warning("Escribe una traducción antes de verificar.")
+
+
+def render_morphology_analysis_exercise(
+    exercise: Dict,
+    lesson_number: int,
+    exercise_index: int = 0,
+    user_id: int = 1,
+    key_suffix: str = ""
+):
+    """
+    Renderiza ejercicio de análisis morfológico.
+    
+    Args:
+        exercise: Dict con 'form', 'expected' (case, number, gender, syntactic_function), 'hint'
+        lesson_number: Número de lección
+        exercise_index: Índice del ejercicio
+        user_id: ID del usuario
+        key_suffix: Sufijo para claves únicas
+    """
+    st.markdown("#### 🔬 Análisis Morfológico")
+    
+    key_prefix = f"morph_l{lesson_number}_ex{exercise_index}_{key_suffix}"
+    
+    # Mostrar forma
+    st.markdown(
+        f"""
+        <div style='background: #fff3e0; padding: 20px; border-radius: 10px; 
+                    text-align: center; border: 3px dashed #ff9800;'>
+            <div style='font-size: 2em; font-weight: bold; color: #e65100;'>
+                {exercise['form']}
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+    
+    st.markdown("###")
+    
+    # Hint si existe
+    if 'hint' in exercise:
+        st.caption(f"💡 {exercise['hint']}")
+    
+    # Formulario de análisis
+    expected = exercise['expected']
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        case_options = ["nominativo", "genitivo", "dativo", "acusativo", "ablativo", "vocativo"]
+        selected_case = st.selectbox(
+            "Caso:",
+            options=case_options,
+            key=f"{key_prefix}_case"
+        )
+        
+        number_options = ["singular", "plural"]
+        selected_number = st.selectbox(
+            "Número:",
+            options=number_options,
+            key=f"{key_prefix}_number"
+        )
+    
+    with col2:
+        gender_options = ["masculino", "femenino", "neutro"]
+        selected_gender = st.selectbox(
+            "Género:",
+            options=gender_options,
+            key=f"{key_prefix}_gender"
+        )
+        
+        function_options = [
+            "sujeto", "objeto_directo", "objeto_indirecto",
+            "complemento_del_nombre", "complemento_circunstancial",
+            "atributo", "predicado"
+        ]
+        selected_function = st.selectbox(
+            "Función sintáctica:",
+            options=function_options,
+            key=f"{key_prefix}_function"
+        )
+    
+    # Verificar
+    if st.button("✅ Verificar Análisis", key=f"{key_prefix}_check"):
+        is_correct = (
+            selected_case == expected.get('case') and
+            selected_number == expected.get('number') and
+            selected_gender == expected.get('gender') and
+            selected_function == expected.get('syntactic_function')
+        )
+        
+        if is_correct:
+            st.success("✅ ¡Análisis correcto en todos los aspectos!")
+            st.balloons()
+        else:
+            st.error("❌ Revisa tu análisis. Compara con la respuesta:")
+            
+            col_a, col_b = st.columns(2)
+            with col_a:
+                st.markdown("**Tu análisis:**")
+                st.write(f"Caso: {selected_case}")
+                st.write(f"Número: {selected_number}")
+                st.write(f"Género: {selected_gender}")
+                st.write(f"Función: {selected_function}")
+            
+            with col_b:
+                st.markdown("**Análisis correcto:**")
+                st.write(f"Caso: {expected.get('case')}")
+                st.write(f"Número: {expected.get('number')}")
+                st.write(f"Género: {expected.get('gender')}")
+                st.write(f"Función: {expected.get('syntactic_function')}")
+
+
+def render_sentence_builder_exercise(
+    exercise: Dict,
+    lesson_number: int,
+    exercise_index: int = 0,
+    user_id: int = 1,
+    key_suffix: str = ""
+):
+    """
+    Renderiza ejercicio de construcción de oraciones.
+    
+    Args:
+        exercise: Dict con 'words', 'expected_order', 'translation', 'explanation'
+        lesson_number: Número de lección
+        exercise_index: Índice del ejercicio
+        user_id: ID del usuario
+        key_suffix: Sufijo para claves únicas
+    """
+    st.markdown("#### 🏗️ Construcción de Oraciones")
+    
+    key_prefix = f"builder_l{lesson_number}_ex{exercise_index}_{key_suffix}"
+    
+    st.info("📝 Ordena las palabras para formar una oración correcta")
+    
+    # Inicializar orden si no existe
+    if f"{key_prefix}_order" not in st.session_state:
+        import random
+        words = exercise['words'].copy()
+        random.shuffle(words)
+        st.session_state[f"{key_prefix}_order"] = words
+    
+    current_order = st.session_state[f"{key_prefix}_order"]
+    
+    # Mostrar palabras desordenadas
+    st.markdown("**Palabras disponibles:**")
+    cols = st.columns(len(current_order))
+    for i, col in enumerate(cols):
+        with col:
+            st.markdown(
+                f"""
+                <div style='background: #e3f2fd; padding: 10px; border-radius: 5px; 
+                            text-align: center; border: 2px solid #2196f3;'>
+                    <b>{current_order[i]}</b>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+    
+    st.markdown("###")
+    
+    # Selector de orden
+    st.markdown("**Ordena las palabras:**")
+    selected_order = []
+    for i in range(len(current_order)):
+        remaining = [w for w in current_order if w not in selected_order]
+        if remaining:
+            word = st.selectbox(
+                f"Posición {i+1}:",
+                options=remaining,
+                key=f"{key_prefix}_pos_{i}"
+            )
+            selected_order.append(word)
+    
+    # Mostrar oración formada
+    if len(selected_order) == len(current_order):
+        st.markdown("**Tu oración:**")
+        st.markdown(
+            f"""
+            <div style='background: #f5f5f5; padding: 15px; border-radius: 8px; 
+                        text-align: center; font-size: 1.3em; font-weight: bold;'>
+                {' '.join(selected_order)}
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+    
+    st.markdown("###")
+    
+    # Botones
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        if st.button("✅ Verificar", key=f"{key_prefix}_check"):
+            if selected_order == exercise['expected_order']:
+                st.success("✅ ¡Correcto! Oración bien formada.")
+                st.info(f"**Traducción**: {exercise['translation']}")
+                if 'explanation' in exercise:
+                    st.caption(f"💡 {exercise['explanation']}")
+                st.balloons()
+            else:
+                st.error("❌ Orden incorrecto. Intenta de nuevo.")
+                st.info(f"**Pista**: La traducción es '{exercise['translation']}'")
+    
+    with col2:
+        if st.button("🔀 Mezclar de nuevo", key=f"{key_prefix}_shuffle"):
+            import random
+            words = exercise['words'].copy()
+            random.shuffle(words)
+            st.session_state[f"{key_prefix}_order"] = words
+            st.rerun()
+
+
+def render_transformation_exercise(
+    exercise: Dict,
+    lesson_number: int,
+    exercise_index: int = 0,
+    user_id: int = 1,
+    key_suffix: str = ""
+):
+    """
+    Renderiza ejercicio de transformación de oraciones.
+    
+    Args:
+        exercise: Dict con 'sentence', 'transformation', 'expected', 'explanation'
+        lesson_number: Número de lección
+        exercise_index: Índice del ejercicio
+        user_id: ID del usuario
+        key_suffix: Sufijo para claves únicas
+    """
+    st.markdown("#### 🔄 Transformación de Oraciones")
+    
+    key_prefix = f"transf_l{lesson_number}_ex{exercise_index}_{key_suffix}"
+    
+    # Mostrar oración original
+    st.markdown("**Oración original:**")
+    st.markdown(
+        f"""
+        <div style='background: #e8f5e9; padding: 15px; border-radius: 8px; 
+                    border-left: 5px solid #4caf50;'>
+            <span style='font-size: 1.3em; font-weight: bold;'>{exercise['sentence']}</span>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+    
+    # Instrucción de transformación
+    transformation_instructions = {
+        "plural_subject": "Cambia el sujeto a plural y ajusta el verbo",
+        "passive_voice": "Convierte la oración a voz pasiva",
+        "singular_to_plural": "Cambia todos los elementos a plural",
+        "change_tense": "Cambia el tiempo verbal según se indica"
+    }
+    
+    transformation = exercise.get('transformation', '')
+    instruction = exercise.get('instructions', transformation_instructions.get(transformation, "Transforma la oración"))
+    
+    st.info(f"📝 **Tarea**: {instruction}")
+    
+    # Área de respuesta
+    user_answer = st.text_input(
+        "Oración transformada:",
+        key=f"{key_prefix}_input",
+        placeholder="Escribe la oración transformada..."
+    )
+    
+    # Verificar
+    if st.button("✅ Verificar", key=f"{key_prefix}_check"):
+        if user_answer.strip():
+            expected = exercise['expected'].lower().strip()
+            user_input = user_answer.lower().strip()
+            
+            if user_input == expected:
+                st.success("✅ ¡Transformación correcta!")
+                if 'explanation' in exercise:
+                    st.info(f"💡 {exercise['explanation']}")
+                st.balloons()
+            else:
+                similarity = SequenceMatcher(None, expected, user_input).ratio()
+                if similarity >= 0.8:
+                    st.warning("~📊 Muy cerca. Compara con la respuesta correcta:")
+                else:
+                    st.error("❌ Revisa tu respuesta:")
+                
+                st.info(f"**Respuesta correcta**: {exercise['expected']}")
+                if 'explanation' in exercise:
+                    st.caption(f"💡 {exercise['explanation']}")
+        else:
+            st.warning("Escribe una respuesta antes de verificar.")
+
+
+def render_pattern_recognition_exercise(
+    exercise: Dict,
+    lesson_number: int,
+    exercise_index: int = 0,
+    user_id: int = 1,
+    key_suffix: str = ""
+):
+    """
+    Renderiza ejercicio de reconocimiento de patrones sintácticos.
+    
+    Args:
+        exercise: Dict con 'text', 'pattern', 'expected_identification', 'hint', 'explanation'
+        lesson_number: Número de lección
+        exercise_index: Índice del ejercicio
+        user_id: ID del usuario
+        key_suffix: Sufijo para claves únicas
+    """
+    st.markdown("#### 🎯 Reconocimiento de Patrones")
+    
+    key_prefix = f"pattern_l{lesson_number}_ex{exercise_index}_{key_suffix}"
+    
+    # Descripción del patrón
+    pattern_descriptions = {
+        "acusativo_objeto_directo": "Acusativo como Objeto Directo",
+        "ablativo_absoluto": "Ablativo Absoluto",
+        "aci": "Acusativo con Infinitivo (AcI)",
+        "genitivo_posesivo": "Genitivo Posesivo",
+        "dativo_interes": "Dativo de Interés"
+    }
+    
+    pattern = exercise.get('pattern', '')
+    pattern_name = pattern_descriptions.get(pattern, pattern.replace('_', ' ').title())
+    
+    st.info(f"🔍 **Identifica**: {pattern_name}")
+    
+    # Mostrar texto
+    st.markdown("**Texto en latín:**")
+    st.markdown(
+        f"""
+        <div style='background: linear-gradient(135deg, #fff3e0, #ffe0b2); 
+                    padding: 20px; border-radius: 10px; 
+                    border: 2px solid #ff9800; margin: 15px 0;'>
+            <div style='font-size: 1.4em; font-style: italic; color: #e65100; text-align: center;'>
+                {exercise['text']}
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+    
+    # Hint
+    if 'hint' in exercise:
+        with st.expander("💡 Ver pista"):
+            st.caption(exercise['hint'])
+    
+    # Área de respuesta
+    user_answer = st.text_input(
+        f"Escribe las palabras que forman el patrón '{pattern_name}':",
+        key=f"{key_prefix}_input",
+        placeholder="Ejemplo: rosam, aquam"
+    )
+    
+    # Verificar
+    if st.button("✅ Verificar", key=f"{key_prefix}_check"):
+        if user_answer.strip():
+            expected = exercise['expected_identification'].lower().strip()
+            user_input = user_answer.lower().strip()
+            
+            # Normalizar (quitar espacios extra, etc.)
+            expected_words = set(w.strip() for w in expected.split(','))
+            user_words = set(w.strip() for w in user_input.split(','))
+            
+            if expected_words == user_words:
+                st.success(f"✅ ¡Correcto! '{exercise['expected_identification']}' es un {pattern_name}")
+                if 'explanation' in exercise:
+                    st.info(f"💡 {exercise['explanation']}")
+                st.balloons()
+            elif expected in user_input or user_input in expected:
+                st.success(f"✅ ¡Correcto! Identificaste el patrón correctamente.")
+                if 'explanation' in exercise:
+                    st.info(f"💡 {exercise['explanation']}")
+            else:
+                st.error("❌ Revisa tu respuesta.")
+                st.info(f"**Respuesta correcta**: {exercise['expected_identification']}")
+                if 'explanation' in exercise:
+                    st.caption(f"💡 {exercise['explanation']}")
+        else:
+            st.warning("Escribe una respuesta antes de verificar.")
+
+
+# --- Consolidated Practice Renderer ---
+
+def render_practice_content(lesson_number: int):
+    """
+    Renderiza el contenido de práctica unificado para una lección.
+    Maneja la lógica de selección entre ejercicios estáticos curados.
+    """
+    st.markdown(f"### ⚔️ Práctica de Lección {lesson_number}")
+    
+    # 1. Taller de Traducción (Siempre disponible si hay datos)
+    with st.expander("📝 Taller de Traducción (Guiado)", expanded=False):
+        render_translation_workshop(lesson_number)
+    
+    st.divider()
+
+    # 2. Selector Unificado de Ejercicios
+    from utils.static_exercise_loader import get_all_exercise_types, load_static_exercises as load_static_db_exercises
+    
+    # Intentar cargar de ambas fuentes
+    static_ex_v1 = get_all_exercise_types(lesson_number)
+    static_ex_v2 = load_static_db_exercises(lesson_number)
+    
+    # Consolidar opciones disponibles
+    available_options = {}
+    
+    # Mapeo de tipos a nombres amigables
+    type_labels = {
+        "vocabulary_match": "🔗 Emparejar Vocabulario",
+        "multiple_choice": "📋 Opción Múltiple (General)",
+        "sentence_completion": "✍️ Completar Oraciones",
+        "translation_latin_spanish": "📖 Traducción Latín → Español",
+        "translation_spanish_latin": "🔄 Traducción Español → Latín",
+        "morphology_analysis": "🔬 Análisis Morfológico",
+        "sentence_builder": "🏗️ Construcción de Oraciones",
+        "transformation": "🔀 Transformaciones",
+        "pattern_recognition": "🎯 Reconocimiento de Patrones"
+    }
+    
+    # Detectar estáticos V1
+    if static_ex_v1:
+        if static_ex_v1.get("multiple_choice"):
+            available_options["static_mc"] = ("Estático", static_ex_v1["multiple_choice"])
+        if static_ex_v1.get("sentence_completion"):
+             available_options["static_fill"] = ("Estático", static_ex_v1["sentence_completion"])
+        if static_ex_v1.get("vocabulary_match"):
+             available_options["static_vocab"] = ("Estático", static_ex_v1["vocabulary_match"])
+
+    # Detectar estáticos V2 (Lista de ejercicios)
+    if static_ex_v2 and 'exercises' in static_ex_v2:
+        for ex in static_ex_v2['exercises']:
+            ex_type = ex.get('type')
+            # Agrupar por tipo para el selector
+            key = f"db_{ex_type}"
+            if key not in available_options:
+                available_options[key] = ("DB", [])
+            available_options[key][1].append(ex)
+
+    if not available_options:
+        st.info("No hay ejercicios estáticos disponibles para esta lección aún.")
+        return
+
+    # --- UI DEL SELECTOR ---
+    
+    st.info("Selecciona el tipo de actividad que deseas practicar hoy:")
+
+    # Crear lista para selectbox
+    options_keys = list(available_options.keys())
+    
+    selected_key = st.selectbox(
+        "Actividad:",
+        options=options_keys,
+        format_func=lambda k: type_labels.get(k.replace("static_", "").replace("db_", ""), k)
+    )
+    
+    st.markdown("---")
+    
+    # --- RENDERIZADO SEGÚN SELECCIÓN ---
+    
+    source_type, data = available_options[selected_key]
+    
+    if source_type == "Estático":
+        # Renderizado V1
+        if "mc" in selected_key:
+            render_multiple_choice_exercise(data, lesson_number, key_suffix="consolidated_v1")
+        elif "fill" in selected_key:
+            render_sentence_completion_exercise(data, lesson_number, key_suffix="consolidated_v1")
+        elif "vocab" in selected_key:
+             for vm_idx, vm_ex in enumerate(data):
+                if "pairs" in vm_ex:
+                    render_vocabulary_match_exercise(vm_ex["pairs"], lesson_number, exercise_index=vm_idx, key_suffix="consolidated_v1")
+                    
+    elif source_type == "DB":
+        # Renderizado V2
+        exercises = data
+        st.caption(f"{len(exercises)} ejercicio(s) disponible(s)")
+        
+        # Selector de ejercicio individual si hay más de uno
+        if len(exercises) > 1:
+            ex_idx = st.selectbox(
+                "Selecciona ejercicio específico:",
+                range(len(exercises)),
+                format_func=lambda i: f"Ejercicio {i+1}",
+                key=f"ex_selector_{selected_key}_l{lesson_number}"
+            )
+        else:
+            ex_idx = 0
+            
+        exercise = exercises[ex_idx]
+        real_type = selected_key.replace("db_", "")
+        
+        # Dispatcher - Usando las funciones ya definidas en este módulo
+        if real_type == "vocabulary_match":
+            pairs = exercise.get('pairs', [])
+            render_vocabulary_match_exercise(pairs, lesson_number, exercise_index=ex_idx, key_suffix="consolidated_v2")
+        elif real_type == "multiple_choice":
+             questions = [{
+                "question": exercise.get('question'),
+                "options": exercise.get('options', []),
+                "correct_answer": exercise['options'][exercise.get('correct', 0)] if 'correct' in exercise and 'options' in exercise else "",
+                "explanation": exercise.get('explanation', '')
+            }]
+             render_multiple_choice_exercise(questions, lesson_number, key_suffix="consolidated_v2")
+        elif real_type == "sentence_completion":
+             questions = [{
+                "question": exercise.get('sentence', ''),
+                "options": exercise.get('options', []),
+                "correct_answer": exercise['options'][exercise.get('correct', 0)] if 'correct' in exercise else "",
+                "explanation": exercise.get('explanation', ''),
+                "translation": exercise.get('translation', '')
+            }]
+             render_sentence_completion_exercise(questions, lesson_number, key_suffix="consolidated_v2")
+        elif real_type == "translation_latin_spanish":
+            render_translation_latin_spanish_exercise(exercise, lesson_number, ex_idx, key_suffix="consolidated_v2")
+        elif real_type == "translation_spanish_latin":
+            render_translation_spanish_latin_exercise(exercise, lesson_number, ex_idx, key_suffix="consolidated_v2")
+        elif real_type == "morphology_analysis":
+            render_morphology_analysis_exercise(exercise, lesson_number, ex_idx, key_suffix="consolidated_v2")
+        elif real_type == "sentence_builder":
+            render_sentence_builder_exercise(exercise, lesson_number, ex_idx, key_suffix="consolidated_v2")
+        elif real_type == "transformation":
+            render_transformation_exercise(exercise, lesson_number, ex_idx, key_suffix="consolidated_v2")
+        elif real_type == "pattern_recognition":
+            render_pattern_recognition_exercise(exercise, lesson_number, ex_idx, key_suffix="consolidated_v2")
+
+# ============================================================================
+# FINAL CHALLENGE WIDGET
+# ============================================================================
+
+def render_final_challenge(lesson_number: int, on_complete=None):
+    """
+    Renders the Final Challenge (Prueba Final) for the lesson.
+    Reuses the game engine but with stricter rules (Exam Mode).
+    """
+    
+    # 1. Initialize Exam Session
+    key_prefix = f"final_challenge_l{lesson_number}"
+    
+    # Only if not initialized
+    if f"{key_prefix}_state" not in st.session_state:
+        # Generate exercises on the fly (Vocabulary + Grammar mix if possible)
+        # For MVP: We use vocabulary matching but with 20 questions (or max available)
+        
+        # We need to fetch exercises
+        from utils.exercise_generator import ExerciseGenerator
+        with get_session() as session:
+            generator = ExerciseGenerator(session)
+            # Fetch a larger set for the exam
+            exercises = generator.generate_vocabulary_match(lesson_number, count=20)
+            
+        st.session_state[f"{key_prefix}_exam_exercises"] = exercises
+        _init_game_session(key_prefix, len(exercises))
+        # Shuffle for exam
+        import random
+        spanish_order = list(range(len(exercises)))
+        random.shuffle(spanish_order)
+        st.session_state[f"{key_prefix}_shuffled_indices"] = spanish_order
+        st.session_state[f"{key_prefix}_current_idx"] = 0
+
+    # Retrieve State
+    state = st.session_state[f"{key_prefix}_state"]
+    exercises = st.session_state.get(f"{key_prefix}_exam_exercises", [])
+    
+    # Validation: Check if exercises are valid (have options) - Fix for cached old state
+    if exercises and ('options' not in exercises[0]):
+        del st.session_state[f"{key_prefix}_state"]
+        del st.session_state[f"{key_prefix}_exam_exercises"]
+        st.rerun()
+    
+    if not exercises:
+        st.warning("No hay suficientes ejercicios para generar la prueba final.")
+        if st.button("Reintentar Generación"):
+            del st.session_state[f"{key_prefix}_state"]
+            st.rerun()
+        return
+
+    # 2. Render State Machine
+    if state == "INTRO":
+        def start_exam():
+            st.session_state[f"{key_prefix}_state"] = "PLAYING"
+            
+        st.markdown(f"### ⚔️ Prueba Final: Lección {lesson_number}")
+        st.markdown("""
+        Bienvenido a la prueba final. 
+        
+        *   **Reglas**: Debes completar todos los ejercicios.
+        *   **Aprobación**: Necesitas un **80% de aciertos** para pasar.
+        *   **Recompensa**: 50 XP y Desbloqueo del siguiente nivel.
+        """)
+        
+        if st.button("🔥 COMENZAR PRUEBA", type="primary", key=f"{key_prefix}_start"):
+            start_exam()
+            st.rerun()
+
+    elif state == "PLAYING":
+        # Reuse existing logic logic, but maybe suppress hints?
+        # For now, we reuse render_vocabulary_match_exercise logic but mostly manually to control flow
+        
+        current_idx = st.session_state[f"{key_prefix}_current_idx"]
+        shuffled_indices = st.session_state[f"{key_prefix}_shuffled_indices"]
+        
+        # Safety check
+        if current_idx >= len(exercises):
+             st.session_state[f"{key_prefix}_state"] = "VICTORY"
+             st.rerun()
+             return
+
+        real_idx = shuffled_indices[current_idx]
+        ex = exercises[real_idx]
+        
+        # Show Progress for Exam
+        progress = (current_idx / len(exercises))
+        st.progress(progress, text=f"Pregunta {current_idx + 1} de {len(exercises)}")
+        
+        # Question Card
+        st.markdown(
+            f"""
+            <div style="text-align: center; padding: 40px; background-color: #f8fafc; border-radius: 10px; border: 2px solid #e2e8f0; margin-bottom: 20px;">
+                <div style="font-size: 1.2em; color: #64748b; margin-bottom: 10px;">Traduce al Latín:</div>
+                <div style="font-size: 2.5em; font-weight: bold; color: #1e293b; font-family: 'Cinzel', serif;">{ex['spanish']}</div>
+            </div>
+            """, 
+            unsafe_allow_html=True
+        )
+        
+        # Options
+        opts = ex['options']
+        cols = st.columns(2)
+        
+        # Callback for answer
+        def check_answer(selected_opt):
+             is_correct = (selected_opt == ex['latin'])
+             
+             # Exam Logic: We record internally
+             if is_correct:
+                 st.session_state[f"{key_prefix}_score"] += 1
+             
+             # Save last result for feedback (even in exam, feedback is good learning)
+             st.session_state[f"{key_prefix}_last_correct"] = is_correct
+             st.session_state[f"{key_prefix}_last_answer"] = ex['latin']
+             st.session_state[f"{key_prefix}_last_explanation"] = f"'{ex['latin']}' significa '{ex['spanish']}'"
+             
+             # Move to feedback state
+             st.session_state[f"{key_prefix}_state"] = "FEEDBACK"
+        
+        for idx, opt in enumerate(opts):
+             with cols[idx % 2]:
+                 st.button(
+                     opt, 
+                     key=f"{key_prefix}_opt_{current_idx}_{idx}", 
+                     use_container_width=True,
+                     on_click=check_answer,
+                     args=(opt,)
+                 )
+
+    elif state == "FEEDBACK":
+        # In Exam Mode, maybe we just show brief feedback or NO feedback?
+        # User requested "Exam Mode". Let's show brief feedback but continue automatically?
+        # Or standard Juicy Feedback is fine.
+        
+        def next_question():
+             # Advance index
+             st.session_state[f"{key_prefix}_current_idx"] += 1
+             if st.session_state[f"{key_prefix}_current_idx"] >= len(exercises):
+                 st.session_state[f"{key_prefix}_state"] = "VICTORY"
+             else:
+                 st.session_state[f"{key_prefix}_state"] = "PLAYING"
+        
+        # Show feedback
+        render_juicy_feedback(
+            is_correct=st.session_state[f"{key_prefix}_last_correct"],
+            explanation=st.session_state[f"{key_prefix}_last_explanation"],
+            correct_answer=st.session_state[f"{key_prefix}_last_answer"],
+            on_continue=next_question,
+            key=f"{key_prefix}_feed_{st.session_state[f'{key_prefix}_current_idx']}"
+        )
+
+    elif state == "VICTORY":
+        # Calculate Final Grade
+        score = st.session_state[f"{key_prefix}_score"]
+        total = len(exercises)
+        percentage = score / total
+        
+        has_passed = percentage >= 0.8
+        
+        st.markdown(f"### 🏁 Resultado de la Prueba")
+        
+        col1, col2, col3 = st.columns(3)
+        col1.metric("Puntaje", f"{score}/{total}")
+        col2.metric("Porcentaje", f"{int(percentage*100)}%")
+        col3.metric("Estado", "APROBADO" if has_passed else "REPROBADO")
+        
+        if has_passed:
+            st.success("🎉 ¡Felicidades! Has superado la prueba final.")
+            st.balloons()
+            
+            if st.button("🏆 Reclamar Recompensa y Finalizar", type="primary", key=f"{key_prefix}_claim"):
+                 # Trigger Completion Callback
+                 if on_complete:
+                     on_complete()
+                 # Clean state
+                 del st.session_state[f"{key_prefix}_state"]
+                 st.rerun()
+        else:
+            st.error("❌ No has alcanzado el 80% necesario.")
+            st.markdown("Debes repasar la lección y volver a intentarlo.")
+            if st.button("🔄 Intentar de Nuevo", key=f"{key_prefix}_retry"):
+                 # Reset key to force re-init
+                 del st.session_state[f"{key_prefix}_state"]
+                 st.rerun()

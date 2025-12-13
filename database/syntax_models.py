@@ -53,9 +53,9 @@ class SentenceAnalysis(SQLModel, table=True):
     verified: bool = Field(default=False)  # Revisión manual
     
     # Relaciones
-    category_links: List["SentenceCategoryLink"] = Relationship(back_populates="sentence")
-    token_annotations: List["TokenAnnotation"] = Relationship(back_populates="sentence")
-    structures: List["SentenceStructure"] = Relationship(back_populates="sentence")
+    category_links: List["database.syntax_models.SentenceCategoryLink"] = Relationship(back_populates="sentence")
+    token_annotations: List["database.syntax_models.TokenAnnotation"] = Relationship(back_populates="sentence")
+    structures: List["database.syntax_models.SentenceStructure"] = Relationship(back_populates="sentence")
 
 
 class SyntaxCategory(SQLModel, table=True):
@@ -69,7 +69,7 @@ class SyntaxCategory(SQLModel, table=True):
     description: str = Field(default="")
     
     # Relaciones
-    sentence_links: list["SentenceCategoryLink"] = Relationship(back_populates="category")
+    sentence_links: list["database.syntax_models.SentenceCategoryLink"] = Relationship(back_populates="category")
 
 
 class SentenceCategoryLink(SQLModel, table=True):
@@ -81,8 +81,8 @@ class SentenceCategoryLink(SQLModel, table=True):
     category_id: int = Field(foreign_key="syntaxcategory.id", index=True)
     
     # Relaciones
-    sentence: Optional["SentenceAnalysis"] = Relationship(back_populates="category_links")
-    category: Optional["SyntaxCategory"] = Relationship(back_populates="sentence_links")
+    sentence: Optional["database.syntax_models.SentenceAnalysis"] = Relationship(back_populates="category_links")
+    category: Optional["database.syntax_models.SyntaxCategory"] = Relationship(back_populates="sentence_links")
 
 
 class TokenAnnotation(SQLModel, table=True):
@@ -100,7 +100,7 @@ class TokenAnnotation(SQLModel, table=True):
     explanation: Optional[str] = None  # Explicación en lenguaje natural
     
     # Relación
-    sentence: Optional["SentenceAnalysis"] = Relationship(back_populates="token_annotations")
+    sentence: Optional["database.syntax_models.SentenceAnalysis"] = Relationship(back_populates="token_annotations")
 
 
 class SentenceStructure(SQLModel, table=True):
@@ -115,4 +115,4 @@ class SentenceStructure(SQLModel, table=True):
     notes: Optional[str] = None
     
     # Relación
-    sentence: Optional["SentenceAnalysis"] = Relationship(back_populates="structures")
+    sentence: Optional["database.syntax_models.SentenceAnalysis"] = Relationship(back_populates="structures")

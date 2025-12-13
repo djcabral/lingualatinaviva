@@ -5,7 +5,8 @@ import os
 
 
 from database.connection import get_session
-from database import Word, Text, TextWordLink, ReviewLog, UserProfile
+# Models imported locally in functions to avoid circular imports/registry duplication
+# from database import Word, Text, TextWordLink, ReviewLog, UserProfile 
 from utils.text_analyzer import LatinTextAnalyzer
 from utils.text_cache import get_text_analysis_from_cache
 from utils.i18n import get_text
@@ -151,6 +152,7 @@ def add_interactive_text_css(font_size=1.3):
 
 def calculate_mastery(session, text_id):
     """Calculate mastery percentage for a text based on word reviews"""
+    from database import TextWordLink, ReviewLog
     links = session.exec(select(TextWordLink).where(TextWordLink.text_id == text_id)).all()
     
     if not links:
@@ -172,6 +174,7 @@ def calculate_mastery(session, text_id):
 
 def get_word_mastery(session, word_id):
     """Get mastery level for a specific word"""
+    from database import ReviewLog
     latest_review = session.exec(
         select(ReviewLog)
         .where(ReviewLog.word_id == word_id)
@@ -316,6 +319,7 @@ def render_readings_content():
     
     # Load texts from database
     with get_session() as session:
+        from database import Text, TextWordLink, Word
         texts = session.exec(select(Text).order_by(Text.difficulty)).all()
         
         # Check if we're in reading view
@@ -405,6 +409,7 @@ def render_readings_content():
                                 
                                 if st.button("💾 Guardar Corrección"):
                                     if new_trans:
+                                        from database import Word
                                         word_to_update = session.get(Word, wid)
                                         if word_to_update:
                                             word_to_update.translation = new_trans

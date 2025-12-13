@@ -27,8 +27,8 @@ class Author(SQLModel, table=True):
     description: Optional[str] = None
     
     # Relaciones
-    words: List["Word"] = Relationship(back_populates="author")
-    texts: List["Text"] = Relationship(back_populates="author")
+    words: List["database.models.Word"] = Relationship(back_populates="author")
+    texts: List["database.models.Text"] = Relationship(back_populates="author")
 
 
 
@@ -76,10 +76,10 @@ class Word(SQLModel, table=True):
     status: str = Field(default="active")     # 'active', 'reservoir', 'hidden'
     
     # Relaciones
-    reviews: List["ReviewLog"] = Relationship(back_populates="word")
-    text_links: List["TextWordLink"] = Relationship(back_populates="word")
-    author: Optional["Author"] = Relationship(back_populates="words")
-    frequencies: List["WordFrequency"] = Relationship(back_populates="word")
+    reviews: List["database.models.ReviewLog"] = Relationship(back_populates="word")
+    text_links: List["database.models.TextWordLink"] = Relationship(back_populates="word")
+    author: Optional["database.models.Author"] = Relationship(back_populates="words")
+    frequencies: List["database.models.WordFrequency"] = Relationship(back_populates="word")
 
 class ReviewLog(SQLModel, table=True):
     __table_args__ = {'extend_existing': True}
@@ -92,7 +92,7 @@ class ReviewLog(SQLModel, table=True):
     interval: int = Field(default=0) # Days until next review
     repetitions: int = Field(default=0)
     
-    word: Optional["Word"] = Relationship(back_populates="reviews")
+    word: Optional["database.models.Word"] = Relationship(back_populates="reviews")
 
 class UserProfile(SQLModel, table=True):
     __table_args__ = {'extend_existing': True}
@@ -174,8 +174,8 @@ class Text(SQLModel, table=True):
     created_at: datetime = Field(default_factory=datetime.utcnow)
     
     # Relaciones
-    author: Optional["Author"] = Relationship(back_populates="texts")
-    word_links: List["TextWordLink"] = Relationship(back_populates="text")
+    author: Optional["database.models.Author"] = Relationship(back_populates="texts")
+    word_links: List["database.models.TextWordLink"] = Relationship(back_populates="text")
 
 class TextWordLink(SQLModel, table=True):
     """Vincula palabras con textos (con anotaciones morfológicas y sintácticas)"""
@@ -192,8 +192,8 @@ class TextWordLink(SQLModel, table=True):
     notes: Optional[str] = None  # Explicaciones contextuales o análisis CLTK adicional
     
     # Relaciones
-    text: Optional["Text"] = Relationship(back_populates="word_links")
-    word: Optional["Word"] = Relationship(back_populates="text_links")
+    text: Optional["database.models.Text"] = Relationship(back_populates="word_links")
+    word: Optional["database.models.Word"] = Relationship(back_populates="text_links")
 
 
 class WordFrequency(SQLModel, table=True):
@@ -209,8 +209,8 @@ class WordFrequency(SQLModel, table=True):
     is_top_500: bool = Field(default=False)
     
     # Relaciones
-    word: Optional["Word"] = Relationship(back_populates="frequencies")
-    author: Optional["Author"] = Relationship()
+    word: Optional["database.models.Word"] = Relationship(back_populates="frequencies")
+    author: Optional["database.models.Author"] = Relationship()
 
 
 class SyntaxPattern(SQLModel, table=True):
@@ -242,7 +242,7 @@ class InflectedForm(SQLModel, table=True):
     morphology: str
     
     # Relación
-    word: Optional["Word"] = Relationship()
+    word: Optional["database.models.Word"] = Relationship()
 
 
 class Challenge(SQLModel, table=True):
@@ -274,7 +274,7 @@ class Challenge(SQLModel, table=True):
     difficulty_level: int = Field(default=1)  # 1-10
     
     # Relaciones
-    progress: List["UserChallengeProgress"] = Relationship(back_populates="challenge")
+    progress: List["database.models.UserChallengeProgress"] = Relationship(back_populates="challenge")
 
 
 class UserChallengeProgress(SQLModel, table=True):
@@ -302,7 +302,7 @@ class UserChallengeProgress(SQLModel, table=True):
     completed_at: Optional[datetime] = None
     
     # Relación
-    challenge: Optional["Challenge"] = Relationship(back_populates="progress")
+    challenge: Optional["database.models.Challenge"] = Relationship(back_populates="progress")
 
 
 class Lesson(SQLModel, table=True):

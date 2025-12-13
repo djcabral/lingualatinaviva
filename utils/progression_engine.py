@@ -14,8 +14,7 @@ from typing import Dict, List, Optional, Tuple
 from datetime import datetime
 from sqlmodel import Session, select
 # Import from database package to avoid duplicate registration
-from database import UserProfile, Word, ReviewLog
-from database.models import UserLessonProgressV2
+from database import UserProfile, Word, ReviewLog, UserLessonProgressV2
 import logging
 
 logger = logging.getLogger(__name__)

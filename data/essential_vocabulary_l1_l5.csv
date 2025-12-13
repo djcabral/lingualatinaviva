@@ -1,0 +1,78 @@
+latin,lesson,pos,translation,reason
+rosa,1,noun,rosa,Sustantivo básico 1ª declinación para ejercicios
+puella,1,noun,niña,Sustantivo básico 1ª declinación para ejercicios
+femina,1,noun,mujer,Sustantivo básico 1ª declinación para ejercicios
+aqua,1,noun,agua,Sustantivo básico 1ª declinación para ejercicios
+terra,1,noun,tierra,Sustantivo básico 1ª declinación para ejercicios
+dominus,1,noun,señor,Sustantivo básico 2ª declinación masculino
+servus,1,noun,esclavo,Sustantivo básico 2ª declinación masculino
+amicus,1,noun,amigo,Sustantivo básico 2ª declinación masculino
+filius,1,noun,hijo,Sustantivo básico 2ª declinación masculino
+sum,1,verb,ser/estar,Verbo más importante del latín (presente)
+est,1,verb,es/está,Forma más común de SUM
+amo,1,verb,amar,Verbo modelo 1ª conjugación
+amat,1,verb,ama,3ª persona singular presente
+voco,1,verb,llamar,Verbo transitivo básico
+vocat,1,verb,llama,3ª persona singular
+et,1,conjunction,y,Conjunción copulativa básica
+sed,1,conjunction,pero,Conjunción adversativa básica
+magnus,1,adjective,grande,Adjetivo básico
+bonus,1,adjective,bueno,Adjetivo básico
+malus,1,adjective,malo,Adjetivo básico
+agricola,2,noun,agricultor,Sustantivo masculino 1ª declinación (excepción)
+nauta,2,noun,marinero,Sustantivo masculino 1ª declinación (excepción)
+poeta,2,noun,poeta,Sustantivo masculino 1ª declinación (excepción)
+porta,2,noun,puerta,Sustantivo femenino para ejercicios de nominativo/acusativo
+via,2,noun,camino,Sustantivo femenino frecuente
+populus,2,noun,pueblo,Sustantivo masculino para sujetos
+deus,2,noun,dios,Sustantivo masculino irregular
+legit,2,verb,lee,Verbo leer (transitivo) para ejercicios
+scribit,2,verb,escribe,Verbo escribir (transitivo)
+audit,2,verb,oye/escucha,Verbo oír (transitivo)
+video,2,verb,ver,Verbo muy frecuente
+videt,2,verb,ve,3ª persona singular
+habeo,2,verb,tener,Verbo tener básico
+habet,2,verb,tiene,3ª persona singular
+in,2,preposition,en,Preposición más frecuente
+cum,2,preposition,con,Preposición con ablativo
+ancilla,3,noun,criada,Sustantivo 1ª declinación para ejercicios completos
+filia,3,noun,hija,Sustantivo 1ª declinación
+insula,3,noun,isla,Sustantivo 1ª declinación
+silva,3,noun,bosque,Sustantivo 1ª declinación
+stella,3,noun,estrella,Sustantivo 1ª declinación
+provincia,3,noun,provincia,Sustantivo 1ª declinación
+victoria,3,noun,victoria,Sustantivo 1ª declinación
+memoria,3,noun,memoria,Sustantivo 1ª declinación
+laudo,3,verb,alabar,Verbo 1ª conjugación
+laudat,3,verb,alaba,3ª persona singular
+paro,3,verb,preparar,Verbo 1ª conjugación
+parat,3,verb,prepara,3ª persona singular
+porto,3,verb,llevar,Verbo 1ª conjugación básico
+portat,3,verb,lleva,3ª persona singular
+puer,4,noun,niño,Sustantivo 2ª declinación (nominativo irregular)
+ager,4,noun,campo,Sustantivo 2ª declinación
+liber,4,noun,libro,Sustantivo 2ª declinación
+magister,4,noun,maestro,Sustantivo 2ª declinación -er
+verbum,4,noun,palabra,Sustantivo neutro 2ª declinación
+bellum,4,noun,guerra,Sustantivo neutro frecuente
+consilium,4,noun,consejo/plan,Sustantivo neutro
+templum,4,noun,templo,Sustantivo neutro
+donum,4,noun,regalo/don,Sustantivo neutro
+lego,4,verb,leer,Verbo 3ª conjugación
+do,4,verb,dar,Verbo irregular dar
+dat,4,verb,da,3ª persona singular de do
+moneo,4,verb,advertir,Verbo 2ª conjugación
+monet,4,verb,advierte,3ª persona singular
+doceo,4,verb,enseñar,Verbo 2ª conjugación
+caput,5,noun,cabeza,Sustantivo neutro 3ª declinación
+corpus,5,noun,cuerpo,Sustantivo neutro 3ª declinación
+nomen,5,noun,nombre,Sustantivo neutro 3ª declinación
+tempus,5,noun,tiempo,Sustantivo neutro 3ª declinación frecuentísimo
+opus,5,noun,obra/trabajo,Sustantivo neutro 3ª declinación
+genus,5,noun,género/tipo,Sustantivo neutro 3ª declinación
+foedus,5,noun,pacto,Sustantivo neutro 3ª declinación
+longus,5,adjective,largo,Adjetivo que concierta con neutros
+altus,5,adjective,alto,Adjetivo que concierta con neutros
+parvus,5,adjective,pequeño,Adjetivo básico
+novus,5,adjective,nuevo,Adjetivo frecuente
+multus,5,adjective,mucho,Adjetivo frecuentísimo

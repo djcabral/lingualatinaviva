@@ -18,11 +18,14 @@ class ExerciseGenerator:
     def __init__(self, session: Session):
         self.session = session
 
-    def generate_vocabulary_match(self, lesson_number: int, num_pairs: int = 5) -> List[Dict[str, str]]:
+    def generate_vocabulary_match(self, lesson_number: int, num_pairs: int = 5, count: int = None) -> List[Dict[str, str]]:
         """
         Genera pares de vocabulario para ejercicios de emparejamiento.
         Retorna una lista de diccionarios con 'latin' y 'spanish'.
         """
+        if count is not None:
+            num_pairs = count
+
         statement = (
             select(Word)
             .join(LessonVocabulary, Word.id == LessonVocabulary.word_id)
@@ -36,14 +39,29 @@ class ExerciseGenerator:
         else:
             selected_words = random.sample(words, num_pairs)
             
-        return [
-            {
+        result = []
+        all_latin_words = [w.latin for w in words]
+        
+        for w in selected_words:
+            # Generate options (Correct + 3 Distractors)
+            distractors = [lw for lw in all_latin_words if lw != w.latin]
+            # Ensure we have enough distractors
+            if len(distractors) < 3:
+                 current_opts = distractors + ["(Placeholder)"] * (3 - len(distractors))
+            else:
+                 current_opts = random.sample(distractors, 3)
+            
+            options = [w.latin] + current_opts
+            random.shuffle(options)
+            
+            result.append({
                 "id": str(w.id),
                 "latin": w.latin,
-                "spanish": w.translation
-            }
-            for w in selected_words
-        ]
+                "spanish": w.translation,
+                "options": options
+            })
+            
+        return result
 
     def generate_declension_choice(self, lesson_number: int, num_questions: int = 3) -> List[Dict[str, Any]]:
         """

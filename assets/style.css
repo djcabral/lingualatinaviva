@@ -166,6 +166,15 @@ table tbody td:first-child {
     animation: spin 1s ease-in-out infinite;
 }
 
-@keyframes spin {
-    to { transform: rotate(360deg); }
+
+/* Reading Tooltips */
+.word-tooltip {
+    border-bottom: 2px dotted #888;
+    cursor: help;
+    background-color: rgba(255, 255, 0, 0.1);
+    transition: background-color 0.2s;
+}
+
+.word-tooltip:hover {
+    background-color: rgba(255, 255, 0, 0.3);
 }
