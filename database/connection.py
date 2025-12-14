@@ -407,10 +407,12 @@ def init_db():
     Raises:
         DatabaseError: If initialization fails critically
     """
+    
     try:
         logger.info("=" * 60)
         logger.info("INITIALIZING DATABASE")
         logger.info("=" * 60)
+         
 
         # Create tables
         create_db_and_tables()

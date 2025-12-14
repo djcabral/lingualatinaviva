@@ -127,4 +127,7 @@ windows-build/
 installer/
 
 # PDF Documentation (large files)
-pdf/
+
+# Windows Port Build
+windows-port/
+windows-port-v2/
