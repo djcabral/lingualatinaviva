@@ -1,0 +1,76 @@
+{
+  "id": 22,
+  "sections": [
+    {
+      "type": "markdown",
+      "content": "\n        ## Leccion 22: El Ablativo Absoluto\n        \n        ### 1. La Construccion Reina del Latin\n        \n        El **Ablativo Absoluto** es una construccion sintactica fundamental y muy frecuente en latin clasico.\n        Equivale a una **oracion subordinada circunstancial** (temporal, causal, concesiva, condicional).\n        \n        Se llama \"absoluto\" (*absolutus* = desatado, suelto) porque gramaticalmente esta **desligado** de la oracion principal:\n        *   Su sujeto NO es el sujeto de la principal.\n        *   Su sujeto NO es el objeto de la principal.\n        *   Funciona como un complemento circunstancial independiente.\n        \n        ### 2. Estructura Basica\n        \n        Se compone de **DOS elementos en caso ABLATIVO**:\n        \n        1.  **Sujeto** (Sustantivo o Pronombre en Ablativo)\n        2.  **Predicado** (Participio, Adjetivo o Sustantivo en Ablativo)\n        \n        **Formula**: **[Sust. Ablativo] + [Participio/Adj/Sust Ablativo]**\n        \n        ### 3. Tipos de Ablativo Absoluto\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Tipo",
+        "Estructura",
+        "Significado",
+        "Ejemplo"
+      ],
+      "rows": [
+        [
+          "**Con Part. Presente**",
+          "Abl + Part. Pres",
+          "Simultaneidad",
+          "*Sole **oriente*** (Saliendo el sol)"
+        ],
+        [
+          "**Con Part. Perfecto**",
+          "Abl + Part. Perf",
+          "Anterioridad",
+          "*Urbe **capta*** (Capturada la ciudad)"
+        ],
+        [
+          "**Nominal**",
+          "Abl + Sust/Adj",
+          "Estado/Circunstancia",
+          "*Me **consule*** (Siendo yo consul)"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        ### 4. Ablativo Absoluto con Participio Presente\n        \n        Expresa una **accion simultanea** a la principal.\n        \n        **Ejemplos**:\n        *   *Sole **oriente**, aves canunt.*\n            *   **Saliendo el sol** / **Al salir el sol**, las aves cantan.\n            *   (= Cuando sale el sol)\n        \n        *   *Caesare **duce**, Romani vincebant.*\n            *   **Siendo Cesar el jefe** / **Bajo el mando de Cesar**, los romanos vencian.\n        \n        *   *Me **tacente**, tu loquebaris.*\n            * **Callando yo** / **Mientras yo callaba**, tu hablabas.\n        \n        ### 5. Ablativo Absoluto con Participio Perfecto\n        \n        Expresa una **accion anterior** a la principal (la mas comun).\n        \n        **Ejemplos**:\n        *   *Urbe **capta**, hostes redierunt.*\n            *   **Capturada la ciudad** / **Despues de capturar la ciudad**, los enemigos regresaron.\n            *   (Primero capturaron, luego regresaron)\n        \n        *   *His rebus **cognitis**, Caesar exercitum movit.*\n            *   **Conocidas estas cosas** / **Cuando supo esto**, Cesar movio el ejercito.\n        \n        *   *Romulo **regnante**, urbs condita est.*\n            *   **Reinando Romulo** / **En el reinado de Romulo**, la ciudad fue fundada.\n        \n        ### 6. Ablativo Absoluto Nominal (sin Participio)\n        \n        Cuando NO hay participio, se sobreentiende el verbo **SUM** (\"ser/estar\").\n        \n        **Estructura**: Sustantivo/Pronombre + Sustantivo/Adjetivo (ambos en Ablativo)\n        \n        **Ejemplos**:\n        *   *Me **consule**, pax erat.*\n            *   **Siendo yo consul** / **Durante mi consulado**, habia paz.\n            *   (= Cum ego consul essem)\n        \n        *   *Cicerone **oratore**, Romani eloquentes erant.*\n            *   **Siendo Ciceron orador** / **Con Ciceron como orador**, los romanos eran elocuentes.\n        \n        *   ***Vivo** patre, felix sum.*\n            *   **Viviendo el padre** / **Estando vivo el padre**, soy feliz.\n        \n        ### 7. Como Traducir el Ablativo Absoluto\n        \n        El Ablativo Absoluto puede tener diversos matices y traducirse de varias formas:\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Matiz",
+        "Conjuncion Espanola",
+        "Ejemplo Traduccion"
+      ],
+      "rows": [
+        [
+          "**Temporal**",
+          "Cuando, Al, Mientras",
+          "**Cuando** el sol salia..."
+        ],
+        [
+          "**Causal**",
+          "Como, Porque, Ya que",
+          "**Como** la ciudad fue capturada..."
+        ],
+        [
+          "**Concesivo**",
+          "Aunque",
+          "**Aunque** el padre vivia..."
+        ],
+        [
+          "**Condicional**",
+          "Si",
+          "**Si** el consul hubiera muerto..."
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        ### 8. Diferencia con el Participio Concertado\n        \n        Es crucial NO confundir:\n        \n        **Participio Concertado**: El participio concuerda con un elemento de la oracion principal (Sujeto, OD, etc.)\n        *   *Consul, **urbem videns**, laetus erat.*\n        *   El consul, **viendo la ciudad**, estaba contento.\n        *   (*videns* concuerda con *consul*, que es el sujeto)\n        \n        **Ablativo Absoluto**: El participio esta en Ablativo con su propio sujeto, separado de la principal.\n        *   ***Sole oriente**, consul laetus erat.*\n        *   **Al salir el sol**, el consul estaba contento.\n        *   (*oriente* esta con *sole*, en Ablativo, independiente de *consul*)\n        \n        ### 9. Ejercicios de Analisis\n        \n        Identifica y traduce:\n        \n        1.  *Romanis **pugnan tibus**, hostes fugerunt.*\n            *   Ablativo Absoluto con Participio Presente.\n            *   **Luchando los romanos** / **Mientras los romanos luchaban**, los enemigos huyeron.\n        \n        2.  *Caesare **mortuo**, Marcus consul factus est.*\n            *   Ablativo Absoluto con Participio Perfecto.\n            *   **Muerto Cesar** / **Despues de morir Cesar**, Marco fue hecho consul.\n        \n        3.  *Te **duce**, vincere possumus.*\n            *   Ablativo Absoluto Nominal (sin participio, se sobreentiende *sum*).\n            *   **Siendo tu el jefe** / **Contigo como jefe**, podemos vencer.\n        \n        4.  *Omnibus **audientibus**, orator dixit.*\n            *   Ablativo Absoluto con Participio Presente.\n            *   **Escuchando todos** / **Mientras todos escuchaban**, el orador hablo.\n        \n        ### Vocabulario Esencial\n        *   **Orior, oriri, ortus sum**: salir, levantarse (el sol)\n        *   **Dux, ducis** (m): jefe, general\n        *   **Taceo, tacere**: callar\n        *   **Loquor, loqui**: hablar (deponente)\n        *   **Cognosco, cognoscere, cognovi**: conocer, enterarse\n        *   **Moveo, movere**: mover\n        *   **Exercitus, -us** (m): ejercito\n        *   **Eloquens, -entis**: elocuente\n        \n        "
+    }
+  ]
+}

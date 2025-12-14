@@ -1,0 +1,391 @@
+{
+  "id": 13,
+  "sections": [
+    {
+      "type": "markdown",
+      "content": "\n        ## Lección 13: Voz Pasiva y el Ablativo\n        "
+    },
+    {
+      "type": "image",
+      "path": "static/images/curso_gramatica/passive_voice_diagram.png",
+      "caption": "La Voz Pasiva: Estructura y Formación"
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        ### 1. Voz Pasiva: El Sujeto Recibe la Acción\n        \n        En la **voz activa**, el sujeto **realiza** la acción: *Puer puellam amat* (El niño ama a la niña).\n        En la **voz pasiva**, el sujeto **recibe** la acción: *Puella a puero amatur* (La niña es amada por el niño).\n        \n        **Formación**: Se cambian las **desinencias personales**.\n        \n        #### Desinencias Personales Pasivas (Sistema de Infectum)\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Persona",
+        "Activa",
+        "Pasiva"
+      ],
+      "rows": [
+        [
+          "1a Sg",
+          "-o/-m",
+          "**-r**"
+        ],
+        [
+          "2a Sg",
+          "-s",
+          "**-ris**"
+        ],
+        [
+          "3a Sg",
+          "-t",
+          "**-tur**"
+        ],
+        [
+          "1a Pl",
+          "-mus",
+          "**-mur**"
+        ],
+        [
+          "2a Pl",
+          "-tis",
+          "**-mini**"
+        ],
+        [
+          "3a Pl",
+          "-nt",
+          "**-ntur**"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        #### Presente Pasivo - Ejemplo: AMARE\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Persona",
+        "Activa",
+        "Pasiva",
+        "Traducción"
+      ],
+      "rows": [
+        [
+          "1a Sg",
+          "amo",
+          "amo**r**",
+          "yo soy amado"
+        ],
+        [
+          "2a Sg",
+          "amas",
+          "ama**ris** / ama**re**",
+          "tú eres amado"
+        ],
+        [
+          "3a Sg",
+          "amat",
+          "ama**tur**",
+          "él/ella es amado/a"
+        ],
+        [
+          "1a Pl",
+          "amamus",
+          "ama**mur**",
+          "nosotros somos amados"
+        ],
+        [
+          "2a Sg",
+          "amatis",
+          "ama**mini**",
+          "vosotros sois amados"
+        ],
+        [
+          "3a Pl",
+          "amant",
+          "ama**ntur**",
+          "ellos/ellas son amados/as"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        #### Imperfecto Pasivo\n        *   *Amabar, amabaris, amabatur...* (Yo era amado, tú eras amado...)\n        \n        #### Futuro Pasívo (1a/2a Conj)\n        *   *Amabor, amaberis, amabitur...* (Yo seré amado...)\n        \n        ### 2. Verbos Deponentes: Pasivos en Forma, Activos en Significado\n        \n        Los **verbos deponentes** tienen forma pasiva pero significado activo.\n        (¡Se conjugan como pasivos pero se traducen como activos!)\n        \n        **Ejemplos importantes:**\n        *   **Sequor, sequi, secutus sum** (seguir)\n            - *Sequor te* = Te sigo (no \"soy seguido por ti\")\n        *   **Loquor, loqui, locutus sum** (hablar)\n        *   **Patior, pati, passus sum** (sufrir, padecer)\n        *   **Morior, mori, mortuus sum** (morir)\n        *   **Nascor, nasci, natus sum** (nacer)\n        \n        ### 3. El Caso Ablativo: El Más Versátil\n        \n        El **Ablativo** es el caso de las **circunstancias**. Es el caso más versátil del latín, \n        con una enorme variedad de usos. Vamos a explorar los complementos circunstanciales en detalle.\n        \n        ---\n        \n        ## COMPLEMENTOS CIRCUNSTANCIALES DE LUGAR\n        \n        Los complementos de lugar expresan dónde ocurre la acción. El latín distingue cuatro tipos fundamentales:\n        \n        "
+    },
+    {
+      "type": "image",
+      "path": "static/images/curso_gramatica/leccion13_complementos_lugar.png",
+      "caption": "Esquema de los Complementos de Lugar en Latín"
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        ### 3.1 ¿A DÓNDE? - Movimiento hacia un lugar (Acusativo)\n        \n        Para expresar **movimiento hacia** un lugar se usa **Acusativo** con preposiciones:\n        \n        **AD + Acusativo**: \"hacia, a\" (dirección general)\n        *   *Miles ad urbem it.* (El soldado va hacia la ciudad)\n        *   *Venit ad Caesarem.* (Viene hacia César)\n        *   *Ad forum ambulamus.* (Caminamos hacia el foro)\n        \n        **IN + Acusativo**: \"hacia dentro de, a\" (entrada a un espacio cerrado)\n        *   *Puer in silvam currit.* (El niño corre hacia el bosque)\n        *   *In scholam venio.* (Vengo a la escuela)\n        *   *Equus in aquam descendit.* (El caballo desciende al agua)\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Preposición",
+        "Caso",
+        "Significado",
+        "Ejemplo Latino",
+        "Traducción"
+      ],
+      "rows": [
+        [
+          "**AD**",
+          "Acusativo",
+          "hacia, a",
+          "*ad urbem*",
+          "hacia la ciudad"
+        ],
+        [
+          "**IN**",
+          "Acusativo",
+          "hacia dentro de",
+          "*in silvam*",
+          "hacia el bosque"
+        ],
+        [
+          "**PER**",
+          "Acusativo",
+          "a través de",
+          "*per viam*",
+          "por el camino"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        ### 3.2 ¿DE DÓNDE? - Procedencia u origen (Ablativo)\n        \n        Para expresar **procedencia** se usa **Ablativo** con preposiciones:\n        \n        **A/AB + Ablativo**: \"desde, de\" (punto de partida, alejamiento)\n        *   *Ab urbe venio.* (Vengo desde la ciudad)\n        *   *A porta discedunt.* (Se alejan de la puerta)\n        *   *A Roma proficiscitur.* (Parte desde Roma)\n        \n        **DE + Ablativo**: \"de, desde\" (bajada, descenso)\n        *   *De monte descendit.* (Desciende del monte)\n        *   *De caelo cadit.* (Cae del cielo)\n        *   *De nave exit.* (Sale de la nave)\n        \n        **EX/E + Ablativo**: \"de, fuera de, desde\" (salida del interior)\n        *   *Ex oppido exeunt.* (Salen de la ciudad)\n        *   *E silva veniunt.* (Vienen del bosque)\n        *   *Ex urbe fugit.* (Huye de la ciudad)\n        \n        **Matices importantes**:\n        *   *AB*: Énfasis en el alejamiento o punto de partida\n        *   *DE*: Énfasis en bajada o descenso\n        *   *EX*: Énfasis en salida del interior\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Preposición",
+        "Caso",
+        "Matiz",
+        "Ejemplo Latino",
+        "Traducción"
+      ],
+      "rows": [
+        [
+          "**A/AB**",
+          "Ablativo",
+          "alejamiento",
+          "*ab urbe*",
+          "desde la ciudad"
+        ],
+        [
+          "**DE**",
+          "Ablativo",
+          "descenso",
+          "*de monte*",
+          "desde el monte"
+        ],
+        [
+          "**EX/E**",
+          "Ablativo",
+          "salida interior",
+          "*ex oppido*",
+          "fuera de la ciudad"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        ### 3.3 ¿DÓNDE? - Ubicación estática (Ablativo)\n        \n        Para expresar **ubicación en un lugar** se usa **Ablativo** con preposiciones:\n        \n        **IN + Ablativo**: \"en, dentro de\"\n        *   *In urbe habito.* (Habito en la ciudad)\n        *   *In silva sunt.* (Están en el bosque)\n        *   *In templo orat.* (Ora en el templo)\n        \n        **SUB + Ablativo**: \"bajo, debajo de\"\n        *   *Sub arbore sedet.* (Se sienta bajo el árbol)\n        *   *Sub terra latent.* (Se esconden bajo tierra)\n        \n        **SUPER + Ablativo**: \"sobre, encima de\"\n        *   *Super montem stat.* (Está sobre el monte)\n        \n        > **¡ATENCIÓN!** La preposición **IN** cambia de significado según el caso:\n        > *   **IN + Acusativo** = hacia dentro de (movimiento)\n        > *   **IN + Ablativo** = en, dentro de (ubicación estática)\n        \n        ### 3.4 ¿POR DÓNDE? - Tránsito o paso (Acusativo)\n        \n        **PER + Acusativo**: \"por, a través de\"\n        *   *Per viam ambulat.* (Camina por el camino)\n        *   *Per silvam iter faciunt.* (Hacen el viaje a través del bosque)\n        *   *Per forum transit.* (Pasa por el foro)\n        \n        "
+    },
+    {
+      "type": "markdown",
+      "content": "### 🧠 Mnemotecnia: Preposiciones"
+    },
+    {
+      "type": "image",
+      "path": "static/images/curso_gramatica/leccion13_preposiciones_completas.png",
+      "caption": "Guía Visual de Preposiciones (Acusativo vs Ablativo)"
+    },
+    {
+      "type": "image",
+      "path": "static/images/curso_gramatica/leccion13_preposiciones_casos.png",
+      "caption": "Preposiciones de Lugar con sus Casos Gramaticales"
+    },
+    {
+      "type": "image",
+      "path": "static/images/curso_gramatica/leccion13_decision_preposiciones.png",
+      "caption": "Diagrama de Decisión: ¿Qué Preposición Usar?"
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        ### 3.5 EL LOCATIVO: Caso Especial para Ciudades\n        \n        El **Locativo** es un caso arcaico que sobrevive SOLO para:\n        *   Nombres de **ciudades** y **pueblos**\n        *   Nombres de **islas pequeñas**\n        *   Las palabras **domus** (casa) y **rus** (campo)\n        \n        "
+    },
+    {
+      "type": "image",
+      "path": "static/images/curso_gramatica/leccion13_locativo.png",
+      "caption": "El Locativo: Nombres de Ciudades e Islas Pequeñas"
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        **Terminaciones del Locativo:**\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Declinación",
+        "Singular",
+        "Plural",
+        "Ejemplos"
+      ],
+      "rows": [
+        [
+          "**1a Decl**",
+          "-ae",
+          "-is",
+          "*Romae* (en Roma), *Athenis* (en Atenas)"
+        ],
+        [
+          "**2a Decl**",
+          "-i",
+          "-is",
+          "*Corinthi* (en Corinto), *Delphi* (en Delfos)"
+        ],
+        [
+          "**3a Decl**",
+          "-i / -e",
+          "-ibus",
+          "*Carthagine* (en Cartago)"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        **Ejemplos con ciudades:**\n        *   **Ubicación**: *Romae vivit.* (Vive en Roma) - Locativo\n        *   **Dirección**: *Romam it.* (Va a Roma) - Acusativo sin preposición\n        *   **Procedencia**: *Roma venit.* (Viene de Roma) - Ablativo sin preposición\n        \n        **Palabras especiales:**\n        *   *Domi* (en casa): *Domi maneo.* (Me quedo en casa)\n        *   *Domum* (a casa): *Domum eo.* (Voy a casa)\n        *   *Domo* (de casa): *Domo venio.* (Vengo de casa)\n        \n        > **Nota**: Las ciudades grandes a veces usan *in + Ablativo* en lugar del locativo.\n        \n        "
+    },
+    {
+      "type": "markdown",
+      "content": "\n        ---\n        \n        ## COMPLEMENTOS CIRCUNSTANCIALES DE TIEMPO\n        "
+    },
+    {
+      "type": "image",
+      "path": "static/images/curso_gramatica/leccion13_complementos_tiempo.png",
+      "caption": "Esquema de los Complementos de Tiempo en Latín"
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        ### 4.1 ¿CUÁNDO? - Momento determinado (Ablativo sin preposición)\n        \n        Para expresar **en qué momento** ocurre algo, se usa **Ablativo SIN preposición**:\n        \n        *   *Prima hora venio.* (Vengo en la primera hora)\n        *   *Aestate* (En verano)\n        *   *Hieme* (En invierno)\n        *   *Nocte* (De noche)\n        *   *Die* (De día)\n        *   *Hora sexta* (A la hora sexta)\n        *   *Tertio die* (Al tercer día)\n        \n        **Ejemplos en contexto:**\n        *   *Nocte stellae lucent.* (De noche brillan las estrellas)\n        *   *Prima luce proficiscuntur.* (Parten al amanecer)\n        *   *Aestate in agris laborant.* (En verano trabajan en los campos)\n        \n        ### 4.2 ¿DESDE CUÁNDO? - Punto de partida temporal (Ablativo con preposición)\n        \n        **A/AB + Ablativo**: \"desde\"\n        *   *A prima luce laborat.* (Trabaja desde el amanecer)\n        *   *Ab illo tempore* (Desde aquel tiempo)\n        *   *A pueritia* (Desde la infancia)\n        \n        **EX + Ablativo**: \"desde, a partir de\"\n        *   *Ex eo tempore* (Desde ese tiempo)\n        *   *Ex hoc die* (A partir de este día)\n        \n        ### 4.3 ¿HASTA CUÁNDO? - Límite temporal (Acusativo)\n        \n        **AD + Acusativo**: \"hasta\"\n        *   *Ad vesperum manet.* (Permanece hasta la tarde)\n        *   *Ad noctem pugnaverunt.* (Lucharon hasta la noche)\n        \n        **USQUE AD + Acusativo**: \"hasta\" (con énfasis)\n        *   *Usque ad mortem fidelis.* (Fiel hasta la muerte)\n        *   *Usque ad noctem* (Hasta la noche)\n        \n        ### 4.4 ¿CUÁNTO TIEMPO? - Duración (Acusativo sin preposición)\n        \n        Para expresar **duración** se usa **Acusativo SIN preposición**:\n        \n        *   *Tres dies maneo.* (Permanezco tres días)\n        *   *Multos annos vixit.* (Vivió muchos años)\n        *   *Totam noctem vigilat.* (Vigila toda la noche)\n        *   *Decem annos regnavit.* (Reinó diez años)\n        \n        **PER + Acusativo**: Duración con énfasis en la continuidad\n        *   *Per decem annos* (Durante diez años [continuamente])\n        *   *Per totam vitam* (Durante toda la vida)\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Pregunta",
+        "Construcción",
+        "Ejemplo Latino",
+        "Traducción"
+      ],
+      "rows": [
+        [
+          "**¿Cuándo?**",
+          "Ablativo solo",
+          "*nocte*",
+          "de noche"
+        ],
+        [
+          "**¿Desde cuándo?**",
+          "A/AB + Abl",
+          "*a prima luce*",
+          "desde el amanecer"
+        ],
+        [
+          "**¿Hasta cuándo?**",
+          "AD + Acus",
+          "*ad vesperum*",
+          "hasta la tarde"
+        ],
+        [
+          "**¿Cuánto tiempo?**",
+          "Acusativo solo",
+          "*tres dies*",
+          "tres días"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        ---\n        \n        ## OTROS COMPLEMENTOS CIRCUNSTANCIALES\n        "
+    },
+    {
+      "type": "image",
+      "path": "static/images/curso_gramatica/leccion13_otros_complementos.png",
+      "caption": "Otros Complementos Circunstanciales: Modo, Causa, Instrumento, etc."
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        ### 5.1 Modo (¿Cómo?)\n        \n        **CUM + Ablativo**: Con + cualidad\n        *   *Cum gaudio venit.* (Viene con alegría)\n        *   *Cum studio laborat.* (Trabaja con empeño)\n        *   *Magna cum laude* (Con gran alabanza)\n        \n        **Ablativo de cualidad solo** (sin preposición):\n        *   *Magna voce clamat.* (Grita en voz alta)\n        *   *Summa celeritate* (Con suma rapidez)\n        \n        ### 5.2 Causa (¿Por qué?)\n        \n        **OB/PROPTER + Acusativo**: \"a causa de, por\"\n        *   *Propter bellum fugiunt.* (Huyen a causa de la guerra)\n        *   *Ob metum tacet.* (Calla por miedo)\n        \n        **Ablativo de causa** (sin preposición):\n        *   *Metu fugiunt.* (Huyen por miedo)\n        *   *Amore patriae pugnat.* (Lucha por amor a la patria)\n        \n        ### 5.3 Medio o Instrumento (¿Con qué?)\n        \n        **Ablativo SIN preposición** (cosas):\n        *   *Gladio pugnat.* (Lucha con la espada)\n        *   *Oculis videt.* (Ve con los ojos)\n        *   *Navibus veniunt.* (Vienen en barcos)\n        \n        **PER + Acusativo** (medio, intermediario):\n        *   *Per nuntium dicit.* (Dice mediante un mensajero)\n        *   *Per epistulam scribit.* (Escribe por carta)\n        \n        ### 5.4 Compañía (¿Con quién?)\n        \n        **CUM + Ablativo**:\n        *   *Cum amicis ambulo.* (Camino con los amigos)\n        *   *Cum patre venit.* (Viene con el padre)\n        *   *Cum militibus pugnat.* (Lucha con los soldados)\n        \n        ### 5.5 Complemento Agente (con Pasiva)\n        \n        **A/AB + Ablativo** (persona que realiza la acción en voz pasiva):\n        *   *Urbs a Romanis capitur.* (La ciudad es tomada por los romanos)\n        *   *Puella a patre amatur.* (La niña es amada por el padre)\n        *   *Liber a Marco legitur.* (El libro es leído por Marco)\n        \n        ### 5.6 Materia (¿De qué está hecho?)\n        \n        **EX/DE + Ablativo**:\n        *   *Statua ex auro est.* (La estatua es de oro)\n        *   *Domus de ligno* (Casa de madera)\n        \n        ---\n        \n        ## RESUMEN DE USOS DEL ABLATIVO\n        \n        El Ablativo es el caso más versátil. Resumen de sus principales funciones:\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Uso",
+        "Construcción",
+        "Ejemplo",
+        "Traducción"
+      ],
+      "rows": [
+        [
+          "**Agente**",
+          "a/ab + Abl",
+          "*a patre*",
+          "por el padre"
+        ],
+        [
+          "**Instrumento**",
+          "Abl solo",
+          "*gladio*",
+          "con la espada"
+        ],
+        [
+          "**Compañía**",
+          "cum + Abl",
+          "*cum amicis*",
+          "con los amigos"
+        ],
+        [
+          "**Modo**",
+          "cum + Abl / Abl solo",
+          "*magna voce*",
+          "en voz alta"
+        ],
+        [
+          "**Causa**",
+          "Abl solo / propter + Ac",
+          "*metu*",
+          "por miedo"
+        ],
+        [
+          "**Lugar ¿dónde?**",
+          "in + Abl",
+          "*in urbe*",
+          "en la ciudad"
+        ],
+        [
+          "**Lugar ¿de dónde?**",
+          "ab/ex/de + Abl",
+          "*ab urbe*",
+          "desde la ciudad"
+        ],
+        [
+          "**Tiempo ¿cuándo?**",
+          "Abl solo",
+          "*nocte*",
+          "de noche"
+        ],
+        [
+          "**Materia**",
+          "ex/de + Abl",
+          "*ex auro*",
+          "de oro"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        ### Vocabulario Esencial de Lugar y Tiempo\n        \n        **Lugares:**\n        *   *urbs, urbis* (f): ciudad\n        *   *oppidum, -i* (n): ciudad, plaza fuerte\n        *   *silva, -ae* (f): bosque\n        *   *mons, montis* (m): monte\n        *   *via, -ae* (f): camino\n        *   *forum, -i* (n): foro\n        *   *templum, -i* (n): templo\n        *   *porta, -ae* (f): puerta\n        \n        **Tiempo:**\n        *   *hora, -ae* (f): hora\n        *   *dies, diei* (m/f): día\n        *   *nox, noctis* (f): noche\n        *   *annus, -i* (m): año\n        *   *aestas, aestatis* (f): verano\n        *   *hiems, hiemis* (f): invierno\n        *   *tempus, temporis* (n): tiempo\n        *   *lux, lucis* (f): luz (prima luce = al amanecer)\n        \n        ### Resumen Final: ¡Has Completado el Curso!\n        \n        ¡Felicidades! Ahora conoces:\n        *   ✓ Las **5 declinaciones** del latín\n        *   ✓ Los **6 casos** y sus funciones\n        *   ✓ Las **4 conjugaciones** verbales\n        *   ✓ Los **4 tiempos principales**: Presente, Imperfecto, Perfecto, Futuro\n        *   ✓ La **voz pasiva** y los verbos deponentes\n        *   ✓ Los **pronombres** personales, demostrativos y relativos\n        *   ✓ Los **grados del adjetivo**: positivo, comparativo, superlativo\n        \n        ¡Ahora estás listo para leer textos latinos originales!\n        "
+    }
+  ]
+}

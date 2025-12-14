@@ -1,0 +1,208 @@
+{
+    "lesson": 27,
+    "topic": "Subordinadas Adverbiales II (Finales, Consecutivas y Condicionales)",
+    "exercises": [
+        {
+            "type": "multiple_choice",
+            "question": "¿Qué expresan las oraciones finales?",
+            "options": [
+                "Consecuencia",
+                "Tiempo",
+                "Propósito/Finalidad",
+                "Condición"
+            ],
+            "correct_answer": "Propósito/Finalidad",
+            "explanation": "Las finales responden a '¿para qué?': expresan el propósito de la acción."
+        },
+        {
+            "type": "multiple_choice",
+            "question": "¿Cómo se niegan las oraciones finales?",
+            "options": [
+                "Ut non",
+                "Ne",
+                "Non ut",
+                "Nec"
+            ],
+            "correct_answer": "Ne",
+            "explanation": "Las finales usan 'ut' (afirmativo) y 'ne' (negativo): 'para que no'."
+        },
+        {
+            "type": "multiple_choice",
+            "question": "¿Cómo se reconoce una consecutiva?",
+            "options": [
+                "Tiene 'ne'",
+                "Tiene adverbio de intensidad + 'ut'",
+                "Usa indicativo",
+                "Tiene 'si'"
+            ],
+            "correct_answer": "Tiene adverbio de intensidad + 'ut'",
+            "explanation": "Las consecutivas van precedidas de tam, ita, sic, tantus, adeo... + 'ut'."
+        },
+        {
+            "type": "multiple_choice",
+            "question": "¿Cómo se niegan las consecutivas?",
+            "options": [
+                "Ne",
+                "Ut non",
+                "Non ut",
+                "Nec ut"
+            ],
+            "correct_answer": "Ut non",
+            "explanation": "A diferencia de las finales, las consecutivas usan 'ut non' para negar."
+        },
+        {
+            "type": "multiple_choice",
+            "question": "'Si hoc facis, erras' - ¿Qué tipo de condicional es?",
+            "options": [
+                "Irreal de presente",
+                "Irreal de pasado",
+                "Real (indicativo)",
+                "Potencial"
+            ],
+            "correct_answer": "Real (indicativo)",
+            "explanation": "Condicional real: indicativo en ambas partes. Expresa hechos o lógica."
+        },
+        {
+            "type": "multiple_choice",
+            "question": "'Si hoc faceres, errares' - ¿Qué tipo de condicional es?",
+            "options": [
+                "Real",
+                "Irreal de presente",
+                "Irreal de pasado",
+                "Potencial futuro"
+            ],
+            "correct_answer": "Irreal de presente",
+            "explanation": "Subjuntivo imperfecto en ambas partes: irreal de presente (no ocurre ahora)."
+        },
+        {
+            "type": "multiple_choice",
+            "question": "'Si hoc fecisses, erravisses' - ¿Qué tipo de condicional es?",
+            "options": [
+                "Real",
+                "Irreal de presente",
+                "Irreal de pasado",
+                "Potencial"
+            ],
+            "correct_answer": "Irreal de pasado",
+            "explanation": "Subjuntivo pluscuamperfecto: irreal de pasado (no ocurrió)."
+        },
+        {
+            "type": "sentence_completion",
+            "question": "Edo _____ vivam. (para vivir)",
+            "options": [
+                "ut",
+                "ne",
+                "si"
+            ],
+            "correct_answer": "ut",
+            "explanation": "'Ut' + subjuntivo = oración final afirmativa."
+        },
+        {
+            "type": "sentence_completion",
+            "question": "Portas clausit _____ hostes intrarent. (para que no)",
+            "options": [
+                "ut non",
+                "ne",
+                "si non"
+            ],
+            "correct_answer": "ne",
+            "explanation": "'Ne' + subjuntivo = oración final negativa."
+        },
+        {
+            "type": "sentence_completion",
+            "question": "Tam stultus est _____ nihil intelligat. (que)",
+            "options": [
+                "ut",
+                "ne",
+                "quod"
+            ],
+            "correct_answer": "ut",
+            "explanation": "'Tam' + adjetivo + 'ut' + subjuntivo = consecutiva: 'tan tonto que'."
+        },
+        {
+            "type": "vocabulary_match",
+            "pairs": [
+                {
+                    "latin": "ut + subj. (final)",
+                    "spanish": "para que"
+                },
+                {
+                    "latin": "ne (final)",
+                    "spanish": "para que no"
+                },
+                {
+                    "latin": "tam...ut",
+                    "spanish": "tan...que"
+                },
+                {
+                    "latin": "ita...ut",
+                    "spanish": "de tal modo...que"
+                },
+                {
+                    "latin": "tantus...ut",
+                    "spanish": "tan grande...que"
+                }
+            ]
+        },
+        {
+            "type": "vocabulary_match",
+            "pairs": [
+                {
+                    "latin": "si + indicativo",
+                    "spanish": "si (real)"
+                },
+                {
+                    "latin": "si + subj. pres.",
+                    "spanish": "si (potencial)"
+                },
+                {
+                    "latin": "si + subj. imperf.",
+                    "spanish": "si (irreal presente)"
+                },
+                {
+                    "latin": "si + subj. plusc.",
+                    "spanish": "si (irreal pasado)"
+                },
+                {
+                    "latin": "nisi",
+                    "spanish": "si no / a menos que"
+                }
+            ]
+        },
+        {
+            "type": "multiple_choice",
+            "question": "¿Qué diferencia 'final' de 'consecutiva'?",
+            "options": [
+                "El modo verbal",
+                "La intención vs. el resultado",
+                "El tiempo verbal",
+                "El tipo de negación únicamente"
+            ],
+            "correct_answer": "La intención vs. el resultado",
+            "explanation": "Final = propósito (subjetivo). Consecutiva = resultado (objetivo, con adverbio de intensidad)."
+        },
+        {
+            "type": "multiple_choice",
+            "question": "'Nisi pluat, ibimus' significa:",
+            "options": [
+                "Si llueve, iremos",
+                "Si no llueve, iremos",
+                "Aunque llueva, iremos",
+                "Porque llueve, iremos"
+            ],
+            "correct_answer": "Si no llueve, iremos",
+            "explanation": "'Nisi' = 'si no', 'a menos que'. Es la negación de 'si'."
+        },
+        {
+            "type": "sentence_completion",
+            "question": "_____ me amaveris, felix fuerim. (Si me hubieras amado)",
+            "options": [
+                "Si",
+                "Nisi",
+                "Cum"
+            ],
+            "correct_answer": "Si",
+            "explanation": "'Si' + pluscuamperfecto subjuntivo = condicional irreal de pasado."
+        }
+    ]
+}

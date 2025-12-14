@@ -1,0 +1,58 @@
+{
+  "id": 23,
+  "sections": [
+    {
+      "type": "markdown",
+      "content": "\n        ## Lección 23: Gerundio y Gerundivo\n        \n        ### 1. Dos Caras de la Misma Moneda\n        \n        El latín tiene dos formas verbales que a menudo se confunden pero tienen funciones distintas:\n        \n        1.  **Gerundio**: Es un **Sustantivo Verbal** Activo. (Equivale a \"el acto de amar\").\n        2.  **Gerundivo**: Es un **Adjetivo Verbal** Pasivo. (Equivale a \"que debe ser amado\").\n        \n        "
+    },
+    {
+      "type": "markdown",
+      "content": "\n        ### 2. El Gerundio (Sustantivo Verbal)\n        \n        El Gerundio sirve para **declinar el infinitivo**.\n        El infinitivo (*amare*) se usa como Nominativo. Para los demás casos, usamos el Gerundio.\n        \n        **Formación**: Tema de presente + **-nd-** + terminaciones de segunda declinación neutra singular.\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Caso",
+        "Forma",
+        "Traducción",
+        "Uso"
+      ],
+      "rows": [
+        [
+          "**Nom**",
+          "*(Amare)*",
+          "El amar",
+          "Sujeto"
+        ],
+        [
+          "**Gen**",
+          "Ama**ndi**",
+          "De amar / Del amar",
+          "Complemento de nombre/adjetivo"
+        ],
+        [
+          "**Dat**",
+          "Ama**ndo**",
+          "Para amar",
+          "Finalidad (poco usado)"
+        ],
+        [
+          "**Ac**",
+          "*(Amare)* / ad ama**ndum**",
+          "A amar / Para amar",
+          "Objeto / Finalidad (con *ad*)"
+        ],
+        [
+          "**Abl**",
+          "Ama**ndo**",
+          "Amando / Por amar",
+          "Modo / Instrumento"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        **Ejemplos**:\n        *   *Ars **amandi*** (El arte **de amar**).\n        *   *Paratus ad **pugnandum*** (Preparado **para luchar**).\n        *   *Discimus **legendo*** (Aprendemos **leyendo**).\n        \n        ### 3. El Gerundivo (Adjetivo Verbal)\n        \n        El Gerundivo es un **adjetivo de la primera clase** (*-ndus, -nda, -ndum*).\n        Indica **necesidad u obligación pasiva**.\n        \n        **Concordancia**: Como adjetivo, **concuerda** con un sustantivo en género, número y caso.\n        \n        **Ejemplos**:\n        *   *Liber **legendus*** (Un libro **que debe ser leído** / Un libro **para leer**).\n        *   *Virtus **laudanda*** (Una virtud **que debe ser alabada** / digna de alabanza).\n        \n        ### 4. La Construcción de Gerundivo (Sustitución)\n        \n        En latín clásico, se prefiere usar el **Gerundivo** en lugar del Gerundio cuando hay un Objeto Directo.\n        \n        **Transformación**:\n        1.  **Gerundio + OD**: *Cupidus **videndi** (Gen) **urbem** (Ac)* -> \"Deseoso de ver la ciudad\".\n        2.  **Gerundivo (Concertado)**: *Cupidus **urbis** (Gen) **videndae** (Gen)* -> \"Deseoso de la ciudad que debe ser vista\".\n        \n        > **Regla**: El sustantivo toma el caso del gerundio, y el gerundivo concuerda con el sustantivo.\n        \n        ### 5. Ejercicios de Análisis\n        \n        Distingue si es Gerundio o Gerundivo:\n        \n        1.  *Tempus **legendī**.*\n            *   **Gerundio** (Genitivo). No concuerda con nada.\n            *   -> Tiempo **de leer**.\n        \n        2.  *Ad **pacem petendam** venerunt.*\n            *   **Gerundivo**. *Petendam* concuerda con *pacem* (Acusativo Fem. Sing).\n            *   -> Vinieron **para pedir la paz**.\n        \n        3.  *In **libro legendo**.*\n            *   **Gerundivo**. *Legendo* concuerda con *libro* (Ablativo Masc. Sing).\n            *   -> **Al leer el libro** (En el libro que debe ser leído).\n        \n        ### Vocabulario Esencial\n        *   **Cupidus, -a, -um**: deseoso (+ Gen)\n        *   **Peritus, -a, -um**: experto (+ Gen)\n        *   **Ad**: para (+ Acusativo)\n        *   **Causa / Gratia**: por causa de, para (+ Genitivo)\n        "
+    }
+  ]
+}

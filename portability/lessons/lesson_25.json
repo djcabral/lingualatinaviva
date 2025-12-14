@@ -1,0 +1,64 @@
+{
+  "id": 25,
+  "sections": [
+    {
+      "type": "markdown",
+      "content": "\n        ## Lección 25: Sintaxis I - Coordinación y Subordinadas (Causales/Temp)\n        \n        ### 1. La Oración Compuesta y la Coordinación\n        \n        Antes de entrar en las subordinadas, es vital dominar las **conjunciones coordinantes** que unen oraciones del mismo nivel.\n\n        #### A. Copulativas (Suman)\n        *   **et**: y (la más común).\n        *   **-que**: y (enclítica, se une a la segunda palabra). *Senatus Populus**que** Romanus* (El Senado **y** el Pueblo Romano).\n        *   **atque / ac**: y además, y también (más fuerte).\n        *   **etiam**: también, incluso.\n        *   **neque / nec**: y no, ni. *Nec possum nec volo* (Ni puedo ni quiero).\n        \n        #### B. Disyuntivas (Eligen)\n        *   **aut**: o (una cosa o la otra, excluyente). *Vincere **aut** mori* (Vencer **o** morir).\n        *   **vel**: o (puedes elegir, incluyente).\n        *   **-ve**: o (enclítica). *Bis ter**ve*** (Dos **o** tres veces).\n        \n        #### C. Adversativas (Oponen)\n        *   **sed**: pero, sino. *Non est vivere **sed** valere vita* (La vida no es vivir, **sino** estar sano).\n        *   **autem**: pero, en cambio (suele ir en segunda posición).\n        *   **tamen**: sin embargo.\n        *   **at**: pero (objeción fuerte).\n        \n        #### D. Ilativas (Deducen)\n        *   **ergo**: por tanto, luego. *Cogito, **ergo** sum* (Pienso, **luego** existo).\n        *   **igitur**: así pues (suele ir en segunda posición).\n        *   **itaque**: así que, por consiguiente.\n        \n        #### E. Causales Coordinadas (Explican)\n        *   **nam**: pues, porque (al principio de frase). *Nam tua res agitur* (Pues se trata de tu asunto).\n        *   **enim**: pues, en efecto (en segunda posición).\n        *   **etenim**: y en efecto.\n        "
+    },
+    {
+      "type": "markdown",
+      "content": "### 🧠 Mnemotecnia: Palabras Invariables Frecuentes"
+    },
+    {
+      "type": "markdown",
+      "content": "\n        ---\n\n        ### 2. La Lógica de la Subordinación\n        \n        Las oraciones subordinadas adverbiales funcionan como un adverbio: indican **cuándo** (tiempo), **por qué** (causa), **para qué** (fin), etc.\n        \n        En latín, el uso del **Indicativo** o **Subjuntivo** depende del matiz:\n        *   **Indicativo**: Hecho real, objetivo temporal.\n        *   **Subjuntivo**: Causa subjetiva, circunstancia histórica, matiz lógico.\n        \n        ### 2. El \"Cum\" Histórico (Narrativo)\n        "
+    },
+    {
+      "type": "markdown",
+      "content": "\n        Es una de las construcciones más frecuentes en la narración histórica (César, Tito Livio).\n        \n        **Estructura**: **CUM + Subjuntivo** (Imperfecto o Pluscuamperfecto).\n        \n        **Traducción**:\n        *   **Gerundio simple**: *Cum videret* -> \"Viendo...\"\n        *   **Gerundio compuesto**: *Cum vidisset* -> \"Habiendo visto...\"\n        *   **Al + Infinitivo**: \"Al ver...\"\n        *   **Como + Subjuntivo**: \"Como viera...\"\n        \n        "
+    },
+    {
+      "type": "markdown",
+      "content": "\n        ### 3. Otras Oraciones Temporales (con Indicativo)\n        \n        Indican el momento exacto (tiempo puro) y suelen llevar **Indicativo**.\n        \n        #### Tabla de Conjunciones Temporales:\n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Conjunción",
+        "Significado",
+        "Ejemplo",
+        "Traducción"
+      ],
+      "rows": [
+        [
+          "**Cum** (+ Ind)",
+          "Cuando",
+          "*Cum eum videbis...*",
+          "**Cuando** lo veas..."
+        ],
+        [
+          "**Ubi**",
+          "Cuando / Donde",
+          "*Ubi Caesar venit...*",
+          "**Cuando** César llegó..."
+        ],
+        [
+          "**Postquam**",
+          "Después de que",
+          "*Postquam hostes fugerunt...*",
+          "**Después de que** los enemigos huyeron..."
+        ],
+        [
+          "**Dum** (+ Pres)",
+          "Mientras",
+          "*Dum haec geruntur...*",
+          "**Mientras** esto sucedía..."
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        > **Ojo con DUM!** Suele llevar Presente de Indicativo aunque narre el pasado (\"Presente Histórico\").\n        \n        ### 4. Oraciones Causales\n        \n        Explican el motivo de la acción principal.\n        \n        *   **Quod, Quia, Quoniam** + **Indicativo**: Causa real / objetiva.\n            *   *Gaudeo **quod vales**.* (Me alegro **porque estás bien** - es un hecho).\n        \n        *   **Cum, Quod** + **Subjuntivo**: Causa subjetiva / supuesta.\n            *   *Laudatur **quod fuerit** fortis.* (Es alabado **porque [dicen que] fue** valiente).\n            *   ***Cum** sis bonus, te amo.* (**Puesto que / Como** eres bueno, te amo).\n        \n        ### 5. Ejercicios de Análisis\n        \n        Analiza y traduce:\n        \n        1.  *Cum Caesar in Galliam venisset, Romani laeti erant.*\n            *   *Cum ... venisset* (Cum Histórico, Plusc. Subj).\n            *   -> **Habiendo llegado César a la Galia**, los romanos estaban contentos.\n            *   -> **Al llegar César a la Galia**...\n        \n        2.  *Dum Romae sum, multos libros lego.*\n            *   *Dum* + Presente.\n            *   -> **Mientras estoy en Roma**, leo muchos libros.\n        \n        3.  *Postquam urbs capta est, milites redierunt.*\n            *   *Postquam* + Perfecto Indicativo.\n            *   -> **Después de que la ciudad fue tomada**, los soldados regresaron.\n\n        4.  *Quod vales, gaudeo.*\n            *   *Quod* + Indicativo (Causa real).\n            *   -> **Porque estás bien**, me alegro.\n\n        5.  *Socrates accusatus est quod corrumperet juventutem.*\n            *   *Quod* + Subjuntivo (Causa alegada/subjetiva).\n            *   -> Sócrates fue acusado **porque (supuestamente) corrompía** a la juventud.\n        \n        ### Vocabulario Esencial\n        *   **Cum**: cuando, como, aunque (depende del contexto)\n        *   **Ubi**: cuando, donde\n        *   **Postquam**: después de que\n        *   **Dum**: mientras\n        *   **Quod / Quia**: porque\n        "
+    }
+  ]
+}

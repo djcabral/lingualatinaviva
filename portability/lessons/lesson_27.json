@@ -1,0 +1,101 @@
+{
+  "id": 27,
+  "sections": [
+    {
+      "type": "markdown",
+      "content": "\n        ## Lección 27: Subordinadas Adverbiales II (Finales, Consecutivas y Condicionales)\n        \n        En esta lección completamos las subordinadas adverbiales, añadiendo tres tipos esenciales:\n        **Finales** (para qué), **Consecutivas** (con qué resultado), y **Condicionales** (si...).\n        \n        ---\n        \n        ### 1. Oraciones Finales (Propósito)\n        \n        Responden a: **¿Para qué?** / **¿Con qué fin?**\n        \n        **Estructura**:\n        *   **Afirmativa**: **UT** + Subjuntivo\n        *   **Negativa**: **NE** + Subjuntivo\n        \n        **Ejemplos**:\n        *   *Edo **ut vivam**.*\n            *   Como **para vivir**.\n        *   *Portas clausit **ne** hostes **intrarent**.*\n            *   Cerró las puertas **para que** los enemigos **no entraran**.\n        *   *Legatos misit **ut** pacem **peterent**.*\n            *   Envió embajadores **para pedir** la paz.\n        \n        ---\n        \n        ### 2. Oraciones Consecutivas (Consecuencia)\n        \n        Responden a: **¿Con qué consecuencia?** / **¿Con qué resultado?**\n        \n        Suelen estar **anunciadas** en la principal por un adverbio de intensidad:\n        **Tam, Ita, Sic, Adeo, Tantus, Talis**\n        \n        **Estructura**:\n        *   **Afirmativa**: **UT** + Subjuntivo\n        *   **Negativa**: **UT NON** + Subjuntivo (¡No *NE*!)\n        \n        **Ejemplos**:\n        *   ***Tam** stultus est **ut** nihil **intelligat**.*\n            *   Es **tan** tonto **que no entiende** nada.\n        *   ***Ita** locutus est **ut** omnes **flerent**.*\n            *   Habló **de tal modo que** todos lloraban.\n        *   ***Tantus** erat timor **ut** nemo **exiret**.*\n            *   **Tanto** era el miedo **que** nadie salía.\n        \n        ---\n        \n        ### 3. Diferencia entre Finales y Consecutivas\n        \n        Ambas usan **UT**, pero tienen significados muy distintos:\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Característica",
+        "Finales",
+        "Consecutivas"
+      ],
+      "rows": [
+        [
+          "**Significado**",
+          "Intención / Propósito",
+          "Resultado / Efecto"
+        ],
+        [
+          "**Negación**",
+          "**NE**",
+          "**UT NON**"
+        ],
+        [
+          "**Pistas**",
+          "Verbos de movimiento, voluntad",
+          "*Tam, Ita, Sic, Tantus, Adeo* en la principal"
+        ],
+        [
+          "**Ejemplo**",
+          "*Venit ut me videat*",
+          "*Tam fortis est ut vincat*"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        ---\n        \n        ### 4. Oraciones Condicionales\n        \n        Expresan una **condición** (prótasis: \"Si...\") y su **consecuencia** (apódosis: \"...entonces\").\n        \n        Hay **tres tipos** según el grado de realidad:\n        \n        #### A. Tipo I: Real (Indicativo)\n        \n        Expresa un hecho real o lógico. *Si pasa A, pasa B.*\n        \n        *   **Modo**: **Indicativo** en ambas partes\n        *   *Si hoc **facis**, **erras**.*\n            *   Si haces esto, te equivocas.\n        \n        #### B. Tipo II: Posible (Subjuntivo Presente/Perfecto)\n        \n        Expresa algo que **podría** ocurrir en el futuro.\n        \n        *   **Modo**: **Subjuntivo Presente**\n        *   *Si hoc **facias**, **erres**.*\n            *   Si hicieras esto (en el futuro), te equivocarías.\n        \n        #### C. Tipo III: Irreal (Subjuntivo Imperfecto/Pluscuamperfecto)\n        \n        Expresa algo que **no ocurre** (presente) o **no ocurrió** (pasado).\n        \n        *   **Irreal de Presente**: Subjuntivo Imperfecto\n            *   *Si hoc **faceres**, **errares**.*\n                *   Si hicieras esto (ahora, pero no lo haces), te equivocarías.\n        \n        *   **Irreal de Pasado**: Subjuntivo Pluscuamperfecto\n            *   *Si hoc **fecisses**, **erravisses**.*\n                *   Si hubieras hecho esto, te habrías equivocado.\n        \n        ---\n        \n        ### 5. Cuadro Resumen Completo\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Tipo",
+        "Conjunción",
+        "Modo",
+        "Ejemplo",
+        "Traducción"
+      ],
+      "rows": [
+        [
+          "**Final**",
+          "UT / NE",
+          "Subjuntivo",
+          "*Venit ut me videat*",
+          "Viene para verme"
+        ],
+        [
+          "**Consecutiva**",
+          "UT / UT NON",
+          "Subjuntivo",
+          "*Tam fortis est ut vincat*",
+          "Es tan fuerte que vence"
+        ],
+        [
+          "**Cond. Real**",
+          "SI",
+          "Indicativo",
+          "*Si facis, erras*",
+          "Si haces, te equivocas"
+        ],
+        [
+          "**Cond. Posible**",
+          "SI",
+          "Subj. Pres.",
+          "*Si facias, erres*",
+          "Si hicieras, te equivocarías"
+        ],
+        [
+          "**Cond. Irreal Pres.**",
+          "SI",
+          "Subj. Imperf.",
+          "*Si faceres, errares*",
+          "Si hicieras (ahora), te equivocarías"
+        ],
+        [
+          "**Cond. Irreal Pas.**",
+          "SI",
+          "Subj. Plusc.",
+          "*Si fecisses, erravisses*",
+          "Si hubieras hecho, te habrías equivocado"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        ---\n        \n        ### 6. Ejercicios de Análisis\n        \n        Identifica el tipo de subordinada y traduce:\n        \n        1.  *Milites pugnant **ut** urbem **defendant**.*\n            *   ¿Pista de intensidad? No. ¿Es propósito? Sí.\n            *   → **Final**: Los soldados luchan **para defender** la ciudad.\n        \n        2.  *Solis ardor **tam** magnus est **ut** herba **arescat**.*\n            *   Pista: *Tam* (tan).\n            *   → **Consecutiva**: El calor del sol es **tan** grande **que** la hierba se seca.\n        \n        3.  *Si venisses, laetus fuissem.*\n            *   Subjuntivo Pluscuamperfecto.\n            *   → **Condicional Irreal de Pasado**: **Si hubieras venido**, habría estado contento.\n        \n        4.  *Portas clausit **ne** hostes **intrarent**.*\n            *   Negación *NE*.\n            *   → **Final**: Cerró las puertas **para que** los enemigos **no entraran**.\n        \n        5.  *Si dives sim, orbem peragrem.*\n            *   Subjuntivo Presente.\n            *   → **Condicional Posible**: **Si fuera rico**, recorrería el mundo.\n        \n        ---\n        \n        ### Vocabulario Esencial\n        \n        **Conjunciones Finales**:\n        *   **Ut**: para que (afirmativa)\n        *   **Ne**: para que no (negativa)\n        \n        **Adverbios de Intensidad** (anuncian Consecutivas):\n        *   **Tam**: tan\n        *   **Ita / Sic**: así, de tal modo\n        *   **Adeo**: tanto, hasta tal punto\n        *   **Tantus, -a, -um**: tanto, tan grande\n        *   **Talis, -e**: tal, de tal clase\n        \n        **Conjunciones Condicionales**:\n        *   **Si**: si\n        *   **Nisi**: si no, a menos que\n        *   **Sin**: pero si, si por el contrario\n        "
+    }
+  ]
+}

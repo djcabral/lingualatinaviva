@@ -195,6 +195,49 @@ else:
         st.markdown("### 📚 Mapa de Lecciones")
         st.markdown("<br>", unsafe_allow_html=True)
         
+        # CSS para forzar altura uniforme en los botones del mapa
+        st.markdown("""
+        <style>
+        /* Target buttons inside columns in the main area */
+        div[data-testid="column"] .stButton button,
+        div[data-testid="stColumn"] .stButton button {
+            height: 120px !important;
+            min-height: 120px !important;
+            max-height: 120px !important;
+            width: 100% !important;
+            white-space: normal !important;
+            word-wrap: break-word !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+            align-items: center !important;
+            text-align: center !important;
+            border-radius: 12px !important;
+            padding: 5px !important;
+            margin-bottom: 10px !important;
+            line-height: 1.3 !important;
+        }
+        
+        div[data-testid="column"] .stButton button:hover,
+        div[data-testid="stColumn"] .stButton button:hover {
+            transform: translateY(-5px) !important;
+            z-index: 10 !important;
+        }
+        
+        /* Ensure content inside button is centered and wraps */
+        div[data-testid="column"] .stButton button p,
+        div[data-testid="stColumn"] .stButton button p,
+        div[data-testid="column"] .stButton button div,
+        div[data-testid="stColumn"] .stButton button div {
+            font-size: 1.05em !important;
+            font-weight: 600 !important;
+            line-height: 1.3 !important;
+            text-align: center !important;
+            white-space: normal !important;
+        }
+        </style>
+        """, unsafe_allow_html=True)
+
         # Configuración de lecciones (primeras 10 para demostración)
         LESSON_TITLES = {
             1: "Primera Declinación",
@@ -229,10 +272,11 @@ else:
             30: "Métrica y Síntesis"
         }
         
-        # Crear grid de lecciones (5 columnas)
+        # Crear grid de lecciones (5 columnas para una cuadrícula perfecta de 30 lecciones)
         num_cols = 5
         total_lessons = 30
         
+        # Iterar sobre las filas
         for row_start in range(1, total_lessons + 1, num_cols):
             cols = st.columns(num_cols)
             for i, col in enumerate(cols):
@@ -248,38 +292,35 @@ else:
                     # Determinar estado visual
                     is_current = (lesson_num == current_lesson)
                     is_completed = (overall >= 1.0)
-                    is_locked = (lesson_num > current_lesson)
+                    is_locked = (lesson_num > current_lesson and lesson_num != 1) # Asegurar L1 siempre abierta
                     
-                    # Colores según estado
+                    # Colores y Textos según estado (para tooltip)
                     if is_completed:
-                        border_color = "#28a745"
-                        bg_color = "#28a74515"
                         icon = "✅"
                         status_text = "Completada"
+                        btn_type = "secondary" 
+                        # Hack visual: usaremos CSS para pintar los bordes si es necesario, 
+                        # pero por ahora confiamos en el icono
                     elif is_current:
-                        border_color = "#fd7e14"
-                        bg_color = "#fd7e1415"
                         icon = "🔄"
-                        status_text = f"{int(overall * 100)}%"
+                        status_text = f"En progreso: {int(overall * 100)}%"
+                        btn_type = "primary"
                     elif is_locked:
-                        border_color = "#adb5bd"
-                        bg_color = "#f8f9fa"
                         icon = "🔒"
                         status_text = "Bloqueada"
+                        btn_type = "secondary"
                     else:
-                        border_color = "#007bff"
-                        bg_color = "#007bff15"
+                        is_locked = False # Safety fallback
                         icon = "📘"
                         status_text = "Disponible"
+                        btn_type = "secondary"
                     
-                    # Renderizar card
+                    # Renderizar card como botón
                     lesson_title = LESSON_TITLES.get(lesson_num, f"Lección {lesson_num}")
                     
-                    if is_current:
-                        st.markdown(f"**📍 ACTUAL**")
-                    
-                    # Use a native Streamlit button for interactivity
-                    # Formatting the label to be informative
+                    # Construir la etiqueta del botón con saltos de línea para forzar estructura
+                    # Line 1: Icon + L#
+                    # Line 2: Title
                     btn_label = f"{icon} L{lesson_num}\n{lesson_title}"
                     
                     if st.button(
@@ -287,21 +328,11 @@ else:
                         key=f"nav_l{lesson_num}", 
                         disabled=is_locked, 
                         use_container_width=True,
-                        type="primary" if is_current else "secondary",
+                        type=btn_type,
                         help=f"Estado: {status_text}"
                     ):
                         st.session_state.current_lesson = f"l{lesson_num}"
                         st.switch_page("pages/02_📘_Lecciones.py")
-                    
-                    # Small status indicator below button
-                    if is_completed:
-                         st.caption(f"✅ Completada")
-                    elif is_current:
-                         st.caption(f"🔄 En progreso: {int(overall * 100)}%")
-                    elif is_locked:
-                         st.caption("🔒 Bloqueada")
-                    else:
-                         st.caption("📘 Disponible")
         
         st.markdown("---")
         

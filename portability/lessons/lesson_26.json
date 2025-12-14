@@ -1,0 +1,64 @@
+{
+  "id": 26,
+  "sections": [
+    {
+      "type": "markdown",
+      "content": "\n        ## Lección 26: Subordinadas Sustantivas (Completivas)\n        \n        ### 1. ¿Qué son las Oraciones Completivas?\n        \n        Las oraciones completivas **funcionan como un sustantivo**: son el **Sujeto** o el **Objeto Directo** del verbo principal.\n        \n        Por ejemplo:\n        - \"**Quiero** que vengas\" → \"Que vengas\" es el objeto de \"quiero\"\n        - \"**Es necesario** que estudies\" → \"Que estudies\" es el sujeto de \"es necesario\"\n        \n        En latín, estas oraciones se construyen de formas diferentes según el tipo de verbo principal.\n        \n        ---\n        \n        ### 2. Completivas con UT / NE (Verbos de Voluntad y Mandato)\n        \n        Dependen de verbos que expresan **voluntad, deseo, mandato, ruego**:\n        - *Volo* (querer), *Nolo* (no querer), *Malo* (preferir)\n        - *Oro* (rogar), *Peto* (pedir)\n        - *Impero* (mandar), *Hortor* (exhortar)\n        \n        "
+    },
+    {
+      "type": "markdown",
+      "content": "\n        **Estructura**: Verbo principal + **UT** (que) / **NE** (que no) + **Subjuntivo**\n        \n        **Ejemplos**:\n        *   *Impero tibi **ut venias**.*\n            - Te mando **que vengas**.\n        *   *Oro te **ne eas**.*\n            - Te ruego **que no vayas**.\n        *   *Volo **ut discas**.*\n            - Quiero **que aprendas**.\n        \n        ---\n        \n        ### 3. Verbos de Temor (*Verba Timendi*)\n        \n        ⚠️ **¡Atención!** Los verbos de temor usan UT/NE de forma **contraintuitiva**:\n        \n        - **Timeo NE...** = Temo **QUE** ocurra (algo que NO quiero)\n        - **Timeo UT...** = Temo **QUE NO** ocurra (algo que SÍ quiero)\n        \n        **Ejemplos**:\n        *   *Timeo **ne** pluat.*\n            - Temo **que** llueva. [No quiero que llueva]\n        *   *Timeo **ut** veniat.*\n            - Temo **que no** venga. [Quiero que venga]\n        *   *Vereor **ne** hostes urbem capiant.*\n            - Temo **que** los enemigos tomen la ciudad.\n        \n        **Verbos de temor comunes**: *Timeo, vereor, metuo* (temer)\n        \n        ---\n        \n        ### 4. Interrogativas Indirectas\n        \n        Las **preguntas indirectas** también son completivas. Usan:\n        - Partículas interrogativas (*quis, quid, cur, quando, ubi, quo, unde*)\n        - **Subjuntivo** (aunque en español usamos indicativo)\n        \n        **Ejemplos**:\n        *   *Nescio **quid** **facias**.*\n            - No sé **qué** haces. (Lit: \"qué hagas\")\n        *   *Rogat **cur** **veneris**.*\n            - Pregunta **por qué** has venido.\n        *   *Ignoro **ubi** **sit**.*\n            - Ignoro **dónde** está. (Lit: \"dónde esté\")\n        \n        ---\n        \n        ### 5. Cuadro Resumen\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Tipo",
+        "Conjunción",
+        "Modo",
+        "Ejemplo",
+        "Traducción"
+      ],
+      "rows": [
+        [
+          "**Voluntad**",
+          "UT",
+          "Subjuntivo",
+          "*Volo ut venias*",
+          "Quiero que vengas"
+        ],
+        [
+          "**Voluntad (Neg)**",
+          "NE",
+          "Subjuntivo",
+          "*Nolo ne eas*",
+          "No quiero que vayas"
+        ],
+        [
+          "**Temor**",
+          "NE",
+          "Subjuntivo",
+          "*Timeo ne pluat*",
+          "Temo que llueva"
+        ],
+        [
+          "**Temor (Neg)**",
+          "UT",
+          "Subjuntivo",
+          "*Timeo ut veniat*",
+          "Temo que NO venga"
+        ],
+        [
+          "**Interrog. Ind.**",
+          "Quis/Quid/Cur/etc",
+          "Subjuntivo",
+          "*Nescio quid faciam*",
+          "No sé qué hacer"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        ---\n        \n        ### 6. Ejercicios de Análisis\n        \n        Identifica el tipo de completiva y traduce:\n        \n        1.  *Imperavit militibus **ut** oppugnarent.*\n            - Verbo de mando + *ut* → **Completiva de Voluntad**\n            - **Traducción**: Mandó a los soldados **que** atacaran.\n        \n        2.  *Timeo **ne** hostes veniant.*\n            - Verbo de temor + *ne* → **Completiva de Temor**\n            - **Traducción**: Temo **que** los enemigos vengan.\n        \n        3.  *Peto **ne** me relinquas.*\n            - Verbo de ruego + *ne* → **Completiva de Voluntad (negativa)**\n            - **Traducción**: Pido **que no** me abandones.\n        \n        4.  *Nescio **quo** fugerint.*\n            - Verbo de ignorancia + *quo* → **Interrogativa Indirecta**\n            - **Traducción**: No sé **a dónde** huyeron.\n        \n        5.  *Vereor **ut** id facere possit.*\n            - Verbo de temor + *ut* → **Completiva de Temor (negativa)**\n            - **Traducción**: Temo **que no** pueda hacerlo.\n        \n        ---\n        \n        ### Vocabulario Esencial\n        \n        **Verbos de Voluntad**:\n        *   **Volo, velle, volui**: querer\n        *   **Nolo, nolle, nolui**: no querer\n        *   **Malo, malle, malui**: preferir\n        *   **Cupio, cupere**: desear\n        *   **Hortor, hortari**: exhortar\n        \n        **Verbos de Mandato**:\n        *   **Impero, imperare**: mandar\n        *   **Iubeo, iubere**: ordenar\n        *   **Rogo, rogare**: rogar, pedir\n        *   **Peto, petere**: pedir, solicitar\n        \n        **Verbos de Temor**:\n        *   **Timeo, timere**: temer\n        *   **Vereor, vereri**: temer (deponente)\n        *   **Metuo, metuere**: temer\n        \n        **Conjunciones**:\n        *   **Ut**: que (afirmativo)\n        *   **Ne**: que no (negativo)\n        \n        "
+    }
+  ]
+}

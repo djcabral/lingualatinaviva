@@ -1,0 +1,222 @@
+{
+  "id": 14,
+  "sections": [
+    {
+      "type": "markdown",
+      "content": "\n        ## Lección 14: Pluscuamperfecto y Futuro Perfecto\n        "
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        ### 1. Pretérito Pluscuamperfecto: El Pasado del Pasado\n        \n        El **Pluscuamperfecto** indica una acción pasada que ocurrió **antes** de otra acción pasada.\n        Equivale al español \"había amado\".\n        \n        **Formación**: Tema de Perfecto + **-eram, -eras, -erat...**\n        \n        > **Truco**: ¡Es el Tema de Perfecto + el Imperfecto de *SUM*!\n        \n        #### Paradigma: AMARE\n        (Tema de Perfecto: *amav-*)\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Persona",
+        "Forma",
+        "Traducción"
+      ],
+      "rows": [
+        [
+          "1a Sg",
+          "amav-**eram**",
+          "yo había amado"
+        ],
+        [
+          "2a Sg",
+          "amav-**eras**",
+          "tú habías amado"
+        ],
+        [
+          "3a Sg",
+          "amav-**erat**",
+          "él/ella había amado"
+        ],
+        [
+          "1a Pl",
+          "amav-**eramus**",
+          "nosotros habíamos amado"
+        ],
+        [
+          "2a Pl",
+          "amav-**eratis**",
+          "vosotros habíais amado"
+        ],
+        [
+          "3a Pl",
+          "amav-**erant**",
+          "ellos/ellas habían amado"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        #### Otros ejemplos con verbos irregulares:\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Verbo",
+        "Perfecto (3a Sg)",
+        "Pluscuamperfecto (3a Sg)",
+        "Traducción"
+      ],
+      "rows": [
+        [
+          "*Habeo*",
+          "*habuit*",
+          "*habu**erat***",
+          "había tenido"
+        ],
+        [
+          "*Dico*",
+          "*dixit*",
+          "*dix**erat***",
+          "había dicho"
+        ],
+        [
+          "*Lego*",
+          "*legit*",
+          "*leg**erat***",
+          "había leído"
+        ],
+        [
+          "*Sum*",
+          "*fuit*",
+          "*fu**erat***",
+          "había sido/estado"
+        ],
+        [
+          "*Venio*",
+          "*venit*",
+          "*ven**erat***",
+          "había venido"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        **Ejemplos en contexto**:\n        *   *Caesar, antequam Romani venerunt, ad Galliam pervener**at**.* \n            (César **había llegado** a la Galia antes de que los romanos vinieran)\n        *   *Puella rosam, quam puer dederat, amabat.*\n            (La niña amaba la rosa que el niño **le había dado**)\n        *   *Milites, qui diu pugav**erant**, fessi erant.*\n            (Los soldados, que **habían luchado** mucho tiempo, estaban cansados)\n        \n        ### 2. Futuro Perfecto: El Pasado en el Futuro\n        \n        El **Futuro Perfecto** expresa una acción que **estará completada en el futuro**.\n        Equivale a \"habré amado\" en español.\n        \n        **Formación**: Tema de Perfecto + **-ero, -eris, -erit, -erimus, -eritis, -erint**\n        \n        > ¡Atención! Las terminaciones son casi idénticas al **Futuro de SUM** (ero, eris, erit...)\n        > excepto en la 3a persona plural: -erint (no -erunt)\n        \n        #### Paradigma: AMARE\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Persona",
+        "Forma",
+        "Traducción"
+      ],
+      "rows": [
+        [
+          "1a Sg",
+          "amav-**ero**",
+          "yo habré amado"
+        ],
+        [
+          "2a Sg",
+          "amav-**eris**",
+          "tú habrás amado"
+        ],
+        [
+          "3a Sg",
+          "amav-**erit**",
+          "él/ella habrá amado"
+        ],
+        [
+          "1a Pl",
+          "amav-**erimus**",
+          "nosotros habremos amado"
+        ],
+        [
+          "2a Pl",
+          "amav-**eritis**",
+          "vosotros habréis amado"
+        ],
+        [
+          "3a Pl",
+          "amav-**erint**",
+          "ellos/ellas habrán amado"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        **Uso típico**: En oraciones temporales con *cum, ubi, postquam, simul atque*\n        \n        *   *Cum hoc fec**eris**, felix eris.*\n            (Cuando **hayas hecho** esto, serás feliz)\n        *   *Simul atque ven**eris**, tibi dicam.*\n            (Tan pronto como **hayas venido**, te diré)\n        *   *Si hoc leg**erit**, intelleget.*\n            (Si **hubiere leído** esto, lo entenderá)\n        \n        ### 3. Resumen: Sistema Completo de Perfectum (Activo)\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Tiempo",
+        "Terminaciones",
+        "Ejemplo (AMARE)",
+        "Significado"
+      ],
+      "rows": [
+        [
+          "**Perfecto**",
+          "-i, -isti, -it, -imus, -istis, -erunt",
+          "amav**i**",
+          "amé / he amado"
+        ],
+        [
+          "**Pluscuamperfecto**",
+          "-eram, -eras, -erat, -eramus, -eratis, -erant",
+          "amav**eram**",
+          "había amado"
+        ],
+        [
+          "**Futuro Perfecto**",
+          "-ero, -eris, -erit, -erimus, -eritis, -erint",
+          "amav**ero**",
+          "habré amado"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        > **Clave**: Los tres tiempos se forman sobre el **mismo tema de perfecto**, \n        > solo cambian las terminaciones.\n        \n        ### 4. Ejercicio de Conjugación\n        \n        Conjuga en los tres tiempos los siguientes verbos (3a persona singular):\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Verbo",
+        "Perfecto",
+        "Pluscuamperfecto",
+        "Futuro Perfecto"
+      ],
+      "rows": [
+        [
+          "*Porto, portare, portavi, portatum*",
+          "*portavit*",
+          "*portav**erat***",
+          "*portav**erit***"
+        ],
+        [
+          "*Moneo, monere, monui, monitum*",
+          "*monuit*",
+          "*monu**erat***",
+          "*monu**erit***"
+        ],
+        [
+          "*Mitto, mittere, misi, missum*",
+          "*misit*",
+          "*mis**erat***",
+          "*mis**erit***"
+        ],
+        [
+          "*Audio, audire, audivi, auditum*",
+          "*audivit*",
+          "*audiv**erat***",
+          "*audiv**erit***"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        ### Vocabulario Esencial\n        *   **antequam**: antes de que\n        *   **postquam**: después de que\n        *   **ubi**: cuando (tan pronto como)\n        *   **simul atque / simul ac**: tan pronto como\n        *   **priusquam**: antes de que\n        *   **cum primum**: apenas, en cuanto\n        "
+    },
+    {
+      "type": "markdown",
+      "content": "### 🏛️ Cultura Romana: Las Grandes Fiestas Religiosas"
+    }
+  ]
+}

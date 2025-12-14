@@ -1,0 +1,171 @@
+{
+  "title": "Gramática Rápida",
+  "description": "Consulta rápida de gramática latina. Encuentra tablas de declinaciones, conjugaciones y más.",
+  "tabs": [
+    {
+      "id": "declensions",
+      "label": "Declinaciones",
+      "icon": "🏛️",
+      "sections": [
+        {
+          "title": "Primera Declinación (-a, -ae) - Femenino",
+          "content": "**Ejemplo:** *puella, puellae* (f) - niña\n\n| Caso | Singular | Plural |\n|:----:|:--------:|:------:|\n| **Nominativo** | puell**a** | puell**ae** |\n| **Vocativo** | puell**a** | puell**ae** |\n| **Acusativo** | puell**am** | puell**ās** |\n| **Genitivo** | puell**ae** | puell**ārum** |\n| **Dativo** | puell**ae** | puell**īs** |\n| **Ablativo** | puell**ā** | puell**īs** |\n\n💡 Típicamente femenino. Terminación característica: **-a** (nom. sg.)"
+        },
+        {
+          "title": "Segunda Declinación (-us, -i / -um, -i)",
+          "content": "**Masculino:** *dominus, dominī* (m) - señor\n\n| Caso | Singular | Plural |\n|:----:|:--------:|:------:|\n| **Nom.** | domin**us** | domin**ī** |\n| **Voc.** | domin**e** | domin**ī** |\n| **Acc.** | domin**um** | domin**ōs** |\n| **Gen.** | domin**ī** | domin**ōrum** |\n| **Dat.** | domin**ō** | domin**īs** |\n| **Abl.** | domin**ō** | domin**īs** |\n\n**Neutro:** *templum, templī* (n) - templo\n\n| Caso | Singular | Plural |\n|:----:|:--------:|:------:|\n| **Nom.** | templ**um** | templ**a** |\n| **Voc.** | templ**um** | templ**a** |\n| **Acc.** | templ**um** | templ**a** |\n| **Gen.** | templ**ī** | templ**ōrum** |\n| **Dat.** | templ**ō** | templ**īs** |\n| **Abl.** | templ**ō** | templ**īs** |\n\n💡 Neutros: Nom. = Acc. = Voc. (en ambos números). Plural siempre en **-a**"
+        },
+        {
+          "title": "Tercera Declinación (variada)",
+          "content": "ℹ️ La 3ª declinación tiene dos subtipos según el número de sílabas en nominativo vs genitivo\n\n### Imparisílabos (Genitivo tiene MÁS sílabas)\nEjemplo: *rēx* (1 sílaba) → *rēg-is* (2 sílabas)\n\n**Masculino/Femenino:** *rēx, rēgis* (m) - rey\n\n| Caso | Singular | Plural |\n|:----:|:--------:|:------:|\n| **Nom.** | **rēx** | rēg**ēs** |\n| **Voc.** | **rēx** | rēg**ēs** |\n| **Acc.** | rēg**em** | rēg**ēs** |\n| **Gen.** | rēg**is** | rēg**um** |\n| **Dat.** | rēg**ī** | rēg**ibus** |\n| **Abl.** | rēg**e** | rēg**ibus** |\n\n**Neutro:** *nōmen, nōminis* (n) - nombre\n\n| Caso | Singular | Plural |\n|:----:|:--------:|:------:|\n| **Nom.** | **nōmen** | nōmin**a** |\n| **Voc.** | **nōmen** | nōmin**a** |\n| **Acc.** | **nōmen** | nōmin**a** |\n| **Gen.** | nōmin**is** | nōmin**um** |\n| **Dat.** | nōmin**ī** | nōmin**ibus** |\n| **Abl.** | nōmin**e** | nōmin**ibus** |\n\n---\n\n### Parisílabos (Genitivo tiene IGUAL sílabas)\nEjemplo: *cīv-is* (2 sílabas) → *cīv-is* (2 sílabas)\n\n**Masculino/Femenino:** *cīvis, cīvis* (c) - ciudadano\n\n| Caso | Singular | Plural |\n|:----:|:--------:|:------:|\n| **Nom.** | **cīvis** | cīv**ēs** |\n| **Voc.** | **cīvis** | cīv**ēs** |\n| **Acc.** | cīv**em** | cīv**ēs** |\n| **Gen.** | cīv**is** | cīv**ium** |\n| **Dat.** | cīv**ī** | cīv**ibus** |\n| **Abl.** | cīv**ī** | cīv**ibus** |\n\n**Neutro:** *mare, maris* (n) - mar\n\n| Caso | Singular | Plural |\n|:----:|:--------:|:------:|\n| **Nom.** | **mare** | mar**ia** |\n| **Voc.** | **mare** | mar**ia** |\n| **Acc.** | **mare** | mar**ia** |\n| **Gen.** | mar**is** | mar**ium** |\n| **Dat.** | mar**ī** | mar**ibus** |\n| **Abl.** | mar**ī** | mar**ibus** |\n\n⚠️ **Diferencias clave:**\n- **Gen. Pl.:** Imparisílabo = `-um` | Parisílabo = `-ium`\n- **Abl. Sg.:** Imparisílabo = `-e` | Parisílabo = `-ī` (M/F puede variar)\n- **Nom/Acc Pl. Neutro:** Imparisílabo = `-a` | Parisílabo = `-ia`\n\n💡 Genitivo singular en **-is**. Gran variedad de nominativos."
+        },
+        {
+          "title": "Cuarta Declinación (-us, -ūs)",
+          "content": "**Masculino:** *frūctus, frūctūs* (m) - fruto\n\n| Caso | Singular | Plural |\n|:----:|:--------:|:------:|\n| **Nom.** | frūct**us** | frūct**ūs** |\n| **Voc.** | frūct**us** | frūct**ūs** |\n| **Acc.** | frūct**um** | frūct**ūs** |\n| **Gen.** | frūct**ūs** | frūct**uum** |\n| **Dat.** | frūct**uī** | frūct**ibus** |\n| **Abl.** | frūct**ū** | frūct**ibus** |\n\n**Neutro:** *cornū, cornūs* (n) - cuerno\n\n| Caso | Singular | Plural |\n|:----:|:--------:|:------:|\n| **Nom.** | corn**ū** | corn**ua** |\n| **Voc.** | corn**ū** | corn**ua** |\n| **Acc.** | corn**ū** | corn**ua** |\n| **Gen.** | corn**ūs** | corn**uum** |\n| **Dat.** | corn**ū** | corn**ibus** |\n| **Abl.** | corn**ū** | corn**ibus** |\n\n💡 Típicamente masculino. Muy pocos neutros. Genitivo sg.: **-ūs**"
+        },
+        {
+          "title": "Quinta Declinación (-ēs, -ēī)",
+          "content": "**Femenino:** *rēs, reī* (f) - cosa\n\n| Caso | Singular | Plural |\n|:----:|:--------:|:------:|\n| **Nom.** | r**ēs** | r**ēs** |\n| **Voc.** | r**ēs** | r**ēs** |\n| **Acc.** | r**em** | r**ēs** |\n| **Gen.** | r**eī** | r**ērum** |\n| **Dat.** | r**eī** | r**ēbus** |\n| **Abl.** | r**ē** | r**ēbus** |\n\n💡 Casi todos femeninos. Pocos sustantivos. Importante: *rēs* (cosa), *diēs* (día), *fidēs* (fe), *spēs* (esperanza)"
+        },
+        {
+          "title": "Excepciones y Casos Especiales",
+          "content": "### Sustantivos Irregulares Comunes\n\n**domus, domūs** (f) - casa (mezcla 2ª y 4ª declinación)\n- Gen. sg.: **domūs** o **domī**\n- Abl. sg.: **domō** o **domū**\n- Locativo: **domī** (en casa)\n\n**vis, vīs** (f) - fuerza (irregular)\n- Solo tiene plural completo\n- Ac. sg.: **vim**, Abl. sg.: **vī**\n\n**Género excepcional:**\n- *humus* (f) - tierra (2ª decl. pero femenino)\n- *pinus* (f) - pino (2ª decl. pero femenino)\n- *manus* (f) - mano (4ª decl. femenino)\n- *domus* (f) - casa (4ª decl. femenino)"
+        }
+      ]
+    },
+    {
+      "id": "conjugations",
+      "label": "Conjugaciones",
+      "icon": "⚔️",
+      "sections": [
+        {
+          "title": "Sistema de Presente (Presente, Imperfecto, Futuro)",
+          "content": "### Presente de Indicativo Activo\n\n**1ª Conjugación:** *amō, amāre* - amar\n| Persona | Singular | Plural |\n|:-------:|:--------:|:------:|\n| **1ª** | am**ō** | am**āmus** |\n| **2ª** | am**ās** | am**ātis** |\n| **3ª** | am**at** | am**ant** |\n\n**2ª Conjugación:** *moneō, monēre* - advertir\n| Persona | Singular | Plural |\n|:-------:|:--------:|:------:|\n| **1ª** | mone**ō** | mon**ēmus** |\n| **2ª** | mon**ēs** | mon**ētis** |\n| **3ª** | mon**et** | mon**ent** |\n\n**3ª Conjugación:** *regō, regere* - regir\n| Persona | Singular | Plural |\n|:-------:|:--------:|:------:|\n| **1ª** | reg**ō** | reg**imus** |\n| **2ª** | reg**is** | reg**itis** |\n| **3ª** | reg**it** | reg**unt** |\n\n**4ª Conjugación:** *audiō, audīre* - oír\n| Persona | Singular | Plural |\n|:-------:|:--------:|:------:|\n| **1ª** | audi**ō** | aud**īmus** |\n| **2ª** | aud**īs** | aud**ītis** |\n| **3ª** | aud**it** | aud**iunt** |\n\n---\n\n### Imperfecto de Indicativo Activo\n💡 Formación: raíz + **-ba-** (1ª/2ª) o **-ēba-** (3ª/4ª) + desinencias\n\n| Persona | 1ª (amō) | 2ª (moneō) | 3ª (regō) | 4ª (audiō) |\n|:-------:|:--------:|:----------:|:---------:|:----------:|\n| **1ª sg** | amā**bam** | monē**bam** | reg**ēbam** | audi**ēbam** |\n| **2ª sg** | amā**bās** | monē**bās** | reg**ēbās** | audi**ēbās** |\n| **3ª sg** | amā**bat** | monē**bat** | reg**ēbat** | audi**ēbat** |\n| **1ª pl** | amā**bāmus** | monē**bāmus** | reg**ēbāmus** | audi**ēbāmus** |\n| **2ª pl** | amā**bātis** | monē**bātis** | reg**ēbātis** | audi**ēbātis** |\n| **3ª pl** | amā**bant** | monē**bant** | reg**ēbant** | audi**ēbant** |"
+        },
+        {
+          "title": "Sistema de Perfecto",
+          "content": "### Perfecto de Indicativo Activo\n💡 Formación: **raíz de perfecto** + desinencias (-ī, -istī, -it, -imus, -istis, -ērunt)\n\n**Ejemplo:** *amāvī* (he amado)\n\n| Persona | Singular | Plural |\n|:-------:|:--------:|:------:|\n| **1ª** | amāv**ī** | amāv**imus** |\n| **2ª** | amāv**istī** | amāv**istis** |\n| **3ª** | amāv**it** | amāv**ērunt** |\n\n---\n\n### Pluscuamperfecto de Indicativo Activo\n💡 Formación: raíz de perfecto + **-eram**\n\n| Persona | Singular | Plural |\n|:-------:|:--------:|:------:|\n| **1ª** | amāv**eram** | amāv**erāmus** |\n| **2ª** | amāv**erās** | amāv**erātis** |\n| **3ª** | amāv**erat** | amāv**erant** |\n\n---\n\n### Futuro de Indicativo Activo\n💡 1ª/2ª conjugación: raíz + **-b-**; 3ª/4ª: raíz + **-ē-** (excepto 1ª sg.)\n\n| Persona | 1ª (amō) | 2ª (moneō) | 3ª (regō) | 4ª (audiō) |\n|:-------:|:--------:|:----------:|:---------:|:----------:|\n| **1ª sg** | amā**bō** | monē**bō** | reg**am** | audi**am** |\n| **2ª sg** | amā**bis** | monē**bis** | reg**ēs** | audi**ēs** |\n| **3ª sg** | amā**bit** | monē**bit** | reg**et** | audi**et** |\n| **1ª pl** | amā**bimus** | monē**bimus** | reg**ēmus** | audi**ēmus** |\n| **2ª pl** | amā**bitis** | monē**bitis** | reg**ētis** | audi**ētis** |\n| **3ª pl** | amā**bunt** | monē**bunt** | reg**ent** | audi**ent** |"
+        },
+        {
+          "title": "Verbos Irregulares Importantes",
+          "content": "### sum, esse, fuī (ser/estar)\n\n| Tiempo | 1ª sg | 2ª sg | 3ª sg | 1ª pl | 2ª pl | 3ª pl |\n|:-------|:------|:------|:------|:------|:------|:------|\n| **Presente** | sum | es | est | sumus | estis | sunt |\n| **Imperfecto** | eram | erās | erat | erāmus | erātis | erant |\n| **Futuro** | erō | eris | erit | erimus | eritis | erunt |\n| **Perfecto** | fuī | fuistī | fuit | fuimus | fuistis | fuērunt |\n\n---\n\n### possum, posse, potuī (poder)\n💡 Formación: pot + sum (pot-sum → possum)\n\n| Tiempo | 1ª sg | 2ª sg | 3ª sg | 1ª pl | 2ª pl | 3ª pl |\n|:-------|:------|:------|:------|:------|:------|:------|\n| **Presente** | possum | potes | potest | possumus | potestis | possunt |\n| **Imperfecto** | poteram | poterās | poterat | poterāmus | poterātis | poterant |\n| **Futuro** | poterō | poteris | poterit | poterimus | poteritis | poterunt |\n\n---\n\n### eō, īre, iī/īvī, itum (ir)\n| Tiempo | 1ª sg | 2ª sg | 3ª sg | 1ª pl | 2ª pl | 3ª pl |\n|:-------|:------|:------|:------|:------|:------|:------|\n| **Presente** | eō | īs | it | īmus | ītis | eunt |\n| **Imperfecto** | ībam | ībās | ībat | ībāmus | ībātis | ībant |\n| **Futuro** | ībō | ībis | ībit | ībimus | ībitis | ībunt |\n\n---\n\n### ferō, ferre, tulī, lātum (llevar)\n| Tiempo | 1ª sg | 2ª sg | 3ª sg | 1ª pl | 2ª pl | 3ª pl |\n|:-------|:------|:------|:------|:------|:------|:------|\n| **Presente** | ferō | fers | fert | ferimus | fertis | ferunt |\n| **Imperfecto** | ferēbam | ferēbās | ferēbat | ferēbāmus | ferēbātis | ferēbant |\n\n---\n\n**volō / nōlō / mālō**\n\n*volō* (querer)\n| Presente |\n|:---------|\n| volō |\n| vīs |\n| vult |\n| volumus |\n| vultis |\n| volunt |\n\n*nōlō* (no querer)\n| Presente |\n|:---------|\n| nōlō |\n| nōn vīs |\n| nōn vult |\n| nōlumus |\n| nōn vultis |\n| nōlunt |\n\n*mālō* (preferir)\n| Presente |\n|:---------|\n| mālō |\n| māvīs |\n| māvult |\n| mālumus |\n| māvultis |\n| mālunt |"
+        },
+        {
+          "title": "Verboides (Formas Nominales del Verbo)",
+          "content": "### Infinitivos\n\n| Conjugación | Presente Activo | Perfecto Activo | Presente Pasivo |\n|:-----------:|:----------------|:----------------|:----------------|\n| **1ª** | amā**re** | amāv**isse** | amā**rī** |\n| **2ª** | monē**re** | monu**isse** | monē**rī** |\n| **3ª** | reg**ere** | rēx**isse** | reg**ī** |\n| **4ª** | aud**īre** | audīv**isse** | aud**īrī** |\n\n---\n\n### Participios\n\n**Participio Presente Activo:**\n- Se forma: raíz + **-ns / -nt-** + terminación\n- Ejemplo: *amāns, amantis* (amante, que ama)\n\n**Participio Perfecto Pasivo (PPP):**\n- 4ª parte principal\n- Ejemplo: *amātus, -a, -um* (amado/a)\n\n**Participio Future Activo:**\n- PPP + **-ūrus, -a, -um**\n- Ejemplo: *amātūrus, -a, -um* (que va a amar)\n\n---\n\n### Gerundio\n**Formación:** raíz + **-nd-** + terminaciones de 2ª declinación neutro\n\n| Caso | Forma | Ejemplo (amō) |\n|:-----|:------|:--------------|\n| **Gen.** | -**ndī** | amandī (de amar) |\n| **Dat.** | -**ndō** | amandō (para amar) |\n| **Acc.** | -(ad) **ndum** | (ad) amandum (para amar) |\n| **Abl.** | -**ndō** | amandō (por/con amar) |\n\n---\n\n### Gerundivo\n**Formación:** raíz + **-ndus, -a, -um** (adjetivo verbal de obligación)\n\n- Ejemplo: *amandus, -a, -um* (que debe ser amado)\n- Uso: construcción pasiva de obligación con *sum*\n- *Carthāgō dēlenda est* = Cartago debe ser destruida\n\n---\n\n### Supino\n**Formación:** PPP sin terminación + **-um** (acusativo) o **-ū** (ablativo)\n\n| Forma | Uso | Ejemplo |\n|:------|:----|:--------|\n| **Ac. (-um)** | Expresa finalidad con verbos de movimiento | Vēnī **vīsum** (Vine a ver) |\n| **Abl. (-ū)** | \"En cuanto a...\" | Facile **dictū** (Fácil de decir) |"
+        },
+        {
+          "title": "Adverbios Más Usados",
+          "content": "### Adverbios de Lugar\n- **hīc** - aquí\n- **illīc** - allí\n- **ibī** - allí\n- **ubī** - donde\n- **quō** - adonde\n- **unde** - de donde\n- **longē** - lejos\n- **prope** - cerca\n\n### Adverbios de Tiempo\n- **nunc** - ahora\n- **tunc / tum** - entonces\n- **iam** - ya\n- **mox** - pronto\n- **statim** - inmediatamente\n- **semper** - siempre\n- **numquam** - nunca\n- **saepe** - a menudo\n- **hodiē** - hoy\n- **herī** - ayer\n- **crās** - mañana\n\n### Adverbios de Modo\n- **bene** - bien\n- **male** - mal\n- **multum** - mucho\n- **parum** - poco\n- **sīc** - así\n- **ita** - así\n- **maximē** - muchísimo\n- **minimē** - nada, en absoluto\n\n### Otros Adverbios Comunes\n- **etiam** - también, incluso\n- **quoque** - también\n- **nōn** - no\n- **fortasse** - quizás\n- **valdē** - mucho, muy\n- **tantum** - solamente\n- **circum** - alrededor\n- **prope** - casi"
+        }
+      ]
+    },
+    {
+      "id": "pronouns",
+      "label": "Pronombres",
+      "icon": "👤",
+      "sections": [
+        {
+          "title": "Pronombres Personales",
+          "content": "**1ª Persona:** ego (yo) / nōs (nosotros)\n\n| Caso | Singular (yo) | Plural (nosotros) |\n|:----:|:-------------:|:-----------------:|\n| **Nom.** | **ego** | **nōs** |\n| **Gen.** | **meī** | **nostrī / nostrum** |\n| **Dat.** | **mihi** | **nōbīs** |\n| **Acc.** | **mē** | **nōs** |\n| **Abl.** | **mē** | **nōbīs** |\n\n**2ª Persona:** tū (tú) / vōs (vosotros)\n\n| Caso | Singular (tú) | Plural (vosotros) |\n|:----:|:-------------:|:-----------------:|\n| **Nom.** | **tū** | **vōs** |\n| **Gen.** | **tuī** | **vestrī / vestrum** |\n| **Dat.** | **tibi** | **vōbīs** |\n| **Acc.** | **tē** | **vōs** |\n| **Abl.** | **tē** | **vōbīs** |"
+        },
+        {
+          "title": "Pronombre Reflexivo (3ª Persona)",
+          "content": "**sē** (se, a sí mismo/a/os/as)\n💡 No tiene Nominativo. Es igual para singular y plural.\n\n| Caso | Forma | Traducción |\n|:----:|:-----:|:-----------|\n| **Gen.** | **suī** | de sí mismo/a/os/as |\n| **Dat.** | **sibi** | para sí mismo... |\n| **Acc.** | **sē / sēsē** | a sí mismo... |\n| **Abl.** | **sē / sēsē** | con/por sí mismo... |"
+        },
+        {
+          "title": "Pronombres Demostrativos",
+          "content": "### hic, haec, hoc (este, esta, esto)\n\n| Caso | Masc. Sg | Fem. Sg | Neut. Sg | Masc. Pl | Fem. Pl | Neut. Pl |\n|:----:|:--------:|:-------:|:--------:|:--------:|:-------:|:--------:|\n| **Nom.** | hic | haec | hoc | hī | hae | haec |\n| **Gen.** | huius | huius | huius | hōrum | hārum | hōrum |\n| **Dat.** | huic | huic | huic | hīs | hīs | hīs |\n| **Acc.** | hunc | hanc | hoc | hōs | hās | haec |\n| **Abl.** | hōc | hāc | hōc | hīs | hīs | hīs |\n\n---\n\n### ille, illa, illud (aquel, aquella, aquello)\n\n| Caso | Masc. Sg | Fem. Sg | Neut. Sg | Masc. Pl | Fem. Pl | Neut. Pl |\n|:----:|:--------:|:-------:|:--------:|:--------:|:-------:|:--------:|\n| **Nom.** | ille | illa | illud | illī | illae | illa |\n| **Gen.** | illīus | illīus | illīus | illōrum | illārum | illōrum |\n| **Dat.** | illī | illī | illī | illīs | illīs | illīs |\n| **Acc.** | illum | illam | illud | illōs | illās | illa |\n| **Abl.** | illō | illā | illō | illīs | illīs | illīs |\n\n---\n\n### iste, ista, istud (ese, esa, eso)\n💡 Se declina igual que *ille*.\n\n| Caso | Masc. Sg | Fem. Sg | Neut. Sg | Masc. Pl | Fem. Pl | Neut. Pl |\n|:----:|:--------:|:-------:|:--------:|:--------:|:-------:|:--------:|\n| **Nom.** | iste | ista | istud | istī | istae | ista |\n| **Gen.** | istīus | istīus | istīus | istōrum | istārum | istōrum |\n| **Dat.** | istī | istī | istī | istīs | istīs | istīs |\n| **Acc.** | istum | istam | istud | istōs | istās | ista |\n| **Abl.** | istō | istā | istō | istīs | istīs | istīs |\n\n---\n\n### is, ea, id (él, ella, ello / este, ese)\n💡 Usado como pronombre personal de 3ª persona o demostrativo débil.\n\n| Caso | Masc. Sg | Fem. Sg | Neut. Sg | Masc. Pl | Fem. Pl | Neut. Pl |\n|:----:|:--------:|:-------:|:--------:|:--------:|:-------:|:--------:|\n| **Nom.** | is | ea | id | eī / iī | eae | ea |\n| **Gen.** | eius | eius | eius | eōrum | eārum | eōrum |\n| **Dat.** | eī | eī | eī | eīs / iīs | eīs / iīs | eīs / iīs |\n| **Acc.** | eum | eam | id | eōs | eās | ea |\n| **Abl.** | eō | eā | eō | eīs / iīs | eīs / iīs | eīs / iīs |"
+        },
+        {
+          "title": "Pronombre Relativo",
+          "content": "### quī, quae, quod (que, el cual, quien)\n\n| Caso | Masc. Sg | Fem. Sg | Neut. Sg | Masc. Pl | Fem. Pl | Neut. Pl |\n|:----:|:--------:|:-------:|:--------:|:--------:|:-------:|:--------:|\n| **Nom.** | quī | quae | quod | quī | quae | quae |\n| **Gen.** | cuius | cuius | cuius | quōrum | quārum | quōrum |\n| **Dat.** | cui | cui | cui | quibus | quibus | quibus |\n| **Acc.** | quem | quam | quod | quōs | quās | quae |\n| **Abl.** | quō | quā | quō | quibus | quibus | quibus |"
+        },
+        {
+          "title": "Pronombre Interrogativo",
+          "content": "### quis, quid (¿quién?, ¿qué?)\n💡 En plural es igual que el relativo (*quī, quae, quae*).\n\n| Caso | Masc./Fem. Sg | Neutro Sg |\n|:----:|:-------------:|:---------:|\n| **Nom.** | **quis** | **quid** |\n| **Gen.** | cuius | cuius |\n| **Dat.** | cui | cui |\n| **Acc.** | quem | **quid** |\n| **Abl.** | quō | quō |"
+        }
+      ]
+    },
+    {
+      "id": "adjectives",
+      "label": "Adjetivos",
+      "icon": "✨",
+      "sections": [
+        {
+          "title": "Adjetivos 1ª/2ª Declinación",
+          "content": "**bonus, bona, bonum** (bueno, buena)\n💡 Se declina como sustantivos: -us (2ª masc), -a (1ª fem), -um (2ª neut)\n\n| Caso | Masc. Sg | Fem. Sg | Neut. Sg | Masc. Pl | Fem. Pl | Neut. Pl |\n|:----:|:--------:|:-------:|:--------:|:--------:|:-------:|:--------:|\n| **Nom.** | bon**us** | bon**a** | bon**um** | bon**ī** | bon**ae** | bon**a** |\n| **Gen.** | bon**ī** | bon**ae** | bon**ī** | bon**ōrum** | bon**ārum** | bon**ōrum** |\n| **Dat.** | bon**ō** | bon**ae** | bon**ō** | bon**īs** | bon**īs** | bon**īs** |\n| **Acc.** | bon**um** | bon**am** | bon**um** | bon**ōs** | bon**ās** | bon**a** |\n| **Abl.** | bon**ō** | bon**ā** | bon**ō** | bon**īs** | bon**īs** | bon**īs** |"
+        },
+        {
+          "title": "Adjetivos de 2ª Clase (3ª Declinación)",
+          "content": "Siguen la 3ª declinación de temas en -i (Parisílabos). Abl. sg. en **-ī**, Gen. pl. en **-ium**, Nom/Ac pl. neutro en **-ia**.\n\n### 1. Tres Terminaciones (-er, -is, -e)\n**acer, acris, acre** (agudo, enérgico)\nMasc: *acer*, Fem: *acris*, Neut: *acre*. (Solo cambia en el Nominativo singular).\n\n### 2. Dos Terminaciones (-is, -e)\n**fortis, forte** (fuerte, valiente)\nMasc/Fem: *fortis*, Neut: *forte*. (La mayoría son de este tipo).\n\n| Caso | Masc./Fem. Sg | Neutro Sg | Masc./Fem. Pl | Neutro Pl |\n|:----:|:-------------:|:---------:|:-------------:|:---------:|\n| **Nom.** | fort**is** | fort**e** | fort**ēs** | fort**ia** |\n| **Gen.** | fort**is** | fort**is** | fort**ium** | fort**ium** |\n| **Dat.** | fort**ī** | fort**ī** | fort**ibus** | fort**ibus** |\n| **Acc.** | fort**em** | fort**e** | fort**ēs** | fort**ia** |\n| **Abl.** | fort**ī** | fort**ī** | fort**ibus** | fort**ibus** |\n\n### 3. Una Terminación\n**fēlīx, fēlīcis** (feliz)\nMasc/Fem/Neut: *fēlīx* en el nominativo. Se distinguen en los demás casos.\n\n| Caso | Masc./Fem. Sg | Neutro Sg | Masc./Fem. Pl | Neutro Pl |\n|:----:|:-------------:|:---------:|:-------------:|:---------:|\n| **Nom.** | fēlīx | fēlīx | fēlīc**ēs** | fēlīc**ia** |\n| **Gen.** | fēlīc**is** | fēlīc**is** | fēlīc**ium** | fēlīc**ium** |\n| **Acc.** | fēlīc**em** | fēlīx | fēlīc**ēs** | fēlīc**ia** |\n| **Abl.** | fēlīc**ī** | fēlīc**ī** | fēlīc**ibus** | fēlīc**ibus** |"
+        },
+        {
+          "title": "Grados del Adjetivo (Comparativo y Superlativo)",
+          "content": "### 1. Comparativo de Superioridad\nSe forma añadiendo **-ior** (M/F) y **-ius** (N) a la raíz.\n**Ejemplo:** *altus* (alto) → *altior, altius* (más alto)\n⚠️ Se declina como la 3ª declinación CONSONÁNTICA (Imparisílabo). Abl. sg. en **-e**, Gen. pl. en **-um**.\n\n| Caso | Masc./Fem. Sg | Neutro Sg | Masc./Fem. Pl | Neutro Pl |\n|:----:|:-------------:|:---------:|:-------------:|:---------:|\n| **Nom.** | altior | altius | altiōr**ēs** | altiōr**a** |\n| **Gen.** | altiōr**is** | altiōr**is** | altiōr**um** | altiōr**um** |\n| **Acc.** | altiōr**em** | altius | altiōr**ēs** | altiōr**a** |\n| **Abl.** | altiōr**e** | altiōr**e** | altiōr**ibus** | altiōr**ibus** |\n\n---\n\n### 2. Superlativo\nSe forma generalmente añadiendo **-issimus, -a, -um** a la raíz.\n**Ejemplo:** *altus* → *altissimus, -a, -um* (altísimo / el más alto)\n💡 Se declina como un adjetivo de 1ª/2ª declinación (*bonus, -a, -um*).\n\n**Excepciones:**\n- Adjetivos en **-er**: añaden *-rimus* (*pucher* → *pulcherrimus*)\n- Adjetivos en **-lis**: añaden *-limus* (*facilis* → *facillimus*)\n\n---\n\n### 3. Comparación Irregular\n\n| Positivo | Comparativo | Superlativo | Significado |\n|:---------|:------------|:------------|:------------|\n| **bonus** | melior, -ius | optimus | bueno, mejor, óptimo |\n| **malus** | peior, -ius | pessimus | malo, peor, pésimo |\n| **magnus** | maior, -ius | maximus | grande, mayor, máximo |\n| **parvus** | minor, minus | minimus | pequeño, menor, mínimo |\n| **multus** | plūs | plūrimus | mucho, más, muchísimo |"
+        }
+      ]
+    },
+    {
+      "id": "syntax",
+      "label": "Sintaxis",
+      "icon": "📝",
+      "sections": [
+        {
+          "title": "Los Complementos y los Casos",
+          "content": "### Guía Rápida de Funciones\n\n| Caso | Función | ¿Qué es? | Pregunta | Ejemplo |\n|:---:|:---|:---|:---|:---|\n| **Nominativo** | **Sujeto** | Quien realiza la acción o de quien se habla. | ¿Quién? | *__Puella__ cantat.* (La niña canta) |\n| | **Atributo** | Cualidad del sujeto con verbos copulativos (sum). | ¿Cómo es? | *Puella __pulchra__ est.* (La niña es hermosa) |\n| **Vocativo** | **Apelación** | A quien nos dirigimos directamente. | — | *__Marce__, veni!* (¡Marco, ven!) |\n| **Acusativo** | **Objeto Directo (OD)** | Recibe la acción directamente. | ¿Qué? / ¿A quién? | *Puer __puellam__ videt.* (El niño ve a la niña) |\n| | **Dirección (CC)** | Hacia dónde se va (con *ad* o *in*). | ¿Adónde? | *__Ad urbem__ eo.* (Voy a la ciudad) |\n| | **Sujeto de Inf.** | En oraciones de Acusativo + Infinitivo. | ¿Quién? | *Dico __te__ bonum esse.* (Digo que tú eres bueno) |\n| **Genitivo** | **Complemento del Nombre (CN)** | Posesión o pertenencia. | ¿De quién? | *Liber __pueri__.* (El libro del niño) |\n| | **Partitivo** | El todo del que se toma una parte. | ¿De qué? | *Pars __militum__.* (Parte de los soldados) |\n| **Dativo** | **Objeto Indirecto (OI)** | Destinatario o beneficiario de la acción. | ¿A quién? / ¿Para quién? | *Do librum __tibi__.* (Te doy el libro a ti) |\n| | **Posesivo** | Con *sum*, indica al poseedor. | ¿De quién? | *Liber est __mihi__.* (Tengo un libro / El libro es para mí) |\n| **Ablativo** | **CC Instrumento** | Con qué se hace la acción. | ¿Con qué? | *__Gladio__ pugnat.* (Lucha con la espada) |\n| | **CC Lugar** | Dónde ocurre (con *in*). | ¿Dónde? | *__In horto__ est.* (Está en el jardín) |\n| | **CC Compañía** | Con quién (con *cum*). | ¿Con quién? | *__Cum amico__ venit.* (Viene con un amigo) |\n| | **Agente** | Quien hace la acción en pasiva (con *a/ab*). | ¿Por quién? | *Amor __a patre__.* (Soy amado por el padre) |"
+        },
+        {
+          "title": "Tipos de Oraciones",
+          "content": "### Según la actitud del hablante\n- **Enunciativas:** Afirman o niegan un hecho. (*Puer currit.*)\n- **Interrogativas:** Hacen una pregunta. (*Quis venit?* - ¿Quién viene?)\n    - Partículas: *-ne* (pregunta general), *nonne* (espera 'sí'), *num* (espera 'no').\n- **Imperativas:** Dan una orden. (*Veni huc!* - ¡Ven aquí!)\n- **Exclamativas:** Expresan emoción. (*Quam pulchra est!* - ¡Qué hermosa es!)\n- **Desiderativas:** Expresan un deseo (usualmente subjuntivo). (*Utinam veniat!* - ¡Ojalá venga!)\n\n---\n\n### Oraciones Compuestas\n- **Coordinadas:** Unidas por conjunciones (*et, sed, aut*). Tienen el mismo nivel.\n    - *Puer currit __et__ puella saltat.*\n- **Subordinadas:** Dependen de una oración principal.\n    - **Sustantivas:** Actúan como sujeto u objeto (ej. Infinitivo, *ut* completivo).\n    - **Adjetivas (Relativo):** Actúan como adjetivo (*Puer __qui__ currit...*).\n    - **Adverbiales:** Actúan como adverbio (Temporal, Causal, Final, etc.)."
+        },
+        {
+          "title": "Construcciones Especiales",
+          "content": "### 1. Acusativo + Infinitivo (Oración de Infinitivo)\n💡 Muy común con verbos de **lengua** (decir), **entendimiento** (saber, creer) y **sentido** (ver, oír).\n\n**Estructura:** Verbo Principal + [ **Sujeto en Acusativo** + **Verbo en Infinitivo** ]\n\n**Cómo traducir:**\n1. Traduce el verbo principal.\n2. Añade un \"**que**\".\n3. Traduce el Acusativo como **Sujeto**.\n4. Traduce el Infinitivo como un verbo conjugado.\n\n**Ejemplo:**\n> *Video* [ *puerum* *currere* ]\n> - *Video* = Veo\n> - *que*\n> - *puerum* = el niño\n> - *currere* = corre\n> = **Veo que el niño corre.**\n\n---\n\n### 2. Doble Acusativo\n💡 Algunos verbos piden DOS acusativos: uno de persona y otro de cosa o predicativo.\n\n**Verbos que enseñan / piden / ocultan:**\n- *Doceo* (enseñar): *Doceo __pueros__ __grammaticam__.* (Enseño gramática a los niños).\n- *Posco* (pedir): *Posco __te__ __pecuniam__.* (Te pido dinero).\n- *Celo* (ocultar): *Celo __te__ __veritatem__.* (Te oculto la verdad).\n\n**Verbos que nombran / eligen / hacen (Predicativo):**\n- *Appello* (llamar): *Romani __Ciceronem__ __consulem__ creaverunt.* (Los romanos eligieron cónsul a Cicerón).\n  - *Ciceronem* = OD\n  - *consulem* = Predicativo del OD\n\n---\n\n### 3. Ablativo Absoluto\n💡 Construcción independiente que indica las circunstancias (tiempo, causa) de la oración principal.\n\n**Estructura:** [ **Sustantivo en Ablativo** + **Participio en Ablativo** ]\n\n**Cómo traducir:**\n- Literal: \"Habiendo sido...\" o \"Siendo...\"\n- Mejor: \"Cuando...\", \"Como...\", \"Después de que...\"\n\n**Ejemplo:**\n> [ *Urbe* *capta* ], hostes discesserunt.\n> - *Urbe* = ciudad (abl)\n> - *capta* = capturada (part. perf. pasivo abl)\n> - Literal: \"La ciudad capturada...\"\n> - Traducción: **Una vez capturada la ciudad**, los enemigos se marcharon."
+        }
+      ]
+    },
+    {
+      "id": "spanish",
+      "label": "Gramática Española",
+      "icon": "🇪🇸",
+      "sections": [
+        {
+          "title": "Morfología (Tipos de Palabras)",
+          "content": "![Clasificación de las palabras en español](/assets/images/spanish_morphology.png)\n\n**Puntos clave:**\n- **Sustantivo:** Nombra entidades (personas, cosas, ideas).\n- **Verbo:** Indica acción o estado. Es el núcleo de la oración.\n- **Adjetivo:** Modifica al sustantivo (califica o determina).\n- **Adverbio:** Modifica al verbo, adjetivo u otro adverbio."
+        },
+        {
+          "title": "Elementos de Enlace (Nexos y Preposiciones)",
+          "content": "### Nexos (Conectores)\n![Principales conectores](/assets/images/spanish_connectors.png)\n\n### Preposiciones\n![Lista de preposiciones](/assets/images/spanish_prepositions.png)\n\n### Subordinantes\n![Palabras que introducen subordinación](/assets/images/spanish_subordinators.png)"
+        },
+        {
+          "title": "La Oración (Simple y Compuesta)",
+          "content": "### Oración Simple\n![Estructura de la oración simple](/assets/images/spanish_simple_sentences.png)\n\n---\n\n### Oración Compuesta\n![Coordinación vs Subordinación](/assets/images/spanish_compound_sentences.png)"
+        },
+        {
+          "title": "Oraciones Subordinadas",
+          "content": "### Vista General\n![Resumen de oraciones subordinadas en español](/assets/images/spanish_subordinadas_resumen.png)\n\n---\n\n### 1. Sustantivas (Noun Clauses)\n💡 Funcionan como un **Sustantivo** dentro de la oración (Sujeto, OD, Atributo, etc.)\n\n![Completivas sustantivas: tipos y ejemplos](/assets/images/spanish_completivas_sustantivas.png)\n![Funcionan como un Sustantivo (Sujeto u OD)](/assets/images/spanish_noun_clauses.png)\n\n---\n\n### 2. Adjetivas (Adjective Clauses)\n💡 Funcionan como un **Adjetivo**, modificando a un sustantivo anterior (antecedente). Introducidas por 'que', 'quien', 'el cual', 'cuyo', 'donde', 'cuando'.\n\n![Subordinadas adjetivas: especificativas vs explicativas](/assets/images/spanish_adjetivas.png)\n\n---\n\n### 3. Adverbiales (Adverbial Clauses)\n💡 Funcionan como un **Adverbio** (indican tiempo, lugar, modo, causa, finalidad, condición, concesión, consecuencia...).\n\n![Los 8 tipos de subordinadas adverbiales](/assets/images/spanish_adverbiales.png)"
+        }
+      ]
+    },
+    {
+      "id": "tips",
+      "label": "Consejos",
+      "icon": "💡",
+      "sections": [
+        {
+          "title": "El Método Detective (Paso a Paso)",
+          "content": "Ante una oración latina, no traduzcas palabra por palabra. Sigue este orden lógico:\n\n1.  **🔍 Busca el VERBO:** Es el corazón de la oración.\n    - ¿Es singular o plural? (Te dice el número del sujeto).\n    - ¿Es activo o pasivo?\n    - ¿Es transitivo (busca OD) o copulativo (busca Atributo)?\n\n2.  **👤 Busca el SUJETO (Nominativo):**\n    - Debe concordar con el verbo en número.\n    - Si no hay Nominativo explícito, el sujeto está en el verbo (él/ella/ello).\n\n3.  **📦 Busca el OBJETO DIRECTO (Acusativo):**\n    - Solo si el verbo es transitivo.\n    - Responde a \"¿Qué?\" o \"¿A quién?\".\n\n4.  **🎁 Busca los COMPLEMENTOS (Resto de casos):**\n    - Dativo (¿Para quién?).\n    - Ablativo (¿Con qué? ¿Dónde? ¿Cuándo?).\n\n5.  **🧩 Encaja las piezas:**\n    - *Puer* (S) *rosam* (OD) *amat* (V).\n    - El niño (S) ama (V) la rosa (OD)."
+        },
+        {
+          "title": "Falsos Amigos y Trampas Comunes",
+          "content": "- **Constat:** No es \"consta\", sino \"cuesta\" (dinero) o \"es evidente\".\n- **Tandem:** No es una bicicleta, significa \"finalmente\".\n- **Autem:** No es \"auto\", significa \"sin embargo\" o \"por otro lado\".\n- **Enim:** Significa \"pues\" o \"en efecto\" (siempre va en segunda posición).\n- **Cum:** Puede ser preposición (\"con\" + Abl) o conjunción (\"cuando/como\" + Subjuntivo). ¡Mira qué le sigue!\n- **Ut:** ¡El camaleón del latín!\n    - + Indicativo: \"Como\" o \"Cuando\".\n    - + Subjuntivo: \"Para que\" (Final) o \"Que\" (Completiva/Consecutiva)."
+        },
+        {
+          "title": "Estrategia con Participios",
+          "content": "El latín ama los participios. El español prefiere oraciones subordinadas.\n\n**Participio de Presente (*amans*):**\n- Traduce como gerundio (\"amando\") o relativo (\"que ama\").\n- *Puer currens* = El niño corriendo / El niño que corre.\n\n**Participio de Perfecto (*amatus*):**\n- Traduce como participio (\"amado\") o pasiva (\"que fue amado\").\n- *Urbs capta* = La ciudad capturada / La ciudad que fue capturada.\n\n**Participio de Futuro (*amaturus*):**\n- Traduce como perífrasis (\"que va a amar\", \"dispuesto a amar\").\n- *Ave moritura* = Ave que va a morir."
+        }
+      ]
+    }
+  ]
+}

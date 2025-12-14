@@ -1,0 +1,161 @@
+{
+  "id": 1,
+  "sections": [
+    {
+      "type": "image",
+      "path": "static/images/curso_gramatica/leccion1_mapa_imperio.png",
+      "caption": "El Imperio Romano en su máxima extensión, con el Lacio (Latium) y Roma destacados"
+    },
+    {
+      "type": "markdown",
+      "content": "\n        ## Lección 1: Primeros Pasos\n        \n        ### 1. El Alfabeto Latino\n        \n        El alfabeto latino constaba originalmente de 23 letras. Persiste en el español, pero sin la **ñ**. \n        Algunas letras tenían pronunciación distinta a la nuestra.\n        \n        > **Importante**: En latín clásico no existían los acentos escritos ni signos de cantidad. \n        > Los gramáticos modernos los añaden para facilitar el aprendizaje.\n        \n        ### 2. Reglas de Pronunciación Clásica\n        \n        Vamos a aprender la **pronunciación restituta** (restituida), que intenta reconstruir cómo \n        hablaban los romanos cultos en el siglo I a.C.\n        "
+    },
+    {
+      "type": "image",
+      "path": "static/images/curso_gramatica/leccion1_alfabeto.png",
+      "caption": "Guía de pronunciación del alfabeto latino clásico"
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        **Consonantes especiales:**\n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Letra(s)",
+        "Pronunciación",
+        "Ejemplo",
+        "Se dice"
+      ],
+      "rows": [
+        [
+          "**c**",
+          "Siempre /k/ (como 'casa')",
+          "*Cicero*",
+          "/Kíkero/"
+        ],
+        [
+          "**ch**",
+          "/k/ (no /ch/)",
+          "*chorus*",
+          "/kórus/"
+        ],
+        [
+          "**g**",
+          "Siempre /g/ suave (como 'gato')",
+          "*genus*",
+          "/guénus/"
+        ],
+        [
+          "**ge, gi**",
+          "/gue/, /gui/",
+          "*genui*, *gigno*",
+          "/guénui/, /guígno/"
+        ],
+        [
+          "**j**",
+          "Como /i/ consonántica (inglés 'y')",
+          "*janua*",
+          "/iánua/"
+        ],
+        [
+          "**ph**",
+          "Como /f/",
+          "*philosophia*",
+          "/filosofía/"
+        ],
+        [
+          "**que, qui**",
+          "/kue/, /kui/",
+          "*atque*, *quidem*",
+          "/átkue/, /kúidem/"
+        ],
+        [
+          "**v**",
+          "Como /u/ semiconsonántica (inglés 'w')",
+          "*vivere*",
+          "/wíwere/"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        **Diptongos:**\n        *   **ae** = /ai/: *rosae* se dice /rósai/\n        *   **oe** = /oi/: *poena* se dice /póina/\n        *   **au** = /au/ (como en español): *aurum* se dice /áurum/\n        \n        > **Nota sobre la doble L**: En latín no existía el sonido /ll/ español. \n        > Se pronuncian las dos eles separadas: *ille* = /il-le/, *puella* = /puel-la/, *ancilla* = /an-kil-la/.\n        \n        ### 3. Acentuación\n        \n        En latín **no hay palabras agudas**, solo llanas (graves) o esdrújulas.\n        \n        **Reglas:**\n        1.  Todas las palabras de **dos sílabas** son llanas: *ro-sa*, *do-mus*, *pa-ter*.\n        2.  Las palabras de **tres o más sílabas**:\n            *   Si la penúltima sílaba es **larga**: acento en la penúltima -> *musá-rum*, *candó-ris*.\n            *   Si la penúltima sílaba es **breve**: acento en la antepenúltima -> *cón-sules*, *fí-li-o-lus*.\n        \n        **¿Cómo saber si una sílaba es larga o breve?**\n        *   Es **larga** si forma diptongo, o si la vocal va seguida de **x, z, o dos consonantes**.\n        *   Es **breve** si la vocal va seguida de otra vocal.\n        \n        ### 4. Conceptos Fundamentales: Flexión\n        \n        El latín es una lengua **flexiva**. Esto significa que las palabras cambian su terminación (desinencia) \n        para indicar su función en la oración, no el orden de las palabras.\n        \n        **Comparación con el español:**\n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Español",
+        "Latín"
+      ],
+      "rows": [
+        [
+          "El agricultor llama a la criada.",
+          "*Agricola ancillam vocat.*"
+        ],
+        [
+          "La criada llama al agricultor.",
+          "*Agricolam ancilla vocat.*"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        > Observa que *agricola* y *ancilla* cambian de forma (*-a* / *-am*) para indicar quién es el sujeto \n        > y quién el objeto, sin importar el orden.\n        \n        **Características de la flexión:**\n        *   **Declinación**: Cambios que experimentan sustantivos, adjetivos y pronombres.\n        *   **Conjugación**: Cambios que experimentan los verbos.\n        \n        ### 5. Categorías Gramaticales\n        \n        Las palabras latinas tienen:\n        *   **Género**: Masculino, Femenino, **Neutro** (ni uno ni otro).\n        *   **Número**: Singular, Plural.\n        *   **Caso**: Indica la función sintáctica (Sujeto, Objeto, Posesión, etc.).\n        \n        > **Sobre los artículos**: El latín **no tiene artículos** (el, la, un, una). \n        > Al traducir, debemos añadirlos según el contexto. *Puella* puede ser \"la niña\", \"una niña\" o simplemente \"niña\".\n        \n        ### 6. Partes de la Oración\n        \n        En latín hay ocho clases de palabras:\n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Palabra",
+        "Ejemplo",
+        "Traducción"
+      ],
+      "rows": [
+        [
+          "Nombre (sustantivo)",
+          "*ancilla*",
+          "criada"
+        ],
+        [
+          "Adjetivo",
+          "*sedula*",
+          "activa"
+        ],
+        [
+          "Pronombre",
+          "*ego*",
+          "yo"
+        ],
+        [
+          "Verbo",
+          "*voco*",
+          "llamo"
+        ],
+        [
+          "Adverbio",
+          "*bene*",
+          "bien"
+        ],
+        [
+          "Preposición",
+          "*cum*",
+          "con"
+        ],
+        [
+          "Conjunción",
+          "*et*",
+          "y"
+        ],
+        [
+          "Interjección",
+          "*o!*",
+          "¡oh!"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        ### Ejercicio de Pronunciación\n        \n        Intenta leer en voz alta estas palabras aplicando las reglas:\n        *   *Cicero philosophus* (Cicerón el filósofo) -> /Kíkero filósofus/\n        *   *Julius Caesar* (Julio César) -> /Iúlius Káisar/\n        *   *Via longa* (El camino largo) -> /Wía lónga/\n        *   *Aqua vitae* (Agua de vida) -> /Ákua wítai/\n        "
+    }
+  ]
+}

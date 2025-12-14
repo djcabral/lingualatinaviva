@@ -1,0 +1,96 @@
+{
+    "lesson": 29,
+    "topic": "Estilo Indirecto (Oratio Obliqua)",
+    "exercises": [
+        {
+            "type": "multiple_choice",
+            "question": "En Estilo Indirecto, ¿en qué modo van los verbos de las oraciones subordinadas?",
+            "options": [
+                "Subjuntivo",
+                "Indicativo",
+                "Infinitivo",
+                "Imperativo"
+            ],
+            "correct_answer": "Subjuntivo",
+            "explanation": "Todos los verbos subordinados pasan a Subjuntivo en el Estilo Indirecto."
+        },
+        {
+            "type": "multiple_choice",
+            "question": "En Estilo Indirecto, ¿en qué estructura se convierte la Oración Principal aseverativa?",
+            "options": [
+                "Acusativo con Infinitivo (AcI)",
+                "Ut + Subjuntivo",
+                "Nominativo con Indicativo",
+                "Ablativo Absoluto"
+            ],
+            "correct_answer": "Acusativo con Infinitivo (AcI)",
+            "explanation": "El sujeto pasa a Acusativo y el verbo a Infinitivo."
+        },
+        {
+            "type": "sentence_completion",
+            "question": "Directo: 'Ego sum rex'. Indirecto: Dicit _____ (que él es rey).",
+            "options": [
+                "se regem esse",
+                "eum regem esse",
+                "me regem esse"
+            ],
+            "correct_answer": "se regem esse",
+            "explanation": "Reflexivo 'se' refiere al sujeto del verbo principal (Dicit). 'Regem' en acusativo como atributo."
+        },
+        {
+            "type": "sentence_completion",
+            "question": "Directo: 'Veni!'. Indirecto: Imperat _____ (que venga).",
+            "options": [
+                "ut veniat",
+                "venire",
+                "utvenit"
+            ],
+            "correct_answer": "ut veniat",
+            "explanation": "Las oraciones de mandato (Imperativo) pasan a Subjuntivo con Ut/Ne."
+        },
+        {
+            "type": "vocabulary_match",
+            "pairs": [
+                {
+                    "latin": "Dicit se amare",
+                    "spanish": "Dice que ama (Simultáneo)"
+                },
+                {
+                    "latin": "Dixit se amavisse",
+                    "spanish": "Dijo que había amado (Anterior)"
+                },
+                {
+                    "latin": "Dicit se amaturum esse",
+                    "spanish": "Dice que amará (Posterior)"
+                },
+                {
+                    "latin": "Dixit se amare",
+                    "spanish": "Dijo que amaba (Simultáneo pasado)"
+                }
+            ]
+        },
+        {
+            "type": "sentence_completion",
+            "question": "Dixit milites, qui _____ (lucharan), vicisse.",
+            "options": [
+                "pugnarent",
+                "pugnabant",
+                "pugnant"
+            ],
+            "correct_answer": "pugnarent",
+            "explanation": "Subordinada dentro de Estilo Indirecto: SUBJUNTIVO. Como el principal es pasado (Dixit), usamos Imperfecto Subjuntivo."
+        },
+        {
+            "type": "multiple_choice",
+            "question": "¿Qué es la 'Consecutio Temporum'?",
+            "options": [
+                "La concordancia de tiempos entre principal y subordinada",
+                "El orden de las palabras",
+                "La conjugación de verbos irregulares",
+                "La secuencia de los casos"
+            ],
+            "correct_answer": "La concordancia de tiempos entre principal y subordinada",
+            "explanation": "Determina qué tiempo de subjuntivo usar según si el verbo principal es presente o histórico."
+        }
+    ]
+}

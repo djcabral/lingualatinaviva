@@ -1,0 +1,207 @@
+{
+  "id": 9,
+  "sections": [
+    {
+      "type": "markdown",
+      "content": "\n        ## Lección 9: Quinta Declinación y Futuro\n        "
+    },
+    {
+      "type": "image",
+      "path": "static/images/curso_gramatica/leccion9_fifth_declension.png",
+      "caption": "La Quinta Declinación: Temas en -E"
+    },
+    {
+      "type": "image",
+      "path": "static/images/curso_gramatica/leccion9_calendario_fiestas.png",
+      "caption": "Calendario Romano y Fiestas (Las fechas usaban la 5a Declinación: Dies, Idus, Kalendae)"
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        ### 1. Quinta Declinación: Temas en -E (La más pequeña)\n        \n        Sustantivos **femeninos** que terminan en **-es** en Nominativo y **-ei** en Genitivo.\n        Es la declinación más pequeña (solo unas 50 palabras).\n        \n        **Modelo: Dies, diei (El día) - Masc/Fem**\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Caso",
+        "Singular",
+        "Plural"
+      ],
+      "rows": [
+        [
+          "**Nominativo**",
+          "di-**es**",
+          "di-**es**"
+        ],
+        [
+          "**Vocativo**",
+          "di-**es**",
+          "di-**es**"
+        ],
+        [
+          "**Acusativo**",
+          "di-**em**",
+          "di-**es**"
+        ],
+        [
+          "**Genitivo**",
+          "di-**ei**",
+          "di-**erum**"
+        ],
+        [
+          "**Dativo**",
+          "di-**ei**",
+          "di-**ebus**"
+        ],
+        [
+          "**Ablativo**",
+          "di-**e**",
+          "di-**ebus**"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        **Palabra más importante de 5a Declinación:**\n        *   **Res, rei** (f): cosa, asunto, hecho\n            - *Res publica* = La cosa pública = La república\n        \n        **Otras palabras de 5a Declinación:**\n        *   *Spes, spei* (f): esperanza\n        *   *Fides, fidei* (f): fe, confianza\n        *   *Species, speciei* (f): aspecto, especie\n        \n        ### 2. Futuro Imperfecto: El Tiempo Venidero\n        \n        El **Futuro Imperfecto** expresa una acción que **ocurrirá en el futuro**.\n        \n        **¡Atención!** La formación es **diferente** en 1a/2a conj. y 3a/4a conj.\n        \n        #### A. Primera y Segunda Conjugación: Sufijo -BO-\n        \n        **Modelo: AMARE**\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Persona",
+        "Forma",
+        "Traducción"
+      ],
+      "rows": [
+        [
+          "1a Sg",
+          "ama-**bo**",
+          "yo amaré"
+        ],
+        [
+          "2a Sg",
+          "ama-**bis**",
+          "tú amarás"
+        ],
+        [
+          "3a Sg",
+          "ama-**bit**",
+          "él/ella amará"
+        ],
+        [
+          "1a Pl",
+          "ama-**bimus**",
+          "nosotros amaremos"
+        ],
+        [
+          "2a Pl",
+          "ama-**bitis**",
+          "vosotros amaréis"
+        ],
+        [
+          "3a Pl",
+          "ama-**bunt**",
+          "ellos/ellas amarán"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        **Modelo: MONERE**\n        *   *Monebo, monebis, monebit...* (Aconsejaré, aconsejarás...)\n        \n        #### B. Tercera y Cuarta Conjugación: Vocal -A- / -E-\n        \n        **Modelo: LEGERE**\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Persona",
+        "Forma",
+        "Traducción"
+      ],
+      "rows": [
+        [
+          "1a Sg",
+          "leg-**am**",
+          "yo leeré"
+        ],
+        [
+          "2a Sg",
+          "leg-**es**",
+          "tú leerás"
+        ],
+        [
+          "3a Sg",
+          "leg-**et**",
+          "él/ella leerá"
+        ],
+        [
+          "1a Pl",
+          "leg-**emus**",
+          "nosotros leeremos"
+        ],
+        [
+          "2a Pl",
+          "leg-**etis**",
+          "vosotros leeréis"
+        ],
+        [
+          "3a Pl",
+          "leg-**ent**",
+          "ellos/ellas leerán"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        **Modelo: AUDIRE**\n        *   *Audiam, audies, audiet...* (Oiré, oirás...)\n        \n        **Futuro de SUM (Irregular):**\n        *   *Ero, eris, erit, erimus, eritis, erunt* (Seré, serás...)\n        \n        ### Resumen de Tiempos Verbales Aprendidos\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Tiempo",
+        "Significado",
+        "1a/2a Conj",
+        "3a/4a Conj"
+      ],
+      "rows": [
+        [
+          "**Presente**",
+          "amo",
+          "-o, -as, -at",
+          "-o, -is, -it"
+        ],
+        [
+          "**Imperfecto**",
+          "amaba",
+          "-**ba**m, -**ba**s",
+          "-**eba**m, -**eba**s"
+        ],
+        [
+          "**Perfecto**",
+          "amé",
+          "-**vi**, -v**isti**",
+          "Varía según verbo"
+        ],
+        [
+          "**Futuro**",
+          "amaré",
+          "-**bo**, -**bis**",
+          "-**am**, -**es**"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        "
+    },
+    {
+      "type": "markdown",
+      "content": "### 🧠 Mnemotecnia: Las 5 Declinaciones"
+    },
+    {
+      "type": "image",
+      "path": "static/images/curso_gramatica/leccion9_5declinaciones_completas.png",
+      "caption": "Resumen Visual de las 5 Declinaciones Latinas"
+    },
+    {
+      "type": "markdown",
+      "content": "### 🏛️ Cultura Romana: Las Cuatro Estaciones"
+    }
+  ]
+}

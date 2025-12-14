@@ -1,0 +1,188 @@
+{
+  "id": 4,
+  "sections": [
+    {
+      "type": "image",
+      "path": "static/images/curso_gramatica/leccion4_vida_cotidiana.png",
+      "caption": "La vida cotidiana en una domus romana"
+    },
+    {
+      "type": "image",
+      "path": "static/images/curso_gramatica/leccion4_escuela_romana.png",
+      "caption": "Escuela Romana (Ludus Litterarius): El Magister y los Discipuli"
+    },
+    {
+      "type": "markdown",
+      "content": "\n        ## Lección 4: Segunda Declinación (Masculinos) y el Acusativo\n        \n        ### 1. Segunda Declinación: Sustantivos Masculinos en -US\n        \n        La Segunda Declinación agrupa sustantivos mayoritariamente **masculinos** que terminan en **-us** en Nominativo.\n        El Genitivo Singular termina en **-i**.\n        \n        **Enunciado estándar**: *Dominus, domini* (el señor, del señor)\n        \n        **Paradigma completo: Dominus, -i (El señor)**\n        "
+    },
+    {
+      "type": "markdown",
+      "content": "### 🧠 Mnemotecnia: Segunda Declinación"
+    },
+    {
+      "type": "image",
+      "path": "static/images/curso_gramatica/leccion4_segunda_declinacion_completa.png",
+      "caption": "Resumen Visual de la Segunda Declinación (Masculinos y Neutros)"
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Caso",
+        "Singular",
+        "Terminación",
+        "Plural",
+        "Terminación",
+        "Función"
+      ],
+      "rows": [
+        [
+          "**Nominativo**",
+          "domin-**us**",
+          "**-us**",
+          "domin-**i**",
+          "**-i**",
+          "Sujeto"
+        ],
+        [
+          "**Vocativo**",
+          "domin-**e**",
+          "**-e**",
+          "domin-**i**",
+          "**-i**",
+          "¡Oh señor!"
+        ],
+        [
+          "**Acusativo**",
+          "domin-**um**",
+          "**-um**",
+          "domin-**os**",
+          "**-os**",
+          "Objeto Directo"
+        ],
+        [
+          "**Genitivo**",
+          "domin-**i**",
+          "**-i**",
+          "domin-**orum**",
+          "**-orum**",
+          "Del señor"
+        ],
+        [
+          "**Dativo**",
+          "domin-**o**",
+          "**-o**",
+          "domin-**is**",
+          "**-is**",
+          "Al señor"
+        ],
+        [
+          "**Ablativo**",
+          "domin-**o**",
+          "**-o**",
+          "domin-**is**",
+          "**-is**",
+          "Con/Por el señor"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        > **¡Atención al Vocativo!** El Vocativo Singular de los sustantivos en **-us** es **-e**. \n        > Es la única diferencia con el Nominativo. *Domine!* = ¡Señor!\n        \n        **Sustantivos en -ER (menos frecuentes):**\n        Algunos masculinos de 2a Declinación terminan en **-er** en Nominativo:\n        *   *Puer, pueri* (niño) - Mantiene la **e**\n        *   *Ager, agri* (campo) - Pierde la **e** en los demás casos\n        \n        **Otros ejemplos de 2a Declinación Masculina:**\n        *   *Servus, -i*: esclavo, siervo\n        *   *Amicus, -i*: amigo\n        *   *Filius, -i*: hijo (Vocativo: *fili*, no *filie*)\n        *   *Deus, -i*: dios (Vocativo: *Deus*, irregular)\n        *   *Populus, -i*: pueblo\n        *   *Animus, -i*: ánimo, alma\n        *   *Liber, libri*: libro\n        *   *Magister, magistri*: maestro\n        \n        ### 2. El Caso Acusativo: El Objeto Directo\n        \n        El **Acusativo** es el caso del **Objeto Directo**. Responde a la pregunta **¿A quién?** o **¿Qué?** recibe la acción.\n        \n        **Equivale en español a**: \"a\" + sustantivo (cuando es persona), o simplemente el sustantivo (cuando es cosa).\n        \n        **Ejemplos:**\n        *   *Dominus servum vocat.* (El señor llama al siervo)\n            - *Dominus*: Nominativo (Sujeto) = ¿Quién llama?\n            - *servum*: Acusativo (Objeto Directo) = ¿A quién llama?\n        *   *Puella rosam amat.* (La niña ama la rosa)\n            - *Puella*: Nominativo (Sujeto)\n            - *rosam*: Acusativo (Objeto Directo)\n        \n        ### 3. Pretérito Imperfecto de Indicativo\n        \n        El **Pretérito Imperfecto** expresa una acción pasada que:\n        - Era continua o habitual: \"amaba\", \"solía amar\"\n        - No tiene un final definido en el tiempo\n        \n        **Formación**: Se añade el sufijo temporal **-ba-** (1a/2a conj.) a la raíz del presente.\n        \n        **Verbo SUM (Irregular):**\n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Persona",
+        "Forma",
+        "Traducción"
+      ],
+      "rows": [
+        [
+          "1a Sg",
+          "**eram**",
+          "yo era / estaba"
+        ],
+        [
+          "2a Sg",
+          "**eras**",
+          "tú eras / estabas"
+        ],
+        [
+          "3a Sg",
+          "**erat**",
+          "él/ella era / estaba"
+        ],
+        [
+          "1a Pl",
+          "**eramus**",
+          "nosotros éramos / estábamos"
+        ],
+        [
+          "2a Pl",
+          "**eratis**",
+          "vosotros erais / estabais"
+        ],
+        [
+          "3a Pl",
+          "**erant**",
+          "ellos eran / estaban"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        **Primera Conjugación (AMARE):**\n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Persona",
+        "Raíz + Sufijo",
+        "Forma",
+        "Traducción"
+      ],
+      "rows": [
+        [
+          "1a Sg",
+          "ama + ba + m",
+          "**amabam**",
+          "yo amaba"
+        ],
+        [
+          "2a Sg",
+          "ama + ba + s",
+          "**amabas**",
+          "tú amabas"
+        ],
+        [
+          "3a Sg",
+          "ama + ba + t",
+          "**amabat**",
+          "él/ella amaba"
+        ],
+        [
+          "1a Pl",
+          "ama + ba + mus",
+          "**amabamus**",
+          "nosotros amábamos"
+        ],
+        [
+          "2a Pl",
+          "ama + ba + tis",
+          "**amabatis**",
+          "vosotros amabais"
+        ],
+        [
+          "3a Pl",
+          "ama + ba + nt",
+          "**amabant**",
+          "ellos/ellas amaban"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        **Ejemplos de uso:**\n        *   *Dominus servos vocabat.* (El señor llamaba a los siervos)\n        *   *Puella rosam amabat.* (La niña amaba la rosa)\n        *   *Eram puer.* (Yo era un niño)\n        *   *Magistri discipulos laudabant.* (Los maestros alababan a los discípulos)\n        \n        ### Vocabulario Esencial\n        *   **Dominus, -i** (m): señor, amo\n        *   **Servus, -i** (m): esclavo, siervo\n        *   **Amicus, -i** (m): amigo\n        *   **Puer, pueri** (m): niño\n        *   **Magister, magistri** (m): maestro\n        *   **Deus, -i** (m): dios\n        *   **Voco, vocare**: llamar\n        *   **Porto, portare**: llevar\n        "
+    }
+  ]
+}

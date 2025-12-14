@@ -1,0 +1,171 @@
+{
+  "id": 3,
+  "sections": [
+    {
+      "type": "markdown",
+      "content": "\n        ## Lección 3: Primera Declinación y Verbos Fundamentales\n        \n        ### 1. Primera Declinación (Temas en -a): Sustantivos Femeninos\n        \n        La Primera Declinación agrupa sustantivos mayoritariamente **femeninos** que terminan en **-a** en Nominativo Singular.\n        \n        **Enunciado**: Los sustantivos se enuncian con el Nominativo y el Genitivo Singular:\n        *   *Rosa, rosae* (la rosa, de la rosa) -> indica que es 1a Declinación\n        "
+    },
+    {
+      "type": "image",
+      "path": "static/images/curso_gramatica/leccion3_primera_declinacion.png",
+      "caption": "Primera Declinación completa con ejemplos situacionales de uso de cada caso"
+    },
+    {
+      "type": "image",
+      "path": "static/images/curso_gramatica/leccion3_casos_accion.png",
+      "caption": "Casos en Acción: Nominativo (Sujeto), Acusativo (Objeto) y Dativo (Receptor)"
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        > **Nota sobre el Ablativo Sg**: La terminación **-ā** es larga (aunque se escribe igual que el Nominativo).\n        \n        **Otros ejemplos de 1a Declinación:**\n        *   *Puella, puellae* (niña)\n        *   *Femina, feminae* (mujer)\n        *   *Via, viae* (camino)\n        *   *Aqua, aquae* (agua)\n        *   *Terra, terrae* (tierra)\n        *   *Patria, patriae* (patria)\n        *   *Agricola, agricolae* (agricultor) ← **¡Masculino!** (excepción por su profesión)\n        \n        ### 2. El Verbo SUM (Ser/Estar) - Presente de Indicativo\n        \n        El verbo **sum** (ser/estar) es **irregular** pero absolutamente fundamental. \n        Se usa para formar el atributo y aparece en innumerables expresiones.\n        \n        **Conjugación completa:**\n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Persona",
+        "Forma",
+        "Traducción 1",
+        "Traducción 2"
+      ],
+      "rows": [
+        [
+          "1a Sg",
+          "**sum**",
+          "yo soy",
+          "yo estoy"
+        ],
+        [
+          "2a Sg",
+          "**es**",
+          "tú eres",
+          "tú estás"
+        ],
+        [
+          "3a Sg",
+          "**est**",
+          "él/ella es",
+          "él/ella está"
+        ],
+        [
+          "1a Pl",
+          "**sumus**",
+          "nosotros somos",
+          "nosotros estamos"
+        ],
+        [
+          "2a Pl",
+          "**estis**",
+          "vosotros sois",
+          "vosotros estáis"
+        ],
+        [
+          "3a Pl",
+          "**sunt**",
+          "ellos/ellas son",
+          "ellos/ellas están"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        **Ejemplos de uso:**\n        *   *Sum Romanus.* (Soy romano)\n        *   *Puella est pulchra.* (La niña es hermosa)\n        *   *Rosae sunt pulchrae.* (Las rosas son hermosas)\n        *   *Ubi es?* (¿Dónde estás?)\n        \n        ### 3. Primera Conjugación (verbos en -ARE): AMARE (Amar)\n        \n        Los verbos cuyo infinitivo termina en **-are** pertenecen a la 1a Conjugación.\n        Son los más regulares y numerosos.\n        \n        **Presente de Indicativo - Voz Activa:**\n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Persona",
+        "Raíz",
+        "Desinencia",
+        "Forma completa",
+        "Español"
+      ],
+      "rows": [
+        [
+          "1a Sg",
+          "am-",
+          "**-o**",
+          "am-**o**",
+          "yo amo"
+        ],
+        [
+          "2a Sg",
+          "am-",
+          "**-as**",
+          "am-**as**",
+          "tú amas"
+        ],
+        [
+          "3a Sg",
+          "am-",
+          "**-at**",
+          "am-**at**",
+          "él/ella ama"
+        ],
+        [
+          "1a Pl",
+          "am-",
+          "**-amus**",
+          "am-**amus**",
+          "nosotros amamos"
+        ],
+        [
+          "2a Pl",
+          "am-",
+          "**-atis**",
+          "am-**atis**",
+          "vosotros amáis"
+        ],
+        [
+          "3a Pl",
+          "am-",
+          "**-ant**",
+          "am-**ant**",
+          "ellos/ellas aman"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        **Otros verbos de 1a Conjugación:**\n        *   *Laudo, laudare* (alabar)\n        *   *Voco, vocare* (llamar)\n        *   *Narro, narrare* (narrar, contar)\n        *   *Oro, orare* (rogar, rezar)\n        *   *Ambulo, ambulare* (caminar)\n        *   *Habito, habitare* (habitar)\n        \n        ### Ejemplos de Frases Completas\n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Latín",
+        "Análisis",
+        "Traducción"
+      ],
+      "rows": [
+        [
+          "*Puella rosam amat.*",
+          "Puella (Nom, Suj) + rosam (Ac, OD) + amat (verbo)",
+          "La niña ama la rosa."
+        ],
+        [
+          "*Feminae aquam portant.*",
+          "Feminae (Nom Pl, Suj) + aquam (Ac, OD) + portant (verbo)",
+          "Las mujeres llevan agua."
+        ],
+        [
+          "*Puella est bona.*",
+          "Puella (Nom, Suj) + est (verbo) + bona (Nom, Atrib)",
+          "La niña es buena."
+        ],
+        [
+          "*Agricola patriam laudat.*",
+          "Agricola (Nom, Suj) + patriam (Ac, OD) + laudat (verbo)",
+          "El agricultor alaba la patria."
+        ],
+        [
+          "*Puellae cantant.*",
+          "Puellae (Nom Pl, Suj) + cantant (verbo)",
+          "Las niñas cantan."
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        ### Vocabulario Esencial\n        \n        Aprende estas palabras fundamentales:\n        *   **Puella, -ae** (f): niña\n        *   **Rosa, -ae** (f): rosa\n        *   **Femina, -ae** (f): mujer\n        *   **Aqua, -ae** (f): agua\n        *   **Terra, -ae** (f): tierra\n        *   **Vita, -ae** (f): vida\n        *   **Amo, amare**: amar\n        *   **Laudo, laudare**: alabar\n        *   **Voco, vocare**: llamar\n        "
+    }
+  ]
+}

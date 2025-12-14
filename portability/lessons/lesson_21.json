@@ -1,0 +1,97 @@
+{
+  "id": 21,
+  "sections": [
+    {
+      "type": "markdown",
+      "content": "\n        ## Leccion 21: Los Participios\n        \n        ### 1. ¿Que es un Participio?\n        \n        El participio es un **adjetivo verbal**: una forma hibrida que combina caracteristicas de verbo y adjetivo.\n        *   Como **adjetivo**: concuerda en Genero, Numero y Caso con un sustantivo.\n        *   Como **verbo**: tiene Tiempo y Voz, y puede regir complementos (OD, circunstanciales, etc.).\n        \n        > En espanol tenemos \"amado\" (pasivo) y \"amante\" (activo), pero el latin tiene un sistema mucho mas completo.\n        \n        ### 2. El Sistema de Participios Latino\n        \n        El latin tiene **TRES participios** que cubren todas las combinaciones de tiempo y voz:\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Participio",
+        "Tiempo",
+        "Voz",
+        "Formacion",
+        "Ejemplo (AMARE)"
+      ],
+      "rows": [
+        [
+          "**Presente**",
+          "Presente",
+          "Activa",
+          "Tema + **-ns, -ntis**",
+          "*ama-**ns**, ama-**ntis***"
+        ],
+        [
+          "**Perfecto**",
+          "Pasado",
+          "Pasiva",
+          "Tema Supino + **-us, -a, -um**",
+          "*ama-**tus, -a, -um***"
+        ],
+        [
+          "**Futuro**",
+          "Futuro",
+          "Activa",
+          "Tema Supino + **-urus, -a, -um**",
+          "*ama-**turus, -a, -um***"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        ### 3. Participio Presente Activo (-ns, -ntis)\n        \n        Indica una accion **simultanea** con la accion principal.\n        Se declina como adjetivo de 3a declinacion (una terminacion).\n        \n        **Formacion**:\n        *   1a/2a Conjugacion: Tema + **-ns** -> *amans, monens*\n        *   3a Conjugacion: Tema + **-ens** -> *legens*\n        *   4a Conjugacion: Tema + **-iens** -> *audiens*\n        \n        **Declinacion** (Modelo: *amans, amantis* - que ama / amante):\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Caso",
+        "Masc/Fem Sg",
+        "Neutro Sg",
+        "Masc/Fem Pl",
+        "N Pl"
+      ],
+      "rows": [
+        [
+          "**Nom**",
+          "ama**ns**",
+          "ama**ns**",
+          "ama**ntes**",
+          "ama**ntia**"
+        ],
+        [
+          "**Ac**",
+          "ama**ntem**",
+          "ama**ns**",
+          "ama**ntes**",
+          "ama**ntia**"
+        ],
+        [
+          "**Gen**",
+          "ama**ntis**",
+          "ama**ntis**",
+          "ama**ntium**",
+          "ama**ntium**"
+        ],
+        [
+          "**Dat**",
+          "ama**nti**",
+          "ama**nti**",
+          "ama**ntibus**",
+          "ama**ntibus**"
+        ],
+        [
+          "**Abl**",
+          "ama**nte/-i**",
+          "ama**nte/-i**",
+          "ama**ntibus**",
+          "ama**ntibus**"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        **Ejemplos**:\n        *   *Puer **currens** cadit.* (El nino, **corriendo**, cae / El nino **que corre** cae).\n        *   *Milites **pugnantes** vicerunt.* (Los soldados **que luchaban** vencieron).\n        *   *Video puellam **canentem**.* (Veo a la nina **que canta**).\n        \n        ### 4. Participio Perfecto Pasivo (-tus, -a, -um)\n        \n        Indica una accion **anterior** a la accion principal, con sentido **pasivo**.\n        Se declina como adjetivo de 1a Clase (2-1-2: *bonus, -a, -um*).\n        \n        **Formacion**: Se forma del **tema de supino** (4a forma del enunciado):\n        *   *Amare, amavi, **amatum*** -> *ama**tus**, -a, -um* (amado/a)\n        *   *Legere, legi, **lectum*** -> *lec**tus**, -a, -um* (leido/a)\n        *   *Capere, cepi, **captum*** -> *cap**tus**, -a, -um* (capturado/a)\n        \n        **Ejemplos**:\n        *   *Urbs, ab hostibus **capta**, incensa est.*\n            *   La ciudad, **capturada** por los enemigos, fue incendiada.\n            *   (Primero fue capturada, luego incendiada)\n        *   *Poeta, a rege **laudatus**, felix erat.*\n            *   El poeta, **alabado** por el rey, era feliz.\n        *   *Liber **lectus** bonus est.*\n            *   El libro **leido** es bueno.\n        \n        ### 5. Participio Futuro Activo (-urus, -a, -um)\n        \n        Indica **intencion** o **accion futura** respecto a la principal.\n        Se declina como adjetivo de 1a Clase.\n        \n        **Formacion**: Tema de supino + **-urus, -a, -um**:\n        *   *Amare* -> *ama**turus**, -a, -um* (que va a amar / a punto de amar)\n        *   *Legere* -> *lec**turus**, -a, -um* (que va a leer)\n        *   *Mori* -> *mori**turus**, -a, -um* (que va a morir)\n        \n        **Ejemplos**:\n        *   ***Ave, Caesar, morituri te salutant.***\n            *   Salve, Cesar, **los que van a morir** te saludan.\n            *   (Frase famosa de los gladiadores)\n        *   *Nuntii **venturi** sunt.*\n            *   Los mensajeros **estan a punto de llegar**.\n        \n        ### 6. Traduccion de Participios al Espanol\n        \n        Los participios latinos se pueden traducir de varias formas:\n        \n        1.  **Como participio** (cuando existe): \"amado\", \"corriendo\"\n        2.  **Como oracion de relativo**: \"que ama\", \"que fue amado\"\n        3.  **Como oracion adverbial**:\n            *   Temporal: \"cuando ama\", \"despues de ser amado\"\n            *   Causal: \"porque ama\", \"como fue amado\"\n            *   Concesiva: \"aunque ama\"\n        \n        **Ejemplo de multiples traducciones**:\n        *Consul, **urbem videns**, laetus erat.*\n        \n        *   El consul, **viendo la ciudad**, estaba contento. (Gerundio)\n        *   El consul, **que veia la ciudad**, estaba contento. (Relativo)\n        *   El consul, **cuando vio la ciudad**, estaba contento. (Temporal)\n        *   El consul, **porque veia la ciudad**, estaba contento. (Causal)\n        \n        ### Vocabulario Esencial\n        *   **Curro, currere**: correr\n        *   **Pugno, pugnare**: luchar\n        *   **Cano, canere**: cantar\n        *   **Incendo, incendere**: incendiar, quemar\n        *   **Laudo, laudare**: alabar\n        *   **Saluto, salutare**: saludar\n        \n        "
+    }
+  ]
+}

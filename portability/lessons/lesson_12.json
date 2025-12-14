@@ -1,0 +1,141 @@
+{
+  "id": 12,
+  "sections": [
+    {
+      "type": "markdown",
+      "content": "\n        ## Lección 12: Los Pronombres\n        "
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        ### 1. Pronombres Personales\n        \n        Los pronombres personales se usan para referirse a personas sin nombrarlas.\n        \n        **Primera y Segunda Persona:**\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Caso",
+        "1a Sg (Yo)",
+        "2a Sg (Tú)",
+        "1a Pl (Nosotros)",
+        "2a Pl (Vosotros)"
+      ],
+      "rows": [
+        [
+          "**Nom**",
+          "ego",
+          "tu",
+          "nos",
+          "vos"
+        ],
+        [
+          "**Ac**",
+          "me",
+          "te",
+          "nos",
+          "vos"
+        ],
+        [
+          "**Gen**",
+          "mei",
+          "tui",
+          "nostrum/nostri",
+          "vestrum/vestri"
+        ],
+        [
+          "**Dat**",
+          "mihi",
+          "tibi",
+          "nobis",
+          "vobis"
+        ],
+        [
+          "**Abl**",
+          "me",
+          "te",
+          "nobis",
+          "vobis"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        > **Nota**: Los pronombres personales en Nominativo **raramente se usan** excepto para énfasis,\n        > porque el verbo ya indica la persona.\n        \n        **Tercera Persona**: Se usa el pronombre demostrativo *is, ea, id* (ver más abajo).\n        \n        ### 2. Pronombre Reflexivo (SE)\n        \n        El pronombre reflexivo **se refiere al sujeto de la oración**.\n        Solo existe para 3a persona (no hay formas de 1a y 2a, se usan *me, te*).\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Caso",
+        "Forma",
+        "Significado"
+      ],
+      "rows": [
+        [
+          "**Ac**",
+          "**se**",
+          "a sí mismo/a"
+        ],
+        [
+          "**Gen**",
+          "**sui**",
+          "de sí mismo"
+        ],
+        [
+          "**Dat**",
+          "**sibi**",
+          "a/para sí mismo"
+        ],
+        [
+          "**Abl**",
+          "**se**",
+          "consigo mismo"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        *   *Se amat.* (Él se ama a sí mismo)\n        *   *Sibi dicit.* (Se dice a sí mismo)\n        \n        ### 3. Pronombres-Adjetivos Posesivos\n        \n        Indican posesión. Se declinan como adjetivos de 1a Clase.\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Poseedor",
+        "Singular (cosa poseída)",
+        "Plural (cosas poseídas)"
+      ],
+      "rows": [
+        [
+          "Mi(s)",
+          "*meus, -a, -um*",
+          "*mei, -ae, -a*"
+        ],
+        [
+          "Tu(s)",
+          "*tuus, -a, -um*",
+          "*tui, -ae, -a*"
+        ],
+        [
+          "Su(s) (de él/ella)",
+          "*suus, -a, -um*",
+          "*sui, -ae, -a*"
+        ],
+        [
+          "Nuestro(s)",
+          "*noster, nostra, nostrum*",
+          "*nostri, -ae, -a*"
+        ],
+        [
+          "Vuestro(s)",
+          "*vester, vestra, vestrum*",
+          "*vestri, -ae, -a*"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        *   *Meus pater* (Mi padre)\n        *   *Tua mater* (Tu madre)\n        *   *Nostrum oppidum* (Nuestra ciudad)\n        \n        ### 4. Pronombres-Adjetivos Demostrativos\n        \n        Señalan personas o cosas en el espacio o en el discurso.\n        \n        "
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        #### A. Hic, haec, hoc (Este, esta, esto)\n        Indica **cercanía** al hablante.\n        \n        *   *Hic puer* (Este niño)\n        *   *Haec puella* (Esta niña)\n        *   *Hoc templum* (Este templo)\n        \n        #### B. Ille, illa, illud (Aquel, aquella, aquello)\n        Indica **lejanía** del hablante.\n        \n        *   *Ille rex* (Aquel rey)\n        *   *Illa regina* (Aquella reina)\n        \n        #### C. Is, ea, id (Él, ella, ello / Ese, esa, eso)\n        Es el demostrativo **neutro** y también se usa como pronombre personal de 3a persona.\n        \n        *   *Is vir* (Este/Ese hombre / Él, el hombre)\n        *   *Ea femina* (Ésa mujer / Ella, la mujer)\n        \n        ### 5. Pronombres Interrogativos\n        \n        Se usan para hacer preguntas.\n        \n        *   **Quis? Quid?** (¿Quién? ¿Qué?) - Para personas/cosas\n        *   **Qui, quae, quod?** (¿Qué? ¿Cuál?) - Como adjetivo\n        *   **Ubi?** (¿Dónde?)\n        *   **Quando?** (¿Cuándo?)\n        *   **Cur?** (¿Por qué?)\n        \n        ### 6. Pronombres Relativos\n        \n        Introducen **oraciones subordinadas adjetivas** (que modifican un sustantivo).\n        \n        **Qui, quae, quod** (Que, el cual, la cual, lo cual)\n        \n        *   *Puella quae cantat* (La niña que canta)\n        *   *Liber quem lego* (El libro que leo)\n        *   *Vir cuius filium video* (El hombre cuyo hijo veo)\n        \n        **Concordancia**: El relativo concuerda en **género y número** con su antecedente,\n        pero su **caso** depende de su función en la oración subordinada.\n        "
+    }
+  ]
+}

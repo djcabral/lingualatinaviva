@@ -1,0 +1,140 @@
+{
+    "lesson": 20,
+    "topic": "Infinitivos y Acusativo con Infinitivo",
+    "exercises": [
+        {
+            "type": "vocabulary_match",
+            "description": "Empareja el infinitivo con su traducción correcta",
+            "pairs": [
+                {
+                    "latin": "amare",
+                    "spanish": "amar"
+                },
+                {
+                    "latin": "amari",
+                    "spanish": "ser amado"
+                },
+                {
+                    "latin": "amavisse",
+                    "spanish": "haber amado"
+                },
+                {
+                    "latin": "amatus esse",
+                    "spanish": "haber sido amado"
+                },
+                {
+                    "latin": "amaturus esse",
+                    "spanish": "que va a amar"
+                }
+            ]
+        },
+        {
+            "type": "vocabulary_match",
+            "description": "Distingue entre voz activa y pasiva",
+            "pairs": [
+                {
+                    "latin": "videre",
+                    "spanish": "ver"
+                },
+                {
+                    "latin": "videri",
+                    "spanish": "ser visto / parecer"
+                },
+                {
+                    "latin": "audire",
+                    "spanish": "oír"
+                },
+                {
+                    "latin": "audiri",
+                    "spanish": "ser oído"
+                },
+                {
+                    "latin": "regere",
+                    "spanish": "gobernar"
+                },
+                {
+                    "latin": "regi",
+                    "spanish": "ser gobernado"
+                }
+            ]
+        },
+        {
+            "type": "multiple_choice",
+            "question": "¿Cuál es el INFINITIVO PRESENTE PASIVO de 'amo'?",
+            "options": [
+                "amare",
+                "amari",
+                "amavisse",
+                "amatus esse"
+            ],
+            "correct_answer": "amari",
+            "explanation": "'amari' es la forma pasiva (ser amado). 'amare' es activa."
+        },
+        {
+            "type": "multiple_choice",
+            "question": "¿Qué tiempo indica el infinitivo 'amavisse'?",
+            "options": [
+                "Presente",
+                "Perfecto (Pasado)",
+                "Futuro"
+            ],
+            "correct_answer": "Perfecto (Pasado)",
+            "explanation": "-isse es la marca del infinitivo perfecto activo (haber amado)."
+        },
+        {
+            "type": "multiple_choice",
+            "question": "En la frase 'Dico puerum currere', ¿qué función cumple 'puerum'?",
+            "options": [
+                "Sujeto del infinitivo (Acusativo)",
+                "Objeto directo de Dico",
+                "Nominativo sujeto"
+            ],
+            "correct_answer": "Sujeto del infinitivo (Acusativo)",
+            "explanation": "En las oraciones de infinitivo (AcI), el sujeto del infinitivo va en ACUSATIVO."
+        },
+        {
+            "type": "multiple_choice",
+            "question": "¿Cómo se traduce 'Credo terram rotundam esse'?",
+            "options": [
+                "Creo que la tierra es redonda",
+                "Creo en la tierra redonda",
+                "La tierra cree ser redonda"
+            ],
+            "correct_answer": "Creo que la tierra es redonda",
+            "explanation": "AcI: 'terram' (acusativo sujeto) + 'esse' (infinitivo) se traduce 'que la tierra es'."
+        },
+        {
+            "type": "sentence_completion",
+            "question": "Caesar dicit milites _____ (luchar - infinitivo presente).",
+            "options": [
+                "pugnare",
+                "pugnant",
+                "pugnaverunt"
+            ],
+            "correct_answer": "pugnare",
+            "explanation": "La construcción requiere un infinitivo: 'Dice que los soldados luchan'."
+        },
+        {
+            "type": "sentence_completion",
+            "question": "Scio puellam _____ (ser buena).",
+            "options": [
+                "bona est",
+                "bonam esse",
+                "bona esse"
+            ],
+            "correct_answer": "bonam esse",
+            "explanation": "AcI: El sujeto 'puellam' es acusativo femenino, así que el atributo 'bonam' también debe ser acusativo."
+        },
+        {
+            "type": "sentence_completion",
+            "question": "Volo te _____ (venir).",
+            "options": [
+                "venire",
+                "venis",
+                "venias"
+            ],
+            "correct_answer": "venire",
+            "explanation": "Volo (quiero) rige infinitivo: 'Quiero que tú vengas' o 'Quiero venirte' (literal)."
+        }
+    ]
+}

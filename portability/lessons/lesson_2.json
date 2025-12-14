@@ -1,0 +1,96 @@
+{
+  "id": 2,
+  "sections": [
+    {
+      "type": "image",
+      "path": "static/images/curso_gramatica/leccion2_foro_romano.png",
+      "caption": "El Foro Romano, centro de la vida pública en la antigua Roma"
+    },
+    {
+      "type": "markdown",
+      "content": "\n        ## Lección 2: Los Casos y el Nominativo\n        \n        ### ¿Qué son los Casos?\n        \n        En español, usamos el **orden de las palabras** y las **preposiciones** para indicar la función de cada palabra:\n        *   \"El padre ama **al hijo**\" (hijo = objeto directo, marcado con \"a\")\n        *   \"El regalo **del padre**\" (padre = posesión, marcado con \"de\")\n        *   \"Hablo **al maestro**\" (maestro = objeto indirecto, marcado con \"a\")\n        \n        En latín, usamos los **casos**: terminaciones especiales que cambian según la función sintáctica.\n        \n        ### Los Seis Casos del Latín\n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Caso",
+        "Función Principal",
+        "Pregunta Clave"
+      ],
+      "rows": [
+        [
+          "**Nominativo**",
+          "Sujeto / Atributo",
+          "¿Quién?"
+        ],
+        [
+          "**Vocativo**",
+          "Invocación/Llamada",
+          "¡...!"
+        ],
+        [
+          "**Acusativo**",
+          "Objeto Directo",
+          "¿A quién/qué?"
+        ],
+        [
+          "**Genitivo**",
+          "Posesión/Pertenencia",
+          "¿De quién?"
+        ],
+        [
+          "**Dativo**",
+          "Objeto Indirecto",
+          "¿A/Para quién?"
+        ],
+        [
+          "**Ablativo**",
+          "Circunstancia (Lugar, Modo, Instrumento)",
+          "¿Con/Por/Desde qué?"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        "
+    },
+    {
+      "type": "image",
+      "path": "static/images/curso_gramatica/casos_latinos_diagram.png",
+      "caption": "Rueda de los 6 Casos Latinos y sus funciones"
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        > **Clave de aprendizaje**: Aprenderemos los casos progresivamente. \n        > Empezaremos con el Nominativo (Sujeto) y el Acusativo (Objeto Directo).\n        \n        ### El Caso Nominativo: El Sujeto\n        \n        El **Nominativo** es el caso fundamental. Responde a la pregunta **¿Quién?** realiza la acción.\n        \n        **Usos:**\n        1.  **Sujeto de un verbo**: *Puella cantat* (La niña canta)\n        2.  **Atributo** (con verbos copulativos como *sum*): *Puella est pulchra* (La niña es hermosa)\n        \n        ### La Oración Simple en Latín\n        \n        **Orden flexible:**\n        El latín permite gran libertad en el orden de las palabras porque los casos marcan la función.\n        Sin embargo, el orden más elegante y común es:\n        \n        **SUJETO + COMPLEMENTOS + VERBO**\n        \n        *   *Puella rosam amat.* (La niña ama la rosa)\n        *   *Rosam puella amat.* (La niña ama la rosa) ← Mismo significado, énfasis distinto\n        *   *Amat puella rosam.* (La niña ama la rosa) ← Menos elegante pero correcto\n        \n        > **Nota crucial**: En latín **NO hay artículos** (el, la, un, una). Al traducir, los añadimos según el contexto.\n        \n        ### Ejemplos de Análisis\n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Oración Latina",
+        "Análisis",
+        "Traducción"
+      ],
+      "rows": [
+        [
+          "*Deus est bonus.*",
+          "Deus (Nom, Suj) + est (verbo) + bonus (Nom, Atributo)",
+          "Dios es bueno."
+        ],
+        [
+          "*Puella cantat.*",
+          "Puella (Nom, Suj) + cantat (verbo)",
+          "La niña canta."
+        ],
+        [
+          "*Roma magna est.*",
+          "Roma (Nom, Suj) + magna (Nom, Atributo) + est (verbo)",
+          "Roma es grande."
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        "
+    }
+  ]
+}

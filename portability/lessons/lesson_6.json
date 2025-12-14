@@ -1,0 +1,134 @@
+{
+  "id": 6,
+  "sections": [
+    {
+      "type": "image",
+      "path": "static/images/curso_gramatica/leccion6_arquitectura.png",
+      "caption": "Arquitectura romana icónica: Coliseo, Panteón, acueductos y columnas"
+    },
+    {
+      "type": "markdown",
+      "content": "\n        ## Lección 6: Consolidación, 3a/4a Conjugación y Adjetivos\n        "
+    },
+    {
+      "type": "image",
+      "path": "static/images/curso_gramatica/conjugaciones_overview.png",
+      "caption": "Resumen visual de las 4 conjugaciones latinas"
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        ### Revisión: Lo que hemos aprendido hasta ahora\n        \n        **Declinaciones:**\n        *   1a Declinación: Femeninos en **-a** (*rosa, puella*)\n        *   2a Declinación: Masculinos en **-us/-er** (*dominus, puer*) y Neutros en **-um** (*templum*)\n        \n        **Casos dominados:**\n        *   **Nominativo**: Sujeto\n        *   **Acusativo**: Objeto Directo\n        \n        **Verbos:**\n        *   *Sum* (irregular): Presente e Imperfecto\n        *   1a Conjugación (*amare*): Presente e Imperfecto\n        *   2a Conjugación (*monere*): Presente e Imperfecto\n        \n        ### 1. Tercera Conjugación: Verbos en -ERE (e breve)\n        \n        Los verbos cuyo infinitivo termina en **-ere** (con **e breve**, no larga) pertenecen a la 3a Conjugación.\n        Son más irregulares que la 1a y 2a.\n        \n        **Modelo: Legere (Leer)**\n        \n        **Presente de Indicativo:**\n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Persona",
+        "Forma",
+        "Español"
+      ],
+      "rows": [
+        [
+          "1a Sg",
+          "**lego**",
+          "yo leo"
+        ],
+        [
+          "2a Sg",
+          "**legis**",
+          "tú lees"
+        ],
+        [
+          "3a Sg",
+          "**legit**",
+          "él/ella lee"
+        ],
+        [
+          "1a Pl",
+          "**legimus**",
+          "nosotros leemos"
+        ],
+        [
+          "2a Pl",
+          "**legitis**",
+          "vosotros leéis"
+        ],
+        [
+          "3a Pl",
+          "**legunt**",
+          "ellos/ellas leen"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        **Pretérito Imperfecto:**\n        Sufijo: **-eba-** (igual que la 2a)\n        *   *legebam, legebas, legebat, legebamus, legebatis, legebant*\n        \n        **Otros verbos de 3a Conjugación:**\n        *   *Dico, dicere*: decir\n        *   *Duco, ducere*: conducir, guiar\n        *   *Scribo, scribere*: escribir\n        *   *Mitto, mittere*: enviar\n        *   *Vivo, vivere*: vivir\n        \n        ### 2. Cuarta Conjugación: Verbos en -IRE\n        \n        Los verbos cuyo infinitivo termina en **-ire** pertenecen a la 4a Conjugación.\n        \n        **Modelo: Audire (Oír, Escuchar)**\n        \n        **Presente de Indicativo:**\n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Persona",
+        "Forma",
+        "Español"
+      ],
+      "rows": [
+        [
+          "1a Sg",
+          "**audio**",
+          "yo oigo"
+        ],
+        [
+          "2a Sg",
+          "**audis**",
+          "tú oyes"
+        ],
+        [
+          "3a Sg",
+          "**audit**",
+          "él/ella oye"
+        ],
+        [
+          "1a Pl",
+          "**audimus**",
+          "nosotros oímos"
+        ],
+        [
+          "2a Pl",
+          "**auditis**",
+          "vosotros oís"
+        ],
+        [
+          "3a Pl",
+          "**audiunt**",
+          "ellos/ellas oyen"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        **Pretérito Imperfecto:**\n        Sufijo: **-ieba-**\n        *   *audiebam, audiebas, audiebat, audiebamus, audiebatis, audiebant*\n        \n        **Otros verbos de 4a Conjugación:**\n        *   *Venio, venire*: venir\n        *   *Dormio, dormire*: dormir\n        *   *Sentio, sentire*: sentir\n        "
+    },
+    {
+      "type": "markdown",
+      "content": "### 🧠 Mnemotecnia: Primera Declinación"
+    },
+    {
+      "type": "image",
+      "path": "static/images/curso_gramatica/leccion3_rosa_diagram.png",
+      "caption": "Diagrama Clásico de ROSA (Estructura)"
+    },
+    {
+      "type": "image",
+      "path": "static/images/curso_gramatica/leccion3_rosa_paradigma_mnemotecnia.png",
+      "caption": "Mnemotecnia: Paradigma y Trucos de Memoria"
+    },
+    {
+      "type": "image",
+      "path": "static/images/curso_gramatica/leccion3_verbo_sum_mnemotecnia.png",
+      "caption": "Conjugación del Verbo SUM y Regla Mnemotécnica"
+    },
+    {
+      "type": "markdown",
+      "content": "\n        ### 3. Adjetivos de Primera Clase (Sistema 2-1-2)\n        \n        Los adjetivos de 1a Clase se declinan como los sustantivos de **1a y 2a Declinación**.\n        \n        **Modelo: Bonus, -a, -um (Bueno)**\n        \n        *   **Masculino**: *bonus* (se declina como *dominus*)\n        *   **Femenino**: *bona* (se declina como *rosa*)\n        *   **Neutro**: *bonum* (se declina como *templum*)\n        \n        **Principio de CONCORDANCIA**:\n        El adjetivo debe concordar con el sustantivo en **Género, Número y Caso**.\n        \n        **Ejemplos:**\n        *   *Puer bonus* (Niño bueno) - Masculino, Singular, Nominativo\n        *   *Puella bona* (Niña buena) - Femenino, Singular, Nominativo\n        *   *Templum bonum* (Templo bueno) - Neutro, Singular, Nominativo\n        *   *Puellam bonam* (A la niña buena) - Femenino, Singular, Acusativo\n        *   *Templa bona* (Los templos buenos) - Neutro, Plural, Nom/Ac\n        \n        **Otros adjetivos de 1a Clase:**\n        *   *Magnus, -a, -um*: grande\n        *   *Parvus, -a, -um*: pequeño\n        *   *Pulcher, pulchra, pulchrum*: hermoso\n        *   *Liber, libera, liberum*: libre\n        *   *Malus, -a, -um*: malo\n        \n        ### 4. El Caso Vocativo: La Invocación\n        \n        El **Vocativo** se usa para **invocar, llamar o dirigirse** a alguien.\n        \n        **Reglas:**\n        *   En 1a Declinación: **igual al Nominativo**\n        *   En 2a Declinación (-us): termina en **-e**\n        *   En 2a Declinación (-um): **igual al Nominativo**\n        \n        **Ejemplos:**\n        *   *Domine!* (¡Señor!)\n        *   *Puella!* (¡Niña!)\n        *   *Fili!* (¡Hijo!) - Excepción: *filius* hace *fili*, no *filie*\n        *   *Mi amice!* (¡Amigo mío!)\n        "
+    }
+  ]
+}

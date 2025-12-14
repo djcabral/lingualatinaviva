@@ -1,0 +1,150 @@
+{
+  "id": 11,
+  "sections": [
+    {
+      "type": "markdown",
+      "content": "\n        ## Lección 11: Comparativos, Superlativos y Numerales\n        "
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        ### 1. Grados del Adjetivo\n        \n        En latín, como en español, los adjetivos tienen tres grados:\n        \n        #### A. Positivo (Normal)\n        *   *Altus* (Alto)\n        *   *Fortis* (Fuerte)\n        \n        #### B. Comparativo (Más que...)\n        \n        **Formación**: Raíz + **-ior** (m/f) / **-ius** (n)\n        \n        **Modelo: Altior, altius (Más alto)**\n        Se declina como 3a Declinación.\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Caso",
+        "Masc/Fem Sg",
+        "Neutro Sg"
+      ],
+      "rows": [
+        [
+          "**Nom**",
+          "alt-**ior**",
+          "alt-**ius**"
+        ],
+        [
+          "**Ac**",
+          "alt-**iorem**",
+          "alt-**ius**"
+        ],
+        [
+          "**Gen**",
+          "alt-**ioris**",
+          "alt-**ioris**"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        **Ejemplos:**\n        *   *fortis* -> *fortior, fortius* (más fuerte)\n        *   *celer* -> *celerior, celerius* (más rápido)\n        *   *felix* -> *felicior, felicius* (más feliz)\n        \n        #### C. Superlativo (El más... / Muy...)\n        \n        **Formación regular**: Raíz + **-issimus, -a, -um**\n        \n        **Modelo: Altissimus, -a, -um**\n        Se declina como adjetivo de 1a Clase (2-1-2).\n        \n        *   *altissimus* = el más alto / altísimo / muy alto\n        *   *fortissimus* = el más fuerte / fortísimo\n        *   *felicissimus* = el más feliz / felicísimo\n        \n        **Superlativos irregulares importantes:**\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Positivo",
+        "Comparativo",
+        "Superlativo"
+      ],
+      "rows": [
+        [
+          "*bonus* (bueno)",
+          "*melior* (mejor)",
+          "*optimus* (el mejor / óptimo)"
+        ],
+        [
+          "*malus* (malo)",
+          "*peior* (peor)",
+          "*pessimus* (el peor / pésimo)"
+        ],
+        [
+          "*magnus* (grande)",
+          "*maior* (mayor)",
+          "*maximus* (el mayor / máximo)"
+        ],
+        [
+          "*parvus* (pequeño)",
+          "*minor* (menor)",
+          "*minimus* (el menor / mínimo)"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        **Construcción del comparativo:**\n        - El segundo término va en **Ablativo** (sin preposición): *Petrus altior Paulo est* (Pedro es más alto que Pablo)\n        - O con *quam* + mismo caso: *Petrus altior quam Paulus est*\n        \n        ### 2. Numerales Cardinales y Ordinales\n        \n        **Cardinales** (cuántos): uno, dos, tres...\n        **Ordinales** (en qué orden): primero, segundo, tercero...\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Número",
+        "Cardinal",
+        "Ordinal"
+      ],
+      "rows": [
+        [
+          "1",
+          "*unus, -a, -um*",
+          "*primus, -a, -um*"
+        ],
+        [
+          "2",
+          "*duo, duae, duo*",
+          "*secundus / alter*"
+        ],
+        [
+          "3",
+          "*tres, tria*",
+          "*tertius*"
+        ],
+        [
+          "4",
+          "*quattuor*",
+          "*quartus*"
+        ],
+        [
+          "5",
+          "*quinque*",
+          "*quintus*"
+        ],
+        [
+          "6",
+          "*sex*",
+          "*sextus*"
+        ],
+        [
+          "7",
+          "*septem*",
+          "*septimus*"
+        ],
+        [
+          "8",
+          "*octo*",
+          "*octavus*"
+        ],
+        [
+          "9",
+          "*novem*",
+          "*nonus*"
+        ],
+        [
+          "10",
+          "*decem*",
+          "*decimus*"
+        ],
+        [
+          "100",
+          "*centum*",
+          "*centesimus*"
+        ],
+        [
+          "1000",
+          "*mille*",
+          "*millesimus*"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        > **Nota**: Los cardinales del 4 al 100 son **indeclinables**.\n        > *Unus, duo, tres* sí se declinan.\n        "
+    }
+  ]
+}

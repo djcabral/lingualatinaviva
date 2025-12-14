@@ -1,0 +1,110 @@
+{
+  "id": 7,
+  "sections": [
+    {
+      "type": "markdown",
+      "content": "\n        ## Lección 7: Tercera Declinación y el Dativo\n        "
+    },
+    {
+      "type": "image",
+      "path": "static/images/curso_gramatica/leccion7_third_declension.png",
+      "caption": "Esquema de la Tercera Declinación: Imparísílabos y Parisísílabos"
+    },
+    {
+      "type": "image",
+      "path": "static/images/curso_gramatica/leccion7_soldado_romano.png",
+      "caption": "El Soldado Romano: Muchas partes del cuerpo y equipo son de la 3a Declinación"
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        ### 1. Tercera Declinación: La Más Compleja\n        \n        La 3a Declinación es la más amplia y compleja. Agrupa sustantivos de **los tres géneros**.\n        \n        **Característica identificadora**: Genitivo Singular en **-is**.\n        \n        **Dos grandes grupos:**\n        \n        #### A. Imparísílabos (Temas en consonante)\n        \n        Tienen **diferente número de sílabas** en Nominativo y Genitivo.\n        \n        **Modelo: Rex, regis (El rey) - Masculino**\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Caso",
+        "Singular",
+        "Plural"
+      ],
+      "rows": [
+        [
+          "**Nominativo**",
+          "rex",
+          "reg-**es**"
+        ],
+        [
+          "**Vocativo**",
+          "rex",
+          "reg-**es**"
+        ],
+        [
+          "**Acusativo**",
+          "reg-**em**",
+          "reg-**es**"
+        ],
+        [
+          "**Genitivo**",
+          "reg-**is**",
+          "reg-**um**"
+        ],
+        [
+          "**Dativo**",
+          "reg-**i**",
+          "reg-**ibus**"
+        ],
+        [
+          "**Ablativo**",
+          "reg-**e**",
+          "reg-**ibus**"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        **Otros ejemplos de Imparísílabos:**\n        *   *Homo, hominis* (m): hombre\n        *   *Mulier, mulieris* (f): mujer\n        *   *Pater, patris* (m): padre\n        *   *Mater, matris* (f): madre\n        *   *Frater, fratris* (m): hermano\n        *   *Consul, consulis* (m): cónsul\n        *   *Virtus, virtutis* (f): virtud\n        *   *Amor, amoris* (m): amor\n        \n        #### B. Parisísílabos (Temas en -i)\n        \n        Tienen **igual número de sílabas** en Nom. y Gen. (o terminan en dos consonantes en Nom.).\n        \n        **Modelo: Civis, civis (El ciudadano) - Masculino/Femenino**\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Caso",
+        "Singular",
+        "Plural"
+      ],
+      "rows": [
+        [
+          "**Nominativo**",
+          "civis",
+          "civ-**es**"
+        ],
+        [
+          "**Acusativo**",
+          "civ-**em**",
+          "civ-**es**"
+        ],
+        [
+          "**Genitivo**",
+          "civ-**is**",
+          "civ-**ium**"
+        ],
+        [
+          "**Dativo**",
+          "civ-**i**",
+          "civ-**ibus**"
+        ],
+        [
+          "**Ablativo**",
+          "civ-**e/i**",
+          "civ-**ibus**"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        > **Diferencia clave**: Los parisísílabos tienen Genitivo Plural en **-ium** (no -um).\n        \n        **Ejemplos de Parisísílabos:**\n        *   *Urbs, urbis* (f): ciudad\n        *   *Mons, montis* (m): monte\n        *   *Fons, fontis* (m): fuente\n        *   *Navis, navis* (f): nave\n        \n        **Neutros de 3a Declinación:**\n        Siguen la **regla de oro del neutro** (Nom/Voc/Ac iguales, plural en -a).\n        \n        *   *Corpus, corporis* (n): cuerpo\n        *   *Opus, operis* (n): obra\n        *   *Nomen, nominis* (n): nombre\n        \n        ### 3. Excepciones de la Tercera Declinación (Refuerzo)\n        "
+    },
+    {
+      "type": "markdown",
+      "content": "\n        ### 4. El Caso Dativo: Objeto Indirecto\n        \n        El **Dativo** marca el **Objeto Indirecto** o el **Destinatario** de la acción.\n        Responde a **¿A quién?** o **¿Para quién?**\n        \n        **En español se traduce con**: \"a\" o \"para\" + persona.\n        \n        **Ejemplos:**\n        *   *Puer puellae rosam dat.* (El niño da una rosa a la niña)\n            - *Puer*: Nominativo (Sujeto)\n            - *puellae*: **Dativo** (Objeto Indirecto) = a quién da\n            - *rosam*: Acusativo (Objeto Directo) = qué da\n        *   *Magister discipulis libros dat.* (El maestro da libros a los discípulos)\n        *   *Do tibi donum.* (Te doy un regalo)\n        \n        **Terminaciones de Dativo:**\n        *   1a Declinación: Sg **-ae**, Pl **-is**\n        *   2a Declinación: Sg **-o**, Pl **-is**\n        *   3a Declinación: Sg **-i**, Pl **-ibus**\n        "
+    }
+  ]
+}

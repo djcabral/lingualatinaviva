@@ -1,0 +1,76 @@
+{
+  "id": 28,
+  "sections": [
+    {
+      "type": "markdown",
+      "content": "\n        ## Lección 28: Subordinadas Adjetivas (Relativas)\n        \n        ### 1. El Pronombre Relativo (Qui, Quae, Quod)\n        \n        Las oraciones de relativo adjetivan a un sustantivo anterior llamado **antecedente**.\n        \n        *   \"El libro **que** lees es bueno.\"\n            *   Antecedente: *Libro*.\n            *   Relativo: *Que*.\n        \n        ### 2. La Regla de Oro de la Concordancia\n        \n        El pronombre relativo concuerda con su antecedente en **GÉNERO y NÚMERO**.\n        Pero su **CASO** depende de su función **dentro de la oración subordinada**.\n        \n        "
+    },
+    {
+      "type": "markdown",
+      "content": "\n        ### 3. Declinación de Qui, Quae, Quod\n        \n        #### Declinación del Relativo:\n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Caso",
+        "Masc. Sg",
+        "Fem. Sg",
+        "Neut. Sg",
+        "Masc. Pl",
+        "Fem. Pl",
+        "Neut. Pl"
+      ],
+      "rows": [
+        [
+          "**Nom**",
+          "**qui**",
+          "**quae**",
+          "**quod**",
+          "**qui**",
+          "**quae**",
+          "**quae**"
+        ],
+        [
+          "**Ac**",
+          "**quem**",
+          "**quam**",
+          "**quod**",
+          "**quos**",
+          "**quas**",
+          "**quae**"
+        ],
+        [
+          "**Gen**",
+          "**cuius**",
+          "**cuius**",
+          "**cuius**",
+          "**quorum**",
+          "**quarum**",
+          "**quorum**"
+        ],
+        [
+          "**Dat**",
+          "**cui**",
+          "**cui**",
+          "**cui**",
+          "**quibus**",
+          "**quibus**",
+          "**quibus**"
+        ],
+        [
+          "**Abl**",
+          "**quo**",
+          "**qua**",
+          "**quo**",
+          "**quibus**",
+          "**quibus**",
+          "**quibus**"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        ### 4. Ejemplos de Análisis de Caso\n        \n        1.  *Puer, **quem** vides, amicus meus est.*\n            *   Antecedente: *Puer* (Masc, Sg).\n            *   Función en sub.: Objeto Directo de *vides* (tú ves al niño).\n            *   → Relativo: Masc, Sg, **Acusativo** = **QUEM**.\n            *   \"El niño, **al cual** ves, es mi amigo.\"\n        \n        2.  *Puella, **cui** librum dedi, laeta est.*\n            *   Antecedente: *Puella* (Fem, Sg).\n            *   Función en sub.: Objeto Indirecto de *dedi* (di el libro a la niña).\n            *   → Relativo: Fem, Sg, **Dativo** = **CUI**.\n            *   \"La niña, **a la cual** di el libro, está contenta.\"\n        \n        3.  *Urbs, **in qua** habito, magna est.*\n            *   Antecedente: *Urbs* (Fem, Sg).\n            *   Función en sub.: CC Lugar (*in* + Abl).\n            *   → Relativo: Fem, Sg, **Ablativo** = **QUA**.\n            *   \"La ciudad **en la que** vivo es grande.\"\n        \n        ### 5. Relativas con Subjuntivo\n        \n        Normalmente llevan Indicativo. Si llevan **Subjuntivo**, añaden un matiz circunstancial (Final, Consecut o Causal).\n        \n        *   **Final**: *Milites misit **qui** (= ut ii) nuntiarent.*\n            *   Envió soldados **para que** anunciaran (literal: \"que anunciaran\").\n        \n        *   **Consecutiva**: *Nemo est tam stultus **qui** (= ut is) hoc credat.*\n            *   Nadie es tan tonto **que** crea esto.\n\n        ### 6. El Relativo de Unión (Nexo Relativo)\n        \n        En latín, a veces se usa un relativo al **principio de una oración** (después de punto) para referirse a algo dicho anteriormente.\n        Se traduce como un demostrativo: \"Y este...\", \"Este...\", \"El cual...\".\n        \n        *   ***Quae** cum ita sint...*\n            *   Literal: Las cuales cosas como sean así...\n            *   Traducción: **Y como esto es así...** / **Puesto que esto es así...**\n        \n        *   ***Quod** cum audivisset...*\n            *   Literal: Lo cual como hubiese oído...\n            *   Traducción: **Cuando oyó esto...** / **Al oír esto...**\n        \n        ### Vocabulario Esencial\n        *   **Qui, quae, quod**: el cual, la cual, lo cual / que / quien\n        *   **Ubi** (adv. relativo): donde (= in quo)\n        *   **Unde** (adv. relativo): de donde (= ex quo)\n        *   **Quo** (adv. relativo): a donde (= ad quem)\n        "
+    }
+  ]
+}

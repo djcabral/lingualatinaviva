@@ -1,0 +1,13 @@
+{
+  "id": 30,
+  "sections": [
+    {
+      "type": "markdown",
+      "content": "\n        ## Lección 30: Verbos Irregulares y Síntesis Final\n        \n        ### 1. Los Tres Irregulares Clásicos\n        \n        Para completar tu dominio del latín, debes conocer tres verbos irregulares omnipresentes que desafían las reglas normales.\n        \n        #### A. Fero, ferre, tuli, latum (Llevar, soportar)\n        \n        Es irregular porque **pierde la vocal de unión** en Presente.\n        \n        *   **Presente**: *Fero, Fers, Fert, Ferimus, Fertis, Ferunt*.\n        *   **Infinitivo**: *Ferre* (no *ferere*).\n        *   **Compuestos**: *Au-fero* (llevarse), *In-fero* (introducir), *Con-fero* (reunir).\n        \n        "
+    },
+    {
+      "type": "markdown",
+      "content": "\n        #### B. Eo, ire, ii, itum (Ir)\n        \n        La raíz es **i-**. Se transforma en **e-** ante vocal (*eo, eunt*).\n        \n        *   **Presente**: *Eo, Is, It, Imus, Itis, Eunt*.\n        *   **Futuro**: *Ibo, ibis...* (Como la 1ª/2ª conj).\n        *   **Compuestos**: *Ex-eo* (salir), *Red-eo* (volver), *Transe-o* (cruzar).\n        \n        #### C. Fio, fieri, factus sum (Hacerse, suceder)\n        \n        Funciona como la **voz pasiva de *Facio*** (hacer).\n        \n        *   **Presente**: *Fio, Fis, Fit, Fimus, Fitis, Fiunt*.\n        *   **Significado**:\n            *   *Hoc **fit**.* = Esto **sucede** / Esto **es hecho**.\n            *   *Consul **factus est**.* = **Se hizo** (fue nombrado) cónsul.\n        \n        ---\n\n        ### 2. La Métrica Latina (Bonus)\n        \n        El latín clásico no se basaba en la rima, sino en la **cantidad** (duración) de las sílabas.\n        \n        *   **Sílaba Larga (-)**: Dura dos tiempos.\n        *   **Sílaba Breve (u)**: Dura un tiempo.\n        \n        El verso más famoso es el **Hexametro Dactílico** (usado en la Eneida).\n        \n        ### 3. Síntesis y Despedida\n        \n        Has recorrido el camino desde `Rosa, -ae` hasta el Estilo Indirecto y los verbos anómalos. Tienes, ahora sí, las llaves de Roma.\n        \n        > **Per aspera ad astra**\n        > (A través de las dificultades, hacia las estrellas)\n        \n        A partir de aquí, el aprendizaje continúa leyendo a los clásicos: César, Cicerón, Virgilio.\n        \n        **¡Felicidades, Grammaticus!**\n        "
+    }
+  ]
+}

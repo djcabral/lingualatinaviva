@@ -1,0 +1,52 @@
+{
+  "id": 10,
+  "sections": [
+    {
+      "type": "markdown",
+      "content": "\n        ## Lección 10: Adjetivos de Segunda Clase y Sintaxis\n        "
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        ### Revisión: Las Cinco Declinaciones y los Casos\n        \n        Ya hemos cubierto **todas las declinaciones del latín**:\n        *   1a: Femeninos en -a (*rosa, puella*)\n        *   2a: Masculinos en -us/er (*dominus, puer*) y Neutros en -um (*templum*)\n        *   3a: Los tres géneros (*rex, urbs, corpus*)\n        *   4a: Masculinos/Femeninos en -us (*manus, senatus*)\n        *   5a: Femeninos en -es (*res, dies*)\n        \n        Y **todos los seis casos**: Nominativo, Vocativo, Acusativo, Genitivo, Dativo, Ablativo.\n        \n        ### 1. Adjetivos de Segunda Clase (3a Declinación)\n        \n        Los adjetivos de 2a Clase se declinan como sustantivos de **3a Declinación** (temas en -i).\n        \n        **Tres tipos según el número de terminaciones:**\n        \n        #### A. Tres Terminaciones (M / F / N)\n        \n        **Modelo: Acer, acris, acre (Agudo, penetrante)**\n        *   Masc: *acer* (como *puer* pero con casos de 3a)\n        *   Fem: *acris*\n        *   Neut: *acre*\n        \n        **Otro ejemplo:**\n        *   *Celer, celeris, celere* (rápido)\n        \n        #### B. Dos Terminaciones (M/F | N)\n        \n        **Modelo: Omnis, omne (Todo, cada)**\n        *   Masc/Fem: *omnis*\n        *   Neut: *omne*\n        \n        **Otros ejemplos:**\n        *   *Brevis, breve* (breve, corto)\n        *   *Fortis, forte* (fuerte, valiente)\n        *   *Tristis, triste* (triste)\n        *   *Dulcis, dulce* (dulce)\n        \n        #### C. Una Terminación (M/F/N)\n        \n        **Modelo: Felix, felicis (Feliz, afortunado)**\n        Solo hay una forma para los tres géneros en Nominativo.\n        El género se determina por concordancia con el sustantivo.\n        \n        **Otros ejemplos:**\n        *   *Sapiens, sapientis* (sabio)\n        *   *Prudens, prudentis* (prudente)\n        *   *Audax, audacis* (audaz)\n        *   *Velox, velocis* (veloz)\n        \n        **Paradigma de Felix**:\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Caso",
+        "Singular",
+        "Plural"
+      ],
+      "rows": [
+        [
+          "Nom (m/f/n)",
+          "felix",
+          "felic-**es** / felic-**ia** (n)"
+        ],
+        [
+          "Ac (m/f)",
+          "felic-**em**",
+          "felic-**es**"
+        ],
+        [
+          "Ac (n)",
+          "felix",
+          "felic-**ia**"
+        ],
+        [
+          "Gen",
+          "felic-**is**",
+          "felic-**ium**"
+        ],
+        [
+          "Dat/Abl",
+          "felic-**i/-e**",
+          "felic-**ibus**"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        ### 2. La Aposición: Complemento Nominal\n        \n        La **aposición** es un sustantivo que explica o determina a otro sustantivo.\n        Ambos deben estar en el **mismo caso**.\n        \n        **Ejemplos:**\n        *   *Cicero, consul, dicit.* (Cicerón, el cónsul, dice)\n            - *Cicero*: Nominativo\n            - *consul*: Nominativo (en aposición)\n        *   *Roma, urbs magna, est.* (Roma, la gran ciudad, existe)\n        *   *Homerus, poeta Graecus, carmina scripsit.* (Homero, el poeta griego, escribió poemas)\n        "
+    }
+  ]
+}

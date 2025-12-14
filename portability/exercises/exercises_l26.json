@@ -1,0 +1,95 @@
+{
+    "lesson": 26,
+    "topic": "Subordinadas Sustantivas (Completivas)",
+    "exercises": [
+        {
+            "type": "sentence_completion",
+            "question": "Volo _____ (que vengas).",
+            "options": [
+                "ut venias",
+                "ne venias",
+                "ut venis"
+            ],
+            "correct_answer": "ut venias",
+            "explanation": "Verbo de voluntad 'Volo' + ut + subjuntivo presente."
+        },
+        {
+            "type": "sentence_completion",
+            "question": "Timeo _____ (que llueva - no quiero).",
+            "options": [
+                "ne pluat",
+                "ut pluat",
+                "quod pluit"
+            ],
+            "correct_answer": "ne pluat",
+            "explanation": "Verbos de temor: 'ne' introduce lo que tememos que ocurra (y no queremos)."
+        },
+        {
+            "type": "sentence_completion",
+            "question": "Timeo _____ (que NO venga - sí quiero).",
+            "options": [
+                "ut veniat",
+                "ne veniat",
+                "non venire"
+            ],
+            "correct_answer": "ut veniat",
+            "explanation": "Verbos de temor: 'ut' introduce el temor de que algo NO ocurra."
+        },
+        {
+            "type": "multiple_choice",
+            "question": "¿Qué modo verbal usan las interrogativas indirectas?",
+            "options": [
+                "Subjuntivo",
+                "Indicativo",
+                "Imperativo",
+                "Infinitivo"
+            ],
+            "correct_answer": "Subjuntivo",
+            "explanation": "Aunque en español usamos indicativo ('No sé quién es'), en latín es subjuntivo ('Nescio quis sit')."
+        },
+        {
+            "type": "vocabulary_match",
+            "pairs": [
+                {
+                    "latin": "Imperavit ut pugnarent",
+                    "spanish": "Mandó que lucharan"
+                },
+                {
+                    "latin": "Rogavit ne abiret",
+                    "spanish": "Rogó que no se fuera"
+                },
+                {
+                    "latin": "Nescio quis sit",
+                    "spanish": "No sé quién es"
+                },
+                {
+                    "latin": "Volo ut discas",
+                    "spanish": "Quiero que aprendas"
+                }
+            ]
+        },
+        {
+            "type": "sentence_completion",
+            "question": "Rogat _____ (por qué) ridas.",
+            "options": [
+                "cur",
+                "quid",
+                "ubi"
+            ],
+            "correct_answer": "cur",
+            "explanation": "Cur = por qué. Introduce interrogativa indirecta."
+        },
+        {
+            "type": "multiple_choice",
+            "question": "Función sintáctica de 'ut venias' en 'Volo ut venias'",
+            "options": [
+                "Objeto Directo",
+                "Sujeto",
+                "Complemento Circunstancial",
+                "Atributo"
+            ],
+            "correct_answer": "Objeto Directo",
+            "explanation": "Completa el sentido del verbo 'querer'. ¿Qué quiero? Que vengas."
+        }
+    ]
+}

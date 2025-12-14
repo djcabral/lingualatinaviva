@@ -1,0 +1,18 @@
+{
+  "id": 35,
+  "sections": [
+    {
+      "type": "markdown",
+      "content": "\n        ## Lección 35: Virgilio y la Épica\n        \n        ### 1. P. Vergilius Maro (70-19 a.C.)\n        \n        El poeta nacional de Roma. Su obra glorifica los orígenes míticos de Roma y la familia Julia (Augusto).\n        "
+    },
+    {
+      "type": "image",
+      "path": "static/images/curso_gramatica/leccion35_virgilio.png",
+      "caption": "Virgilio leyendo la Eneida a Augusto"
+    },
+    {
+      "type": "markdown",
+      "content": "\n        ### 2. Estilo: La Perfección del Hexámetro\n        \n        *   **Hexámetro Dactílico**: Virgilio llevó este metro a su máxima perfección y armonía.\n        *   **Pietas**: El tema central de Eneas, el deber hacia los dioses, la patria y la familia.\n        *   **Pathos**: Gran sensibilidad hacia el sufrimiento humano (las \"lágrimas de las cosas\").\n        \n        ### 3. Texto: La Eneida (I.1-3)\n        \n        El inicio de la gran epopeya romana:\n        \n        > *Arma virumque cano, Troiae qui primus ab oris*\n        > *Italiam, fato profugus, Laviniaque venit*\n        > *litora...*\n        \n        **Traducción**:\n        \"Canto a las armas y al hombre que, el primero desde las costas de Troya,\n        llegó a Italia, prófugo por el destino, y a las costas de Lavinio...\"\n        \n        ### 4. Vocabulario de Autor\n        *   **Cano, -ere, cecini**: cantar (poéticamente)\n        *   **Ora, -ae**: costa, orilla\n        *   **Fatum, -i**: destino, hado\n        *   **Profugus, -a, -um**: prófugo, fugitivo\n        *   **Litus, -oris**: playa, costa\n        "
+    }
+  ]
+}

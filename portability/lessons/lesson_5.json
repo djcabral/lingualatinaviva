@@ -1,0 +1,213 @@
+{
+  "id": 5,
+  "sections": [
+    {
+      "type": "markdown",
+      "content": "\n        ## Lección 5: El Neutro y Segunda Conjugación\n        "
+    },
+    {
+      "type": "image",
+      "path": "static/images/curso_gramatica/leccion5_neutro_diagram.png",
+      "caption": "Diagrama del Género Neutro y sus reglas fundamentales"
+    },
+    {
+      "type": "image",
+      "path": "static/images/curso_gramatica/leccion5_animales_neutros.png",
+      "caption": "Animales en el campo: muchos nombres de rebaño son Neutros (Ovis, Pecus)"
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        ### 1. Segunda Declinación: Sustantivos Neutros en -UM\n        \n        El género **Neutro** (neuter = ni uno ni otro) se usa principalmente para cosas inanimadas, \n        aunque no todas las cosas son neutras.\n        \n        **Las Reglas de Oro del Neutro** (válidas para TODAS las declinaciones):\n        1.  El **Nominativo, Vocativo y Acusativo** son **siempre iguales** entre sí.\n        2.  En el **Plural**, estos tres casos terminan siempre en **-a**.\n        \n        **Paradigma completo: Templum, -i (El templo)**\n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Caso",
+        "Singular",
+        "Terminación",
+        "Plural",
+        "Terminación",
+        "Función"
+      ],
+      "rows": [
+        [
+          "**Nom/Voc/Ac**",
+          "templ-**um**",
+          "**-um**",
+          "templ-**a**",
+          "**-a**",
+          "Suj/OD"
+        ],
+        [
+          "**Genitivo**",
+          "templ-**i**",
+          "**-i**",
+          "templ-**orum**",
+          "**-orum**",
+          "Del templo"
+        ],
+        [
+          "**Dativo**",
+          "templ-**o**",
+          "**-o**",
+          "templ-**is**",
+          "**-is**",
+          "Al templo"
+        ],
+        [
+          "**Ablativo**",
+          "templ-**o**",
+          "**-o**",
+          "templ-**is**",
+          "**-is**",
+          "Con el templo"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        > **Observación**: Los casos Genitivo, Dativo y Ablativo son idénticos a los masculinos de 2a Declinación.\n        > La única diferencia está en Nom/Voc/Ac.\n        \n        **Otros ejemplos de Neutros en -UM:**\n        *   *Bellum, -i*: guerra\n        *   *Donum, -i*: regalo, don\n        *   *Verbum, -i*: palabra\n        *   *Caelum, -i*: cielo\n        *   *Oppidum, -i*: ciudad, plaza fuerte\n        *   *Auxilium, -i*: ayuda, auxilio\n        *   *Forum, -i*: foro, plaza pública\n        \n        **¡Nota sobre concordancia!**\n        En latín, cuando el sujeto es neutro plural (*templa*, *bella*), el verbo va en **plural**, igual que con los masculinos y femeninos.\n        \n        *   *Templa **sunt** pulchra.* ✓ (Correcto) - Los templos son hermosos.\n        *   *Templa est pulchra.* ❌ (Incorrecto en latín) - El verbo debe concordar en número.\n        \n        ### 2. Segunda Conjugación: Verbos en -ĒRE\n        \n        Los verbos cuyo infinitivo termina en **-ēre** (con **e larga**) pertenecen a la 2a Conjugación.\n        \n        **Modelo: Monere (Aconsejar, Advertir)**\n        \n        **Presente de Indicativo:**\n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Persona",
+        "Raíz",
+        "Desinencia",
+        "Forma",
+        "Español"
+      ],
+      "rows": [
+        [
+          "1a Sg",
+          "mone-",
+          "**-o**",
+          "**moneo**",
+          "yo aconsejo"
+        ],
+        [
+          "2a Sg",
+          "mone-",
+          "**-s**",
+          "**mones**",
+          "tú aconsejas"
+        ],
+        [
+          "3a Sg",
+          "mone-",
+          "**-t**",
+          "**monet**",
+          "él/ella aconseja"
+        ],
+        [
+          "1a Pl",
+          "mone-",
+          "**-mus**",
+          "**monemus**",
+          "nosotros aconsejamos"
+        ],
+        [
+          "2a Pl",
+          "mone-",
+          "**-tis**",
+          "**monetis**",
+          "vosotros aconsejáis"
+        ],
+        [
+          "3a Pl",
+          "mone-",
+          "**-nt**",
+          "**monent**",
+          "ellos/ellas aconsejan"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        **Pretérito Imperfecto:**\n        Sufijo temporal: **-eba-** (no -ba- como en la 1a)\n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Persona",
+        "Forma",
+        "Traducción"
+      ],
+      "rows": [
+        [
+          "1a Sg",
+          "**monebam**",
+          "yo aconsejaba"
+        ],
+        [
+          "2a Sg",
+          "**monebas**",
+          "tú aconsejabas"
+        ],
+        [
+          "3a Sg",
+          "**monebat**",
+          "él/ella aconsejaba"
+        ],
+        [
+          "1a Pl",
+          "**monebamus**",
+          "nosotros aconsejábamos"
+        ],
+        [
+          "2a Pl",
+          "**monebatis**",
+          "vosotros aconsejabais"
+        ],
+        [
+          "3a Pl",
+          "**monebant**",
+          "ellos/ellas aconsejaban"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        **Otros verbos de 2a Conjugación:**\n        *   *Habeo, habere*: tener, poseer\n        *   *Video, videre*: ver\n        *   *Timeo, timere*: temer\n        *   *Debeo, debere*: deber\n        *   *Teneo, tenere*: tener, sostener\n        *   *Doceo, docere*: enseñar\n        \n        ### Ejemplos de Frases\n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Latín",
+        "Análisis",
+        "Traducción"
+      ],
+      "rows": [
+        [
+          "*Puer templum videt.*",
+          "Puer (Nom, Suj) + templum (Ac, OD) + videt (verbo)",
+          "El niño ve el templo."
+        ],
+        [
+          "*Templum pulchrum est.*",
+          "Templum (Nom, Suj) + pulchrum (Nom, Atrib) + est",
+          "El templo es hermoso."
+        ],
+        [
+          "*Templa pulchra sunt.*",
+          "Templa (Nom Pl Neut, Suj) + pulchra (Nom Pl Neut, Atrib) + sunt",
+          "Los templos son hermosos."
+        ],
+        [
+          "*Magister pueros monet.*",
+          "Magister (Nom, Suj) + pueros (Ac, OD) + monet (verbo)",
+          "El maestro aconseja a los niños."
+        ],
+        [
+          "*Bellum timebamus.*",
+          "Bellum (Ac, OD) + timebamus (verbo 1a Pl)",
+          "Temíamos la guerra."
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        ### Vocabulario Esencial\n        *   **Templum, -i** (n): templo\n        *   **Bellum, -i** (n): guerra\n        *   **Donum, -i** (n): regalo\n        *   **Verbum, -i** (n): palabra\n        *   **Moneo, monere**: aconsejar\n        *   **Habeo, habere**: tener\n        *   **Video, videre**: ver\n        *   **Timeo, timere**: temer\n        "
+    }
+  ]
+}

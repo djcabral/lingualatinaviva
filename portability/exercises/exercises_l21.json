@@ -1,0 +1,105 @@
+{
+    "lesson": 21,
+    "topic": "Participios",
+    "exercises": [
+        {
+            "type": "multiple_choice",
+            "question": "¿Qué es un Participio?",
+            "options": [
+                "Un sustantivo verbal",
+                "Un adjetivo verbal",
+                "Un adverbio de modo",
+                "Una preposición"
+            ],
+            "correct_answer": "Un adjetivo verbal",
+            "explanation": "El participio es un adjetivo verbal: tiene características de verbo (tiempo, voz) y de adjetivo (género, número, caso)."
+        },
+        {
+            "type": "multiple_choice",
+            "question": "¿Cómo se forma el Participio Presente?",
+            "options": [
+                "Tema de presente + -ns, -ntis",
+                "Tema de supino + -us, -a, -um",
+                "Tema de perfecto + -isse",
+                "Tema de presente + -ndus"
+            ],
+            "correct_answer": "Tema de presente + -ns, -ntis",
+            "explanation": "Se forma añadiendo -ns (nominativo) y -ntis (genitivo) al tema de presente."
+        },
+        {
+            "type": "vocabulary_match",
+            "pairs": [
+                {
+                    "latin": "amans",
+                    "spanish": "que ama / amante"
+                },
+                {
+                    "latin": "amatus",
+                    "spanish": "amado (que ha sido amado)"
+                },
+                {
+                    "latin": "amaturus",
+                    "spanish": "que va a amar"
+                },
+                {
+                    "latin": "videns",
+                    "spanish": "que ve / viendo"
+                }
+            ]
+        },
+        {
+            "type": "sentence_completion",
+            "question": "Puer _____ (corriendo) cecidit.",
+            "options": [
+                "currens",
+                "currentem",
+                "curso"
+            ],
+            "correct_answer": "currens",
+            "explanation": "Debe concertar con 'puer' (Nominativo Singular Masculino). 'Currens' es el nominativo."
+        },
+        {
+            "type": "sentence_completion",
+            "question": "Urbs _____ (capturada) incensa est.",
+            "options": [
+                "capta",
+                "captus",
+                "capiens"
+            ],
+            "correct_answer": "capta",
+            "explanation": "Concierta con 'urbs' (Femenino Singular Nominativo). Participio perfecto pasivo: capta."
+        },
+        {
+            "type": "multiple_choice",
+            "question": "Ave, Caesar, _____ te salutant.",
+            "options": [
+                "morituri",
+                "moriens",
+                "mortui"
+            ],
+            "correct_answer": "morituri",
+            "explanation": "Participio futuro activo: 'los que van a morir'. Nominativo Plural Masculino."
+        },
+        {
+            "type": "vocabulary_match",
+            "pairs": [
+                {
+                    "latin": "legens",
+                    "spanish": "leyendo / que lee"
+                },
+                {
+                    "latin": "lectus",
+                    "spanish": "leído"
+                },
+                {
+                    "latin": "lecturus",
+                    "spanish": "que va a leer"
+                },
+                {
+                    "latin": "audiens",
+                    "spanish": "oyendo / que oye"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,113 @@
+{
+  "id": 8,
+  "sections": [
+    {
+      "type": "markdown",
+      "content": "\n        ## Lección 8: Cuarta Declinación, Pretérito Perfecto y Genitivo\n        "
+    },
+    {
+      "type": "image",
+      "path": "static/images/curso_gramatica/leccion8_perfect_tense.png",
+      "caption": "El Pretérito Perfecto: Formación y Uso"
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        ### 1. Cuarta Declinación: Temas en -U\n        \n        Sustantivos mayoritariamente **masculinos** (aunque hay algunos femeninos y neutros).\n        Terminan en **-us** en Nominativo y **-us** en Genitivo (no confundir con la 2a).\n        \n        **Modelo: Manus, -us (La mano) - FEMENINO (Excepción)**\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Caso",
+        "Singular",
+        "Plural"
+      ],
+      "rows": [
+        [
+          "**Nominativo**",
+          "man-**us**",
+          "man-**us**"
+        ],
+        [
+          "**Vocativo**",
+          "man-**us**",
+          "man-**us**"
+        ],
+        [
+          "**Acusativo**",
+          "man-**um**",
+          "man-**us**"
+        ],
+        [
+          "**Genitivo**",
+          "man-**us**",
+          "man-**uum**"
+        ],
+        [
+          "**Dativo**",
+          "man-**ui**",
+          "man-**ibus**"
+        ],
+        [
+          "**Ablativo**",
+          "man-**u**",
+          "man-**ibus**"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        **Otros ejemplos de 4a Declinación:**\n        *   *Exercitus, -us* (m): ejército\n        *   *Fructus, -us* (m): fruto\n        *   *Senatus, -us* (m): senado\n        *   *Portus, -us* (m): puerto\n        *   *Domus, -us* (f): casa (irregular, mezcla 2a y 4a)\n        \n        **Neutros de 4a Declinación** (muy raros):\n        *   *Cornu, -us* (n): cuerno\n        *   *Genu, -us* (n): rodilla\n        \n        \n        ### 2. Pretérito Perfecto (Perfectum): El Pasado Acabado\n        \n        El **Pretérito Perfecto** expresa una acción **completada en el pasado**.\n        Equivale a \"amé\", \"he amado\" en español.\n        \n        **Formación**: Se construye sobre el **tema de perfecto** (3a forma del enunciado del verbo).\n        \n        **Enunciado completo de un verbo**: Siempre se dan 4 formas:\n        1.  Presente 1a Sg: *amo*\n        2.  Infinitivo: *amare*\n        3.  **Perfecto 1a Sg**: *amavi*\n        4.  Supino: *amatum*\n        \n        **Terminaciones del Perfecto** (IGUALES para todas las conjugaciones):\n        \n        "
+    },
+    {
+      "type": "table",
+      "headers": [
+        "Persona",
+        "Desinencia",
+        "Ejemplo (AMARE)",
+        "Traducción"
+      ],
+      "rows": [
+        [
+          "1a Sg",
+          "**-i**",
+          "amav-**i**",
+          "yo amé / he amado"
+        ],
+        [
+          "2a Sg",
+          "**-isti**",
+          "amav-**isti**",
+          "tú amaste"
+        ],
+        [
+          "3a Sg",
+          "**-it**",
+          "amav-**it**",
+          "él/ella amó"
+        ],
+        [
+          "1a Pl",
+          "**-imus**",
+          "amav-**imus**",
+          "nosotros amamos"
+        ],
+        [
+          "2a Pl",
+          "**-istis**",
+          "amav-**istis**",
+          "vosotros amasteis"
+        ],
+        [
+          "3a Pl",
+          "**-erunt/-ere**",
+          "amav-**erunt**",
+          "ellos/ellas amaron"
+        ]
+      ]
+    },
+    {
+      "type": "markdown",
+      "content": "\n        \n        **Ejemplos de otros verbos:**\n        *   *Habeo, habere, **habui**, habitum* (tener) -> *habui* (tuve)\n        *   *Dico, dicere, **dixi**, dictum* (decir) -> *dixi* (dije)\n        *   *Lego, legere, **legi**, lectum* (leer) -> *legi* (leí)\n        *   *Video, videre, **vidi**, visum* (ver) -> *vidi* (vi)\n        \n        ### 3. El Caso Genitivo: Posesión y Pertenencia\n        \n        El **Genitivo** expresa **posesión**, **pertenencia** o **especificación**.\n        Responde a **¿De quién?** o **¿De qué?**\n        \n        **En español se traduce con**: \"de\" + sustantivo.\n        \n        **Ejemplos:**\n        *   *Domus patris* (La casa del padre)\n            - *Domus*: Nominativo\n            - *patris*: **Genitivo** (de quién es la casa)\n        *   *Liber pueri* (El libro del niño)\n        *   *Amor patriae* (El amor a la patria / de la patria)\n        *   *Corona rosarum* (Una corona de rosas)\n        \n        **Terminaciones de Genitivo:**\n        *   1a Declinación: Sg **-ae**, Pl **-arum**\n        *   2a Declinación: Sg **-i**, Pl **-orum**\n        *   3a Declinación: Sg **-is**, Pl **-um/-ium**\n        *   4a Declinación: Sg **-us**, Pl **-uum**\n    \n        ### 4. El Genitivo Partitivo (El Todo y la Parte)\n        \n        Un uso muy común del genitivo es expresar **el todo del cual se toma una parte**.\n        \n        *   *Pars militum* (Una parte **de los soldados**)\n        *   *Nihil boni* (Nada **de bueno**)\n        *   *Plus pecuniae* (Más **de dinero** -> Más dinero)\n        \n        "
+    }
+  ]
+}

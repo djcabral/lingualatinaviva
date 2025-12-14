@@ -1,0 +1,18 @@
+{
+  "id": 32,
+  "sections": [
+    {
+      "type": "markdown",
+      "content": "\n        ## Lección 32: Cicerón y la Retórica\n        \n        ### 1. M. Tullius Cicero (106-43 a.C.)\n        \n        Cicerón es la cumbre de la oratoria romana y el creador del lenguaje filosófico latino. Su vida estuvo dedicada a la defensa de la República.\n        "
+    },
+    {
+      "type": "image",
+      "path": "static/images/curso_gramatica/leccion32_ciceron.png",
+      "caption": "Cicerón denunciando a Catilina en el Senado"
+    },
+    {
+      "type": "markdown",
+      "content": "\n        ### 2. Estilo: El Periodo Oratorio\n        \n        A diferencia de la brevedad de César, Cicerón busca la **amplitud y el ritmo**:\n        *   **Concinnitas**: Equilibrio y simetría en las frases.\n        *   **Cláusulas Métricas**: El final de las frases tiene un ritmo poético.\n        *   **Anáfora y Tricolon**: Repetición de palabras y estructuras de tres elementos.\n        \n        ### 3. Texto: In Catilinam (I.1)\n        \n        El ataque directo contra el conspirador Catilina:\n        \n        > *Quousque tandem abutere, Catilina, patientia nostra? Quamdiu etiam furor iste tuus nos eludet? Quem ad finem sese effrenata iactabit audacia?*\n        \n        **Traducción**:\n        \"¿Hasta cuándo, finalmente, abusarás, Catilina, de nuestra paciencia? ¿Cuánto tiempo todavía esa locura tuya se burlará de nosotros? ¿Hasta qué límite se arrojará esa audacia desenfrenada?\"\n        \n        ### 4. Vocabulario de Autor\n        *   **Abutor, -i, -usus sum** (+ Abl): abusar\n        *   **Patientia, -ae**: paciencia\n        *   **Furor, -oris**: locura\n        *   **Eludo, -ere**: burlar, esquivar\n        *   **Audacia, -ae**: audacia, osadía\n        "
+    }
+  ]
+}

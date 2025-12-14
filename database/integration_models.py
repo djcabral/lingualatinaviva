@@ -328,8 +328,7 @@ class LessonRequirement(SQLModel, table=True):
     description: Optional[str] = None  # Descripción legible del requisito
     
     # Relación (usa path completamente calificado para evitar ambigüedad con models.UserLessonProgressV2)
-    progress: List["database.integration_models.UserLessonProgress"] = Relationship(back_populates="requirement")
-
+    progress: List["UserLessonProgress"] = Relationship(back_populates="requirement")
 
 
 class UserLessonProgress(SQLModel, table=True):
@@ -358,7 +357,7 @@ class UserLessonProgress(SQLModel, table=True):
     completed_at: Optional[datetime] = None
     
     # Relación
-    requirement: Optional["database.integration_models.LessonRequirement"] = Relationship(back_populates="progress")
+    requirement: Optional["LessonRequirement"] = Relationship(back_populates="progress")
 
 
 # Helper functions moved to database/utils.py

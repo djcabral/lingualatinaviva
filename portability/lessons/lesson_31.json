@@ -1,0 +1,18 @@
+{
+  "id": 31,
+  "sections": [
+    {
+      "type": "markdown",
+      "content": "\n        ## Lección 31: César y la Prosa Militar\n        \n        ### 1. C. Iulius Caesar (100-44 a.C.)\n        \n        Julio César no solo fue uno de los generales y políticos más brillantes de Roma, sino también un **maestro de la prosa latina**. Sus *Commentarii* (Comentarios) son el modelo de la latinidad pura.\n        "
+    },
+    {
+      "type": "image",
+      "path": "static/images/curso_gramatica/leccion31_cesar.png",
+      "caption": "Julio César: Conquistador y Escritor"
+    },
+    {
+      "type": "markdown",
+      "content": "\n        ### 2. Estilo: *Pura et Illustris Brevitas*\n        \n        El estilo de César se caracteriza por:\n        *   **Brevedad y Claridad**: Evita palabras raras o arcaicas.\n        *   **Uso de la 3ª Persona**: Se refiere a sí mismo como \"César\" para dar apariencia de objetividad.\n        *   **Vocabulario Militar**: Preciso y técnico (*acies, legio, castra, imperator*).\n        *   **Ablativo Absoluto**: Uso frecuente para acelerar la narración.\n        \n        ### 3. Texto: De Bello Gallico (I.1)\n        \n        El inicio más famoso de la literatura latina histórica:\n        \n        > *Gallia est omnis divisa in partes tres, quarum unam incolunt Belgae, aliam Aquitani, tertiam qui ipsorum lingua Celtae, nostra Galli appellantur.*\n        \n        **Traducción**:\n        \"Toda la Galia está dividida en tres partes, de las cuales una la habitan los Belgas, otra los Aquitanos, la tercera los que en su propia lengua se llaman Celtas, en la nuestra Galos.\"\n        \n        ### 4. Vocabulario de Autor\n        *   **Divido, -ere, -visi, -visum**: dividir\n        *   **Incolo, -ere, -ui**: habitar\n        *   **Appello, -are**: llamar\n        *   **Lex, legis**: ley\n        *   **Proelium, -ii**: batalla\n        "
+    }
+  ]
+}

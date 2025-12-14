@@ -13,129 +13,100 @@ from database import (
     UserVocabularyProgress
 )
 from utils.progress_tracker import record_vocabulary_practice, record_exercise_attempt as tracker_record_attempt
-from utils.ui_components import render_progress_bar
+from utils.ui_components import render_progress_bar, render_flashcard
 from utils.progress_service import record_exercise_attempt
 import time
 
+
 # ============================================================================
-# GAMIFICATION ENGINE (New)
+# GAMIFICATION ENGINE
 # ============================================================================
 
 def _init_game_session(session_key: str, total_items: int):
     """Initializes the game session state if not present."""
     if f"{session_key}_state" not in st.session_state:
-        st.session_state[f"{session_key}_state"] = "INTRO" # INTRO, PLAYING, FEEDBACK, VICTORY
+        st.session_state[f"{session_key}_state"] = "INTRO"
         st.session_state[f"{session_key}_score"] = 0
-        st.session_state[f"{session_key}_progress"] = 0
         st.session_state[f"{session_key}_streak"] = 0
-        st.session_state[f"{session_key}_total"] = total_items
-        st.session_state[f"{session_key}_answers"] = {} # Store user answers
+        st.session_state[f"{session_key}_current_idx"] = 0
+        st.session_state[f"{session_key}_completed"] = False
 
-def render_mission_intro(title: str, objective: str, xp_reward: int, on_start):
-    """Renders the pre-exercise mission card."""
-    st.markdown(
-        f"""
-        <div style='background: linear-gradient(135deg, #ffffff, #f0fdf4); 
-                    padding: 30px; border-radius: 15px; border: 2px solid #bbf7d0; 
-                    text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 20px;'>
-            <div style='font-size: 3rem; margin-bottom: 10px;'>📜</div>
-            <h2 style='color: #166534; margin: 0;'>Nueva Misión: {title}</h2>
-            <p style='font-size: 1.2rem; color: #374151; margin: 15px 0;'>{objective}</p>
-            <div style='background: #dcfce7; color: #15803d; display: inline-block; 
-                        padding: 5px 15px; border-radius: 20px; font-weight: bold; margin-bottom: 20px;'>
-                🏆 Recompensa: {xp_reward} XP
+def render_mission_intro(title: str, objective: str, xp_reward: int, on_start: callable):
+    """Renders the mission intro screen."""
+    st.markdown(f"""
+        <div style='text-align: center; padding: 40px; background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.2);'>
+            <h1 style='font-size: 3em; margin-bottom: 10px;'>🚀</h1>
+            <h2 style='margin-bottom: 5px; color: #ffd700;'>{title}</h2>
+            <p style='font-size: 1.2em; opacity: 0.9;'>{objective}</p>
+            <div style='margin-top: 20px; font-weight: bold; color: #00ff88;'>
+                🏆 Recompensa: +{xp_reward} XP
             </div>
-            <br>
         </div>
-        """,
-        unsafe_allow_html=True
-    )
+    """, unsafe_allow_html=True)
+    
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
-        if st.button("🚀 ¡Comenzar Misión!", type="primary", use_container_width=True, key=f"start_{title}"):
+        if st.button("⚔️ ¡Comenzar Misión!", type="primary", use_container_width=True, key=f"btn_start_{title}"):
             on_start()
-            st.rerun()
 
 def render_mission_hud(current: int, total: int, streak: int):
-    """Renders the persistent progress bar and stats."""
-    progress = current / total if total > 0 else 0
+    """Renders the Heads-Up Display for the mission."""
+    progress = min(1.0, current / total)
+    
+    st.markdown(f"""
+        <div style='display: flex; justify-content: space-between; align-items: center; background: #f0f2f6; padding: 10px 20px; border-radius: 10px; margin-bottom: 20px;'>
+            <div style='font-weight: bold; color: #555;'>
+                📊 Progreso: {current}/{total}
+            </div>
+            <div style='font-weight: bold; color: {'#e74c3c' if streak == 0 else '#2ecc71'};'>
+                🔥 Racha: {streak}
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
+    
     st.progress(progress)
+
+def render_juicy_feedback(is_correct: bool, explanation: str, correct_answer: str, on_continue: callable, key: str):
+    """Renders visual feedback after an answer."""
+    color = "#2ecc71" if is_correct else "#e74c3c"
+    bg_color = "rgba(46, 204, 113, 0.1)" if is_correct else "rgba(231, 76, 60, 0.1)"
+    title = "¡Correcto! 🎉" if is_correct else "Incorrecto 🛡️"
     
-    col1, col2 = st.columns([3, 1])
-    with col1:
-        st.caption(f"Progreso: {current}/{total}")
+    st.markdown(f"""
+        <div style='text-align: center; padding: 30px; background: {bg_color}; border: 2px solid {color}; border-radius: 15px; margin: 20px 0; animation: fadeIn 0.5s;'>
+            <h2 style='color: {color}; margin-top: 0;'>{title}</h2>
+            <p style='font-size: 1.2em;'>{explanation}</p>
+            {f"<p style='color: #555; margin-top: 10px;'>La respuesta correcta era: <strong>{correct_answer}</strong></p>" if not is_correct else ""}
+        </div>
+    """, unsafe_allow_html=True)
+    
+    col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
-        if streak > 1:
-            st.markdown(f"🔥 **Racha: {streak}**")
-
-def render_juicy_feedback(is_correct: bool, explanation: str, correct_answer: str = None, on_continue=None, key: str = None):
-    """Renders the immediate feedback with style."""
-    
-    if is_correct:
-        bg_color = "#dcfce7" # Green-100
-        border_color = "#22c55e"
-        text_color = "#15803d"
-        title = random.choice(["¡Optime!", "¡Bene factum!", "¡Recte!", "¡Excellens!"])
-        icon = "🌟"
-    else:
-        bg_color = "#fee2e2" # Red-100
-        border_color = "#ef4444" 
-        text_color = "#b91c1c"
-        title = "Errare humanum est..."
-        icon = "⚠️"
-        
-    st.markdown(
-        f"""
-        <div style='background: {bg_color}; padding: 20px; border-radius: 12px; 
-                    border: 2px solid {border_color}; margin: 20px 0; animation: fadeIn 0.5s;'>
-            <div style='font-size: 1.5rem; font-weight: bold; color: {text_color}; display: flex; align-items: center; gap: 10px;'>
-                <span>{icon}</span> {title}
-            </div>
-            <div style='color: {text_color}; margin-top: 10px;'>
-                {explanation.replace('**', '<b>').replace('</b><b>', '</b>')}
-            </div>
-            {f"<div style='margin-top:10px; font-weight:bold;'>Respuesta correcta: {correct_answer}</div>" if not is_correct and correct_answer else ""}
-        </div>
-        """, 
-        unsafe_allow_html=True
-    )
-    
-    if on_continue:
-        # Use provided key or fallback to timestamp (less safe but OK if unique key provided usually)
-        btn_key = f"cont_{key}" if key else f"cont_{int(time.time())}"
-        if st.button("continuar ➡️", type="primary", key=btn_key):
+        if st.button("Continuar ➡️", type="primary", use_container_width=True, key=f"btn_cont_{key}"):
             on_continue()
-            st.rerun()
 
-def render_mission_victory(score: int, total: int, xp_earned: int, on_finish):
-    """Renders the summary screen."""
-    percentage = (score / total) * 100 if total > 0 else 0
+def render_mission_victory(score: int, total: int, xp_earned: int, on_finish: callable):
+    """Renders the victory screen."""
+    st.balloons()
     
-    stars = "⭐"
-    if percentage > 50: stars += "⭐"
-    if percentage > 90: stars += "⭐"
+    accuracy = (score / total) * 100
+    stars = "⭐⭐⭐" if accuracy == 100 else ("⭐⭐" if accuracy >= 70 else "⭐")
     
-    msg = "¡Misión Cumplida!" if percentage >= 60 else "Misión Finalizada"
-    
-    st.markdown(
-        f"""
-        <div style='text-align: center; padding: 40px; background: #fff; border-radius: 20px; border: 1px solid #e5e7eb;'>
-            <div style='font-size: 4rem; margin-bottom: 10px;'>{stars}</div>
-            <h1 style='color: #1e3a8a; margin: 0;'>{msg}</h1>
-            <p style='font-size: 1.5rem; color: #4b5563;'>Obtuviste {score}/{total} aciertos</p>
-            <div style='margin: 30px 0;'>
-                <span style='background: #fef08a; padding: 10px 20px; border-radius: 30px; font-weight: bold; color: #854d0e; font-size: 1.2rem;'>
-                    +{xp_earned} XP Ganados
-                </span>
+    st.markdown(f"""
+        <div style='text-align: center; padding: 50px; background: linear-gradient(135deg, #FFD700 0%, #FDB931 100%); color: #333; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);'>
+            <h1 style='font-size: 4em; margin-bottom: 0;'>{stars}</h1>
+            <h2 style='margin-top: 10px;'>¡Misión Cumplida!</h2>
+            <p style='font-size: 1.5em;'>Puntuación: {score}/{total} ({accuracy:.0f}%)</p>
+            <div style='background: rgba(255,255,255,0.3); padding: 15px; border-radius: 10px; margin-top: 20px; display: inline-block;'>
+                <span style='font-size: 1.5em; font-weight: bold;'>+{xp_earned} XP Ganados</span>
             </div>
         </div>
-        """, 
-        unsafe_allow_html=True
-    )
+    """, unsafe_allow_html=True)
     
-    if st.button("🔙 Volver al Tablero", type="primary", use_container_width=True):
-        on_finish()
-        st.rerun()
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        if st.button("Volver a la Lección", type="primary", use_container_width=True, key="btn_finish_mission"):
+            on_finish()
 
 
 
@@ -272,7 +243,6 @@ def _render_vocabulary_list(words: List, progress_dict: Dict, lesson_number: int
                 else:
                     st.info("No practicado aún")
 
-
 def _render_flashcards(words: List, progress_dict: Dict, lesson_number: int, user_id: int, session: Session):
     """Renderiza modo flashcards interactivo."""
     st.markdown("### 🎴 Práctica con Flashcards")
@@ -332,29 +302,19 @@ def _render_flashcards(words: List, progress_dict: Dict, lesson_number: int, use
         answer = word.latin
         hint = pos_translations.get(word.part_of_speech, word.part_of_speech)
     
-    # Tarjeta frontal
-    st.markdown(
-        f"""
-        <div style='background: linear-gradient(135deg, rgba(139,69,19,0.1), rgba(210,180,140,0.1));
-                    padding: 40px; border-radius: 15px; text-align: center; 
-                    border: 3px solid #8b4513; min-height: 200px;
-                    display: flex; align-items: center; justify-content: center;'>
-            <div>
-                <div style='font-size: 2.5em; font-weight: bold; color: #8b4513; margin-bottom: 10px;'>
-                    {question}
-                </div>
-                <div style='font-size: 1.2em; color: #666; font-style: italic;'>
-                    ({hint})
-                </div>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True
+    # Determinar si mostramos la respuesta (integrada en la tarjeta)
+    display_translation = answer if st.session_state[show_key] else None
+    
+    # Renderizar tarjeta unificada
+    render_flashcard(
+        latin_text=question,
+        hint=f"({hint})",
+        translation=display_translation
     )
     
     st.markdown("###")
     
-    # Botón para mostrar respuesta
+    # Controles
     col1, col2, col3 = st.columns([1, 2, 1])
     
     with col2:
@@ -363,20 +323,7 @@ def _render_flashcards(words: List, progress_dict: Dict, lesson_number: int, use
                 st.session_state[show_key] = True
                 st.rerun()
         else:
-            # Mostrar respuesta
-            st.markdown(
-                f"""
-                <div style='background: #d4edda; padding: 20px; border-radius: 10px; 
-                            text-align: center; border: 2px solid #28a745;'>
-                    <div style='font-size: 2em; font-weight: bold; color: #155724;'>
-                        {answer}
-                    </div>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
-            
-            st.markdown("###")
+            # Botones de evaluación
             st.markdown("#### ¿La sabías?")
             
             col_a, col_b = st.columns(2)

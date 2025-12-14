@@ -1,0 +1,96 @@
+{
+    "lesson": 24,
+    "topic": "Conjugaciones Perifrásticas",
+    "exercises": [
+        {
+            "type": "multiple_choice",
+            "question": "¿Qué expresa la Perifrástica Activa (-urus sum)?",
+            "options": [
+                "Intención o futuro inminente",
+                "Obligación",
+                "Pasado lejano",
+                "Probabilidad"
+            ],
+            "correct_answer": "Intención o futuro inminente",
+            "explanation": "'Voy a amar', 'Tengo intención de amar'."
+        },
+        {
+            "type": "multiple_choice",
+            "question": "¿Qué expresa la Perifrástica Pasiva (-ndus sum)?",
+            "options": [
+                "Obligación o necesidad",
+                "Intención",
+                "Posibilidad",
+                "Deseo"
+            ],
+            "correct_answer": "Obligación o necesidad",
+            "explanation": "'Debe ser amado', 'Hay que amar'."
+        },
+        {
+            "type": "multiple_choice",
+            "question": "En la Perifrástica Pasiva, ¿en qué caso va el agente (quien tiene la obligación)?",
+            "options": [
+                "Dativo",
+                "Ablativo con a/ab",
+                "Genitivo",
+                "Acusativo"
+            ],
+            "correct_answer": "Dativo",
+            "explanation": "Es el llamado 'Dativo Agente'. 'Tibi legendum est' = Tienes que leer (Leíble para ti)."
+        },
+        {
+            "type": "sentence_completion",
+            "question": "Carthago _____ (debe ser destruida).",
+            "options": [
+                "delenda est",
+                "deletura est",
+                "delere est"
+            ],
+            "correct_answer": "delenda est",
+            "explanation": "Gerundivo (-ndus, -a, -um) + sum. Carthago es femenino, así que 'delenda'."
+        },
+        {
+            "type": "sentence_completion",
+            "question": "Hic liber _____ (tengo que leer / debe ser leído por mí).",
+            "options": [
+                "mihi legendus est",
+                "a me legendus est",
+                "ego legendus sum"
+            ],
+            "correct_answer": "mihi legendus est",
+            "explanation": "Usa Dativo Agente ('mihi') para la persona que tiene la obligación."
+        },
+        {
+            "type": "sentence_completion",
+            "question": "Ego _____ (voy a escribir / tengo intención de escribir).",
+            "options": [
+                "scripturus sum",
+                "scribendus sum",
+                "scribens sum"
+            ],
+            "correct_answer": "scripturus sum",
+            "explanation": "Perifrástica Activa: Participio futuro (-urus) + sum."
+        },
+        {
+            "type": "vocabulary_match",
+            "pairs": [
+                {
+                    "latin": "Morituri te salutant",
+                    "spanish": "Los que van a morir te saludan"
+                },
+                {
+                    "latin": "Nunc est bibendum",
+                    "spanish": "Ahora hay que beber"
+                },
+                {
+                    "latin": "Pacta servanda sunt",
+                    "spanish": "Los pactos deben cumplirse"
+                },
+                {
+                    "latin": "Bellum gesturus erat",
+                    "spanish": "Iba a hacer la guerra"
+                }
+            ]
+        }
+    ]
+}

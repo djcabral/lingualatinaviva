@@ -1,0 +1,105 @@
+{
+    "lesson": 28,
+    "topic": "Subordinadas Adjetivas (Relativas)",
+    "exercises": [
+        {
+            "type": "multiple_choice",
+            "question": "¿En qué concuerda el pronombre relativo con su antecedente?",
+            "options": [
+                "Género y Número",
+                "Género, Número y Caso",
+                "Caso solamente",
+                "Número y Caso"
+            ],
+            "correct_answer": "Género y Número",
+            "explanation": "El Caso del relativo depende de su función dentro de la oración subordinada, no del antecedente."
+        },
+        {
+            "type": "sentence_completion",
+            "question": "Puer, _____ (a quien) vides, amicus meus est.",
+            "options": [
+                "quem",
+                "cui",
+                "qui"
+            ],
+            "correct_answer": "quem",
+            "explanation": "Antecedente 'Puer' (Masc, Sg). Función: Objeto Directo de 'vides' (Acusativo). -> Quem."
+        },
+        {
+            "type": "sentence_completion",
+            "question": "Puella, _____ (cuyo) liber est, pulchra est.",
+            "options": [
+                "cuius",
+                "cui",
+                "quam"
+            ],
+            "correct_answer": "cuius",
+            "explanation": "Genitivo de posesión: 'de la cual' = 'cuyo'. Cuius es igual para los tres géneros."
+        },
+        {
+            "type": "vocabulary_match",
+            "pairs": [
+                {
+                    "latin": "Qui (Nom. Sg. Masc)",
+                    "spanish": "El cual / Que / Quien"
+                },
+                {
+                    "latin": "Quae (Nom. Sg. Fem)",
+                    "spanish": "La cual / Que / Quien"
+                },
+                {
+                    "latin": "Quod (Nom. Sg. Neut)",
+                    "spanish": "Lo cual / Que"
+                },
+                {
+                    "latin": "Cui (Dat. Sg)",
+                    "spanish": "Al cual / A quien"
+                }
+            ]
+        },
+        {
+            "type": "sentence_completion",
+            "question": "Urbs, in _____ (la cual) vivo, Roma est.",
+            "options": [
+                "qua",
+                "quo",
+                "quem"
+            ],
+            "correct_answer": "qua",
+            "explanation": "Antecedente 'Urbs' (Fem). Preposición 'in' rige Ablativo. -> Qua."
+        },
+        {
+            "type": "multiple_choice",
+            "question": "¿Qué es el 'Relativo de Unión'?",
+            "options": [
+                "Un relativo al inicio de frase que equivale a un demostrativo",
+                "Un relativo que une dos verbos",
+                "Un relativo que no se declina",
+                "Un relativo interrogativo"
+            ],
+            "correct_answer": "Un relativo al inicio de frase que equivale a un demostrativo",
+            "explanation": "'Quae cum ita sint' = 'Y como estas cosas son así'. Se traduce como demostrativo ('este', 'esto')."
+        },
+        {
+            "type": "vocabulary_match",
+            "pairs": [
+                {
+                    "latin": "Ubi (= In quo)",
+                    "spanish": "Donde / En el cual"
+                },
+                {
+                    "latin": "Unde (= Ex quo)",
+                    "spanish": "De donde / Del cual"
+                },
+                {
+                    "latin": "Quo (= Ad quem)",
+                    "spanish": "A donde / Al cual"
+                },
+                {
+                    "latin": "Qua (= Per quam)",
+                    "spanish": "Por donde / Por la cual"
+                }
+            ]
+        }
+    ]
+}
