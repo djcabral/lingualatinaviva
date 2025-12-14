@@ -418,6 +418,33 @@ def init_db():
         # Validate connection
         if not validate_connection():
             raise DatabaseError("Connection validation failed")
+            
+        # CHECK FOR SEEDING
+        # Streamlit Cloud has ephemeral storage, so we check if DB is empty on startup
+        try:
+            from database import Word
+            with get_session() as session:
+                word_count = session.exec(select(Word)).first()
+                
+                if not word_count:
+                    logger.warning("⚠️ Database appears empty! Attempting to seed data...")
+                    
+                    # Look for seed files
+                    base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+                    seed_file = os.path.join(base_path, "data", "seed_data.csv")
+                    
+                    if os.path.exists(seed_file):
+                        count = import_seed_data(seed_file, session)
+                        logger.info(f"✓ Automatically seeded {count} words.")
+                    else:
+                        logger.warning(f"Seed file not found at: {seed_file}")
+                else:
+                    logger.info("✓ Database already contains data.")
+                    
+        except Exception as e:
+            logger.error(f"Error checking/seeding database: {e}")
+            # We don't raise here to allow app to start even if seeding fails
+            pass
 
         logger.info("=" * 60)
         logger.info("✓ DATABASE READY")

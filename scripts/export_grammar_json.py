@@ -879,12 +879,18 @@ Se forma generalmente añadiendo **-issimus, -a, -um** a la raíz.
 }
 
 # Ensure directory exists
-output_dir = "/home/diego/Projects/latin-python/portability/grammar"
+# Determine project root relative to this script
+script_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(script_dir)
+output_dir = os.path.join(project_root, "portability", "grammar")
+
+# Ensure output directory exists
 os.makedirs(output_dir, exist_ok=True)
 
-# Write to JSON
+print(f"Exporting grammar to: {output_dir}")
 output_file = os.path.join(output_dir, "grammar.json")
 with open(output_file, 'w', encoding='utf-8') as f:
     json.dump(grammar_data, f, ensure_ascii=False, indent=2)
 
 print(f"Grammar extracted to {output_file}")
+```
